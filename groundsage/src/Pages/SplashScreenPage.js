@@ -1,7 +1,10 @@
 import { Typography, Button } from "@mui/material";
 import React from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SplashScreenPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -53,7 +56,13 @@ const SplashScreenPage = () => {
             borderRadius: "4px", // Add border radius
             boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)", // Add box shadow
             fontSize: "16px",
+            "&:hover": {
+              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+              color: "rgb(50, 50, 50)", // Change text color on hover
+              boxShadow: "0px 10px 35px 0px rgb(247, 230, 173)", // Change box shadow on hover
+            },
           }}
+          onClick={(() => navigate('/shoplisting'))}
         >
           LET'S START
           <img
