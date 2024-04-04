@@ -120,7 +120,7 @@ const Footer = () => {
           fontWeight: "500",
           fontSize: "16px",
           fontFamily:'Outfit',
-          letterSpacing:"0px"
+          letterSpacing:"0pxf"
         }}
       >
         © 2024 All Rights Reserved

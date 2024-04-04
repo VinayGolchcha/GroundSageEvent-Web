@@ -1,34 +1,43 @@
 import { Typography, Box, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import Sidbar from "../Component/Sidbar";
+import ProfileAboutpage from "./ProfileAboutpage";
 
 const Profile = () => {
+  const [content, setContent] = useState("");
+
+  const renderContent = () => {
+    switch (content) {
+      case "about":
+        return <ProfileAboutpage />;
+      case "eventHistory":
+        return <div>eventHistory</div>;
+      case "teams":
+        return <div>team</div>;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div style={{ background: "rgb(66, 92, 90)", height: "100vh" }}>
-      <Box>
-        <Button>About</Button>
-        <Button>Event History</Button>
-        <Button>Teams</Button>
-      </Box>
-      <Typography
-        sx={{
-          color: "rgb(247, 230, 173)",
-          textAlign: "center",
-          fontSize: "56px",
-          fontFamily: "Inter",
-          fontWeight: "700",
-          paddingTop: "10px",
-          textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
-        }}
-      >
-        Profile
-      </Typography>
-      <Box>
-        <Box>
-          <Typography>Prashant Pandey</Typography>
-          <Typography>Email : pandeyprashant0012@gmail.com</Typography>
-          <Typography>Role: Coordinator</Typography>
-        </Box>
-      </Box>
+      <Sidbar onItemClick={(content) => setContent(content)} />
+      <div style={{ flex: 1, paddingLeft: "20px", paddingTop: "20px" ,}}>
+        <Typography
+          sx={{
+            color: "rgb(247, 230, 173)",
+            textAlign: "center",
+            fontSize: "56px",
+            fontFamily: "Inter",
+            fontWeight: "700",
+            paddingTop: "10px",
+            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
+          }}
+        >
+          Profile
+        </Typography>
+        <Box sx={{margin:"7% 0% 0% 15%"}}>{renderContent()}</Box>
+      </div>
     </div>
   );
 };
