@@ -27,8 +27,8 @@ const Sidbar = ({ onItemClick }) => {
       <Box
         sx={{
           position: "fixed",
-          top: "50%",
-          transform: "translateY(-50%)",
+          // top: "50%",
+          // transform: "translateY(-50%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
@@ -45,7 +45,7 @@ const Sidbar = ({ onItemClick }) => {
             key={index}
             color="primary"
             sx={{
-              marginBottom: "25px",
+              marginBottom: "30px",
               display: "flex",
               alignItems: "center",
               flexDirection: "column",
@@ -55,7 +55,7 @@ const Sidbar = ({ onItemClick }) => {
             <img
               src={button.imageSrc}
               alt={button.content.toLowerCase()}
-              style={{ margin: "4px 0px 10px 0px", width: "95%" }}
+              style={{ margin: "4px 0px 10px 0px", width: "100%" }}
             />
             {button.content.split("\n").map((line, i) => (
               <Typography

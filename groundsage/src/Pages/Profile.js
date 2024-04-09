@@ -21,8 +21,7 @@ const Profile = () => {
 
   return (
     <div style={{ background: "rgb(66, 92, 90)", height: "100vh" }}>
-      <Sidbar onItemClick={(content) => setContent(content)} />
-      <div style={{ flex: 1, paddingLeft: "20px", paddingTop: "20px" ,}}>
+      <div style={{ flex: 1, paddingLeft: "20px", paddingTop: "20px" }}>
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -36,8 +35,20 @@ const Profile = () => {
         >
           Profile
         </Typography>
-        <Box sx={{margin:"7% 0% 0% 15%"}}>{renderContent()}</Box>
       </div>
+      <Box
+        sx={{
+          display: "flex",
+          // justifyContent: "space-between",
+          // width: {xs:"100%",md:"75%",lg:"75%"},
+        }}
+      >
+        <Sidbar onItemClick={(content) => setContent(content)} />
+        <Box sx={{ 
+          margin: "3% 0px 0px 15%"
+          // marginTop:"5%"
+          }}>{renderContent()}</Box>
+      </Box>
     </div>
   );
 };
