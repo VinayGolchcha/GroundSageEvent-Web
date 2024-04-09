@@ -21,48 +21,48 @@ const ShopListing = () => {
   const Doms = ["A", "B", "C", "D", "E", "F"];
   const shopCards = [
     {
-      dome: "A",
+      dom: "A",
       area: "1200 sq.",
       location: "Near Entrance",
       occupied: true,
       date: "12-Nov-24",
     },
 
-    { dome: "A", area: "120 sq", location: "Near Entrance" },
+    { dom: "A", area: "120 sq", location: "Near Entrance" },
     {
-      dome: "A",
+      dom: "A",
       area: "500 sq.",
       location: "Near Entrance",
       occupied: true,
       date: "2-Nov-24",
     },
 
-    { dome: "D", area: "800 sq", location: "Near Entrance" },
+    { dom: "D", area: "800 sq", location: "Near Entrance" },
     {
-      dome: "D",
+      dom: "D",
       area: "1200 sq.",
       location: "Near Entrance",
       occupied: true,
       date: "1-Nov-24",
     },
     {
-      dome: "E",
+      dom: "E",
       area: "1200 sq",
       location: "Near Entrance",
     },
     {
-      dome: "B",
+      dom: "B",
 
       area: "200 sq.",
       location: "Near Entrance",
       occupied: true,
       date: "10-Nov-24",
     },
-    { dome: "B", area: "100 sq", location: "Near Entrance" },
-    { dome: "C", area: "1200 sq", location: "Near Entrance" },
-    { dome: "C", area: "1200 sq", location: "Near Entrance" },
-    { dome: "E", area: "1200 sq", location: "Near Entrance" },
-    { dome: "D", area: "1200 sq", location: "Near Entrance" },
+    { dom: "B", area: "100 sq", location: "Near Entrance" },
+    { dom: "C", area: "1200 sq", location: "Near Entrance" },
+    { dom: "C", area: "1200 sq", location: "Near Entrance" },
+    { dom: "E", area: "1200 sq", location: "Near Entrance" },
+    { dom: "D", area: "1200 sq", location: "Near Entrance" },
   ];
 
   const filteredShops = shopCards.filter((shop) => {
@@ -140,7 +140,7 @@ const ShopListing = () => {
               }}
               onClick={() => handleDomClick(dom)}
             >
-              Dome {dom}
+              dom {dom}
             </Button>
           ))}
         </Box>

@@ -2,6 +2,8 @@ import { Typography, Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import Sidbar from "../Component/Sidbar";
 import ProfileAboutpage from "./ProfileAboutpage";
+import ProfileEvent from "./ProfileEvent";
+import ProfileTeam from "./ProfileTeam";
 
 const Profile = () => {
   const [content, setContent] = useState("");
@@ -11,9 +13,9 @@ const Profile = () => {
       case "about":
         return <ProfileAboutpage />;
       case "eventHistory":
-        return <div>eventHistory</div>;
+        return <ProfileEvent />;
       case "teams":
-        return <div>team</div>;
+        return <ProfileTeam />;
       default:
         return null;
     }
@@ -44,10 +46,14 @@ const Profile = () => {
         }}
       >
         <Sidbar onItemClick={(content) => setContent(content)} />
-        <Box sx={{ 
-          margin: "3% 0px 0px 15%"
-          // marginTop:"5%"
-          }}>{renderContent()}</Box>
+        <Box
+          sx={{
+            margin: "3% 0px 0px 15%",
+            // marginTop:"5%"
+          }}
+        >
+          {renderContent()}
+        </Box>
       </Box>
     </div>
   );
