@@ -27,7 +27,7 @@ const Sidbar = ({ onItemClick }) => {
       <Box
         sx={{
           position: "fixed",
-          top: "50%",
+          top: "60%",
           transform: "translateY(-50%)",
           display: "flex",
           flexDirection: "column",
