@@ -29,6 +29,8 @@ const Sidbar = ({ onItemClick }) => {
           position: "fixed",
           // top: "50%",
           // transform: "translateY(-50%)",
+          top: "60%",
+          transform: "translateY(-50%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",

@@ -121,7 +121,7 @@ function Navbar() {
                     my: 2,
                     display: "block",
                     justifyContent: "space-around",
-                    width: "200px",
+                    width: "150px",
                     color: activePage === page ? "rgb(247, 230, 173)" : "white",
                     fontSize: "18px",
                     fontFamily: "Inter",
@@ -141,7 +141,7 @@ function Navbar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="" src="../../Component/profile..png" />
                 </IconButton>
               </Tooltip>
               <Menu
