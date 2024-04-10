@@ -9,6 +9,9 @@ import ShopListing from "./Pages/ShopListing";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./Pages/Profile";
 import DescriptionPage from "./Pages/DescriptionPage";
+import RentalAgreementPage from "./Pages/RentalAgreementPage";
+import TransactionPage from "./Pages/TransactionPage";
+import EventListPage from "./Pages/EventListPage";
 
 const App = () => {
   return (
@@ -21,6 +24,9 @@ const App = () => {
       <Route path="/shoplisting" element={<ShopListing />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/description" element={<DescriptionPage />} />
+      <Route path="/rental-agreement" element={<RentalAgreementPage />} />
+      <Route path="/transaction" element={<TransactionPage />} />
+      <Route path="/eventlist" element={<EventListPage/>}/>
     </Routes>
   );
 };
