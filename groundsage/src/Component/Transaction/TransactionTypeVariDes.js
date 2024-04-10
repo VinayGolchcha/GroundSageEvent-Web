@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import FormsData from "./FormsData";
 export default function TransactionTypeVariDes({list}){
+
     const [transactionTypeVariant , setTransactionTypeVariant] = useState(list[0]);
     const handleClick = (val) => {
         setTransactionTypeVariant(val)

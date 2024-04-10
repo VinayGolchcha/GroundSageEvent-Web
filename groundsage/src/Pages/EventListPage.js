@@ -44,6 +44,7 @@ export default function EventListPage() {
       eventType: "FOOD EVENT",
       eventDes: "Celebration with different cuisines from different regions...",
       isSelected: false,
+      isSelected: false,
     },
     {
       date: "13th April 2024 - 13th Jun 2024",
@@ -55,6 +56,7 @@ export default function EventListPage() {
   const [endpoint, setEndpoint] = useState(3);
   const [allselect, setAllselect] = useState(false);
   const [select, setSelect] = useState(false);
+  const [eventListLength, setEventListLength] = useState("Show More...");
 
   const handleAllChange = () => {
     const newEventList = eventList.map((item) => ({
@@ -66,7 +68,13 @@ export default function EventListPage() {
   };
 
   const handleClick = () => {
-    setEndpoint(eventList.length);
+    if(eventListLength === "Show More..."){
+      setEndpoint(eventList.length);
+      setEventListLength("Show Less...");
+    }else if(eventListLength === "Show Less..."){
+      setEndpoint(3);
+      setEventListLength("Show More...");
+    }
   };
 
   const handleCheckboxChange = (index) => {
@@ -92,6 +100,7 @@ export default function EventListPage() {
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
         // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
+        minHeight: "100vh",
         minHeight: "100vh",
       }}
     >
@@ -304,7 +313,7 @@ export default function EventListPage() {
           }}
           onClick={handleClick}
         >
-          Show more....
+          {eventListLength}
         </Typography>
       )}
     </Box>
