@@ -5,9 +5,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
+import Avatar from '@mui/material/Avatar'; 
+
 const ProfileTeam = () => {
-   
+        
   return (
     <div>
 
@@ -40,14 +41,14 @@ const ProfileTeam = () => {
       alignItems="center"
       gap={4}
       p={2}
-      sx={{ border: '2px solid grey',marginLeft:'360px',display:'flex'}}
+      sx={{ border: '2px solid grey',marginLeft:'360px',display:'flex',backgroundColor:'rgb(125, 144, 136)'}}
     >
      <Typography component="div" variant="h5"style={{
-            color:"white",display:'block',marginLeft:'35px'}}>
+            color:"white",display:'block',marginLeft:'45px'}}>
              <b>3</b>
            <Typography variant="subtitle1" color="text.secondary" 
           style={{
-            color:"grey"}}>
+            color:"white",marginLeft:'-15px'}}>
              Teams</Typography>
              </Typography>
           
@@ -62,23 +63,32 @@ const ProfileTeam = () => {
       alignItems="center"
       gap={4}
       p={2}
-      sx={{ border: '2px solid grey',marginLeft:'80px',display:'flex',flexDirection:'row'}}
+      sx={{ border: '2px solid grey',marginLeft:'80px',display:'flex',flexDirection:'row',backgroundColor:'rgb(125, 144, 136)'}}
     >
        <Typography component="div" variant="h5"style={{
-            color:"white",display:'block',marginLeft:'35px'}}>
+            color:"white",display:'block',marginLeft:'45px'}}>
              <b>6</b>
            <Typography variant="subtitle1" color="text.secondary" 
           style={{
-            color:"grey"}}>
+            color:"white",marginLeft:'-15px'}}>
              Events</Typography>
              </Typography>
           </Box>
           <div className='jointeam'>
-          <img src='../../Images/Oval 4.png' alt='add'
-          style={{marginLeft:'180px',width:"60px",height:'60px',marginTop:'30px'}} >
-            
-          </img>
+         <Box
+         style={{  backgroundColor: "rgb(247, 230, 173)",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+          borderRadius: "100px", // Adjust the border radius as needed
+          marginTop:"20px" ,
+          padding: "20px",
+          marginLeft:'140px'}}>
+<img src='../../Images/join_group.png' ></img>
 
+             </Box>
+             <Typography variant="subtitle1" color="text.secondary" 
+          style={{
+            color:"grey",marginLeft:'140px'}}>
+             Join team</Typography>
         </div>
         
           </div>

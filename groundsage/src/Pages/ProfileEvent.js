@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from "../Component/Navbar"
 import SidBar from "../Component/Sidbar"
 import Typography from '@mui/material/Typography';
@@ -8,8 +8,25 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Image1 from "../Component/confetti 1.png"
 
-const ProfileEvent = () => {
-
+const ProfileEvent = ({}) => {
+  const[count,setCount]=useState(0);
+  const box = [
+    {
+      id: "Event Name",
+      date: "14 april-20april",
+      imageSrc: "../Component/confetti 1.png",
+    },
+    {
+      id: "Event Name",
+      date: "14 april-20april",
+      imageSrc: "../Component/confetti 1.png",
+    },
+    {
+      id: "Event Name",
+      date: "14 april-20april",
+      imageSrc: "../Component/confetti 1.png",
+    },
+  ];
  
 
   return (
@@ -39,7 +56,7 @@ const ProfileEvent = () => {
        
     </div>
   
-   <div className='right' style={{width:'50%',float:'left',boxSizing:'border-box',display:'f'}}>
+   <div className='right' style={{width:'100%',boxSizing:'border-box',display:'f'}}>
    <div className='card1'>
     <Card sx={{ display: 'flex',width:"726px",
     marginLeft:'320px',
@@ -176,8 +193,10 @@ const ProfileEvent = () => {
     </div>
  </div>
     </div>
-    <Typography component="div" variant="subtitle1" 
-    style={{color:'rgb(216, 217, 217)',textAlign:'center',marginTop:'30px'}}>Show More...</Typography>
+   
+    <Typography component="div" variant="subtitle1"  onClick={()=>setCount(prev=>prev+1 )}
+    style={{color:'rgb(216, 217, 217)',textAlign:'center',marginTop:'30px'}}>Show More...
+    </Typography>
     </div>
   
   )
