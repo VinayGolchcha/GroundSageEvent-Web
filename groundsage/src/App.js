@@ -10,6 +10,9 @@ import { Routes, Route } from "react-router-dom";
 import Profile from "./Pages/Profile";
 import DescriptionPage from "./Pages/DescriptionPage";
 import ReferralCodePage from "./Pages/ReferralCodePage";
+import TransactionPage from "./Pages/TransactionPage";
+import RentalAgreementPage from "./Pages/RentalAgreementPage";
+import EventListPage from "./Pages/EventListPage";
 import Popup from "./Component/Popup";
 
 const App = () => {
@@ -25,6 +28,9 @@ const App = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/description" element={<DescriptionPage />} />
       <Route path="/refferalcode" element={<ReferralCodePage />} />
+      <Route path="/transaction" element={<TransactionPage />} />
+      <Route path="/rental-agreement" element={<RentalAgreementPage />} />
+      <Route path="/eventlist" element={<EventListPage />} />
     </Routes>
   );
 };
