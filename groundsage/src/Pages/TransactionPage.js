@@ -5,8 +5,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import ShopRental from "../Component/Transaction/ShopRental";
-import Others from "../Component/Transaction/Others";
 import TransactionTypeVari from "../Component/Transaction/TransactionTypeVari";
 
 export default function TransactionPage() {
@@ -22,10 +20,12 @@ export default function TransactionPage() {
   const [transactions, setTransactions] = useState([{
     type: "expense",
     vari: "outlined",
+    list : ["Shop Rental" , "Others"]
   },
   {
     type: "income",
     vari: "contained",
+    list : ["Staff Salary" , "Others"]
   }]);
   
   const handleButtonChange = (index) => {

@@ -11,15 +11,12 @@ import { useState } from "react";
 export default function RentalAgreementPage() {
     const [openCalendar1, setOpenCalendar1] = useState(false);
     const [openCalendar2, setOpenCalendar2] = useState(false);
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        // Handle the selected file here
-        console.log('Selected file:', file);
-    };
+    const [file , setFIle] = useState();
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         // Handle the uploaded file
         console.log(file);
+        setFIle(file);
       };
     
     return (
@@ -55,7 +52,17 @@ export default function RentalAgreementPage() {
                 },
                 width : "100%",
                 margin : "10px 0px "
-            }}id="standard-basic" label="name" variant="standard" />
+            }}
+            InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
+            id="standard-basic" label="name" variant="standard" />
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color : "rgb(255, 255, 255)"
@@ -74,7 +81,17 @@ export default function RentalAgreementPage() {
                 },
                 width : "100%",
                 margin : "10px 0px "
-            }}id="standard-basic" label="phone number" variant="standard" />
+            }}
+            InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
+            id="standard-basic" label="phone number" variant="standard" />
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color : "rgb(255, 255, 255)"
@@ -93,7 +110,17 @@ export default function RentalAgreementPage() {
                 },
                 width : "100%",
                 margin : "10px 0px "
-            }}id="standard-basic" label="email" variant="standard" />
+            }}id="standard-basic" 
+            InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
+            label="email" variant="standard" />
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color : "rgb(255, 255, 255)"
@@ -112,12 +139,23 @@ export default function RentalAgreementPage() {
                 },
                 width : "100%",
                 margin : "10px 0px "
-            }}id="standard-basic" label="address" variant="standard" />
+            }}
+            InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
+            id="standard-basic" label="address" variant="standard" />
             
     <TextField
         id="upload-text"
         label="Upload an image"
         variant="standard"
+        value={file && file.name}
         sx = {{
             "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                 color : "rgb(255, 255, 255)"
@@ -138,6 +176,9 @@ export default function RentalAgreementPage() {
             margin : "10px 0px "
         }}
         InputProps={{
+            style: {
+                color: "rgb(255, 255, 255)",
+              },
           endAdornment: (
             <IconButton
               edge="end"
@@ -178,7 +219,17 @@ export default function RentalAgreementPage() {
                 },
                 width : "100%",
                 margin : "10px 0px "
-            }}id="standard-basic" label="amount" variant="standard" />
+            }}
+            InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
+            id="standard-basic" label="amount" variant="standard" />
             {/* <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color : "rgb(255, 255, 255)"

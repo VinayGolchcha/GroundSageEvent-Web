@@ -23,6 +23,15 @@ export default function Others() {
                 width: "100%",
                 margin: "10px 0px ",
               }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
               id="standard-basic"
               label="add item"
               variant="standard"
@@ -47,6 +56,15 @@ export default function Others() {
                 width: "70%",
                 margin: "10px 0px ",
               }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
               id="standard-basic"
               label="decided amount"
               variant="standard"
@@ -71,6 +89,15 @@ export default function Others() {
                 width: "70%",
                 margin: "10px 0px ",
               }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
               id="standard-basic"
               label="entered amount"
               variant="standard"
@@ -95,6 +122,15 @@ export default function Others() {
                 width: "70%",
                 margin: "10px 0px ",
               }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
               id="standard-basic"
               label="outstanding amount (if any)"
               variant="standard"
@@ -119,6 +155,15 @@ export default function Others() {
                 width: "100%",
                 margin: "10px 0px ",
               }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+              style: {
+                color: "white",
+              },}}
               id="standard-basic"
               label="remarks"
               variant="standard"
