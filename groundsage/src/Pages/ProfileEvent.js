@@ -1,0 +1,264 @@
+import React from "react";
+import Navbar from "../Component/Navbar";
+import SidBar from "../Component/Sidbar";
+import Typography from "@mui/material/Typography";
+
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Image1 from "../Component/confetti 1.png";
+
+const ProfileEvent = () => {
+  return (
+    <div style={{ backgroundColor: "rgb(66, 92, 90)" }}>
+      <div
+        className="page"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <div className="left"></div>
+
+        <div
+          className="right"
+          style={{
+            width: "50%",
+            float: "left",
+            boxSizing: "border-box",
+            display: "f",
+          }}
+        >
+          <div className="card1">
+            <Card
+              sx={{
+                display: "flex",
+                width: "726px",
+                marginLeft: "320px",
+                marginTop: "22px",
+                backgroundColor: "rgb(66, 92, 90)",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <img
+                  src={Image1}
+                  style={{
+                    width: "90px",
+                    marginTop: "20px",
+                    marginLeft: "20px",
+                    marginBottom: "10px",
+                  }}
+                />
+                <Typography
+                  component="div"
+                  variant="h5"
+                  style={{
+                    color: "white",
+                    display: "block",
+                    marginLeft: "100px",
+                    marginTop: "30px",
+                  }}
+                >
+                  EVENT SECOND NAME
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    13th April 2024 - 13th June 2024
+                  </Typography>
+                </Typography>
+
+                <CardContent sx={{ flex: "1 0 auto" }}></CardContent>
+              </Box>
+            </Card>
+          </div>
+        </div>
+        <div
+          className="right"
+          style={{
+            width: "50%",
+            float: "left",
+            boxSizing: "border-box",
+            display: "f",
+          }}
+        >
+          <div className="card1">
+            <Card
+              sx={{
+                display: "flex",
+                width: "726px",
+                marginLeft: "320px",
+                marginTop: "22px",
+                backgroundColor: "rgb(66, 92, 90)",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <img
+                  src={Image1}
+                  style={{
+                    width: "90px",
+                    marginTop: "20px",
+                    marginLeft: "20px",
+                    marginBottom: "10px",
+                  }}
+                />
+                <Typography
+                  component="div"
+                  variant="h5"
+                  style={{
+                    color: "white",
+                    display: "block",
+                    marginLeft: "100px",
+                    marginTop: "30px",
+                  }}
+                >
+                  EVENT SECOND NAME
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    13th April 2024 - 13th June 2024
+                  </Typography>
+                </Typography>
+
+                <CardContent sx={{ flex: "1 0 auto" }}></CardContent>
+              </Box>
+            </Card>
+          </div>
+        </div>
+        <div
+          className="right"
+          style={{
+            width: "50%",
+            float: "left",
+            boxSizing: "border-box",
+            display: "f",
+          }}
+        >
+          <div className="card1">
+            <Card
+              sx={{
+                display: "flex",
+                width: "726px",
+                marginLeft: "320px",
+                marginTop: "22px",
+                backgroundColor: "rgb(66, 92, 90)",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <img
+                  src={Image1}
+                  style={{
+                    width: "90px",
+                    marginTop: "20px",
+                    marginLeft: "20px",
+                    marginBottom: "10px",
+                  }}
+                />
+                <Typography
+                  component="div"
+                  variant="h5"
+                  style={{
+                    color: "white",
+                    display: "block",
+                    marginLeft: "100px",
+                    marginTop: "30px",
+                  }}
+                >
+                  EVENT SECOND NAME
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    13th April 2024 - 13th June 2024
+                  </Typography>
+                </Typography>
+
+                <CardContent sx={{ flex: "1 0 auto" }}></CardContent>
+              </Box>
+            </Card>
+          </div>
+        </div>
+        <div
+          className="right"
+          style={{
+            width: "50%",
+            float: "left",
+            boxSizing: "border-box",
+            display: "f",
+          }}
+        >
+          <div className="card1">
+            <Card
+              sx={{
+                display: "flex",
+                width: "726px",
+                marginLeft: "320px",
+                marginTop: "22px",
+                backgroundColor: "rgb(66, 92, 90)",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <img
+                  src={Image1}
+                  style={{
+                    width: "90px",
+                    marginTop: "20px",
+                    marginLeft: "20px",
+                    marginBottom: "10px",
+                  }}
+                />
+                <Typography
+                  component="div"
+                  variant="h5"
+                  style={{
+                    color: "white",
+                    display: "block",
+                    marginLeft: "100px",
+                    marginTop: "30px",
+                  }}
+                >
+                  EVENT SECOND NAME
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    13th April 2024 - 13th June 2024
+                  </Typography>
+                </Typography>
+
+                <CardContent sx={{ flex: "1 0 auto" }}></CardContent>
+              </Box>
+            </Card>
+          </div>
+        </div>
+      </div>
+      <Typography
+        component="div"
+        variant="subtitle1"
+        style={{
+          color: "rgb(216, 217, 217)",
+          textAlign: "center",
+          marginTop: "30px",
+        }}
+      >
+        Show More...
+      </Typography>
+    </div>
+  );
+};
+
+export default ProfileEvent;

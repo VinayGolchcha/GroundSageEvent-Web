@@ -140,7 +140,7 @@ const ShopListing = () => {
               }}
               onClick={() => handleDomClick(dom)}
             >
-              Dom {dom}
+              dom {dom}
             </Button>
           ))}
         </Box>
