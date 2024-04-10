@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Box, Button } from "@mui/material";
 
-const Sidbar = ({ onItemClick }) => {
+const Sidbar = ({ onItemClick,activeContent }) => {
   const [content, setContent] = useState(""); // State to track current content
 
   const buttons = [
@@ -51,6 +51,10 @@ const Sidbar = ({ onItemClick }) => {
               display: "flex",
               alignItems: "center",
               flexDirection: "column",
+              textDecoration:
+              activeContent === button.id
+                          ? "underline rgb(247, 230, 173)"
+                          : "none",
             }}
             onClick={() => onItemClick(button.id)}
           >

@@ -31,7 +31,7 @@ const ProfileEvent = () => {
               sx={{
                 display: "flex",
                 width: "726px",
-                marginLeft: "320px",
+                marginLeft: "320px",  
                 marginTop: "22px",
                 backgroundColor: "rgb(66, 92, 90)",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
@@ -252,7 +252,8 @@ const ProfileEvent = () => {
         style={{
           color: "rgb(216, 217, 217)",
           textAlign: "center",
-          marginTop: "30px",
+          marginTop: "20px",
+          textAlign:"center"
         }}
       >
         Show More...

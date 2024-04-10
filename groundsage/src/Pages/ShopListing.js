@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Typography, Box, Button } from "@mui/material";
-import ShowDescription from "../Component/Navbar";
-import ShopDescription from "../Component/Navbar";
 import Footer from "../Component/Footer";
 import { useNavigate } from "react-router-dom";
-import Slider from "../Component/Slider";
+// import Slider from "../Component/Slider";
 const ShopListing = () => {
   const [filter, setFilter] = useState("all");
   const [showMore, setShowMore] = useState(false);
@@ -13,9 +11,9 @@ const ShopListing = () => {
 
   const navigate = useNavigate();
 
-  const handleCardClick = (shopIndex) => {
-    // Redirect to description page with shop index as parameter
-    navigate(`/shop-description/${shopIndex}`);
+  const handleCardClick = (shopIndex, shopDetails) => {
+    // Redirect to description page with shop index and details as route state
+    navigate(`/description/${shopIndex}`, { state: { shopDetails } });
   };
 
   const Doms = ["A", "B", "C", "D", "E", "F"];
@@ -95,7 +93,6 @@ const ShopListing = () => {
 
   return (
     <div>
-      <ShopDescription />
       <div
         style={{
           background: "rgb(66, 92, 90)",
@@ -103,6 +100,15 @@ const ShopListing = () => {
           boxShadow: "0px 4px 6px rgba(255, 251, 251, 0.11)", // Adding outside shadow
         }}
       >
+        {/* <div style={{display:"flex"}}> */}
+        <img
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        style={{ cursor: "pointer", width: "45px", margin: "10px 0px 0px 20px" }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -110,12 +116,13 @@ const ShopListing = () => {
             fontSize: "56px",
             fontFamily: "Inter",
             fontWeight: "700",
-            paddingTop: "10px",
+            marginTop: "-40px",
             textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           }}
         >
           Shops List
         </Typography>
+        {/* </div> */}
         <Box
           sx={{
             display: "flex",
@@ -140,7 +147,7 @@ const ShopListing = () => {
               }}
               onClick={() => handleDomClick(dom)}
             >
-              dom {dom}
+              dome {dom}
             </Button>
           ))}
         </Box>
@@ -243,7 +250,7 @@ const ShopListing = () => {
             {filteredShops.slice(0, displayCount).map((shop, index) => (
               <div
                 key={index}
-                onClick={() => handleCardClick(index)} // Redirect to description page on card click
+                onClick={() => handleCardClick(index, filteredShops)} // Redirect to description page on card click
                 style={{
                   // width: "calc(33.33% - 20px)",
                   // padding:"20px",
@@ -270,29 +277,34 @@ const ShopListing = () => {
                     padding: "15px",
                   }}
                 >
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        color: "rgb(24, 49, 47)",
-                        fontSize: "30px",
-                        fontWeight: "700",
-                        fontFamily: "Fira Sans",
-                        letterSpacing: "0px",
-                        lineHeight: "1", // Adjust the line height
-                      }}
-                    >
-                      SHOP
-                    </Typography>
-                    <Typography variant="h6" display="inline" gutterBottom sx={{
-                        color: "rgb(24, 49, 47)",
-                        fontSize: "60px",
-                        fontWeight: "700",
-                        fontFamily: "Fira Sans",
-                        letterSpacing: "0px",
-                        lineHeight: "0.8", // Adjust the line height
-                      }}>
-                      0{index + 1}
-                    </Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      color: "rgb(24, 49, 47)",
+                      fontSize: "30px",
+                      fontWeight: "700",
+                      fontFamily: "Fira Sans",
+                      letterSpacing: "0px",
+                      lineHeight: "1", // Adjust the line height
+                    }}
+                  >
+                    SHOP
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    display="inline"
+                    gutterBottom
+                    sx={{
+                      color: "rgb(24, 49, 47)",
+                      fontSize: "60px",
+                      fontWeight: "700",
+                      fontFamily: "Fira Sans",
+                      letterSpacing: "0px",
+                      lineHeight: "0.8", // Adjust the line height
+                    }}
+                  >
+                    0{index + 1}
+                  </Typography>
                 </div>
                 <div
                   style={{

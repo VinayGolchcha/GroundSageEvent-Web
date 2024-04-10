@@ -6,7 +6,32 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
+import SimplePopup from "../Component/Popup";
+import { useNavigate } from "react-router-dom";
+
 const ProfileTeam = () => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handlePopupOpen = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handlePopupClose = () => {
+    setIsPopupOpen(false);
+  };
+
+  const handleSavePopupData = (data) => {
+    // Save the data (you can perform your save logic here)
+    console.log("Popup data saved:", data);
+
+    // Close the popup
+    handlePopupClose();
+
+    // Navigate back to the profile about page
+    navigate("/profile");
+  };
+
   return (
     <div>
       <div className="profile" style={{ backgroundColor: "rgb(66, 92, 90)" }}>
@@ -85,14 +110,17 @@ const ProfileTeam = () => {
           </Box>
           <div className="jointeam">
             <img
-              src="../../Images/Oval 4.png"
+              src="../../Images/Group 33665.png"
               alt="add"
               style={{
                 marginLeft: "180px",
                 width: "60px",
                 height: "60px",
                 marginTop: "30px",
+                cursor: "pointer",
               }}
+              // onClick={handleOpenPopup} // Add onClick event to open the popup
+              onClick={handlePopupOpen}
             ></img>
           </div>
         </div>
@@ -326,6 +354,13 @@ const ProfileTeam = () => {
       >
         Show More...
       </Typography>
+      {isPopupOpen && (
+        <SimplePopup
+          open={isPopupOpen}
+          onClose={handlePopupClose}
+          onSave={handleSavePopupData}
+        />
+      )}
     </div>
   );
 };
