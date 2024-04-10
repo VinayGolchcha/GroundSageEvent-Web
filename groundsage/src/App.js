@@ -10,20 +10,22 @@ import { Routes, Route } from "react-router-dom";
 import Profile from "./Pages/Profile";
 import DescriptionPage from "./Pages/DescriptionPage";
 import ReferralCodePage from "./Pages/ReferralCodePage";
+import Popup from "./Component/Popup";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<SplashScreenPage />} />
-      <Route path="/signin" element={<SignInPage />} />
-      <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/forgetpassword" element={<ForgetPassword />} />
-      <Route path="/verification" element={<Verification />} />
-      <Route path="/shoplisting" element={<ShopListing />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/description" element={<DescriptionPage />} />
-      <Route path="/refferalcode" element={<ReferralCodePage />} />
-    </Routes>
+    <Popup />
+    // <Routes>
+    //   <Route path="/" element={<SplashScreenPage />} />
+    //   <Route path="/signin" element={<SignInPage />} />
+    //   <Route path="/signup" element={<SignUpPage />} />
+    //   <Route path="/forgetpassword" element={<ForgetPassword />} />
+    //   <Route path="/verification" element={<Verification />} />
+    //   <Route path="/shoplisting" element={<ShopListing />} />
+    //   <Route path="/profile" element={<Profile />} />
+    //   <Route path="/description" element={<DescriptionPage />} />
+    //   <Route path="/refferalcode" element={<ReferralCodePage />} />
+    // </Routes>
   );
 };
 

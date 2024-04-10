@@ -22,7 +22,7 @@ const Profile = () => {
   };
 
   return (
-    <div style={{ background: "rgb(66, 92, 90)", height: "100vh" }}>
+    <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
       <div style={{ flex: 1, paddingLeft: "20px", paddingTop: "20px" }}>
         <Typography
           sx={{
@@ -48,7 +48,7 @@ const Profile = () => {
         <Sidbar onItemClick={(content) => setContent(content)} />
         <Box
           sx={{
-            margin: "3% 0px 0px 15%",
+            // margin: "3% 0px 0px 15%",
             // marginTop:"5%"
           }}
         >

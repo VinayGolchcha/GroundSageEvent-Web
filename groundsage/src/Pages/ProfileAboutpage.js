@@ -18,7 +18,13 @@ const ProfileAboutpage = () => {
     setEmail(event.target.value);
   };
   return (
-    <div>
+    <div
+      style={
+        {
+          margin: "5% 0px 0px 30%",
+        }
+      }
+    >
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
@@ -177,7 +183,7 @@ const ProfileAboutpage = () => {
           component="img"
           src="../../../Images/oval_img@2x.png"
           alt="profile"
-          sx={{ width: "33%" }}
+          sx={{ width: "50%" }}
         />
       </Box>
       <div
