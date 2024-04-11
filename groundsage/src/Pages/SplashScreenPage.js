@@ -10,7 +10,7 @@ const SplashScreenPage = () => {
       style={{
         background: "rgb(66, 92, 90)",
         opacity: 0.9,
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
       <div
@@ -62,7 +62,7 @@ const SplashScreenPage = () => {
               boxShadow: "0px 10px 35px 0px rgb(247, 230, 173)", // Change box shadow on hover
             },
           }}
-          onClick={(() => navigate('/shoplisting'))}
+          onClick={() => navigate("/shops")}
         >
           LET'S START
           <img

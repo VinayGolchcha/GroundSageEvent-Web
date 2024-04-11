@@ -11,8 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 
 const pages = ["Events", "Shops", "Teams", "Transaction", "Notes"];
 const settings = ["Visit Profile", "Logout"];
@@ -20,8 +19,25 @@ const settings = ["Visit Profile", "Logout"];
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [activePage, setActivePage] = React.useState("Shops"); // Default to the first page
+  const [activePage, setActivePage] = React.useState(""); // Default to the first page
   const navigate = useNavigate();
+
+  const location = useLocation();
+  React.useEffect(() => {
+    // Get the path name from the location object
+    const pathName = location.pathname;
+
+    // Find the active page based on the path name
+    const activePage = pages.find(page => pathName.includes(page.toLowerCase()));
+
+    // Set the active page
+    setActivePage(activePage || "");
+  }, [location]);
+
+  // Do not render navbar on the root ("/") route
+  if (location.pathname === "/") {
+    return null;
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -50,16 +66,18 @@ function Navbar() {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Box
-              component="img"
-              src="../../../Images/logo_1 1.png"
-              alt="Right Arrow"
-              sx={{
-                marginRight: "5px",
-                height: "45px",
-                display: { xs: "none", md: "flex" },
-              }} // Adjust margin between image and text
-            />
+            <NavLink to="/" style={{ textDecoration: "none" }}>
+              <Box
+                component="img"
+                src="../../../Images/logo_1 1.png"
+                alt="Right Arrow"
+                sx={{
+                  marginRight: "5px",
+                  height: "45px",
+                  display: { xs: "none", md: "flex" },
+                }} // Adjust margin between image and text
+              />
+            </NavLink>
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -114,27 +132,30 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={() => handlePageClick(page)}
-                  sx={{
-                    my: 2,
-                    display: "block",
-                    justifyContent: "space-around",
-                    width: "150px",
-                    color: activePage === page ? "rgb(247, 230, 173)" : "white",
-                    fontSize: "18px",
-                    fontFamily: "Inter",
-                    fontWeight: activePage === page ? "700" : "500",
-                    textDecoration:
-                      activePage === page
-                        ? "underline rgb(247, 230, 173)"
-                        : "none",
-                    textTransform: "none",
-                  }}
-                >
-                  {page}
-                </Button>
+                <NavLink to={page} style={{ textDecoration: "none" }}>
+                  <Button
+                    key={page}
+                    onClick={() => handlePageClick(page)}
+                    sx={{
+                      my: 2,
+                      display: "block",
+                      justifyContent: "space-around",
+                      width: "150px",
+                      color:
+                        activePage === page ? "rgb(247, 230, 173)" : "white",
+                      fontSize: "18px",
+                      fontFamily: "Inter",
+                      fontWeight: activePage === page ? "700" : "500",
+                      textDecoration:
+                        activePage === page
+                          ? "underline rgb(247, 230, 173)"
+                          : "none",
+                      textTransform: "none",
+                    }}
+                  >
+                    {page}
+                  </Button>
+                </NavLink>
               ))}
             </Box>
 
@@ -192,7 +213,7 @@ function Navbar() {
                           },
                         }}
                         onClick={() => {
-                          (setting==='Visit Profile') && navigate("/Profile");
+                          setting === "Visit Profile" && navigate("/Profile");
                         }}
                       >
                         {setting}

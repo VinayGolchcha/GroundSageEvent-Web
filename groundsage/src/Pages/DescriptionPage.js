@@ -1,15 +1,25 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import MyCarousel from "../Component/Slider";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const DescriptionPage = () => {
+  const navigate = useNavigate();
+  let { shopIndex } = useParams();
+  const location = useLocation();
+  const shopDetails = location.state && location.state.shopDetails;
+
+  const selectedShop = shopDetails[shopIndex];
+  console.log(selectedShop);
+
   const rows = [
-    { label: "Shop Number :", value: "01" },
+    { label: "Shop Number :", value: `${parseInt(shopIndex) + 1}` },
     { label: "Shop DESCRIPTION :", value: "Small shop" },
     { label: "Shop Area :", value: "1200 sq." },
     { label: "Rent:", value: "10k / month" },
     { label: "Shop Location :", value: "NEar Entrance" },
   ];
+
   return (
     <div
       style={{
@@ -19,6 +29,14 @@ const DescriptionPage = () => {
         overflowY: "auto",
       }}
     >
+      <img
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        style={{ cursor: "pointer", width: "45px", marginLeft: "20px" }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
@@ -26,6 +44,7 @@ const DescriptionPage = () => {
           fontSize: "56px",
           fontFamily: "Inter",
           fontWeight: "700",
+          marginTop: "-30px",
           textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
         }}
       >
@@ -65,7 +84,7 @@ const DescriptionPage = () => {
                   fontSize: "20px",
                   fontFamily: "Poppins",
                   lineHeight: "1.5",
-                  fontWeight:"600"
+                  fontWeight: "600",
                 }}
               >
                 {row.label}
@@ -79,7 +98,7 @@ const DescriptionPage = () => {
                   fontSize: "20px",
                   fontFamily: "Poppins",
                   lineHeight: "1.5",
-                  fontWeight:"600"
+                  fontWeight: "600",
                 }}
               >
                 {row.value}
@@ -106,7 +125,7 @@ const DescriptionPage = () => {
               fontWeight: "700",
               fontSize: "18px",
               margin: "5px 20px 0px 60px",
-              textTransform:"uppercase"
+              textTransform: "uppercase",
               // fontFamily:"Roboto"
             }}
           >
@@ -129,6 +148,14 @@ const DescriptionPage = () => {
             background: "rgb(247, 230, 173)",
             marginTop: "20px",
             marginBottom: "5px",
+            "&:hover": {
+              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+              color: "rgb(50, 50, 50)", // Change text color on hover
+              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+            },
+          }}
+          onClick={() => {
+            navigate("/rental-agreement");
           }}
         >
           Go to Rental

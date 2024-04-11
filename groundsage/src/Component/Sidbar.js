@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Box, Button } from "@mui/material";
 
-const Sidbar = ({ onItemClick }) => {
+const Sidbar = ({ onItemClick,activeContent }) => {
   const [content, setContent] = useState(""); // State to track current content
 
   const buttons = [
@@ -27,8 +27,10 @@ const Sidbar = ({ onItemClick }) => {
       <Box
         sx={{
           position: "fixed",
-          top: "60%",
-          transform: "translateY(-50%)",
+          // top: "50%",
+          // transform: "translateY(-50%)",
+          // top: "60%",
+          // transform: "translateY(-50%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
@@ -45,17 +47,21 @@ const Sidbar = ({ onItemClick }) => {
             key={index}
             color="primary"
             sx={{
-              marginBottom: "25px",
+              marginBottom: "30px",
               display: "flex",
               alignItems: "center",
               flexDirection: "column",
+              textDecoration:
+              activeContent === button.id
+                          ? "underline rgb(247, 230, 173)"
+                          : "none",
             }}
             onClick={() => onItemClick(button.id)}
           >
             <img
               src={button.imageSrc}
               alt={button.content.toLowerCase()}
-              style={{ margin: "4px 0px 10px 0px", width: "95%" }}
+              style={{ margin: "4px 0px 10px 0px", width: "100%" }}
             />
             {button.content.split("\n").map((line, i) => (
               <Typography
