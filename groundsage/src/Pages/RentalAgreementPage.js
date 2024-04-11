@@ -36,7 +36,9 @@ export default function RentalAgreementPage() {
             <Typography variant="h3" sx={{
                 color : "rgb(247, 230, 173)",
                 textAlign : "center", 
-                padding : "20px 0px"
+                padding : "20px 0px",
+                fontWeight : "600",
+                textShadow: "0 6px rgba(81,67,21,0.8)"
             }}>Rental Agreement</Typography>
             <Box sx={{display : "flex" , justifyContent : "center" , margin : "10px 0px", alignItems : "center"}}>
                <img src="Rectangle-4242.png" alt="Shop Image" style={{border : "20px solid rgb(78, 101, 100)" , borderRadius: "10px" , position : "relative" , width : "70%"}}/>

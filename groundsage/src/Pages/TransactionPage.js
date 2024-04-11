@@ -47,7 +47,8 @@ export default function TransactionPage() {
           color: "rgb(247, 230, 173)",
           textAlign: "center",
           padding: "20px 0px",
-          fontWeight : "600", fontFamily : "inter"
+          fontWeight : "600", fontFamily : "inter",
+          textShadow: "0 6px rgba(81,67,21,0.8)"
         }}
       >
         Transactions

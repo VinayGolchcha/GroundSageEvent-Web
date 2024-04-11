@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
+import Checkbox from '@mui/joy/Checkbox';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
 
@@ -123,6 +123,7 @@ export default function EventListPage() {
             // padding: "30px",
             marginTop: "-20px",
             fontFamily: "Outfit",
+            textShadow: "0 6px rgba(81,67,21,0.8)"
           }}
         >
           All Events
@@ -141,24 +142,31 @@ export default function EventListPage() {
             <FormControlLabel
               label="Select All"
               control={
-                <Checkbox checked={allselect} onChange={handleAllChange} />
+                <Checkbox sx={{marginRight : "8px"}} variant="outlined" color="neutral" checked={allselect} onChange={handleAllChange} />
               }
               sx={{
                 color: "rgb(216, 217, 217)",
                 marginLeft: "0px",
                 fontFamily: "Poppins",
+                "& .css-ahj2mt-MuiTypography-root" : {
+                  fontSize : "1.2rem"
+                  }
               }}
+              
             />
           ) : (
             <FormControlLabel
               label="Select"
               control={
-                <Checkbox checked={select} onChange={handleSelectChange} />
+                <Checkbox sx={{marginRight : "8px"}} variant="outlined" color="neutral" checked={select} onChange={handleSelectChange} />
               }
               sx={{
                 color: "rgb(216, 217, 217)",
                 marginLeft: "0px",
                 fontFamily: "Poppins",
+                "& .css-ahj2mt-MuiTypography-root" : {
+                fontSize : "1.2rem"
+                }
               }}
             />
           )}
@@ -208,6 +216,8 @@ export default function EventListPage() {
               >
                 {select === true && (
                   <Checkbox
+                    variant="outlined" 
+                    color="neutral"
                     checked={item.isSelected}
                     onChange={() => handleCheckboxChange(index)}
                     inputProps={{ "aria-label": "controlled" }}
