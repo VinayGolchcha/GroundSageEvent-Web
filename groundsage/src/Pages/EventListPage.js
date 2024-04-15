@@ -9,7 +9,7 @@ export default function EventListPage() {
 
   const [eventList, setEventList] = useState([
     {
-      date: "13th April 2024 - 13th Jun 2024",
+      date: "16th April 2024 - 13th Jun 2024",
       eventType: "FOOD EVENT",
       eventDes: "Celebration with different cuisines from different regions...",
       isSelected: false,
