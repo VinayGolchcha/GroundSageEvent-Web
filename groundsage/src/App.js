@@ -13,7 +13,6 @@ import TransactionPage from "./Pages/TransactionPage";
 import RentalAgreementPage from "./Pages/RentalAgreementPage";
 import EventListPage from "./Pages/EventListPage";
 import Navbar from "./Component/Navbar";
-
 const App = () => {
   return (
     // <Popup />

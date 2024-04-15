@@ -1,16 +1,71 @@
 import React, { useState } from "react";
 import Navbar from "../Component/Navbar";
 import SidBar from "../Component/Sidbar";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
 import SimplePopup from "../Component/Popup";
 import { useNavigate } from "react-router-dom";
 
 const ProfileTeam = () => {
+    const [count, setCount] = useState(0)
+    const[members,setmembers]=useState(0)
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
+  const [eventList, setEventList] = useState([
+    {
+
+      eventType: "FOOD EVENT ",
+     
+    },
+    {
+      eventType: "FOOD EVENT 1",
+
+    
+    },
+    {
+
+      eventType: "FOOD EVENT 2",
+      
+    },
+    {
+    
+      eventType: "FOOD EVENT 3",
+   
+    },
+
+    {
+
+      eventType: "FOOD EVENT 4",
+      
+    },
+    {
+      eventType: "FOOD EVENT 5",
+     
+    },
+    {
+      eventType: "FOOD EVENT 6",
+    
+    },
+  ]);
+  
+  const [endpoint, setEndpoint] = useState(4);
+
+  const [eventListLength, setEventListLength] = useState("Show More...");
+
+
+
+  const handleClick = () => {
+    if(eventListLength === "Show More..."){
+      setEndpoint(eventList.length);
+      setEventListLength("Show Less...");
+    }else if(eventListLength === "Show Less..."){
+      setEndpoint(3);
+      setEventListLength("Show More...");
+    }
+  };
+
   const navigate = useNavigate();
 
   const handlePopupOpen = () => {
@@ -30,6 +85,7 @@ const ProfileTeam = () => {
 
     // Navigate back to the profile about page
     navigate("/profile");
+
   };
 
   return (
@@ -48,28 +104,22 @@ const ProfileTeam = () => {
               border: "2px solid grey",
               marginLeft: "360px",
               display: "flex",
+              backgroundColor:'rgb(125, 144, 143)'
             }}
           >
-            <Typography
-              component="div"
-              variant="h5"
-              style={{
-                color: "white",
-                display: "block",
-                marginLeft: "35px",
-              }}
-            >
-              <b>3</b>
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                style={{
-                  color: "grey",
-                }}
-              >
-                Teams
-              </Typography>
-            </Typography>
+            <Typography onClick={() => setmembers((members) => members + 1)}
+             component="div"
+              variant="h6"
+            style={{color:'white',
+            justifyContent:'center',
+            marginLeft:'50px',
+            cursor:'pointer',
+           }}>
+           {members}
+           <br></br>
+           <Typography style={{marginLeft:'-16px',color:'rgb(174, 174, 174)'}}>Teams</Typography>
+        </Typography>
+        
           </Box>
 
           <Box
@@ -85,27 +135,24 @@ const ProfileTeam = () => {
               marginLeft: "80px",
               display: "flex",
               flexDirection: "row",
+              backgroundColor:'rgb(125, 144, 143)',
             }}
           >
-            <Typography
+            <Typography onClick={() => setCount((count) => count + 1)}
               component="div"
-              variant="h5"
+              variant="h6"
               style={{
                 color: "white",
                 display: "block",
-                marginLeft: "35px",
+                cursor:'pointer',
+                marginLeft:'50px'
               }}
             >
-              <b>6</b>
-              <Typography
-                variant="subtitle1"
-                color="text.secondary"
-                style={{
-                  color: "grey",
-                }}
-              >
-                Events
-              </Typography>
+            {count}
+            <br></br>
+         <Typography style={{marginLeft:'-16px',color:'rgb(174, 174, 174)'}}>Events</Typography>   
+              
+
             </Typography>
           </Box>
           <div className="jointeam">
@@ -122,6 +169,12 @@ const ProfileTeam = () => {
               // onClick={handleOpenPopup} // Add onClick event to open the popup
               onClick={handlePopupOpen}
             ></img>
+        <Typography
+        style={{marginLeft:'180px',
+        color:'rgb(174, 174, 174)',
+        cursor:'pointer'}}
+        onClick={handlePopupOpen}>
+        join team</Typography>
           </div>
         </div>
         <Typography
@@ -142,218 +195,90 @@ const ProfileTeam = () => {
           backgroundColor: "rgb(66, 92, 90)",
         }}
       >
-        <div className="card1" style={{ backgroundColor: "rgb(66, 92, 90)" }}>
-          <Card
+       <Box
+      sx={{
+        backgroundColor: "rgb(66, 92, 90)",
+        // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
+        minHeight: "30vh",
+        
+        marginLeft:"130px"
+      }}
+    >
+     
+      
+      {eventList.slice(0, endpoint).map((item, index) => {
+        return (
+          <Box
+            key={index}
             sx={{
-              display: "flex",
-              width: "726px",
-              marginLeft: "320px",
-              marginTop: "22px",
               backgroundColor: "rgb(66, 92, 90)",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 1.2)",
+              margin: "2%",
+              border: "2px solid rgba(0, 0, 0, 0.16)",
+              borderRadius: "10px",
+              padding: "15px",
+              display: "flex",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+              marginLeft:'150px',
+              width:'749px',
+              height:'85px'
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                component="div"
-                variant="h5"
-                style={{
+            <Box
+              sx={{
+                display: "flex",
+                width:'600px'
+              }}
+            >
+               <Typography
+                sx={{
                   color: "white",
-                  display: "block",
-                  marginLeft: "10px",
-                  padding: "20px",
+                  fontSize: "1.5rem",
+                  fontFamily: "Poppins",
+                   display:'block',
+                   marginLeft:'20px'
                 }}
               >
-                EVENT NAME 1
-                <Typography
-                  variant="subtitle1"
-                  color="text.secondary"
-                  style={{
-                    color: "white",
-                  }}
-                >
-                  members 7
+                {item.eventType}
+                <Typography style={{padding:'5px',fontSize:'1.2rem'}}>
+                    9members
                 </Typography>
               </Typography>
-
-              <CardContent
-                sx={{
-                  flex: "1 0 auto",
-                  marginLeft: "60px",
-                  flexDirection: "row",
-                }}
-              >
-                <Avatar style={{ display: "flex" }}>A</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>F</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>Q</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>H</Avatar>
-              </CardContent>
-
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>M</Avatar>
-              </CardContent>
+              
             </Box>
-          </Card>
-        </div>
-      </div>
-
-      <div
-        className="right"
-        style={{
-          width: "100%",
-          float: "left",
-          boxSizing: "border-box",
-          backgroundColor: "rgb(66, 92, 90)",
-        }}
-      >
-        <div className="card1" style={{ backgroundColor: "rgb(66, 92, 90)" }}>
-          <Card
-            sx={{
-              display: "flex",
-              width: "726px",
-              marginLeft: "320px",
-              marginTop: "22px",
-              backgroundColor: "rgb(66, 92, 90)",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 1.2)",
-            }}
-          >
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                component="div"
-                variant="h5"
-                style={{
-                  color: "white",
-                  display: "block",
-                  marginLeft: "10px",
-                  padding: "20px",
-                }}
-              >
-                EVENT NAME 2
-                <Typography
-                  variant="subtitle1"
-                  color="text.secondary"
-                  style={{
-                    color: "white",
-                  }}
-                >
-                  members 7
-                </Typography>
-              </Typography>
-
-              <CardContent
-                sx={{
-                  flex: "1 0 auto",
-                  marginLeft: "60px",
-                  flexDirection: "row",
-                }}
-              >
-                <Avatar style={{ display: "flex" }}>A</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>F</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>Q</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>H</Avatar>
-              </CardContent>
-
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>M</Avatar>
-              </CardContent>
+            <Box >
+            <Stack direction="row" spacing={2} style={{marginTop:'15px',cursor:'pointer'}}>
+            <Avatar>A</Avatar>
+            <Avatar>B</Avatar>
+            <Avatar>C</Avatar>
+            <Avatar>D</Avatar>
+            <Avatar>E</Avatar>
+            <img src="../../Images/Vector (1).png" alt="dx"
+            style={{width:'8px',height:'8px',marginTop:'20px'}}></img>
+           <img src="../../Images/Vector (1).png" alt="qefvwdf"
+            style={{width:'8px',height:'8px',marginTop:'20px'}}></img>
+           <img src="../../Images/Vector (1).png"alt="wqfw"
+            style={{width:'8px',height:'8px',marginTop:'20px'}}></img>
+            </Stack>
             </Box>
-          </Card>
-        </div>
-      </div>
-
-      <div
-        className="right"
-        style={{
-          width: "100%",
-          float: "left",
-          boxSizing: "border-box",
-          backgroundColor: "rgb(66, 92, 90)",
-        }}
-      >
-        <div className="card1" style={{ backgroundColor: "rgb(66, 92, 90)" }}>
-          <Card
-            sx={{
-              display: "flex",
-              width: "726px",
-              marginLeft: "320px",
-              marginTop: "22px",
-              backgroundColor: "rgb(66, 92, 90)",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 1.2)",
-            }}
-          >
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Typography
-                component="div"
-                variant="h5"
-                style={{
-                  color: "white",
-                  display: "block",
-                  marginLeft: "10px",
-                  padding: "20px",
-                }}
-              >
-                EVENT NAME 3
-                <Typography
-                  variant="subtitle1"
-                  color="text.secondary"
-                  style={{
-                    color: "white",
-                  }}
-                >
-                  members 8
-                </Typography>
-              </Typography>
-
-              <CardContent
-                sx={{
-                  flex: "1 0 auto",
-                  marginLeft: "60px",
-                  flexDirection: "row",
-                }}
-              >
-                <Avatar style={{ display: "flex" }}>A</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>F</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>Q</Avatar>
-              </CardContent>
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>H</Avatar>
-              </CardContent>
-
-              <CardContent sx={{ flex: "1 0 auto", flexDirection: "row" }}>
-                <Avatar style={{ display: "flex" }}>M</Avatar>
-              </CardContent>
-            </Box>
-          </Card>
-        </div>
-      </div>
-      <Typography
-        component="div"
-        variant="subtitle1"
-        style={{
-          color: "rgb(216, 217, 217)",
-          textAlign: "center",
-          paddingTop: "50px",
-          backgroundColor: "rgb(66, 92, 90)",
-        }}
-      >
-        Show More...
-      </Typography>
+          </Box>
+        );
+      })}
+     
+      {eventList.length !== 0 && (
+        <Typography
+          textAlign="center"
+          sx={{
+            color: "rgb(255, 255, 255) ",
+            cursor: "pointer",
+            fontFamily: "Roboto",
+          }}
+          onClick={handleClick}
+        >
+          {eventListLength}
+        </Typography>
+      )}
+    </Box>
+        
       {isPopupOpen && (
         <SimplePopup
           open={isPopupOpen}
@@ -361,6 +286,7 @@ const ProfileTeam = () => {
           onSave={handleSavePopupData}
         />
       )}
+      </div>
     </div>
   );
 };
