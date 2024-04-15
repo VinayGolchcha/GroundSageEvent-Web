@@ -14,7 +14,6 @@ import RentalAgreementPage from "./Pages/RentalAgreementPage";
 import EventListPage from "./Pages/EventListPage";
 import Popup from "./Component/Popup";
 import Navbar from "./Component/Navbar";
-
 const App = () => {
   return (
     // <Popup />
