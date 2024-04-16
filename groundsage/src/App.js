@@ -13,6 +13,7 @@ import TransactionPage from "./Pages/TransactionPage";
 import RentalAgreementPage from "./Pages/RentalAgreementPage";
 import EventListPage from "./Pages/EventListPage";
 import Navbar from "./Component/Navbar";
+import CreateShopPage from "./Pages/CreateShopPage";
 const App = () => {
   return (
     // <Popup />
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/transaction" element={<TransactionPage />} />
         <Route path="/rental-agreement" element={<RentalAgreementPage />} />
         <Route path="/Events" element={<EventListPage />} />
+        <Route path="/creatshop" element={<CreateShopPage/>}/>
       </Routes>
     </div>
   );
