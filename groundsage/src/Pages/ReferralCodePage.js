@@ -48,6 +48,7 @@ const ReferralCodePage = () => {
       style={{
         background: "rgb(66, 92, 90)",
         height: "100vh",
+        overflow:"auto",
         // padding: "20px",
       }}
     >

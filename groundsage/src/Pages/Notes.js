@@ -3,6 +3,9 @@ import { Typography, Box } from "@mui/material";
 import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
   const [eventList, setEventList] = useState([
@@ -60,6 +63,7 @@ const Notes = () => {
   const [select, setSelect] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const navigate = useNavigate();
   const maxItems = 3;
 
   const handleOpenPopup = () => {
@@ -72,18 +76,26 @@ const Notes = () => {
       month: "short",
       year: "numeric",
     });
-  
+
     const newItem = {
       date: formattedDate,
       eventType: newData.field1 || "",
       eventDes: newData.field2 || "",
       isSelected: false,
     };
-  
-    setEventList([...eventList, newItem]);
+
+    setEventList([newItem, ...eventList]);
     setIsPopupOpen(false);
+    toast.success("Note added successfully!", {
+      style: {
+        // Change font color
+        fontSize: "16px", // Change font size
+        fontFamily: "Inter", // Change font family
+        fontWeight: "600", // Change font weight
+        color: "rgb(66, 92, 90)",
+      },
+    }); // Use toast to show success message
   };
-  
 
   const handleAllChange = () => {
     const newEventList = eventList.map((item) => ({
@@ -103,17 +115,6 @@ const Notes = () => {
   //     setEventListLength("Show More...");
   //   }
   // };
-  useEffect(() => {
-    const handleClickOutside = () => {
-      setSelect(false); // Deselect all when clicked outside
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleCheckboxChange = (index) => {
     const newEventList = eventList.map((item, i) => {
@@ -128,6 +129,16 @@ const Notes = () => {
   const handleDelete = () => {
     const newArray = eventList.filter((item) => item.isSelected !== true);
     setEventList(newArray);
+    toast.success("Note Deleted successfully!", {
+      style: {
+        // Change font color
+        fontSize: "16px", // Change font size
+        fontFamily: "Inter", // Change font family
+        fontWeight: "600", // Change font weight
+        color: "rgb(66, 92, 90)",
+      },
+      // Other options like position, autoClose, etc.
+    }); // Use toast to show success message
   };
   const handleSelectChange = () => {
     setSelect(!select);
@@ -137,6 +148,19 @@ const Notes = () => {
   };
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
+      <ToastContainer position="bottom-right" style={{ color: "red" }} />
+      <img
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        style={{
+          cursor: "pointer",
+          width: "45px",
+          margin: "10px 0px 0px 20px",
+        }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
@@ -144,12 +168,13 @@ const Notes = () => {
           fontSize: "56px",
           fontFamily: "Inter",
           fontWeight: "700",
-          //   marginTop: "-30px",
+          marginTop: "-35px",
           textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
         }}
       >
         Notes
       </Typography>
+
       <Box>
         {" "}
         {eventList.length !== 0 && (
@@ -215,7 +240,7 @@ const Notes = () => {
                 <img
                   src="deleteIcon.png"
                   alt="delete Icon"
-                  style={{ padding: "2px", height: "30px" }}
+                  style={{ padding: "2px", height: "30px", cursor: "pointer" }}
                   onClick={handleDelete}
                 />
               ) : (
@@ -223,100 +248,110 @@ const Notes = () => {
                   src="add-icon.png"
                   alt="add-icon"
                   onClick={handleOpenPopup}
+                  style={{ cursor: "pointer" }}
                 />
               )}
             </Box>
           </Box>
         )}
-        {eventList.slice(0, showAll ? eventList.length : maxItems).map((item, index) => {
-          return (
-            <Box
-              key={index}
-              sx={{
-                backgroundColor: "rgb(66, 92, 90)",
-                margin: "2% 18%",
-                border: "2px solid rgba(0, 0, 0, 0.16)",
-                borderRadius: "10px",
-                padding: "15px",
-                display: "flex",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-              }}
-            >
+        {eventList
+          .slice(0, showAll ? eventList.length : maxItems)
+          .map((item, index) => {
+            return (
               <Box
+                key={index}
                 sx={{
+                  backgroundColor: "rgb(66, 92, 90)",
+                  margin: "2% 18%",
+                  border: "2px solid rgba(0, 0, 0, 0.16)",
+                  borderRadius: "10px",
+                  padding: "15px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
                 }}
               >
                 <Box
-                  sx={{ display: "flex", alignItems: "start", height: "100%" }}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
-                  {select === true && (
-                    <Checkbox
-                      variant="outlined"
-                      color="neutral"
-                      checked={item.isSelected}
-                      onChange={() => handleCheckboxChange(index)}
-                      inputProps={{ "aria-label": "controlled" }}
-                    />
-                  )}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center", // Center the checkboxes vertically
+                      justifyContent: "center",
+                    }}
+                  >
+                    {select === true && (
+                      <Checkbox
+                        variant="outlined"
+                        color="neutral"
+                        checked={item.isSelected}
+                        onChange={() => handleCheckboxChange(index)}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    )}
+                  </Box>
                 </Box>
-              </Box>
-              <Box
-                sx={{
-                  background:
-                    "linear-gradient(rgb(65, 93, 91), rgba(115, 135, 135, 0))",
-                //   display: "grid",
-                //   alignItems: "center",
-                  padding: "3px",
-                  marginLeft: "10px",
-                  width: "100%", // Ensure date div takes full width
-
-                }}
-              >
-                <div
-                  style={{ display: "flex", justifyContent: "space-between",width:"100%" }}
+                <Box
+                  sx={{
+                    background:
+                      "linear-gradient(rgb(65, 93, 91), rgba(115, 135, 135, 0))",
+                    //   display: "grid",
+                    //   alignItems: "center",
+                    padding: "3px",
+                    marginLeft: "10px",
+                    width: "100%", // Ensure date div takes full width
+                  }}
                 >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        color: "rgb(216, 217, 217)",
+                        fontWeight: "600",
+                        fontSize: "24px",
+                        fontFamily: "Poppins",
+                      }}
+                    >
+                      {item.eventType}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "rgb(254, 240, 180)",
+                        fontSize: "1.2rem",
+                        fontFamily: "Poppins",
+                        textAlign: "right",
+                        marginTop: "-10px",
+                      }}
+                    >
+                      {item.date}
+                    </Typography>
+                  </div>
                   <Typography
                     sx={{
                       color: "rgb(216, 217, 217)",
-                      fontWeight: "600",
-                      fontSize: "24px",
                       fontFamily: "Poppins",
+                      width: "65%",
                     }}
                   >
-                    {item.eventType}
+                    {item.eventDes}
                   </Typography>
-                  <Typography
-                    sx={{
-                      color: "rgb(254, 240, 180)",
-                      fontSize: "1.2rem",
-                      fontFamily: "Poppins",
-                      textAlign: "right",
-                      marginTop: "-10px",
-                    }}
-                  >
-                    {item.date}
-                  </Typography>
-                </div>
-                <Typography
-                  sx={{
-                    color: "rgb(216, 217, 217)",
-                    fontFamily: "Poppins",
-                    width: "65%",
-                  }}
-                >
-                  {item.eventDes}
-                </Typography>
+                </Box>
               </Box>
-            </Box>
-          );
-        })}
-         {eventList.length > maxItems && (
+            );
+          })}
+        {eventList.length > maxItems && (
           <Typography
             sx={{
-              color: "rgb(247, 230, 173)",
+              color: "white",
               textAlign: "center",
               cursor: "pointer",
               fontSize: "16px",

@@ -161,7 +161,7 @@ const ShopListing = () => {
             variant={activeDom === "all" ? "contained" : "outlined"}
             sx={{
               borderColor: "rgb(247, 230, 173)",
-              width: "170px",
+              width: "175px",
               color: activeDom === "all" ? "rgb(91, 94, 97)" : "white",
               background:
                 activeDom === "all" ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
@@ -181,7 +181,7 @@ const ShopListing = () => {
               variant={dom === activeDom ? "contained" : "outlined"} // Make the button contained if active dom
               sx={{
                 borderColor: "rgb(247, 230, 173)",
-                width: "160px",
+                width: "175px",
                 color: activeDom === dom ? "rgb(91, 94, 97)" : "white",
                 background:
                   activeDom === dom ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button

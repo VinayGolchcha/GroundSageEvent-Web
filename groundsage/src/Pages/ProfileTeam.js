@@ -145,7 +145,7 @@ const ProfileTeam = () => {
                 color: "white",
                 display: "block",
                 cursor:'pointer',
-                marginLeft:'50px'
+                marginLeft:'50px',
               }}
             >
             {count}

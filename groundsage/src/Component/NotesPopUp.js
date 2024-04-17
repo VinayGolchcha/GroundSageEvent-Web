@@ -17,8 +17,8 @@ const AddNotes = ({ open, onClose, onSave }) => {
     });
 
     const newData = {
-      ...data,
       date: formattedDate,
+      ...data,
     };
 
     onSave(newData);
@@ -32,7 +32,7 @@ const AddNotes = ({ open, onClose, onSave }) => {
             background: "rgb(65, 93, 91)",
             padding: "0px 60px 20px 60px",
             position: "relative",
-            borderRadius:"4px"
+            borderRadius: "4px",
           }}
         >
           <img
@@ -53,7 +53,7 @@ const AddNotes = ({ open, onClose, onSave }) => {
               fontSize: "35px",
               marginTop: "10px",
               textAlign: "center",
-              fontFamily:"Aoboshi One"
+              fontFamily: "Aoboshi One",
             }}
           >
             Add Notes
@@ -141,7 +141,7 @@ const AddNotes = ({ open, onClose, onSave }) => {
                 alignItems: "center",
                 borderRadius: "1px",
                 fontSize: "16px",
-                fontFamily:"Poppins",
+                fontFamily: "Poppins",
                 "&:hover": {
                   backgroundColor: "rgb(247, 230, 173)",
                   color: "rgb(50, 50, 50)",
