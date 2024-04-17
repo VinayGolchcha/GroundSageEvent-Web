@@ -14,13 +14,28 @@ const ReferralCodePage = () => {
     "STAFF MEMBER",
   ];
 
+  // const handleCopyClick = () => {
+  //   // Check if there's something to copy
+  //   if (inputValue.trim() !== "") {
+  //     navigator.clipboard
+  //       .writeText(inputValue)
+  //       .then(() => {
+  //         alert(inputValue);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Unable to copy text: ", error);
+  //       });
+  //   }
+  // };
+
   const handleCopyClick = () => {
-    // Check if there's something to copy
-    if (inputValue.trim() !== "") {
+    const textField = document.getElementById("myTextField");
+    // Check if the text field exists and has a value
+    if (textField && textField.value.trim() !== "") {
       navigator.clipboard
-        .writeText(inputValue)
+        .writeText(textField.value)
         .then(() => {
-          alert(inputValue);
+          alert("Copied: " + textField.value);
         })
         .catch((error) => {
           console.error("Unable to copy text: ", error);
@@ -109,7 +124,10 @@ const ReferralCodePage = () => {
               {label}
             </Typography>
             <TextField
+              id="myTextField"
               variant="filled"
+              disabled={true}
+              value="FLAJDKAFD"
               sx={{
                 color: "white",
                 margin: "0px 10px 0px 30px",

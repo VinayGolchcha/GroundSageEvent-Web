@@ -2,88 +2,65 @@ import React, { useState } from "react";
 import Navbar from "../Component/Navbar";
 import SidBar from "../Component/Sidbar";
 
-
 import { Box, Typography } from "@mui/material";
 
-import { useNavigate } from "react-router-dom";
-    
-
 const ProfileEvent = () => {
-
-
   const [eventList, setEventList] = useState([
     {
       date: "13th April 2024 - 13th Jun 2024",
       eventType: "Event First Name",
-     
     },
     {
       date: "13th April 2024 - 13th Jun 2024",
       eventType: "Event Second Name",
-
-    
     },
     {
       date: "13th April 2024 - 13th Jun 2024",
       eventType: "Event Third Name",
-      
     },
     {
       date: "13th April 2024 - 13th Jun 2024",
       eventType: "Event Fourth Name",
-   
     },
 
     {
       date: "13th April 2024 - 13th Jun 2024",
       eventType: "Event Fifth Name",
-      
     },
     {
       date: "13th April 2024 - 13th Jun 2024",
       eventType: "Event Sixth Name",
-     
     },
     {
       date: "13th April 2024 - 13th Jun 2024",
       eventType: "FOOD EVENT",
-    
     },
   ]);
- 
 
   const [endpoint, setEndpoint] = useState(4);
 
   const [eventListLength, setEventListLength] = useState("Show More...");
 
-
-
   const handleClick = () => {
-    if(eventListLength === "Show More..."){
+    if (eventListLength === "Show More...") {
       setEndpoint(eventList.length);
       setEventListLength("Show Less...");
-    }else if(eventListLength === "Show Less..."){
+    } else if (eventListLength === "Show Less...") {
       setEndpoint(4);
       setEventListLength("Show More...");
     }
   };
-
-
-
 
   return (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
         // height: { ...[eventList.length === 0 ? "100vh" : "auto"] }
-        
-        marginLeft:"130px"
+
+        marginLeft: "130px",
       }}
     >
-     
-      
       {eventList.slice(0, endpoint).map((item, index) => {
-        
         return (
           <Box
             key={index}
@@ -100,24 +77,24 @@ const ProfileEvent = () => {
             <Box
               sx={{
                 display: "flex",
-               
+
                 justifyContent: "center",
-                width:'700px'
+                width: "700px",
               }}
             >
-              
-              <img src="confetti-05.png" alt="Confetti" style={{marginLeft:'-100px'}} />
+              <img
+                src="confetti-05.png"
+                alt="Confetti"
+                style={{ marginLeft: "-100px" }}
+              />
             </Box>
             <Box
               sx={{
-               marginRight:'40%',
+                marginRight: "40%",
                 background:
                   "linear-gradient(rgb(65, 93, 91), rgba(115, 135, 135, 0))",
                 display: "grid",
                 alignItems: "center",
-               
-                
-               
               }}
             >
               <Typography
@@ -125,7 +102,7 @@ const ProfileEvent = () => {
                   color: "white",
                   fontSize: "1.0rem",
                   fontFamily: "Poppins",
-                   display:'block'
+                  display: "block",
                 }}
               >
                 {item.eventType}
@@ -138,14 +115,13 @@ const ProfileEvent = () => {
                   fontFamily: "Poppins",
                 }}
               >
-               {item.date} 
+                {item.date}
               </Typography>
-            
             </Box>
           </Box>
         );
       })}
-     
+
       {eventList.length !== 0 && (
         <Typography
           textAlign="center"
@@ -161,10 +137,6 @@ const ProfileEvent = () => {
       )}
     </Box>
   );
-}
- 
-
+};
 
 export default ProfileEvent;
-
-

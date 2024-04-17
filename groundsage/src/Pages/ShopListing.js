@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Box, Button } from "@mui/material";
 import Footer from "../Component/Footer";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ const ShopListing = () => {
   const [filter, setFilter] = useState("all");
   const [showMore, setShowMore] = useState(false);
   const [displayCount, setDisplayCount] = useState(9);
-  const [activeDom, setActiveDom] = useState(""); // State to store active dom
+  const [activeDom, setActiveDom] = useState("all"); // State to store active dom, initially set to "all"
 
   const navigate = useNavigate();
 
@@ -63,12 +63,31 @@ const ShopListing = () => {
     { dom: "D", area: "1200 sq", location: "Near Entrance" },
   ];
 
+  // const filteredShops = shopCards.filter((shop) => {
+  //   if (filter === "all") return true; // Return true for all shops when filter is "all"
+
+  //   if (activeDom && shop.dom !== activeDom) return false;
+  //   // if (filter === "all") return true;
+  //   if (filter === "occupied") return shop.occupied;
+  //   if (filter === "vacant") return !shop.occupied;
+  //   return true;
+  // });
   const filteredShops = shopCards.filter((shop) => {
-    if (activeDom && shop.dom !== activeDom) return false;
-    if (filter === "all") return true;
-    if (filter === "occupied") return shop.occupied;
-    if (filter === "vacant") return !shop.occupied;
-    return true;
+    if (filter === "all") {
+      // If filter is "all", show all shops (vacant and occupied) for the selected dome
+      if (activeDom === "all" || shop.dom === activeDom) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      // If filter is "vacant" or "occupied", filter based on shop occupancy status and selected dome
+      if (activeDom === "all" || shop.dom === activeDom) {
+        return filter === "vacant" ? !shop.occupied : shop.occupied;
+      } else {
+        return false;
+      }
+    }
   });
 
   const handleFilterChange = (filterType) => {
@@ -88,9 +107,12 @@ const ShopListing = () => {
 
   const handleDomClick = (dom) => {
     setActiveDom(dom === activeDom ? "" : dom); // Toggle active dom
-    setFilter("dom"); // Set filter to "dom" to filter shops by dom
+    setFilter(dom === "all" ? "all" : "dom"); // Set filter to "dom" if a dome is clicked, else set to "all"
   };
-
+  useEffect(() => {
+    // Set default filter to "all" when component mounts
+    setFilter("all");
+  }, []);
   return (
     <div>
       <div
@@ -102,13 +124,17 @@ const ShopListing = () => {
       >
         {/* <div style={{display:"flex"}}> */}
         <img
-        src="../../Images/arrow-left.png"
-        alt="Share"
-        style={{ cursor: "pointer", width: "45px", margin: "10px 0px 0px 20px" }}
-        onClick={() => {
-          navigate(-1); // Navigate back by one step in the history stack
-        }}
-      />
+          src="../../Images/arrow-left.png"
+          alt="Share"
+          style={{
+            cursor: "pointer",
+            width: "45px",
+            margin: "10px 0px 0px 20px",
+          }}
+          onClick={() => {
+            navigate(-1); // Navigate back by one step in the history stack
+          }}
+        />
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -130,12 +156,32 @@ const ShopListing = () => {
             margin: "20px",
           }}
         >
+          <Button
+            size="large"
+            variant={activeDom === "all" ? "contained" : "outlined"}
+            sx={{
+              borderColor: "rgb(247, 230, 173)",
+              width: "170px",
+              color: activeDom === "all" ? "rgb(91, 94, 97)" : "white",
+              background:
+                activeDom === "all" ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
+              "&:hover": {
+                color: activeDom === "all" ? "white" : "rgb(91, 94, 97)",
+                background:
+                  activeDom === "all" ? "transparent" : "rgb(247, 230, 173)",
+              },
+            }}
+            onClick={() => activeDom !== "all" && handleDomClick("all")}
+          >
+            All
+          </Button>
           {Doms.map((dom, idx) => (
             <Button
               size="large"
               variant={dom === activeDom ? "contained" : "outlined"} // Make the button contained if active dom
               sx={{
                 borderColor: "rgb(247, 230, 173)",
+                width: "160px",
                 color: activeDom === dom ? "rgb(91, 94, 97)" : "white",
                 background:
                   activeDom === dom ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
@@ -265,7 +311,7 @@ const ShopListing = () => {
                   position: "relative", // Position relative for absolute positioning of elements inside
                   boxShadow: "0px 5px 4px 0px rgba(0, 0, 0, 0.25)", // O
                   borderStyle: "none",
-                  borderRadius: "3px",
+                  borderRadius: "4px",
                 }}
               >
                 <div
