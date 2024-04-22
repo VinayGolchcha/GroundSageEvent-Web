@@ -94,6 +94,9 @@ export default function EventListPage() {
   const handleSelectChange = () => {
     setSelect(!select);
   };
+  const refreshPage = () => {
+    window.location.reload(false);
+  }
 
   return (
     <Box
@@ -112,7 +115,7 @@ export default function EventListPage() {
           navigate(-1); // Navigate back by one step in the history stack
         }}
       />
-      <Box sx={{ backgroundColor: "rgb(66, 92, 90)", display: "flex" }}>
+      <Box sx={{ backgroundColor: "rgb(66, 92, 90)", display: "flex" }} onClick = {refreshPage}>
         <Typography
           variant="h3"
           sx={{
