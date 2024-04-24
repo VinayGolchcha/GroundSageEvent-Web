@@ -15,12 +15,14 @@ import EventListPage from "./Pages/EventListPage";
 import Navbar from "./Component/Navbar";
 import CreateShopPage from "./Pages/CreateShopPage";
 import Notes from "./Pages/Notes";
+import HomePage from "./Pages/HomePage";
 const App = () => {
   return (
     <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<SplashScreenPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
