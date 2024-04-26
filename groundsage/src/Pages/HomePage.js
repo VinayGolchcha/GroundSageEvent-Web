@@ -54,7 +54,7 @@ export default function HomePage() {
         <Typography
           variant="h5"
           color="rgb(254, 240, 180)"
-          sx={{ margin: "0% 18%", marginBottom: "10px" }}
+          sx={{ margin: "0% 18%", marginBottom: "10px" , marginRight : "26%"}}
         >
           {" "}
           Prashant{" "}
@@ -71,8 +71,8 @@ export default function HomePage() {
               <Grid item lg={6} md={6} sm={6} xs={12} key={index}>
                 <Box
                   sx={{
-                    minHeight: "96%",
-                    maxWidth: "93%",
+                    minHeight: "95%",
+                    maxWidth: "70%",
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                     padding: "9px",
                     borderRadius: "8px",
@@ -127,7 +127,7 @@ export default function HomePage() {
                     >
                       {item.event}
                     </Typography>
-                    <Typography sx={{ fontFamily: "Poppins" }}>
+                    <Typography color="rgb(43, 40, 73)" sx={{ fontFamily: "Poppins" }}>
                       {item.description}
                     </Typography>
                   </Box>

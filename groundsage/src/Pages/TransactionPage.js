@@ -19,12 +19,12 @@ export default function TransactionPage() {
     border: "1px solid rgb(254, 240, 180)",
   };
   const [transactions, setTransactions] = useState([{
-    type: "expense",
+    type: "income",
     vari: "outlined",
     list : ["Shop Rental" , "Others"]
   },
   {
-    type: "income",
+    type: "expense",
     vari: "contained",
     list : ["Staff Salary" , "Others"]
   }]);
@@ -75,7 +75,7 @@ export default function TransactionPage() {
       >
         <Button
           variant={
-            transactions[0].type === "expense" ? "outlined" : "contained"
+            transactions[0].type === "income" ? "outlined" : "contained"
           }
           onClick={() => handleButtonChange(0)}
           sx={{
@@ -96,7 +96,7 @@ export default function TransactionPage() {
           EXPENSE
         </Button>
         <Button
-          variant={transactions[1].type === "income" ? "outlined" : "contained"}
+          variant={transactions[1].type === "expense" ? "outlined" : "contained"}
           onClick={() => handleButtonChange(1)}
           sx={{
             ...(transactions[1].vari === "outlined"
