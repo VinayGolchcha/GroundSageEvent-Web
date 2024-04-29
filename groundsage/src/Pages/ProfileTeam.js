@@ -145,7 +145,11 @@ const ProfileTeam = () => {
                 color: "white",
                 display: "block",
                 cursor:'pointer',
+<<<<<<< HEAD
                 marginLeft:'50px'
+=======
+                marginLeft:'50px',
+>>>>>>> 9e2ad9496ce096dc35e442aa378e9a9233ba99dd
               }}
             >
             {count}

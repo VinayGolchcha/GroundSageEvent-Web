@@ -12,11 +12,11 @@ import ReferralCodePage from "./Pages/ReferralCodePage";
 import TransactionPage from "./Pages/TransactionPage";
 import RentalAgreementPage from "./Pages/RentalAgreementPage";
 import EventListPage from "./Pages/EventListPage";
-import Popup from "./Component/Popup";
 import Navbar from "./Component/Navbar";
+import CreateShopPage from "./Pages/CreateShopPage";
+import Notes from "./Pages/Notes";
 const App = () => {
   return (
-    // <Popup />
     <div>
       <Navbar />
       <Routes>
@@ -32,6 +32,8 @@ const App = () => {
         <Route path="/transaction" element={<TransactionPage />} />
         <Route path="/rental-agreement" element={<RentalAgreementPage />} />
         <Route path="/Events" element={<EventListPage />} />
+        <Route path="/creatshop" element={<CreateShopPage/>}/>
+        <Route path="/notes" element={<Notes />} />
       </Routes>
     </div>
   );
