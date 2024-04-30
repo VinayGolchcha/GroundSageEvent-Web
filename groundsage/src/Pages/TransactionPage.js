@@ -30,6 +30,7 @@ export default function TransactionPage() {
   }]);
   
   const handleButtonChange = (index) => {
+    // changing the button style based on the selection 
     const newList = [...transactions];
     if (index === 0) {
       newList[index].vari = "contained";
@@ -117,6 +118,7 @@ export default function TransactionPage() {
           INCOME
         </Button>
       </Box>
+      {/* component for showing the form based on the selected button */}
       <TransactionTypeVari transactions = {transactions}/>
       
     </Box>
