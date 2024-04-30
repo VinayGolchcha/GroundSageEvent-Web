@@ -20,23 +20,23 @@ export default function TransactionPage() {
   };
   const [transactions, setTransactions] = useState([{
     type: "income",
-    vari: "outlined",
+    vari: "contained",
     list : ["Shop Rental" , "Others"]
   },
   {
     type: "expense",
-    vari: "contained",
+    vari: "outlined",
     list : ["Staff Salary" , "Others"]
   }]);
   
   const handleButtonChange = (index) => {
     const newList = [...transactions];
     if (index === 0) {
-      newList[index].vari = "outlined";
-      newList[1].vari = "contained";
+      newList[index].vari = "contained";
+      newList[1].vari = "outlined";
     } else {
-      newList[index].vari = "outlined";
-      newList[0].vari = "contained";
+      newList[index].vari = "contained";
+      newList[0].vari = "outlined";
     }
     setTransactions(newList);
   };
@@ -79,7 +79,7 @@ export default function TransactionPage() {
           }
           onClick={() => handleButtonChange(0)}
           sx={{
-            ...(transactions[0].vari === "outlined"
+            ...(transactions[0].vari === "contained"
               ? {
                   "&:hover": {
                     border: "1px solid rgb(254, 240, 180)",
@@ -99,7 +99,7 @@ export default function TransactionPage() {
           variant={transactions[1].type === "expense" ? "outlined" : "contained"}
           onClick={() => handleButtonChange(1)}
           sx={{
-            ...(transactions[1].vari === "outlined"
+            ...(transactions[1].vari === "contained"
               ? {
                   "&:hover": {
                     border: "1px solid rgb(254, 240, 180)",
