@@ -103,7 +103,7 @@ export default function SaffSalary(){
               },
             }}
               id="standard-basic"
-              label="outstanding amount (if any)"
+              label="balance payable amount"
               variant="standard"
             />
             <TextField

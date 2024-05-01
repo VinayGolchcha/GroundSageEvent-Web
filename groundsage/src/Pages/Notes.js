@@ -70,6 +70,10 @@ const Notes = () => {
     setIsPopupOpen(true);
   };
 
+  const refreshPage = () => {
+    window.location.reload(false);
+  }
+
   const handleSaveNote = (newData) => {
     const formattedDate = new Date().toLocaleDateString("en-US", {
       day: "numeric",
@@ -171,6 +175,7 @@ const Notes = () => {
           marginTop: "-35px",
           textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
         }}
+        onClick= {refreshPage}
       >
         Notes
       </Typography>

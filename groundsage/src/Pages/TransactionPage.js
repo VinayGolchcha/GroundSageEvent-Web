@@ -1,13 +1,14 @@
 import {
   Box,
   Button,
-  Grid,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
 import TransactionTypeVari from "../Component/Transaction/TransactionTypeVari";
+import { useNavigate } from "react-router-dom";
 
 export default function TransactionPage() {
+  const navigate = useNavigate();
   const containedStyle = {
     backgroundColor: "rgb(247, 230, 173)",
     color: "rgb(91, 94, 97)",
@@ -18,28 +19,45 @@ export default function TransactionPage() {
     border: "1px solid rgb(254, 240, 180)",
   };
   const [transactions, setTransactions] = useState([{
-    type: "expense",
-    vari: "outlined",
+    type: "income",
+    vari: "contained",
     list : ["Shop Rental" , "Others"]
   },
   {
-    type: "income",
-    vari: "contained",
+    type: "expense",
+    vari: "outlined",
     list : ["Staff Salary" , "Others"]
   }]);
   
   const handleButtonChange = (index) => {
+    // changing the button style based on the selection 
     const newList = [...transactions];
     if (index === 0) {
-      newList[index].vari = "outlined";
-      newList[1].vari = "contained";
+      newList[index].vari = "contained";
+      newList[1].vari = "outlined";
     } else {
-      newList[index].vari = "outlined";
-      newList[0].vari = "contained";
+      newList[index].vari = "contained";
+      newList[0].vari = "outlined";
     }
     setTransactions(newList);
   };
   return (
+    <Box
+    sx={{
+      backgroundColor: "rgb(66, 92, 90)",
+      // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
+      minHeight: "100vh",
+      minHeight: "100vh",
+    }}
+  >
+    <img
+      src="../../Images/arrow-left.png"
+      alt="Share"
+      style={{ cursor: "pointer", width: "45px", marginLeft: "20px" }}
+      onClick={() => {
+        navigate(-1); // Navigate back by one step in the history stack
+      }}
+    />
     <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
       <Typography
         variant="h3"
@@ -58,18 +76,18 @@ export default function TransactionPage() {
       >
         <Button
           variant={
-            transactions[0].type === "expense" ? "outlined" : "contained"
+            transactions[0].type === "income" ? "outlined" : "contained"
           }
           onClick={() => handleButtonChange(0)}
           sx={{
-            ...(transactions[0].vari === "outlined"
+            ...(transactions[0].vari === "contained"
               ? {
                   "&:hover": {
                     border: "1px solid rgb(254, 240, 180)",
                   },
-                  ...outlinedStyle,
+                  ...containedStyle
                 }
-              : { ...containedStyle }),
+              : { ...outlinedStyle, }),
             margin: "0px 20px",
             height : "60px",
             width : "200px",
@@ -79,17 +97,18 @@ export default function TransactionPage() {
           EXPENSE
         </Button>
         <Button
-          variant={transactions[1].type === "income" ? "outlined" : "contained"}
+          variant={transactions[1].type === "expense" ? "outlined" : "contained"}
           onClick={() => handleButtonChange(1)}
           sx={{
-            ...(transactions[1].vari === "outlined"
+            ...(transactions[1].vari === "contained"
               ? {
                   "&:hover": {
                     border: "1px solid rgb(254, 240, 180)",
                   },
-                  ...outlinedStyle,
+                  ...containedStyle
+
                 }
-              : { ...containedStyle }),
+              : { ...outlinedStyle }),
             margin: "0px 20px",
             height : "60px",
             width : "200px",
@@ -99,8 +118,10 @@ export default function TransactionPage() {
           INCOME
         </Button>
       </Box>
+      {/* component for showing the form based on the selected button */}
       <TransactionTypeVari transactions = {transactions}/>
       
+    </Box>
     </Box>
   );
 }

@@ -23,12 +23,14 @@ import ExpenseReport from "./Pages/ReportsComponents/ExpenseReport";
 import TenantsReport from "./Pages/ReportsComponents/TenantsReport";
 import OutStandingReport from "./Pages/ReportsComponents/OutStandingReport";
 import NetPaybleReport from "./Pages/ReportsComponents/NetPaybleReport";
+import HomePage from "./Pages/HomePage";
 const App = () => {
   return (
     <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<SplashScreenPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />

@@ -1,9 +1,11 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormsData from "./FormsData";
-export default function TransactionTypeVariDes({list}){
-
+export default function   TransactionTypeVariDes({list}){
     const [transactionTypeVariant , setTransactionTypeVariant] = useState(list[0]);
+    useEffect(() => {
+      setTransactionTypeVariant(list[0]); // Reset to the first item when list changes
+    }, [list]);
     const handleClick = (val) => {
         setTransactionTypeVariant(val)
     }
