@@ -264,7 +264,7 @@ const ShopListing = () => {
                 padding: "3px 30px 3px 30px",
               }}
             >
-              Vaccant
+              Vacant
             </Button>
             <Button
               variant="outlined"

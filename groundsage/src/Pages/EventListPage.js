@@ -8,50 +8,7 @@ export default function EventListPage() {
   const navigate = useNavigate();
 
   const [eventList, setEventList] = useState([
-    {
-      date: "16th April 2024 - 13th Jun 2024",
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      isSelected: false,
-    },
-    {
-      date: "13th April 2024 - 13th Jun 2024",
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      isSelected: false,
-    },
-    {
-      date: "13th April 2024 - 13th Jun 2024",
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      isSelected: false,
-    },
-    {
-      date: "13th April 2024 - 13th Jun 2024",
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      isSelected: false,
-    },
-
-    {
-      date: "13th April 2024 - 13th Jun 2024",
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      isSelected: false,
-    },
-    {
-      date: "13th April 2024 - 13th Jun 2024",
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      isSelected: false,
-      isSelected: false,
-    },
-    {
-      date: "13th April 2024 - 13th Jun 2024",
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      isSelected: false,
-    },
+    
   ]);
   const [endpoint, setEndpoint] = useState(3);
   const [allselect, setAllselect] = useState(false);

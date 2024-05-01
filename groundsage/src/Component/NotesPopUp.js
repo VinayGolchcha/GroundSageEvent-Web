@@ -62,7 +62,7 @@ const AddNotes = ({ open, onClose, onSave }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            placeholder="EventType"
+            // placeholder="EventType"
             InputProps={{
               disableUnderline: true,
               style: {
@@ -78,14 +78,14 @@ const AddNotes = ({ open, onClose, onSave }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            placeholder="EventDes"
+            // placeholder="EventDes"
             InputProps={{
               disableUnderline: true,
               style: {
                 color: "white",
                 borderBottom: "2px solid rgb(247, 230, 173)",
               },
-              placeholderTextColor: "rgba(255, 255, 255, 0.7)",
+              // placeholderTextColor: "rgba(255, 255, 255, 0.7)",
             }}
             value={data.field2}
             onChange={(e) => setData({ ...data, field2: e.target.value })}
@@ -94,14 +94,14 @@ const AddNotes = ({ open, onClose, onSave }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            placeholder="Field 3"
+            // placeholder="Field 3"
             InputProps={{
               disableUnderline: true,
               style: {
                 color: "white",
                 borderBottom: "2px solid rgb(247, 230, 173)",
               },
-              placeholderTextColor: "rgba(255, 255, 255, 0.7)",
+              // placeholderTextColor: "rgba(255, 255, 255, 0.7)",
             }}
             value={data.field3}
             onChange={(e) => setData({ ...data, field3: e.target.value })}
@@ -110,7 +110,7 @@ const AddNotes = ({ open, onClose, onSave }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            placeholder="Field 4"
+            // placeholder="Field 4"
             InputProps={{
               disableUnderline: true,
               style: {

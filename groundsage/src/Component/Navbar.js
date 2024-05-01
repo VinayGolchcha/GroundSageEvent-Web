@@ -249,7 +249,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-const pages = ["Events", "Shops", "Teams", "Transaction", "Notes"];
+const pages = ["Events", "Shops", "Teams", "Transaction", "Notes","Reports"];
 const settings = ["Visit Profile", "Logout"];
 
 function Navbar() {
