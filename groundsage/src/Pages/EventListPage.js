@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import Checkbox from '@mui/joy/Checkbox';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function EventListPage() {
   const navigate = useNavigate();
@@ -260,17 +261,20 @@ export default function EventListPage() {
           >
             No Events Added
           </Typography>
-          <Typography
-            textAlign="center"
-            sx={{
-              fontSize: "1.3rem",
-              margin: "25px 0px",
-              color: "rgb(216, 217, 217)",
-              fontFamily: "Poppins",
-            }}
-          >
-            Click here to create....
-          </Typography>
+          <Link to="/create-event">
+            <Typography
+              textAlign="center"
+              sx={{
+                fontSize: "1.3rem",
+                margin: "25px 0px",
+                color: "rgb(216, 217, 217)",
+                fontFamily: "Poppins",
+                cursor : "pointer"
+              }}
+            >
+              Click here to create....
+            </Typography>
+          </Link>
         </Box>
       )}
       {eventList.length !== 0 && (

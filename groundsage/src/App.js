@@ -24,6 +24,7 @@ import TenantsReport from "./Pages/ReportsComponents/TenantsReport";
 import OutStandingReport from "./Pages/ReportsComponents/OutStandingReport";
 import NetPaybleReport from "./Pages/ReportsComponents/NetPaybleReport";
 import HomePage from "./Pages/HomePage";
+import CreateEventPage from "./Pages/CreateEventPage";
 const App = () => {
   return (
     <div>
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/outstandingreport" element={<OutStandingReport />} />
         <Route path="/netpayablereport" element={<NetPaybleReport />} />
         <Route path="/tenantsreport" element={<TenantsReport />} />
+        <Route path="/create-event" element={<CreateEventPage />} />
       </Routes>
     </div>
   );
