@@ -18,7 +18,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from "@mui/material/IconButton";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
+
 
 export default function CreateEventPage() {
   const [openCalendar1, setOpenCalendar1] = useState(false);
@@ -26,12 +29,59 @@ export default function CreateEventPage() {
   const [fromDate , setFromDate] = useState("2022-04-20");
   const [toDate , setToDate] = useState("2022-04-20");
   const [file, setFIle] = useState();
+  const eventNameElement = useRef(null);
+  const fromDateElement = useRef(null);
+  const toDateElement = useRef(null);
+  const descriptionElement = useRef(null);
+  const teamNameElement = useRef(null);
+  const teamSizeElement = useRef(null);
+  const coordinatorCountElement = useRef(null);
+  const staffMemberCountElement = useRef(null);
+  const helperCountElement = useRef(null);
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     // Handle the uploaded file
     console.log(file);
     setFIle(file);
   };
+  const addEvent = async(body) => {
+    try{
+      const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , body);
+      console.log(res);
+      toast.success("Data Added Successfully"); 
+    }catch(err){
+      console.log(err);
+      toast.error(err);
+    }
+  }
+  const handleSave = () => {
+    let formattedFromDate = fromDateElement.current.value.split('/');
+    let temp = formattedFromDate[0];
+    formattedFromDate[0] = formattedFromDate[1]
+    formattedFromDate[1] = temp;
+    formattedFromDate = formattedFromDate.reverse().join('-');
+    let formattedToDate = fromDateElement.current.value.split('/');
+    let tempTodate = formattedToDate[0];
+    formattedToDate[0] = formattedToDate[1]
+    formattedToDate[1] = tempTodate;
+    formattedToDate = formattedToDate.reverse().join('-');
+    
+  const  body = { 
+    event_name : eventNameElement.current.value,
+    start_date : formattedFromDate,
+    end_date : formattedToDate,
+    event_description : descriptionElement.current.value,
+    user_id : 1111,
+    role_name : "coordinator",
+    team_name : teamNameElement.current.value,
+    team_size : teamSizeElement.current.value,
+    coordinator_count : coordinatorCountElement.current.value,
+    staff_members_count : staffMemberCountElement.current.value,
+    helpers_count : helperCountElement.current.value
+   }
+   console.log(body);
+   addEvent(body);
+  }
   return (
     <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
       <Typography
@@ -92,6 +142,7 @@ export default function CreateEventPage() {
               id="standard-basic"
               label="Event Name"
               variant="standard"
+              inputRef={eventNameElement}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <FormControl
@@ -106,6 +157,7 @@ export default function CreateEventPage() {
                   open={openCalendar1}
                   onOpen={() => setOpenCalendar1(true)}
                   onClose={() => setOpenCalendar1(false)}
+                  inputRef={fromDateElement}
                   slotProps={{
                     textField: {
                       InputProps: {
@@ -151,6 +203,7 @@ export default function CreateEventPage() {
                   open={openCalendar2}
                   onOpen={() => setOpenCalendar2(true)}
                   onClose={() => setOpenCalendar2(false)}
+                  inputRef={toDateElement}
                   slotProps={{
                     textField: {
                       InputProps: {
@@ -214,41 +267,8 @@ export default function CreateEventPage() {
                   color: "white",
                 },
               }}
+              inputRef={descriptionElement}
               label="description"
-              variant="standard"
-            />
-            <TextField
-              sx={{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                  color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width: "100%",
-                margin: "10px 0px ",
-              }}
-              InputProps={{
-                style: {
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  color: "white",
-                },
-              }}
-              id="standard-basic"
-              label=""
               variant="standard"
             />
 
@@ -341,6 +361,7 @@ export default function CreateEventPage() {
                   color: "white",
                 },
               }}
+              inputRef={teamNameElement}
               id="standard-basic"
               label="Team Name"
               variant="standard"
@@ -368,6 +389,7 @@ export default function CreateEventPage() {
               id="standard-basic"
               label="Team Size"
               variant="standard"
+              inputRef={teamSizeElement}
             />
 
           <Box sx={{display : "flex" , width : "100%" , justifyContent : "space-between"}}>
@@ -393,6 +415,7 @@ export default function CreateEventPage() {
                 width: "50%",
                 margin: "10px 0px ",
               }}
+              inputRef={coordinatorCountElement}
               id="standard-basic"
               label="Count"
               variant="standard"
@@ -424,6 +447,7 @@ export default function CreateEventPage() {
               id="standard-basic"
               label="Count"
               variant="standard"
+              inputRef={staffMemberCountElement}
             />
           </Box>
           <Box sx={{display : "flex" , width : "100%"}}>
@@ -448,6 +472,7 @@ export default function CreateEventPage() {
                 width: "50%",
                 margin: "10px 0px ",
               }}
+              inputRef={helperCountElement}
               id="standard-basic"
               label="Count"
               variant="standard"
@@ -472,6 +497,7 @@ export default function CreateEventPage() {
                 minWidth: "200px",
                 fontWeight: "600",
               }}
+              onClick={handleSave}
             >
               Save
             </Button>

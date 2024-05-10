@@ -66,7 +66,7 @@ export default function Others() {
                 color: "white",
               },}}
               id="standard-basic"
-              label="decided amount"
+              label="amount due"
               variant="standard"
             />
             <TextField
@@ -99,7 +99,7 @@ export default function Others() {
                 color: "white",
               },}}
               id="standard-basic"
-              label="entered amount"
+              label="recieved amount"
               variant="standard"
             />
             <TextField

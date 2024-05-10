@@ -69,7 +69,7 @@ export default function SaffSalary(){
               },
             }}
               id="standard-basic"
-              label="entered amount"
+              label="recieved amount"
               variant="standard"
             />
             <TextField

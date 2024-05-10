@@ -5,58 +5,12 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Component/Loading";
 
 const Notes = () => {
   const [eventList, setEventList] = useState([
-    {
-      date: " 13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-    {
-      date: "13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-    {
-      date: " 13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-    {
-      date: " 13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-
-    // {
-    //   date: " 13th Jun 2024",
-    //   eventType: "FOOD EVENT  - Transaction",
-    //   eventDes: "Celebration with different cuisines from different regions...",
-    //   isSelected: false,
-    // },
-    // {
-    //   date: " 13th Jun 2024",
-    //   eventType: "FOOD EVENT  - Transaction",
-    //   eventDes: "Celebration with different cuisines from different regions...",
-    //   isSelected: false,
-    //   isSelected: false,
-    // },
-    // {
-    //   date: " 13th Jun 2024",
-    //   eventType: "FOOD EVENT  - Transaction",
-    //   eventDes: "Celebration with different cuisines from different regions...",
-    //   isSelected: false,
-    // },
   ]);
   // const [endpoint, setEndpoint] = useState(3)
   const [allselect, setAllselect] = useState(false);
@@ -64,6 +18,33 @@ const Notes = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
+  const [isLoading , setIsLoading] = useState(true);
+  
+
+  const fetchNotes = async () => {
+    try{
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/note/fetch-notes`);
+      const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}))
+      setEventList(newEventList);
+      console.log(eventList);
+      setIsLoading(false)
+      toast.success("Notes fetched successfully", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },});
+    }catch(err){
+      setIsLoading(false);
+      toast.error(err.message);
+    }
+  }
+
+  useEffect(()=>{
+    fetchNotes();
+  },[])
   const maxItems = 3;
 
   const handleOpenPopup = () => {
@@ -73,34 +54,69 @@ const Notes = () => {
   const refreshPage = () => {
     window.location.reload(false);
   }
+  
+  const forrmattedDate = (data) => {
+    let date = new Date(data);
+    const array = date.toString().split(" ");
+    date = array.slice(1,4).join(" ");
+    return date
+  }
 
-  const handleSaveNote = (newData) => {
-    const formattedDate = new Date().toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
+  const handleSaveNote = async (body) => {
+    // const formattedDate = new Date().toLocaleDateString("en-US", {
+    //   day: "numeric",
+    //   month: "short",
+    //   year: "numeric",
+    // });
 
-    const newItem = {
-      date: formattedDate,
-      eventType: newData.field1 || "",
-      eventDes: newData.field2 || "",
-      isSelected: false,
-    };
+    // const newItem = {
+    //   date: formattedDate,
+    //   eventType: newData.field1 || "",
+    //   eventDes: newData.field2 || "",
+    //   isSelected: false,
+    // };
 
-    setEventList([newItem, ...eventList]);
-    setIsPopupOpen(false);
-    toast.success("Note added successfully!", {
-      style: {
-        // Change font color
-        fontSize: "16px", // Change font size
-        fontFamily: "Inter", // Change font family
-        fontWeight: "600", // Change font weight
-        color: "rgb(66, 92, 90)",
-      },
-    }); // Use toast to show success message
+    // setEventList([newItem, ...eventList]);
+    try{
+      const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/note/create-note" , body);
+      setIsPopupOpen(false);
+      console.log(res);
+      toast.success("Note added successfully!", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },});
+        fetchNotes();
+    }catch(err){
+      console.log(err.message);
+    }
+    
+     // Use toast to show success message
   };
 
+  const deleteNoteById = async(id) => {
+    try{
+      const res = await axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note/${id}`);
+      console.log(res);
+      toast.success(res.data.message, {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      }); // Use toast to show success message
+      fetchNotes();
+    }catch(err){
+      toast.error(err);
+      console.log(err);
+    }
+  }
   const handleAllChange = () => {
     const newEventList = eventList.map((item) => ({
       ...item,
@@ -122,27 +138,18 @@ const Notes = () => {
 
   const handleCheckboxChange = (index) => {
     const newEventList = eventList.map((item, i) => {
-      if (i === index) {
-        return { ...item, isSelected: !item.isSelected };
+      if (item._id === index) {
+        return { ...item, isSelected: true };
       }
       return item;
     });
+    console.log(newEventList)
     setEventList(newEventList);
   };
 
   const handleDelete = () => {
-    const newArray = eventList.filter((item) => item.isSelected !== true);
-    setEventList(newArray);
-    toast.success("Note Deleted successfully!", {
-      style: {
-        // Change font color
-        fontSize: "16px", // Change font size
-        fontFamily: "Inter", // Change font family
-        fontWeight: "600", // Change font weight
-        color: "rgb(66, 92, 90)",
-      },
-      // Other options like position, autoClose, etc.
-    }); // Use toast to show success message
+    const ele = eventList?.filter(item => item.isSelected === true);
+    deleteNoteById(ele[0]?._id);
   };
   const handleSelectChange = () => {
     setSelect(!select);
@@ -150,6 +157,9 @@ const Notes = () => {
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+  if(isLoading){
+    return(<Loading/>)
+  }else{
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
       <ToastContainer position="bottom-right" style={{ color: "red" }} />
@@ -294,7 +304,7 @@ const Notes = () => {
                         variant="outlined"
                         color="neutral"
                         checked={item.isSelected}
-                        onChange={() => handleCheckboxChange(index)}
+                        onChange={() => handleCheckboxChange(item?._id)}
                         inputProps={{ "aria-label": "controlled" }}
                       />
                     )}
@@ -326,7 +336,7 @@ const Notes = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      {item.eventType}
+                      {item?.notes_heading}
                     </Typography>
                     <Typography
                       sx={{
@@ -337,7 +347,7 @@ const Notes = () => {
                         marginTop: "-10px",
                       }}
                     >
-                      {item.date}
+                      {forrmattedDate(item?.date)}
                     </Typography>
                   </div>
                   <Typography
@@ -347,7 +357,7 @@ const Notes = () => {
                       width: "65%",
                     }}
                   >
-                    {item.eventDes}
+                    {item?.notes_description}
                   </Typography>
                 </Box>
               </Box>
@@ -374,7 +384,7 @@ const Notes = () => {
         onSave={handleSaveNote}
       />
     </div>
-  );
+  );}
 };
 
 export default Notes;

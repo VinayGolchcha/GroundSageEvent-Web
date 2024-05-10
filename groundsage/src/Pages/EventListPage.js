@@ -1,20 +1,43 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Checkbox from '@mui/joy/Checkbox';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+import Loading from "../Component/Loading";
+
+
 
 export default function EventListPage() {
   const navigate = useNavigate();
-
-  const [eventList, setEventList] = useState([
-    
-  ]);
+  const [eventList, setEventList] = useState([]);
   const [endpoint, setEndpoint] = useState(3);
   const [allselect, setAllselect] = useState(false);
   const [select, setSelect] = useState(false);
   const [eventListLength, setEventListLength] = useState("Show More...");
+  const [isLoading , setIsLoading] = useState(true);
+
+
+ 
+ 
+  const fetchEvents = async () => {
+    try{
+      const res = await axios.get("https://groundsageevent-be.onrender.com/api/v1/event/get-all-event");
+      setEventList(res.data.data);
+      setIsLoading(false);
+      toast.success("events fetched successfully");
+    }catch(err){
+      console.log(err);
+      toast.error(err);
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(()=> {
+    fetchEvents();
+  },[])
 
   const handleAllChange = () => {
     const newEventList = eventList.map((item) => ({
@@ -55,6 +78,15 @@ export default function EventListPage() {
   const refreshPage = () => {
     window.location.reload(false);
   }
+  const forrmattedDate = (data) => {
+    let date = new Date(data);
+    const array = date.toString().split(" ");
+    date = array.slice(1,4).join(" ");
+    return date
+  }
+  if(isLoading){
+    return (<Loading/>);
+  }else{
 
   return (
     <Box
@@ -64,7 +96,7 @@ export default function EventListPage() {
         minHeight: "100vh",
         minHeight: "100vh",
       }}
-    >
+    >     
       <img
         src="../../Images/arrow-left.png"
         alt="Share"
@@ -146,12 +178,12 @@ export default function EventListPage() {
                 onClick={handleDelete}
               />
             ) : (
-              <img src="add-icon.png" alt="add-icon" />
+              <Link to="/create-event"><img src="add-icon.png" alt="add-icon" /></Link>
             )}
           </Box>
         </Box>
       )}
-      {eventList.slice(0, endpoint).map((item, index) => {
+      {eventList?.slice(0, endpoint).map((item, index) => {
         return (
           <Box
             key={index}
@@ -204,7 +236,7 @@ export default function EventListPage() {
                   fontFamily: "Poppins",
                 }}
               >
-                {item.date}
+                {forrmattedDate(item?.created_at)}
               </Typography>
               <Typography
                 sx={{
@@ -214,12 +246,12 @@ export default function EventListPage() {
                   fontFamily: "Poppins",
                 }}
               >
-                {item.eventType}
+                {item?.event_name}
               </Typography>
               <Typography
                 sx={{ color: "rgb(216, 217, 217)", fontFamily: "Poppins" }}
               >
-                {item.eventDes}
+                {item?.event_description}
               </Typography>
             </Box>
           </Box>
@@ -291,5 +323,5 @@ export default function EventListPage() {
         </Typography>
       )}
     </Box>
-  );
+  );}
 }
