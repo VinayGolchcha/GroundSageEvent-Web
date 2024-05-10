@@ -133,7 +133,7 @@ const TenantsReport = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: "56px",
+          fontSize: {xs:"40px",md:"56px"},
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: "-75px",

@@ -1,11 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Box, Typography, Button, TextField } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const Verification = () => {
   const [otp, setOtp] = useState(["", "", "", ""]); // Initialize state for 4 digits
   const otpFields = useRef([]); // Ref to store references of OTP text fields
   const [timer, setTimer] = useState(0); // Initial timer value
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const { setIsEmailVerified } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let interval;
@@ -24,11 +29,32 @@ const Verification = () => {
     return () => clearInterval(interval); // Clean up the interval on unmount
   }, [isTimerRunning]);
 
-  const handleSend = () => {
-    // Implement logic to send the code here
-    // For demonstration, we'll just start the timer
-    setTimer(20); // Set the timer to 20 seconds
-    setIsTimerRunning(true); // Start the timer
+  const handleSend = async () => {
+    try {
+      const { email } = location.state; // Get email and isEmailVerified from location state
+      const response = await fetch(
+        "https://groundsageevent-be.onrender.com/api/v1/profile/verify-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ otp: parseInt(otp.join(""), 10), email }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to verify OTP");
+      }
+
+      console.log(response);
+      setIsEmailVerified(true);
+      navigate("/signin");
+    } catch (error) {
+      // Handle error
+      console.error("Error verifying OTP:", error);
+      // toast.error("Failed to verify OTP. Please try again.");
+    }
   };
   const handleResend = () => {
     // Implement logic to resend the code here
@@ -116,11 +142,15 @@ const Verification = () => {
                   // },
                   " & .MuiOutlinedInput-root ": {
                     "&.Mui-focused fieldset": {
-                  border: "1px solid rgb(188, 189, 163)", // Add border color
-                },
+                      border: "1px solid rgb(188, 189, 163)", // Add border color
+                    },
                   },
                 }}
-                inputProps={{ maxLength: 1, disableUnderline: true ,textAlign:"center"}}
+                inputProps={{
+                  maxLength: 1,
+                  disableUnderline: true,
+                  textAlign: "center",
+                }}
                 InputProps={{
                   style: {
                     textAlign: "center", // Align input text to center

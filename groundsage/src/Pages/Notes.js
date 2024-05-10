@@ -154,6 +154,7 @@ const Notes = () => {
   const handleSelectChange = () => {
     setSelect(!select);
   };
+  
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
@@ -179,7 +180,7 @@ const Notes = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: "56px",
+          fontSize: {xs:"40px",md:"56px"},
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: "-35px",
@@ -195,7 +196,7 @@ const Notes = () => {
         {eventList.length !== 0 && (
           <Box
             sx={{
-              margin: "2% 18%",
+              margin: {xs:"20px",md:"2% 18%"},
               padding: "0px 15px",
               display: "flex",
               justifyContent: "space-between",
@@ -277,7 +278,7 @@ const Notes = () => {
                 key={index}
                 sx={{
                   backgroundColor: "rgb(66, 92, 90)",
-                  margin: "2% 18%",
+                  margin: {xs:"20px",md:"2% 18%"},
                   border: "2px solid rgba(0, 0, 0, 0.16)",
                   borderRadius: "10px",
                   padding: "15px",
@@ -332,7 +333,7 @@ const Notes = () => {
                       sx={{
                         color: "rgb(216, 217, 217)",
                         fontWeight: "600",
-                        fontSize: "24px",
+                        fontSize: {xs:"20px",md:"24px"},
                         fontFamily: "Poppins",
                       }}
                     >
@@ -341,7 +342,7 @@ const Notes = () => {
                     <Typography
                       sx={{
                         color: "rgb(254, 240, 180)",
-                        fontSize: "1.2rem",
+                        fontSize: {xs:"16px",md:"24px"},
                         fontFamily: "Poppins",
                         textAlign: "right",
                         marginTop: "-10px",
@@ -354,7 +355,7 @@ const Notes = () => {
                     sx={{
                       color: "rgb(216, 217, 217)",
                       fontFamily: "Poppins",
-                      width: "65%",
+                      width: {xs:"80%",md:"65%"},
                     }}
                   >
                     {item?.notes_description}

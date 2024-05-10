@@ -7,11 +7,15 @@ const Footer = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          margin: "0px 50px 0px 50px",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: { xs: "center", md: "space-between" },
+          alignItems: "center", // Center vertically
+          textAlign: "center", //
+          margin: {xs:"0px 10px",md:"0px 50px 0px 50px"},
           paddingTop: "20px",
         }}
       >
+        <Box sx={{display:{xs:"flex"},justifyContent:"space-between",}}>
         <Box>
           <img
             src="../../../Images/logo_1 1.png"
@@ -31,7 +35,7 @@ const Footer = () => {
             <br /> Seamless Event Management!
           </Typography>
         </Box>
-        <Box sx={{ marginLeft: "-10%" }}>
+        <Box sx={{ marginLeft: { xs: "0", md: "20%" } }}>
           <Typography
             sx={{
               color: "rgb(255, 255, 255)",
@@ -39,7 +43,7 @@ const Footer = () => {
               lineHeight: "1",
               marginTop: "10px",
               fontWeight: "500",
-              fontSize: "20px",
+              fontSize: "20px", 
               marginBottom: "20px",
             }}
           >
@@ -89,7 +93,8 @@ const Footer = () => {
               color: "rgb(91, 94, 97)",
               padding: "5px 40px 5px 30px",
               display: "flex",
-              margin: "10px 0px 0px 2%",
+              // margin: "10px 0px 0px 2%",
+              margin: "10px auto", // Center button
               alignItems: "center",
               borderRadius: "4px", // Add border radius
               boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)", // Add box shadow
@@ -103,6 +108,7 @@ const Footer = () => {
           >
             Send
           </Button>
+        </Box>
         </Box>
         <Box>
           <img
@@ -119,8 +125,9 @@ const Footer = () => {
           padding: "5px 0px 5px 15px",
           fontWeight: "500",
           fontSize: "16px",
-          fontFamily:'Outfit',
-          letterSpacing:"0pxf"
+          fontFamily: "Outfit",
+          letterSpacing: "0pxf",
+          marginRight:{xs:"0",lg:"10%"}
         }}
       >
         © 2024 All Rights Reserved

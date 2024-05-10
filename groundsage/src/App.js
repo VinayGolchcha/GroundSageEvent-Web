@@ -25,6 +25,10 @@ import OutStandingReport from "./Pages/ReportsComponents/OutStandingReport";
 import NetPaybleReport from "./Pages/ReportsComponents/NetPaybleReport";
 import HomePage from "./Pages/HomePage";
 import CreateEventPage from "./Pages/CreateEventPage";
+import EnterMail from "./Component/EnterMail";
+import Footer from "./Component/Footer";
+import UpdateShopPage from "./Pages/UpdateShop";
+
 const App = () => {
   return (
     <div>
@@ -43,7 +47,7 @@ const App = () => {
         <Route path="/transaction" element={<TransactionPage />} />
         <Route path="/rental-agreement" element={<RentalAgreementPage />} />
         <Route path="/Events" element={<EventListPage />} />
-        <Route path="/creatshop" element={<CreateShopPage />} />
+        <Route path="/createshop" element={<CreateShopPage />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/transactionlist" element={<TransactionList />} />
         <Route path="/reports" element={<Reports />} />
@@ -54,7 +58,10 @@ const App = () => {
         <Route path="/netpayablereport" element={<NetPaybleReport />} />
         <Route path="/tenantsreport" element={<TenantsReport />} />
         <Route path="/create-event" element={<CreateEventPage />} />
+        <Route path="/entermail" element={<EnterMail />} />
+        <Route path="/update-shop" element={<UpdateShopPage />} />
       </Routes>
+      <Footer />
     </div>
   );
 };

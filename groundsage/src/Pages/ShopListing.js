@@ -1,67 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Box, Button } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import Footer from "../Component/Footer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import Axios for making HTTP requests
+import { toast } from "react-toastify";
+
 // import Slider from "../Component/Slider";
 const ShopListing = () => {
   const [filter, setFilter] = useState("all");
   const [showMore, setShowMore] = useState(false);
   const [displayCount, setDisplayCount] = useState(9);
   const [activeDom, setActiveDom] = useState("all"); // State to store active dom, initially set to "all"
+  const [selectedShops, setSelectedShops] = useState([]); // State to store selected shop cards
+  const [selectMode, setSelectMode] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleCardClick = (shopIndex, shopDetails) => {
+  const handleCardClick = (shopIndex, shopDetails, event) => {
+    if (event.target.tagName === "INPUT" && event.target.type === "checkbox") {
+      return; // If checkbox clicked, do nothing
+    }
     // Redirect to description page with shop index and details as route state
     navigate(`/description/${shopIndex}`, { state: { shopDetails } });
   };
 
-  const Doms = ["A", "B", "C", "D", "E", "F"];
-  const shopCards = [
-    {
-      dom: "A",
-      area: "1200 sq.",
-      location: "Near Entrance",
-      occupied: true,
-      date: "12-Nov-24",
-    },
-
-    { dom: "A", area: "120 sq", location: "Near Entrance" },
-    {
-      dom: "A",
-      area: "500 sq.",
-      location: "Near Entrance",
-      occupied: true,
-      date: "2-Nov-24",
-    },
-
-    { dom: "D", area: "800 sq", location: "Near Entrance" },
-    {
-      dom: "D",
-      area: "1200 sq.",
-      location: "Near Entrance",
-      occupied: true,
-      date: "1-Nov-24",
-    },
-    {
-      dom: "E",
-      area: "1200 sq",
-      location: "Near Entrance",
-    },
-    {
-      dom: "B",
-
-      area: "200 sq.",
-      location: "Near Entrance",
-      occupied: true,
-      date: "10-Nov-24",
-    },
-    { dom: "B", area: "100 sq", location: "Near Entrance" },
-    { dom: "C", area: "1200 sq", location: "Near Entrance" },
-    { dom: "C", area: "1200 sq", location: "Near Entrance" },
-    { dom: "E", area: "1200 sq", location: "Near Entrance" },
-    { dom: "D", area: "1200 sq", location: "Near Entrance" },
-  ];
+  const [Doms, setDoms] = useState([]); // State to store the Doms array
+  const [shopCards, setShopCards] = useState([]); // State to store shop data
 
   // const filteredShops = shopCards.filter((shop) => {
   //   if (filter === "all") return true; // Return true for all shops when filter is "all"
@@ -70,29 +35,89 @@ const ShopListing = () => {
   //   // if (filter === "all") return true;
   //   if (filter === "occupied") return shop.occupied;
   //   if (filter === "vacant") return !shop.occupied;
-  //   return true;
+  //   return true;handleFilterChange
   // });
   const filteredShops = shopCards.filter((shop) => {
     if (filter === "all") {
       // If filter is "all", show all shops (vacant and occupied) for the selected dome
-      if (activeDom === "all" || shop.dom === activeDom) {
+      if (activeDom === "all" || shop.dome === activeDom) {
         return true;
       } else {
         return false;
       }
     } else {
-      // If filter is "vacant" or "occupied", filter based on shop occupancy status and selected dome
-      if (activeDom === "all" || shop.dom === activeDom) {
-        return filter === "vacant" ? !shop.occupied : shop.occupied;
+      // If filter is "vacant" or "occupied", filter based on shop status and selected dome
+      if (activeDom === "all" || shop.dome === activeDom) {
+        return filter === "vacant"
+          ? shop.status === "Vacant"
+          : shop.status === "Occupied";
       } else {
         return false;
       }
     }
   });
 
+  useEffect(() => {
+    // Fetch data from the API when component mounts
+    axios
+      .get("https://groundsageevent-be.onrender.com/api/v1/shop/fetch-all-shop")
+      .then((response) => {
+        // Update shopCards state with the fetched data
+        setShopCards(response.data.data);
+        console.log(response.data.data);
+        const uniqueDomes = new Set();
+        // Iterate over shop data and add unique dome values to the Set
+        response.data.data.forEach((shop) => {
+          uniqueDomes.add(shop.dome);
+        });
+        // Convert the Set to an array and set it in the Doms state
+        setDoms(Array.from(uniqueDomes));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   const handleFilterChange = (filterType) => {
     setFilter(filterType);
     setDisplayCount(9); // Reset display count when filter changes
+  };
+
+  const toggleShopSelection = (shopId) => {
+    console.log("Toggling selection for shopId:", shopId);
+
+    // Check if shop is already selected
+    const isSelected = selectedShops.some((shop) => shop.id === shopId);
+    console.log("Is selected:", isSelected);
+
+    // Toggle selection status
+    if (isSelected) {
+      setSelectedShops(selectedShops.filter((shop) => shop.id !== shopId)); // Deselect shop
+    } else {
+      // Find the shop object with the corresponding id
+      const shop = shopCards.find((shop) => shop.id === shopId);
+      console.log("Shop:", shop);
+      if (shop) {
+        setSelectedShops([...selectedShops, shop]); // Select shop by adding its data to selectedShops
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log("Selected Shops:", selectedShops);
+  }, [selectedShops]);
+
+  const handleToggleSelectMode = () => {
+    setSelectMode(!selectMode); // Toggle select mode
+    setSelectedShops([]); // Clear selected shops when entering or exiting select mode
+  };
+  const handleSelectAll = () => {
+    // If all shops are already selected, deselect all; otherwise, select all
+    if (selectedShops.length === filteredShops.length) {
+      setSelectedShops([]);
+    } else {
+      setSelectedShops(filteredShops.map((shop) => shop)); // Add complete shop objects
+    }
   };
 
   const handleShowMore = () => {
@@ -105,9 +130,29 @@ const ShopListing = () => {
     setDisplayCount(9); // Reset display count to 9 when "Show less" is clicked
   };
 
+  const handleDelete = () => {
+    const deletePromises = selectedShops.map((shop) =>
+      axios.delete(`https://groundsageevent-be.onrender.com/api/v1/shop/delete-shop/${shop.id}/${shop.event_id}`)
+    );
+
+    Promise.all(deletePromises)
+      .then((responses) => {
+        console.log("Shops deleted successfully");
+        setSelectedShops([]);
+        const updatedShopCards = shopCards.filter((shop) => !selectedShops.some((selectedShop) => selectedShop.id === shop.id));
+        setShopCards(updatedShopCards);
+        toast.success("Shop Deleted Successfully")
+        setSelectMode(false);
+      })
+      .catch((error) => {
+        console.error("Error deleting shops:", error);
+      });
+  };
   const handleDomClick = (dom) => {
+    console.log(dom);
     setActiveDom(dom === activeDom ? "" : dom); // Toggle active dom
     setFilter(dom === "all" ? "all" : "dom"); // Set filter to "dom" if a dome is clicked, else set to "all"
+    setFilter("all");
   };
   useEffect(() => {
     // Set default filter to "all" when component mounts
@@ -115,6 +160,7 @@ const ShopListing = () => {
   }, []);
   return (
     <div>
+      
       <div
         style={{
           background: "rgb(66, 92, 90)",
@@ -139,7 +185,7 @@ const ShopListing = () => {
           sx={{
             color: "rgb(247, 230, 173)",
             textAlign: "center",
-            fontSize: "56px",
+            fontSize: { xs: "40px", md: "56px" },
             fontFamily: "Inter",
             fontWeight: "700",
             marginTop: "-40px",
@@ -153,6 +199,7 @@ const ShopListing = () => {
           sx={{
             display: "flex",
             justifyContent: "space-around",
+            flexWrap: "wrap",
             margin: "20px",
           }}
         >
@@ -190,10 +237,11 @@ const ShopListing = () => {
                   background:
                     activeDom === dom ? "transparent" : "rgb(247, 230, 173)",
                 },
+                margin: "5px",
               }}
               onClick={() => handleDomClick(dom)}
             >
-              dome {dom}
+              Dome {dom}
             </Button>
           ))}
         </Box>
@@ -282,137 +330,172 @@ const ShopListing = () => {
             </Button>
           </div>
         </Box>
-        <Box>
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-              marginLeft: "190px",
-              marginRight: "190px",
-            }}
-          >
-            {filteredShops.slice(0, displayCount).map((shop, index) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            margin: "30px",
+          }}
+        >
+          <Box>
+            <Button variant="text" onClick={handleToggleSelectMode}>
+              {selectMode ? "Cancel Select" : "Select "}
+            </Button>
+            {selectMode && (
+              <Checkbox
+                checked={selectedShops.length === filteredShops.length}
+                indeterminate={
+                  selectedShops.length > 0 &&
+                  selectedShops.length < filteredShops.length
+                }
+                onChange={handleSelectAll}
+              />
+            )}
+          </Box>
+          <Box>
+            {selectMode && (
+              <img
+                src="deleteIcon.png"
+                alt="delete Icon"
+                style={{ padding: "2px", height: "30px", cursor: "pointer" }}
+                onClick={handleDelete}
+              />
+            )}
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: { xs: "0px", md: "190px" },
+            marginRight: { xs: "0px", md: "190px" },
+          }}
+        >
+          {filteredShops.slice(0, displayCount).map((shop, index) => (
+            <Box
+              key={index}
+              onClick={(event) => handleCardClick(index, filteredShops, event)} // Redirect to description page on card click
+              sx={{
+                // width: "calc(33.33% - 20px)",
+                // padding:"20px",
+                margin: "10px",
+                marginTop: "25px",
+                border: "1px solid #ccc",
+                boxSizing: "border-box",
+                display: "flex",
+                flexDirection: "column",
+                width: { xs: "30%", lg: "calc(25.33% - 20px)" }, // Three cards in one row
+                color: "rgb(255, 255, 255)",
+                position: "relative", // Position relative for absolute positioning of elements inside
+                boxShadow: "0px 5px 4px 0px rgba(0, 0, 0, 0.25)", // O
+                borderStyle: "none",
+                borderRadius: "4px",
+              }}
+            >
+              {selectMode && (
+               <Checkbox
+               checked={selectedShops.includes(shop.id)}
+               onChange={() => toggleShopSelection(shop.id)}
+             />
+             
+              )}
               <div
-                key={index}
-                onClick={() => handleCardClick(index, filteredShops)} // Redirect to description page on card click
                 style={{
-                  // width: "calc(33.33% - 20px)",
-                  // padding:"20px",
-                  margin: "10px",
-                  marginTop: "25px",
-                  border: "1px solid #ccc",
-                  boxSizing: "border-box",
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "calc(25.33% - 20px)", // Three cards in one row
-                  color: "rgb(255, 255, 255)",
-                  position: "relative", // Position relative for absolute positioning of elements inside
-                  boxShadow: "0px 5px 4px 0px rgba(0, 0, 0, 0.25)", // O
-                  borderStyle: "none",
-                  borderRadius: "4px",
+                  height: "50%",
+                  textAlign: "center",
+                  background: "rgb(231, 230, 230)",
+                  borderRadius: "3px",
+                  padding: "15px",
                 }}
               >
-                <div
-                  style={{
-                    height: "50%",
-                    textAlign: "center",
-                    background: "rgb(231, 230, 230)",
-                    borderRadius: "3px",
-                    padding: "15px",
+                <Typography
+                  variant="h5"
+                  sx={{
+                    color: "rgb(24, 49, 47)",
+                    fontSize: "30px",
+                    fontWeight: "700",
+                    fontFamily: "Fira Sans",
+                    letterSpacing: "0px",
+                    lineHeight: "1", // Adjust the line height
                   }}
                 >
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      color: "rgb(24, 49, 47)",
-                      fontSize: "30px",
-                      fontWeight: "700",
-                      fontFamily: "Fira Sans",
-                      letterSpacing: "0px",
-                      lineHeight: "1", // Adjust the line height
-                    }}
-                  >
-                    SHOP
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    display="inline"
-                    gutterBottom
-                    sx={{
-                      color: "rgb(24, 49, 47)",
-                      fontSize: "60px",
-                      fontWeight: "700",
-                      fontFamily: "Fira Sans",
-                      letterSpacing: "0px",
-                      lineHeight: "0.8", // Adjust the line height
-                    }}
-                  >
-                    0{index + 1}
-                  </Typography>
-                </div>
-                <div
-                  style={{
-                    height: "50%",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-around",
-                    background: "rgb(66, 92, 90)",
-                    padding: "15px",
-                    textAlign: "center",
+                  SHOP
+                </Typography>
+                <Typography
+                  variant="h6"
+                  display="inline"
+                  gutterBottom
+                  sx={{
+                    color: "rgb(24, 49, 47)",
+                    fontSize: "60px",
+                    fontWeight: "700",
+                    fontFamily: "Fira Sans",
+                    letterSpacing: "0px",
+                    lineHeight: "0.8", // Adjust the line height
                   }}
                 >
-                  <Typography
-                    variant="body1"
-                    sx={{ fontWeight: "700", fontFamily: "Fira Sans" }}
-                  >
-                    Area: {shop.area}
-                  </Typography>
-                  <Typography variant="body1" sx={{ fontFamily: "Fira Sans" }}>
-                    Location: Near <br />
-                    Entrance
-                  </Typography>
-                </div>
-                {shop.occupied ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{ fontFamily: "Fira Sans" }}
-                    >
-                      {shop.date}
-                    </Typography>
-                    <img
-                      src="../../../Images/Exclude.png"
-                      alt="Right Arrow"
-                      style={{ height: "25px" }}
-                    />
-                  </div>
-                ) : (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "8px",
-                    }}
-                  >
-                    <Typography>---</Typography>
-                    <img
-                      src="../../../Images/矢量 180.png"
-                      alt="Right Arrow"
-                      style={{ height: "25px" }}
-                    />
-                  </div>
-                )}
+                  0{shop.shop_number}
+                </Typography>
               </div>
-            ))}
-          </div>
+              <div
+                style={{
+                  height: "50%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-around",
+                  background: "rgb(66, 92, 90)",
+                  padding: "15px",
+                  textAlign: "center",
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "700", fontFamily: "Fira Sans" }}
+                >
+                  Area: {shop.area} sq.
+                </Typography>
+                <Typography variant="body1" sx={{ fontFamily: "Fira Sans" }}>
+                  Location: {shop.location}
+                </Typography>
+              </div>
+              {shop.status === "Occupied" ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "8px",
+                  }}
+                >
+                  <Typography variant="body1" sx={{ fontFamily: "Fira Sans" }}>
+                    {shop.date}
+                  </Typography>
+                  <img
+                    src="../../../Images/Exclude.png"
+                    alt="Right Arrow"
+                    style={{ height: "25px" }}
+                  />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "8px",
+                  }}
+                >
+                  <Typography>---</Typography>
+                  <img
+                    src="../../../Images/矢量 180.png"
+                    alt="Right Arrow"
+                    style={{ height: "25px" }}
+                  />
+                </div>
+              )}
+            </Box>
+          ))}
         </Box>
         {!showMore && filteredShops.length > displayCount && (
           <Typography

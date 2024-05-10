@@ -47,9 +47,9 @@ const ReferralCodePage = () => {
     <div
       style={{
         background: "rgb(66, 92, 90)",
-        height: "100vh",
-        overflow:"auto",
-        // padding: "20px",
+        // height: "100vh",
+        overflow: "auto",
+        padding: "20px 20px 50px 20px",
       }}
     >
       <img
@@ -68,10 +68,10 @@ const ReferralCodePage = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: "56px",
+          fontSize: { xs: "40px", md: "56px" },
           fontWeight: "700",
           marginBottom: "20px",
-          marginTop: "-45px",
+          marginTop: {xs:"0px",md:"-45px"},
           textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
         }}
       >
@@ -81,20 +81,21 @@ const ReferralCodePage = () => {
         sx={{
           color: "rgba(255, 255, 255, 0.54)",
           textAlign: "center",
-          fontSize: "36px",
+          fontSize: { xs: "25px", md: "36px" },
           fontWeight: "400",
           marginBottom: "45px",
         }}
       >
         Share Your Referral Code and Build Your Team!
       </Typography>
-      <div
-        style={{
+      <Box
+        sx={{
           background: "rgb(66, 92, 90)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
+          margin: { xs: "20px", md: "0px" },
         }}
       >
         {labels.map((label, index) => (
@@ -116,7 +117,7 @@ const ReferralCodePage = () => {
               sx={{
                 color: "white",
                 fontWeight: "600",
-                fontSize: "25px",
+                fontSize: {xs:"20px",md:"25px"},
                 fontFamily: "Poppins",
                 textAlign: "left",
                 width: "200px",
@@ -140,7 +141,7 @@ const ReferralCodePage = () => {
                   color: "rgb(250, 236, 191)",
                   background: "rgba(151, 151, 151, 0.73)",
                   borderRadius: "10px",
-                  fontSize: "22px",
+                  fontSize: {xs:"15px",md:"22px"},
                 },
               }}
               onChange={(e) => setInputValue(e.target.value)}
@@ -153,7 +154,7 @@ const ReferralCodePage = () => {
             />
           </Box>
         ))}
-      </div>
+      </Box>
     </div>
   );
 };

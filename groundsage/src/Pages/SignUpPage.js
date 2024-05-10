@@ -81,7 +81,6 @@ const SignUpPage = () => {
   return (
     <div>
       <ToastContainer />
-
       <Box
         sx={{
           display: "flex",
@@ -389,7 +388,7 @@ const SignUpPage = () => {
             sx={{
               marginRight: { xs: "0", lg: "25%" },
               margin: { xs: "10px 20px 10px 20px", md: "0" },
-              width: { xs: "100%", md: "105%" },
+              width: { xs: "100%", md: "115%" },
             }}
           />
         </Box>

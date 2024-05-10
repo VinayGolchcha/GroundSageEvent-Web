@@ -12,10 +12,36 @@ const TransactionList = () => {
   const navigate = useNavigate();
 
   const [activeButton, setActiveButton] = useState("income");
+  const [transactionData, setTransactionData] = useState([]);
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
+  useEffect(() => {
+    // Fetch transaction data from the API
+    fetch(
+      "https://groundsageevent-be.onrender.com/api/v1/transaction/fetch-transaction",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          transaction_id: 1111,
+          event_id: 1111,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with fetched data
+        setTransactionData(data.data);
+        console.log(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching transaction data:", error);
+      });
+  }, []);
 
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
@@ -35,7 +61,7 @@ const TransactionList = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: "56px",
+          fontSize: { xs: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: "-30px",
@@ -113,8 +139,8 @@ const TransactionList = () => {
           EXPENSE
         </Button>
       </div>
-      {activeButton === "income" && <IncomeList />}
-      {activeButton === "expenses" && <ExpensesList />}
+      {activeButton === "income" && <IncomeList data={transactionData} />}
+      {activeButton === "expenses" && <ExpensesList data={transactionData} />}
     </div>
   );
 };

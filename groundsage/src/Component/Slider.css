@@ -31,3 +31,26 @@ body {
   display: block;
   width: 100%;
 }
+/* Define styles for small devices */
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-image-container {
+    width: 100%;
+    margin-top: 20px; /* Add some spacing between the logo section and the footer image */
+  }
+
+  .footer-fields-container {
+    width: 80%; /* Adjust width as needed */
+  }
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width:95%;
+    /* height:450px */
+  }
+}

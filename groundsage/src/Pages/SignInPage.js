@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Typography,
@@ -9,23 +9,119 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { isEmailVerified, setIsEmailVerified, setUser } =
+    useContext(AuthContext);
+
+  const [verificationStarted, setVerificationStarted] = useState(false);
+
+  // const [isEmailVerifiedAfterCheck, setIsEmailVerifiedAfterCheck] =
+  //   useState(false);
   const navigate = useNavigate();
 
+  const checkEmailVerificationStatus = async () => {
+    try {
+      const response = await fetch(
+        "https://groundsageevent-be.onrender.com/api/v1/profile/check-email-verification",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        // Email is verified, proceed with sign-in
+        // handleSubmit();
+        // Set email verification status after additional check
+        const isEmailVerified = data.data?.is_email_verified === 1;
+        // Update state or handle the email verification status accordingly
+        setIsEmailVerified(isEmailVerified);
+      } else {
+        // Email is not verified, display error message
+        console.log(response);
+        toast.error(data.message || "Email verification failed.");
+      }
+    } catch (error) {
+      // Display error message using toast
+      toast.error("An error occurred while checking email verification.");
+    }
+  };
+
+  const handleSubmit = async () => {
+    checkEmailVerificationStatus();
+    try {
+      // Perform login API call
+      const response = await fetch(
+        "https://groundsageevent-be.onrender.com/api/v1/profile/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      );
+      const data = await response.json();
+
+      // Check if login was successful
+      if (response.ok) {
+        // Display success message using toast
+        toast.success("Login successful");
+        // Redirect to dashboard or home page
+        // Example: navigate("/dashboard");
+        // const userId = data?.data?.[0]?.user_id;
+        const userData = data?.data?.[0];
+        setUser(userData);
+        navigate('/shops');
+      } else {
+        // Display error message using toast
+        toast.error(data.message || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      // Display error message using toast
+      toast.error("An error occurred. Please try again.");
+    }
+  };
+
+  const handleVerify = async () => {
+    // setVerificationStarted(true);
+    navigate("/entermail", { state: { isEmailVerified } });
+  };
   return (
     <div>
+      <ToastContainer />
+
       <Box
         sx={{
           display: "flex",
           background: "rgb(66, 92, 90)",
+          justifyContent: "space-around",
+          flexDirection: { xs: "column-reverse", md: "row" },
           // justifyContent:"space-around",
-          height: "100vh",
+          minheight: "100vh",
         }}
       >
-        <Box sx={{ marginTop: "50px", width: "25%", marginLeft: "8%" }}>
+        <Box sx={{ marginTop: "50px", width: "25%" }}>
           <Typography
             sx={{
               color: "rgb(165, 170, 174)", // Set label color to white
@@ -37,7 +133,13 @@ const SignInPage = () => {
             Sign In
           </Typography>
           <TextField
-            id="filled-basic"
+            id="email"
+            label="Email"
+            variant="filled"
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={checkEmailVerificationStatus}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -65,11 +167,34 @@ const SignInPage = () => {
               border: "1px solid rgb(188, 189, 163)", // Add border color
               marginBottom: "15px",
             }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button
+                    variant="text"
+                    color={isEmailVerified ? "success" : "primary"}
+                    onClick={handleVerify}
+                    sx={{
+                      // backgroundColor: "rgb(115, 135, 135)",
+                      color: isEmailVerified ? "green" : "#162D3A",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {isEmailVerified ? "Email Verified" : "Verify Email"}
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
           />
-
           <br />
           <TextField
-            id="filled-basic"
+            id="password"
+            label="Password"
+            variant="filled"
+            fullWidth
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -157,6 +282,7 @@ const SignInPage = () => {
                   boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
                 },
               }}
+              onClick={handleSubmit}
             >
               Sign In
               <img
@@ -180,7 +306,7 @@ const SignInPage = () => {
             <img
               src="../../../Images/Group 33505.png"
               alt="Google Login"
-              style={{ marginLeft: "9%", cursor: "pointer" }}
+              style={{ marginLeft: "0%", cursor: "pointer" }}
             />
           </Box>
           <div
@@ -196,7 +322,7 @@ const SignInPage = () => {
                 fontSize: { lg: "18px", sm: "18px", xs: "16px" },
                 textAlign: "center",
               }}
-            > 
+            >
               Don’t have an account?{" "}
             </Typography>
             <Typography
@@ -212,11 +338,21 @@ const SignInPage = () => {
             </Typography>
           </div>
         </Box>
-        <Box>
-          <img
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Box
+            component="img"
             src="../../../Images/calendar-5402487_1280 2.svg"
             alt="Right Arrow"
-            style={{ marginTop: "25%", marginLeft: "35%" ,width:'115%'}}
+            sx={{
+              marginRight: { xs: "0", lg: "25%" },
+              margin: { xs: "10px 20px 10px 20px", md: "0" },
+              width: { xs: "100%", md: "110%" },
+            }}
           />
         </Box>
       </Box>

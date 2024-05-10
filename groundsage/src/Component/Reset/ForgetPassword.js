@@ -9,12 +9,53 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleForgetPassword = async () => {
+    console.log(email);
+    try {
+      const response = await fetch(
+        "https://groundsageevent-be.onrender.com/api/v1/profile/forgot-password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+            confirm_password: confirmPassword,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        // Password reset successful, handle accordingly (e.g., redirect)
+        console.log(response);
+        toast.success(response.message);
+      } else {
+        // Password reset failed, handle error
+        console.log(response);
+        toast.error(response.message);
+        console.error("Password reset failed:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Password reset failed:", error.message);
+      toast.error("An error occurred while resetting password.");
+    }
+  };
+
   return (
     <div>
+      <ToastContainer />
       <Box
         sx={{
           display: "flex",
@@ -23,6 +64,7 @@ const ForgetPassword = () => {
           height: "100vh",
         }}
       >
+        
         <Box sx={{ marginTop: "50px", width: "23%", marginLeft: "8%" }}>
           <Typography
             sx={{
@@ -46,7 +88,12 @@ const ForgetPassword = () => {
             use.
           </Typography>
           <TextField
-            id="filled-basic"
+            id="email"
+            label="Email"
+            variant="filled"
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -78,7 +125,12 @@ const ForgetPassword = () => {
 
           <br />
           <TextField
-            id="filled-basic"
+            id="password"
+            label="password"
+            variant="filled"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -135,7 +187,12 @@ const ForgetPassword = () => {
             }}
           />
           <TextField
-            id="filled-basic"
+            id="confirmPassword"
+            label="confirmPassword"
+            variant="filled"
+            fullWidth
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -211,6 +268,7 @@ const ForgetPassword = () => {
                   boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
                 },
               }}
+              onClick={handleForgetPassword}
             >
               Send
               <img

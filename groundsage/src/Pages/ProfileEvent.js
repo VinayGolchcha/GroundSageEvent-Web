@@ -57,7 +57,7 @@ const ProfileEvent = () => {
         backgroundColor: "rgb(66, 92, 90)",
         // height: { ...[eventList.length === 0 ? "100vh" : "auto"] }
 
-        marginLeft: "130px",
+        // marginLeft: "130px",
       }}
     >
       {eventList.slice(0, endpoint).map((item, index) => {
@@ -66,35 +66,30 @@ const ProfileEvent = () => {
             key={index}
             sx={{
               backgroundColor: "rgb(66, 92, 90)",
-              margin: "2% 12%",
+              margin: "2%",
               border: "2px solid rgba(0, 0, 0, 0.16)",
               borderRadius: "10px",
               padding: "8px",
-              display: "flex",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              alignItems: "center",
+              // justifyContent: "center",
             }}
           >
+            <img
+              src="confetti-05.png"
+              alt="Confetti"
+              // style={{ marginLeft: "-100px" }}
+            />
             <Box
               sx={{
-                display: "flex",
-
-                justifyContent: "center",
-                width: "700px",
-              }}
-            >
-              <img
-                src="confetti-05.png"
-                alt="Confetti"
-                style={{ marginLeft: "-100px" }}
-              />
-            </Box>
-            <Box
-              sx={{
-                marginRight: "40%",
+                // marginRight: "40%",
                 background:
                   "linear-gradient(rgb(65, 93, 91), rgba(115, 135, 135, 0))",
-                display: "grid",
-                alignItems: "center",
+                // display: "grid",
+                // alignItems: "center",
+                marginLeft: { xs: "0px", md: "7%" },
+
               }}
             >
               <Typography

@@ -87,7 +87,7 @@ const IncomeList = () => {
       {Income.length !== 0 && (
         <Box
           sx={{
-            margin: "2% 18%",
+            margin: { xs: "20px", md: "2% 18%" },
             padding: "0px 15px",
             display: "flex",
             justifyContent: "space-between",
@@ -159,7 +159,9 @@ const IncomeList = () => {
                 src="add-icon.png"
                 alt="add-icon"
                 style={{ cursor: "pointer" }}
-                onClick={()=>{navigate('/transaction')}}
+                onClick={() => {
+                  navigate("/transaction");
+                }}
               />
             )}
           </Box>
@@ -172,7 +174,7 @@ const IncomeList = () => {
               key={index}
               sx={{
                 backgroundColor: "rgb(66, 92, 90)",
-                margin: "2% 18%",
+                margin: { xs: "20px", md: "2% 18%" },
                 border: "2px solid rgba(0, 0, 0, 0.16)",
                 borderRadius: "10px",
                 padding: "15px",
@@ -227,7 +229,7 @@ const IncomeList = () => {
                       sx={{
                         color: "rgb(216, 217, 217)",
                         fontWeight: "400",
-                        fontSize: "28px",
+                        fontSize: { xs: "18px", md: "24px" },
                         fontFamily: "Poppins",
                       }}
                     >
@@ -236,7 +238,7 @@ const IncomeList = () => {
                     <Typography
                       sx={{
                         color: "#FFFFFF",
-                        fontSize: "20px",
+                        fontSize: { xs: "16px", md: "20px" },
                         fontFamily: "Poppins",
                       }}
                     >
@@ -246,13 +248,15 @@ const IncomeList = () => {
                   <div
                     style={{
                       display: "flex",
-                      width: "60%",
+                      flexWrap:"wrap",
+                      width: "90%",
                       justifyContent: "space-around",
                     }}
                   >
                     <div>
                       <Button
                         variant="Contained"
+                        size="small"
                         sx={{
                           color: "rgb(91, 94, 97)",
                           fontFamily: "Inter",
@@ -272,6 +276,7 @@ const IncomeList = () => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          fontSize: { xs: "13px", md: "20px" },
                         }}
                       >
                         Decided Amount
@@ -299,6 +304,7 @@ const IncomeList = () => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          fontSize: { xs: "13px", md: "20px" },
                         }}
                       >
                         Outstanding Amount
@@ -326,6 +332,8 @@ const IncomeList = () => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          fontSize: {xs:"13px",md:"20px"},
+
                         }}
                       >
                         Entered Amount
