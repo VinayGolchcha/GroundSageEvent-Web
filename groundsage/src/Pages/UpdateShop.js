@@ -10,11 +10,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextApi/AuthContext";
+import { useLocation } from "react-router-dom";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -28,21 +29,29 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export default function CreateShopPage() {
+export default function UpdateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-  const {setShopIds} = useContext(AuthContext)
+  const { setShopIds } = useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  const [eventData, setEventData] = useState({
-    event_id: 1111,
-    description: "",
-    area: null,
-    rent: null,
-    dome: "",
-    location: "",
-    status: "Vacant",
-    shop_number: Math.floor(Math.random() * 50) + 1, // Generate random shop number between 1 and 50
-  });
+  const [eventData, setEventData] = useState({});
+  const location = useLocation();
+  const selectedShop = location.state && location.state.selectedShop;
+
+  useEffect(() => {
+    if (selectedShop) {
+      // Populate form fields with shop details
+      setEventData({
+        dome: selectedShop.dome,
+        rent: selectedShop.rent,
+        description: selectedShop.description,
+        area: selectedShop.area,
+        location: selectedShop.location,
+      });
+      setShopStatus(selectedShop.status);
+    }
+    console.log(selectedShop);
+  }, [selectedShop]);
 
   const handleInputChange = (e, field) => {
     const newValue = e.target.value;
@@ -54,49 +63,34 @@ export default function CreateShopPage() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/create-shop",
-        eventData
-      );
-
-      if (response.status === 200) {
-        toast.success("Shop created successfully!");
-        setEventData({
-          event_id: "",
-          description: "",
-          area: "",
-          rent: "",
-          dome: "",
-          location: "",
-          status: "Vacant",
-          shop_number:8,
-        });
-        setShopIds(response.data.data.shop_id);
-        console.log(response.data.data.shop_id)
+      // Prepare the updated data
+      const updatedData = {
+        dome: eventData.dome,
+        rent: eventData.rent,
+        description: eventData.description,
+        area: eventData.area,
+        location: eventData.location,
+        status: shopStatus,
+      };
+  
+      // Send PUT request to update shop details
+      const response = await axios.put(`https://groundsageevent-be.onrender.com/api/v1/shop/update-shop/${selectedShop.id}/${selectedShop.event_id}`, updatedData);
+  
+      // Check if the request was successful (status code 2xx)
+      if (response.status >= 200 && response.status < 300) {
+        // Show success message
+        toast.success('Shop details updated successfully!');
+        console.log(response);
       } else {
-        toast.error("Failed to create shop. Please try again later.");
-        console.error("Error creating shop: Invalid response code");
+        // If response status is not in the 2xx range, throw an error
+        throw new Error('Failed to update shop details. Please try again.');
       }
     } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        const errorMessage = error.response.data.message;
-        if (errorMessage.includes("Shop number")) {
-          toast.error(
-            "Shop number already exists. Please choose a different shop number."
-          );
-        } else {
-          toast.error("Failed to create shop. Please try again later.");
-        }
-      } else {
-        toast.error("Failed to create shop. Please try again later.");
-      }
-      console.error("Error creating shop:", error);
+      // Show error message if request fails
+      toast.error(error.message || 'Failed to update shop details. Please try again.');
     }
   };
+  
 
   const handleStatus = () => {
     if (shopStatus === "Vacant") {
@@ -167,7 +161,7 @@ export default function CreateShopPage() {
             fontSize: { xs: "40px", md: "56px" },
           }}
         >
-          Add New Shop
+          Update Shop
         </Typography>
         <Typography
           variant="h4"
@@ -209,7 +203,7 @@ export default function CreateShopPage() {
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
-                  width: "100%",
+                  width: eventData.dome ? "auto" : "100%", // Adjust width based on value presence
                   margin: "10px 0px ",
                 }}
                 InputProps={{
@@ -591,7 +585,7 @@ export default function CreateShopPage() {
             }}
             onClick={handleSubmit}
           >
-            Save
+            Update
           </Button>
         </Box>
       </Box>

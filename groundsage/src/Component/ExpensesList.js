@@ -78,7 +78,7 @@ const ExpensesList = () => {
       {expenses.length !== 0 && (
         <Box
           sx={{
-            margin: "2% 18%",
+            margin: { xs: "20px", md: "2% 18%" },
             padding: "0px 15px",
             display: "flex",
             justifyContent: "space-between",
@@ -164,7 +164,7 @@ const ExpensesList = () => {
               key={index}
               sx={{
                 backgroundColor: "rgb(66, 92, 90)",
-                margin: "2% 18%",
+                margin: { xs: "20px", md: "2% 18%" },
                 border: "2px solid rgba(0, 0, 0, 0.16)",
                 borderRadius: "10px",
                 padding: "15px",
@@ -219,7 +219,7 @@ const ExpensesList = () => {
                       sx={{
                         color: "rgb(216, 217, 217)",
                         fontWeight: "400",
-                        fontSize: "28px",
+                        fontSize: { xs: "16px", md: "20px" },
                         fontFamily: "Poppins",
                       }}
                     >
@@ -228,7 +228,7 @@ const ExpensesList = () => {
                     <Typography
                       sx={{
                         color: "#FFFFFF",
-                        fontSize: "20px",
+                        fontSize: { xs: "16px", md: "20px" },
                         fontFamily: "Poppins",
                       }}
                     >
@@ -238,7 +238,7 @@ const ExpensesList = () => {
                   <div
                     style={{
                       display: "flex",
-                      width: "50%",
+                      width: "60%",
                       justifyContent: "space-evenly",
                     }}
                   >
@@ -264,6 +264,8 @@ const ExpensesList = () => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          fontSize: { xs: "13px", md: "20px" },
+
                         }}
                       >
                         Amount
@@ -291,6 +293,7 @@ const ExpensesList = () => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
+                          fontSize: { xs: "13px", md: "20px" },
                         }}
                       >
                         Balance Payable

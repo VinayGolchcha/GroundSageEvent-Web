@@ -37,12 +37,12 @@ const Profile = () => {
           navigate(-1); // Navigate back by one step in the history stack
         }}
       />
-      <div style={{ flex: 1, paddingLeft: "20px" }}>
+      <div style={{ flex: 1, paddingLeft: "20px", maxWidth: "100vw" }}>
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
             textAlign: "center",
-            fontSize: "56px",
+            fontSize: { xs: "40px", md: "56px" },
             fontFamily: "Inter",
             fontWeight: "700",
             marginTop: "-30px",
@@ -55,22 +55,21 @@ const Profile = () => {
       <Box
         sx={{
           display: "flex",
-          // justifyContent: "space-between",
-          // width: {xs:"100%",md:"75%",lg:"75%"},
+          width: "100vw", // Adjust as needed
+          // justifyContent:"space-around"
         }}
       >
-        <Sidbar
-          onItemClick={(content) => setContent(content)}
-          activeContent={content}
-        />
-        <Box
-          sx={
-            {
-              // margin: "3% 0px 0px 15%",
-              // marginTop:"5%"
-            }
-          }
-        >
+        <Box sx={{ width: "20%" }}>
+          {" "}
+          {/* Adjust sidebar width */}
+          <Sidbar
+            onItemClick={(content) => setContent(content)}
+            activeContent={content}
+          />
+        </Box>
+        <Box sx={{ width: "60%" }}>
+          {" "}
+          {/* Adjust content area width */}
           {renderContent()}
         </Box>
       </Box>

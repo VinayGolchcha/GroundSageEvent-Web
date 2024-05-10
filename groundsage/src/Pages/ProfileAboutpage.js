@@ -21,7 +21,8 @@ const ProfileAboutpage = () => {
     <div
       style={
         {
-          margin: "5% 0px 0px 30%",
+          // margin: "5% 0px 0px 30%",
+          width:"60%"
         }
       }
     >

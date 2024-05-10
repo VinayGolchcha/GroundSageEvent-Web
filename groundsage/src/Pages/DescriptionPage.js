@@ -1,31 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import MyCarousel from "../Component/Slider";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import ShopEditForm from "../Component/ShopEdit";
+import UpdateShopPage from "./UpdateShop";
 
 const DescriptionPage = () => {
   const navigate = useNavigate();
   let { shopIndex } = useParams();
   const location = useLocation();
   const shopDetails = location.state && location.state.shopDetails;
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const toggleFormVisibility = () => {
+    setIsFormOpen(!isFormOpen);
+  };
 
   const selectedShop = shopDetails[shopIndex];
   console.log(selectedShop);
 
+  const handleEdit = () => {
+    navigate('/update-shop', { state: { selectedShop: selectedShop } });
+  };
+
   const rows = [
-    { label: "Shop Number :", value: `${parseInt(shopIndex) + 1}` },
-    { label: "Shop DESCRIPTION :", value: "Small shop" },
-    { label: "Shop Area :", value: "1200 sq." },
-    { label: "Rent:", value: "10k / month" },
-    { label: "Shop Location :", value: "NEar Entrance" },
+    { label: "Shop Number : ", value: `${selectedShop.shop_number}` },
+    { label: "Shop Dome : ", value: `${selectedShop.dome}` },
+    { label: "Shop DESCRIPTION : ", value: `${selectedShop.description}` },
+    { label: "Shop Area : ", value: `${selectedShop.area} sq.` },
+    { label: "Rent: ", value: `${selectedShop.rent}` },
+    { label: "Shop Location : ", value: `${selectedShop.location}` },
   ];
 
   return (
     <div
       style={{
         background: "rgb(66, 92, 90)",
-        padding: "0px",
-        minHeight: "100vh",
+        padding: "20px",
+        // minHeight: "100vh",
         overflowY: "auto",
       }}
     >
@@ -37,14 +49,15 @@ const DescriptionPage = () => {
           navigate(-1); // Navigate back by one step in the history stack
         }}
       />
+
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: "56px",
+          fontSize: { xs: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
-          marginTop: "-30px",
+          marginTop: { xs: "0px", md: "-30px" },
           textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
         }}
       >
@@ -59,12 +72,13 @@ const DescriptionPage = () => {
           borderRadius: "7px",
           display: "flex",
           maxWidth: "fit-content",
+          width: { xs: "80%", md: "90%" },
           padding: "12px 30px 5px 30px",
           marginTop: "10px",
           borderColor: "rgb(112, 141, 161)", // Added border color
         }}
       >
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{}}>
           {/* Map over the rows array to render the content */}
           {rows.map((row, index) => (
             <div
@@ -81,10 +95,11 @@ const DescriptionPage = () => {
                 gutterBottom
                 sx={{
                   color: "rgb(165, 170, 174)",
-                  fontSize: "20px",
+                  fontSize: { xs: "16px", md: "20px" },
                   fontFamily: "Poppins",
                   lineHeight: "1.5",
                   fontWeight: "600",
+                  textAlign: "left",
                 }}
               >
                 {row.label}
@@ -95,10 +110,11 @@ const DescriptionPage = () => {
                 gutterBottom
                 sx={{
                   color: "rgb(255, 255, 255)",
-                  fontSize: "20px",
+                  fontSize: { xs: "16px", md: "20px" },
                   fontFamily: "Poppins",
                   lineHeight: "1.5",
                   fontWeight: "600",
+                  textAlign: "left",
                 }}
               >
                 {row.value}
@@ -112,6 +128,7 @@ const DescriptionPage = () => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
+            width: "20%",
           }}
         >
           <img
@@ -159,6 +176,25 @@ const DescriptionPage = () => {
           }}
         >
           Go to Rental
+        </Button>
+        <Button
+          size="large"
+          variant="contained"
+          sx={{
+            color: "rgb(91, 94, 97)",
+            background: "rgb(247, 230, 173)",
+            marginLeft: "10px",
+            marginTop: "20px",
+            marginBottom: "5px",
+            "&:hover": {
+              backgroundColor: "rgb(247, 230, 173)",
+              color: "rgb(50, 50, 50)",
+              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)",
+            },
+          }}
+          onClick={handleEdit}
+        >
+          Edit
         </Button>
       </div>
     </div>

@@ -1,14 +1,32 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
-import Checkbox from '@mui/joy/Checkbox';
+import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
 
 export default function EventListPage() {
   const navigate = useNavigate();
-
   const [eventList, setEventList] = useState([
-    
+    {
+      eventType: "FOOD EVENT",
+      eventDes: "Celebration with different cuisines from different regions...",
+      date: "13th April 2024 - 13th Jun 2024",
+    },
+    {
+      eventType: "FOOD EVENT",
+      eventDes: "Celebration with different cuisines from different regions...",
+      date: "13th April 2024 - 13th Jun 2024",
+    },
+    {
+      eventType: "FOOD EVENT",
+      eventDes: "Celebration with different cuisines from different regions...",
+      date: "13th April 2024 - 13th Jun 2024",
+    },
+    {
+      eventType: "FOOD EVENT",
+      eventDes: "Celebration with different cuisines from different regions...",
+      date: "13th April 2024 - 13th Jun 2024",
+    },
   ]);
   const [endpoint, setEndpoint] = useState(3);
   const [allselect, setAllselect] = useState(false);
@@ -25,10 +43,10 @@ export default function EventListPage() {
   };
 
   const handleClick = () => {
-    if(eventListLength === "Show More..."){
+    if (eventListLength === "Show More...") {
       setEndpoint(eventList.length);
       setEventListLength("Show Less...");
-    }else if(eventListLength === "Show Less..."){
+    } else if (eventListLength === "Show Less...") {
       setEndpoint(3);
       setEventListLength("Show More...");
     }
@@ -53,15 +71,16 @@ export default function EventListPage() {
   };
   const refreshPage = () => {
     window.location.reload(false);
-  }
+  };
 
   return (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
         // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
-        minHeight: "100vh",
-        minHeight: "100vh",
+        // minHeight: "100vh",
+        // minHeight: "100vh",
+        padding: "20px 20px 50px 20px",
       }}
     >
       <img
@@ -72,7 +91,10 @@ export default function EventListPage() {
           navigate(-1); // Navigate back by one step in the history stack
         }}
       />
-      <Box sx={{ backgroundColor: "rgb(66, 92, 90)", display: "flex" }} onClick = {refreshPage}>
+      <Box
+        sx={{ backgroundColor: "rgb(66, 92, 90)", display: "flex" }}
+        onClick={refreshPage}
+      >
         <Typography
           variant="h3"
           sx={{
@@ -83,7 +105,7 @@ export default function EventListPage() {
             // padding: "30px",
             marginTop: "-20px",
             fontFamily: "Outfit",
-            textShadow: "0 6px rgba(81,67,21,0.8)"
+            textShadow: "0 6px rgba(81,67,21,0.8)",
           }}
         >
           All Events
@@ -92,7 +114,7 @@ export default function EventListPage() {
       {eventList.length !== 0 && (
         <Box
           sx={{
-            margin: "2% 18%",
+            margin: { xs: "20px", md: "2% 18%" },
             padding: "0px 15px",
             display: "flex",
             justifyContent: "space-between",
@@ -102,31 +124,42 @@ export default function EventListPage() {
             <FormControlLabel
               label="Select All"
               control={
-                <Checkbox sx={{marginRight : "8px"}} variant="outlined" color="neutral" checked={allselect} onChange={handleAllChange} />
+                <Checkbox
+                  sx={{ marginRight: "8px" }}
+                  variant="outlined"
+                  color="neutral"
+                  checked={allselect}
+                  onChange={handleAllChange}
+                />
               }
               sx={{
                 color: "rgb(216, 217, 217)",
                 marginLeft: "0px",
                 fontFamily: "Poppins",
-                "& .css-ahj2mt-MuiTypography-root" : {
-                  fontSize : "1.2rem"
-                  }
+                "& .css-ahj2mt-MuiTypography-root": {
+                  fontSize: "1.2rem",
+                },
               }}
-              
             />
           ) : (
             <FormControlLabel
               label="Select"
               control={
-                <Checkbox sx={{marginRight : "8px"}} variant="outlined" color="neutral" checked={select} onChange={handleSelectChange} />
+                <Checkbox
+                  sx={{ marginRight: "8px" }}
+                  variant="outlined"
+                  color="neutral"
+                  checked={select}
+                  onChange={handleSelectChange}
+                />
               }
               sx={{
                 color: "rgb(216, 217, 217)",
                 marginLeft: "0px",
                 fontFamily: "Poppins",
-                "& .css-ahj2mt-MuiTypography-root" : {
-                fontSize : "1.2rem"
-                }
+                "& .css-ahj2mt-MuiTypography-root": {
+                  fontSize: "1.2rem",
+                },
               }}
             />
           )}
@@ -156,7 +189,7 @@ export default function EventListPage() {
             key={index}
             sx={{
               backgroundColor: "rgb(66, 92, 90)",
-              margin: "2% 18%",
+              margin: { xs: "20px", md: "2% 18%" },
               border: "2px solid rgba(0, 0, 0, 0.16)",
               borderRadius: "10px",
               padding: "15px",
@@ -176,7 +209,7 @@ export default function EventListPage() {
               >
                 {select === true && (
                   <Checkbox
-                    variant="outlined" 
+                    variant="outlined"
                     color="neutral"
                     checked={item.isSelected}
                     onChange={() => handleCheckboxChange(index)}
@@ -184,11 +217,15 @@ export default function EventListPage() {
                   />
                 )}
               </Box>
-              <img src="confetti-05.png" alt="Confetti" />
+              <img
+                src="confetti-05.png"
+                alt="Confetti"
+                style={{ width: "90%" }}
+              />
             </Box>
             <Box
               sx={{
-                marginLeft: "7%",
+                marginLeft: { xs: "0px", md: "7%" },
                 background:
                   "linear-gradient(rgb(65, 93, 91), rgba(115, 135, 135, 0))",
                 display: "grid",
@@ -232,7 +269,6 @@ export default function EventListPage() {
               alignItems: "center",
               justifyContent: "center",
               width: "60vw",
-              width: "100vw",
             }}
           >
             <Box

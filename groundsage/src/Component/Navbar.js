@@ -248,18 +248,26 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../ContextApi/AuthContext";
 
-const pages = ["Events", "Shops", "Teams", "Transaction", "Notes","Reports"];
+const pages = ["Events", "Shops", "Teams", "Transaction", "Notes", "Reports"];
 const settings = ["Visit Profile", "Logout"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { logout } = React.useContext(AuthContext);
   const location = useLocation();
-  const navigate = useNavigate()
-  if (location.pathname === "/") {
-        return null;
-      }
+  const navigate = useNavigate();
+  if (
+    location.pathname === "/" ||
+    location.pathname === "/entermail" ||
+    location.pathname === "/signin" ||
+    location.pathname === "/signup"
+  ) {
+    return null;
+  }
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -275,28 +283,40 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleLogout = async () => {
+    try {
+      // Call logout function from AuthContext
+      await logout();
+      // Redirect to the login page or any other page
+      // Example: navigate("/login");
+    } catch (error) {
+      // Handle logout error
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <div>
       <AppBar
         position="static"
-        sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none" }}
+        sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none"  }}
       >
-        <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <NavLink to="/" style={{ textDecoration: "none" }}>
+            {/* <NavLink to="/" style={{ textDecoration: "none" }}> */}
               <Box
                 component="img"
                 src="../../../Images/logo_1 1.png"
-                alt="Right Arrow"
+                alt="logo"
                 sx={{
-                  marginRight: "5px",
                   height: "45px",
-                  display: { xs: "none", md: "flex" },
+                  display: { xs: "none", md: "block" },
+                  // justifyContent: "leftwid",
+                  // alignItems:"left",
+                  marginLeft:"30px"
                 }}
               />
-            </NavLink>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            {/* </NavLink>   */}
+            <Box sx={{  display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -340,13 +360,15 @@ function Navbar() {
                 marginRight: "5px",
                 height: "45px",
                 display: { xs: "flex", md: "none" },
+                justifyContent:"left",
               }}
             />
             <Box
               sx={{
-                flexGrow: 1,
                 display: { xs: "none", md: "flex" },
-                marginLeft: "15%",
+                justifyContent: "space-around",
+                marginLeft: "10%",
+                width:"80%"
               }}
             >
               {pages.map((page) => (
@@ -358,9 +380,10 @@ function Navbar() {
                   <Button
                     sx={{
                       my: 2,
-                      display: "block",
-                      justifyContent: "space-around",
-                      width: "150px",
+                      // justifyContent: "space-around",
+                      // width: "150px",
+                      // display: "flex",
+                      // justifyContent: "space-between",
                       color: location.pathname.includes(page.toLowerCase())
                         ? "rgb(247, 230, 173)"
                         : "white",
@@ -385,7 +408,7 @@ function Navbar() {
 
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,marginRight:"50px",}}>
                   <Avatar alt="" src="../../Component/profile..png" />
                 </IconButton>
               </Tooltip>
@@ -437,7 +460,9 @@ function Navbar() {
                           },
                         }}
                         onClick={() => {
-                          setting === "Visit Profile" && navigate("/Profile");
+                          (setting === "Visit Profile" &&
+                            navigate("/Profile")) ||
+                            (setting === "Logout" && handleLogout());
                         }}
                       >
                         {setting}
@@ -448,7 +473,6 @@ function Navbar() {
               </Menu>
             </Box>
           </Toolbar>
-        </Container>
       </AppBar>
     </div>
   );
