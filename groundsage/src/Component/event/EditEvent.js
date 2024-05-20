@@ -28,19 +28,27 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
   console.log(selectedItem);
     const [openCalendar1, setOpenCalendar1] = useState(false);
     const [openCalendar2, setOpenCalendar2] = useState(false);
-    const [fromDate , setFromDate] = useState("2022-04-20");
-    const [toDate , setToDate] = useState("2022-04-20");
+    const [fromDate , setFromDate] = useState(dayjs(selectedItem.start_date));
+    const [toDate , setToDate] = useState(dayjs(selectedItem.end_date));
     const [file, setFIle] = useState();
     const {user} = useContext(AuthContext);
     const eventNameElement = useRef(null);
     const fromDateElement = useRef(null);
     const toDateElement = useRef(null);
     const descriptionElement = useRef(null);
-    const teamNameElement = useRef(null);
-    const teamSizeElement = useRef(null);
-    const coordinatorCountElement = useRef(null);
-    const staffMemberCountElement = useRef(null);
-    const helperCountElement = useRef(null);
+    const [fromDateSelected , setFormDateSelected] = useState(false);
+    const [toDateSelected , setToDateSelected] = useState(false);
+    const handleOpenCalender1 = () => {
+      setOpenCalendar1(true);
+      setFormDateSelected(true);
+    }
+
+    const handleOpenCalender2 = () => {
+      setOpenCalendar2(true);
+      setToDateSelected(true);
+    }
+
+
 
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
@@ -64,7 +72,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
       formattedFromDate[0] = formattedFromDate[1]
       formattedFromDate[1] = temp;
       formattedFromDate = formattedFromDate.reverse().join('-');
-      let formattedToDate = fromDateElement.current.value.split('/');
+      let formattedToDate = toDateElement.current.value.split('/');
       let tempTodate = formattedToDate[0];
       formattedToDate[0] = formattedToDate[1]
       formattedToDate[1] = tempTodate;
@@ -137,13 +145,23 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                   variant="standard"
                   sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
                 >
-                  <InputLabel id="from-date-label" sx={{color : "white"}}>From Date</InputLabel>
+                  {fromDateSelected === false && <InputLabel id="from-date-label" sx={{color : "white"
+                    ,
+                    ...(fromDateElement && {
+                      
+                        color : "white",
+                        opacity : "0.2",
+                        paddingLeft : "100px"
+                      ,
+                    } ) ,
+                  }}>From Date</InputLabel>}
                   <DatePicker
                     labelId="from-date-label"
                     value={dayjs(fromDate)}
-                    onChange={(newValue) => setFromDate(newValue.$d.toISOString().split('T')[0])} // Handle onChange event if needed
+                    onChange={(newValue) => console.log(newValue.$d)} // Handle onChange event if needed
                     open={openCalendar1}
-                    onOpen={() => setOpenCalendar1(true)}
+                    minDate={dayjs(fromDate)}
+                    onOpen={handleOpenCalender1}
                     onClose={() => setOpenCalendar1(false)}
                     inputRef={fromDateElement}
                     slotProps={{
@@ -153,7 +171,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                             <img
                               src="image-4.png"
                               style={{ cursor: "pointer" }}
-                              onClick={() => setOpenCalendar1(true)}
+                              onClick={handleOpenCalender1}
                             />
                           ),
                         },
@@ -172,8 +190,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                     //     borderBottom: " 1px solid rgb(188, 189, 163)",
                     //   },
                       "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
-                          opacity : "0"
+                        color : "white"
                       },
+
                       "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
                         borderRadius : "0px",
                         borderBottom: " 1px solid rgb(188, 189, 163)",
@@ -188,14 +207,22 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                   variant="standard"
                   sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
                 >
-                  <InputLabel id="from-date-label" sx={{color : "white"}}>To date</InputLabel>
+                  {toDateSelected === false && <InputLabel id="from-date-label" sx={{color : "white",
+                    ...(fromDateElement && {
+                      
+                        color : "white",
+                        opacity : "0.2",
+                        paddingLeft : "100px"
+                      ,
+                    } ) ,}}>To date</InputLabel>}
                   <DatePicker
                     labelId="to-date-label"
                     value={dayjs(toDate)}
-                    onChange={(newValue) => setToDate(newValue.$d.toISOString().split('T')[0])} // Handle onChange event if needed
+                    onChange={(newValue) => setToDate(newValue.$d)} // Handle onChange event if needed
                     open={openCalendar2}
-                    onOpen={() => setOpenCalendar2(true)}
+                    onOpen={handleOpenCalender2}
                     onClose={() => setOpenCalendar2(false)}
+                    minDate={dayjs(toDate)}
                     inputRef={toDateElement}
                     slotProps={{
                       textField: {
@@ -204,7 +231,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                             <img
                               src="image-4.png"
                               style={{ cursor: "pointer" }}
-                              onClick={() => setOpenCalendar2(true)}
+                              onClick={handleOpenCalender2}
                             />
                           ),
                         },
@@ -223,7 +250,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                         //     borderBottom: " 1px solid rgb(188, 189, 163)",
                         //   },
                           "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
-                              opacity : "0"
+                            color: "white",
                           },
                           "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
                             borderRadius : "0px",

@@ -4,7 +4,7 @@ import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import Loading from "../Component/Loading";
 import { AuthContext } from "../ContextApi/AuthContext";
@@ -32,7 +32,15 @@ export default function EventListPage() {
         body
       );
       console.log(res);
-      console.log(selectedId);
+      toast.success(res?.data?.data , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        }});
+        setIsEdit(!isEdit);
     }catch(err){
       console.log(err);
       toast.error(err);
@@ -84,6 +92,19 @@ export default function EventListPage() {
   const handleEditEvent = () => {
     const ele = eventList?.filter(item => item.isSelected === true);
     console.log(ele);
+    if(ele.length > 1) {
+      toast.warning("Cannot Edit the multiple Events" , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      });
+      return
+    }
     setSelectedId(ele[0]?.id);
     setSelectedItem(ele[0]);
     setIsEdit(true);
@@ -133,6 +154,7 @@ export default function EventListPage() {
         padding: "20px 20px 50px 20px",
       }}
     >     
+      <ToastContainer position="bottom-right" style={{ color: "red" }} />
       <img
         src="../../Images/arrow-left.png"
         alt="Share"
@@ -223,12 +245,12 @@ export default function EventListPage() {
             {select === true ? (
               <>
               <img src="edit-image.png" alt="edit Icon" style={{ padding: "2px", height: "23px" }} onClick={handleEditEvent}/>
-              <img
+              {/* <img
                 src="deleteIcon.png"
                 alt="delete Icon"
                 style={{ padding: "2px", height: "30px" }}
                 onClick={handleDelete}
-              />
+              /> */}
               </>
             ) : (
               <Link to="/create-event"><img src="add-icon.png" alt="add-icon" /></Link>

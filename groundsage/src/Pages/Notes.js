@@ -176,6 +176,19 @@ const Notes = () => {
   // };
   const handleEditOpenPopup = () => {
     const ele = eventList?.filter(item => item.isSelected === true);
+    if(ele.length > 1){
+      toast.warning("Cannot edit the multiple notes ", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      })
+      return ;
+    }
     setSelectedId(ele[0]?._id);
     setSelectedItem(ele[0]);
     setIsEditPopupOpen(!isEditPopupOpen);
