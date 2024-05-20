@@ -1,8 +1,58 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import Footer from "../Component/Footer";
+import * as React from 'react';
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { AuthContext } from "../ContextApi/AuthContext";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 150,
+    },
+  },
+};
+
+const names = [
+  "Event Name 1",
+  "Event Name 2",
+  "Event Name 3",
+];
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+
+
+
 
 export default function HomePage() {
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState([]);
+  const {eventIds , setActiveEvent ,activeEvent} = React.useContext(AuthContext);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
   const [events, setEvents] = useState([
     {
       event: "Event Name 1",
@@ -23,10 +73,15 @@ export default function HomePage() {
       description: "Event Description...........................",
     },
   ]);
+  const handleSelection = (id) => {
+    setActiveEvent(id);
+    console.log(activeEvent);
+  }
   return (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
+        paddingBottom : "20px"
       }}
     >
       <Typography
@@ -38,31 +93,89 @@ export default function HomePage() {
       </Typography>
 
       <Box
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' }, // Column for small screens, row for larger screens
+        justifyContent: 'space-between',
+        backgroundColor: 'rgb(78, 101, 100)',
+        borderBottomLeftRadius: '80px',
+        borderBottomRightRadius: '80px',
+        padding: { xs: '20px', md: '40px' , lg : "0px" }, // Responsive padding
+        alignItems: 'center', // Align items to the center vertically in column mode
+      }}
+    >
+      <Box
         sx={{
-          backgroundColor: "rgb(78, 101, 100)",
-          borderBottomLeftRadius: "80px",
-          borderBottomRightRadius: "80px",
+          margin: { xs: '0 5%', md: '0 18%' }, // Responsive margin
+          textAlign: { xs: 'center', md: 'left' }, // Center text on small screens
         }}
       >
         <Typography
           variant="h4"
           color="rgb(255, 255, 255)"
-          sx={{ margin: "0% 18%", marginTop: "10px" }}
+          sx={{ marginTop: '10px', width: 'fit-content' }}
         >
-          WELCOME BACK !
+          WELCOME BACK!
         </Typography>
         <Typography
           variant="h5"
           color="rgb(254, 240, 180)"
-          sx={{ margin: "0% 18%", marginBottom: "10px" , marginRight : "26%"}}
+          sx={{ marginBottom: '10px', width: 'fit-content' }}
         >
-          {" "}
-          Prashant{" "}
+          Prashant
         </Typography>
       </Box>
+      <Box
+        sx={{
+          marginRight: { xs: '0', md: '25%' }, // No margin on right for small screens
+          marginTop: { xs: '20px', md: '0' }, // Add top margin for small screens
+          textAlign: { xs: 'center', md: 'right' }, // Center the select box on small screens
+        }}
+      >
+        <FormControl sx={{ m: 1, width: { xs: '100%', sm: 200, md: 160 }, mt: 3 }}>
+          <Select
+            displayEmpty
+            value={personName}
+            onChange={handleChange}
+            input={<OutlinedInput />}
+            renderValue={(selected) => {
+              if (selected.length === 0) {
+                return <em>Pick an event</em>;
+              }
+
+              return selected.join(', ');
+            }}
+            MenuProps={MenuProps}
+            inputProps={{ 'aria-label': 'Without label' }}
+            sx={{
+              backgroundColor: 'rgb(255, 255, 255)',
+              fontFamily: 'Aoboshi One',
+              borderRadius: '8px',
+              width: '100%', // Ensure select box takes full width on small screens
+            }}
+          >
+            <MenuItem disabled value="">
+              <em>Pick an event</em>
+            </MenuItem>
+            {eventIds?.map((name) => (
+              <MenuItem
+                key={name}
+                value={name?.event_name}
+                style={getStyles(name, personName, theme)}
+                sx={{ fontFamily: 'Aoboshi One' }}
+                onSelect={() => handleSelection(name?.id)}
+              >
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+    </Box>
+      
       <Box sx={{ margin: "0% 18%" , display : "flex" , justifyContent : "space-between" , fontSize : "1.6rem" , padding : "5px 0px" , color : "rgb(165, 170, 170)"}}>
         <Box sx={{margin : "0px 8px"}}>Live Events</Box>
-        <Box sx={{fontSize : "1.4rem" ,marginRight : "8px"}}>See All <img src="/Images/Vector-1.png"/> </Box>
+        <Box sx={{fontSize : "1.4rem" ,marginRight : "13%"}}>See All <img src="/Images/Vector-1.png"/> </Box>
       </Box>
       <Box sx={{ margin: "1% 18%" }}>
         <Grid container spacing={2}>
@@ -76,6 +189,7 @@ export default function HomePage() {
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                     padding: "9px",
                     borderRadius: "8px",
+                    overflow : "hidden"
                   }}
                 >
                   <Box sx={{ position: "relative" }}>
@@ -137,17 +251,57 @@ export default function HomePage() {
           })}
         </Grid>
       </Box>
-      <Box sx={{ margin: "2% 13%" , height : "20%" , backgroundColor : "rgba(250, 240, 205, 0.8)" ,display : "flex" , justifyContent : "space-between" , borderRadius : "10px"}}>
-          <Box sx={{alignContent : "center" , padding : "32px"}}>
-            <Typography variant="h4" color="rgb(66, 92, 90)" sx={{fontWeight : "500" , fontFamily : "Aoboshi One"}}>JOIN AN EVENT TODAY!</Typography>
-            <Typography color="rgb(72, 77, 112)" sx={{fontWeight : "rgb(72, 77, 112)" ,fontFamily : "Poppins"}}>Join the team with the referral code below!</Typography>
-            <Button variant="contained" sx={{backgroundColor : "rgb(14, 47, 47)" , marginTop : "8px" , "&:hover" : {
-              backgroundColor : "rgb(14, 47, 47)"
-            }}}>Join now</Button>
-          </Box>
-          <img src="/home/77mLIhf8TW1.png" width="40%"/>
+      <Box
+      sx={{
+        margin: { xs: '0% 5%', md: '0% 13%' }, // Responsive margin
+        height: { xs: 'auto', md: '20%' }, // Responsive height
+        backgroundColor: 'rgba(250, 240, 205, 0.8)',
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' }, // Column on small screens, row on larger screens
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: '10px',
+        fontSize: { xs: '1rem', md: '1.2rem' }, // Responsive font size
+        padding: { xs: '16px', md: '32px' } // Responsive padding
+      }}
+    >
+      <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+        <Typography
+          variant="h4"
+          color="rgb(66, 92, 90)"
+          sx={{ fontWeight: 500, fontFamily: 'Aoboshi One' }}
+        >
+          JOIN AN EVENT TODAY!
+        </Typography>
+        <Typography
+          color="rgb(72, 77, 112)"
+          sx={{ fontWeight: '400', fontFamily: 'Poppins', marginTop: '8px' }}
+        >
+          Join the team with the referral code below!
+        </Typography>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: 'rgb(14, 47, 47)',
+            marginTop: '16px',
+            '&:hover': {
+              backgroundColor: 'rgb(14, 47, 47)'
+            }
+          }}
+        >
+          Join now
+        </Button>
       </Box>
-      <Footer/>
+      <Box
+        component="img"
+        src="/home/77mLIhf8TW1.png"
+        sx={{
+          width: { xs: '100%', md: '40%' }, // Full width on small screens, 40% on larger screens
+          marginTop: { xs: '16px', md: '0' }, // Margin on top for small screens
+          borderRadius: '10px' // Adding border-radius for better appearance
+        }}
+      />
+    </Box>
     </Box>
   );
 }

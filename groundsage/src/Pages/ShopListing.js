@@ -528,8 +528,6 @@ const ShopListing = () => {
           </Typography>
         )}
       </div>
-
-      <Footer />
     </div>
   );
 };

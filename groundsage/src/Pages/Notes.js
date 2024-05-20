@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Typography, Box } from "@mui/material";
 import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -8,6 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Component/Loading";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import EditEventPopUp from "../Component/note/EditEventPopUp";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const Notes = () => {
   const [eventList, setEventList] = useState([
@@ -19,8 +22,21 @@ const Notes = () => {
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
   const [isLoading , setIsLoading] = useState(true);
+  const [isEditPopupOpen , setIsEditPopupOpen] = useState(false);
+  const [selectedId , setSelectedId] = useState(null);
+  const [selectedItem , setSelectedItem] = useState(null);
+  const {user} = useContext(AuthContext);
   
+  const deleteNoteByMultipleId = async (ids) => {
+    try{
+      const res = axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note` , { data : {ids}});
+      console.log(res);
+      fetchNotes();
+    }catch(err){
+      toast.error(err);
+    }
 
+  }
   const fetchNotes = async () => {
     try{
       const res = await axios.get(`${process.env.REACT_APP_API_URI}/note/fetch-notes`);
@@ -62,6 +78,23 @@ const Notes = () => {
     return date
   }
 
+  const handleSaveEditNote = async (body) => {
+    try{
+      const res = await axios.put(`${process.env.REACT_APP_API_URI}/note/update-note/${selectedId}` , body);
+      console.log(res);
+      toast.success(res?.data.data, {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },});
+        fetchNotes();
+    }catch(err){
+      console.log(err);
+    }
+  }
   const handleSaveNote = async (body) => {
     // const formattedDate = new Date().toLocaleDateString("en-US", {
     //   day: "numeric",
@@ -78,7 +111,7 @@ const Notes = () => {
 
     // setEventList([newItem, ...eventList]);
     try{
-      const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/note/create-note" , body);
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/note/create-note` , body);
       setIsPopupOpen(false);
       console.log(res);
       toast.success("Note added successfully!", {
@@ -99,7 +132,13 @@ const Notes = () => {
 
   const deleteNoteById = async(id) => {
     try{
-      const res = await axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note/${id}`);
+      const res = await axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note/${id}` , {
+        headers : {
+        'authorization': user?.token,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+        }
+      });
       console.log(res);
       toast.success(res.data.message, {
         style: {
@@ -135,6 +174,12 @@ const Notes = () => {
   //     setEventListLength("Show More...");
   //   }
   // };
+  const handleEditOpenPopup = () => {
+    const ele = eventList?.filter(item => item.isSelected === true);
+    setSelectedId(ele[0]?._id);
+    setSelectedItem(ele[0]);
+    setIsEditPopupOpen(!isEditPopupOpen);
+  }
 
   const handleCheckboxChange = (index) => {
     const newEventList = eventList.map((item, i) => {
@@ -149,12 +194,12 @@ const Notes = () => {
 
   const handleDelete = () => {
     const ele = eventList?.filter(item => item.isSelected === true);
-    deleteNoteById(ele[0]?._id);
-  };
+
+      const ids = ele?.map(item => item?._id);
+      deleteNoteByMultipleId(ids);}
   const handleSelectChange = () => {
     setSelect(!select);
   };
-  
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
@@ -180,7 +225,7 @@ const Notes = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: {xs:"40px",md:"56px"},
+          fontSize: "56px",
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: "-35px",
@@ -196,7 +241,7 @@ const Notes = () => {
         {eventList.length !== 0 && (
           <Box
             sx={{
-              margin: {xs:"20px",md:"2% 18%"},
+              margin: "2% 18%",
               padding: "0px 15px",
               display: "flex",
               justifyContent: "space-between",
@@ -253,12 +298,15 @@ const Notes = () => {
               }}
             >
               {select === true ? (
-                <img
-                  src="deleteIcon.png"
-                  alt="delete Icon"
-                  style={{ padding: "2px", height: "30px", cursor: "pointer" }}
-                  onClick={handleDelete}
-                />
+                <>
+                  <ModeEditIcon sx={{color : "white" , cursor : "pointer"}} onClick={handleEditOpenPopup}/>
+                  <img
+                    src="deleteIcon.png"
+                    alt="delete Icon"
+                    style={{ padding: "2px", height: "30px", cursor: "pointer" }}
+                    onClick={handleDelete}
+                  />
+                </>
               ) : (
                 <img
                   src="add-icon.png"
@@ -278,7 +326,7 @@ const Notes = () => {
                 key={index}
                 sx={{
                   backgroundColor: "rgb(66, 92, 90)",
-                  margin: {xs:"20px",md:"2% 18%"},
+                  margin: "2% 18%",
                   border: "2px solid rgba(0, 0, 0, 0.16)",
                   borderRadius: "10px",
                   padding: "15px",
@@ -333,7 +381,7 @@ const Notes = () => {
                       sx={{
                         color: "rgb(216, 217, 217)",
                         fontWeight: "600",
-                        fontSize: {xs:"20px",md:"24px"},
+                        fontSize: "24px",
                         fontFamily: "Poppins",
                       }}
                     >
@@ -342,7 +390,7 @@ const Notes = () => {
                     <Typography
                       sx={{
                         color: "rgb(254, 240, 180)",
-                        fontSize: {xs:"16px",md:"24px"},
+                        fontSize: "1.2rem",
                         fontFamily: "Poppins",
                         textAlign: "right",
                         marginTop: "-10px",
@@ -355,7 +403,7 @@ const Notes = () => {
                     sx={{
                       color: "rgb(216, 217, 217)",
                       fontFamily: "Poppins",
-                      width: {xs:"80%",md:"65%"},
+                      width: "65%",
                     }}
                   >
                     {item?.notes_description}
@@ -381,8 +429,15 @@ const Notes = () => {
       </Box>
       <AddNotes
         open={isPopupOpen}
+        user={user}
         onClose={() => setIsPopupOpen(false)}
         onSave={handleSaveNote}
+      />
+      <EditEventPopUp
+      open={isEditPopupOpen}
+      onClose={() => setIsEditPopupOpen(false)}
+      onSave={handleSaveEditNote}
+      item = {selectedItem}
       />
     </div>
   );}

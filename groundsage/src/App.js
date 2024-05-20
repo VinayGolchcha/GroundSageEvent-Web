@@ -28,6 +28,7 @@ import CreateEventPage from "./Pages/CreateEventPage";
 import EnterMail from "./Component/EnterMail";
 import Footer from "./Component/Footer";
 import UpdateShopPage from "./Pages/UpdateShop";
+import EditEvent from "./Component/event/EditEvent";
 
 const App = () => {
   return (
@@ -60,6 +61,7 @@ const App = () => {
         <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/entermail" element={<EnterMail />} />
         <Route path="/update-shop" element={<UpdateShopPage />} />
+        <Route path="/edit-event" element={<EditEvent />} />
       </Routes>
       <Footer />
     </div>

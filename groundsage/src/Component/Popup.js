@@ -1,13 +1,30 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Dialog, DialogTitle, TextField, Box } from "@mui/material";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const SimplePopup = ({ open, onClose, onSave }) => {
-  const [data, setData] = useState();
+  const user_id = 1112;
+  const referralCodeElement = useRef(null);
+
+  const joinTeamWithRefferal = async (body) => {
+    try{
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/event/join-team-with-referral-code` , body);
+      toast.success(res?.data.data.message);
+    }catch(err){
+      console.log(err)
+      toast.error(err)
+    }
+  }
 
   const handleSave = () => {
-
+    const body = {
+      user_id : user_id,
+      referral_code : referralCodeElement?.current.value
+    } 
+    joinTeamWithRefferal(body)
     // Call the onSave function with the data
-    onSave(data);
+    // onSave(data);
   };
   return (
     <div>
@@ -48,6 +65,7 @@ const SimplePopup = ({ open, onClose, onSave }) => {
             variant="standard"
             fullWidth
             placeholder="add referral code "
+            inputRef={referralCodeElement}
             InputProps={{
               disableUnderline: true,
               style: {
@@ -59,7 +77,6 @@ const SimplePopup = ({ open, onClose, onSave }) => {
               },
               placeholderTextColor: "rgba(255, 255, 255, 0.7)",
             }}
-            onChange={(e) => setData(e.target.value)}
             />
           <div
             style={{

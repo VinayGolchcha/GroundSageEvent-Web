@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Dialog, DialogTitle, TextField, Box } from "@mui/material";
 import { toast } from "react-toastify";
 
-const AddNotes = ({ open, onClose, onSave }) => {
+const AddNotes = ({ open, onClose, onSave , user }) => {
   const currentDate = new Date();
   const now = currentDate.toISOString().split('T')[0];
   const [data, setData] = useState({
@@ -12,15 +12,14 @@ const AddNotes = ({ open, onClose, onSave }) => {
     field4: "",
   });
   const eventIdElement = useRef(null);
-  const userIdElement = useRef(null);
   const notesHeadingElement = useRef(null);
   const notesDescriptionElement = useRef(null);
 
 
   const handleSave = () => {
     const body = {
-     event_id : eventIdElement.current.value,
-     user_id : userIdElement.current.value,
+     event_id : 1114,
+     user_id : user?.user_id,
      notes_heading : notesHeadingElement.current.value,
      notes_description : notesDescriptionElement.current.value,
      date : now
@@ -73,38 +72,6 @@ const AddNotes = ({ open, onClose, onSave }) => {
           >
             Add Notes
           </DialogTitle>
-          <TextField
-            margin="dense"
-            variant="standard"
-            fullWidth
-            placeholder="Event Id"
-            inputRef={eventIdElement}
-            InputProps={{
-              disableUnderline: true,
-              style: {
-                color: "white",
-                borderBottom: "2px solid rgb(247, 230, 173)",
-              },
-              placeholderTextColor: "rgba(255, 255, 255, 0.7)",
-            }}
-            onChange={(e) => setData({ ...data, field1: e.target.value })}
-          />
-          <TextField
-            margin="dense"
-            variant="standard"
-            fullWidth
-            placeholder="User Id"
-            InputProps={{
-              disableUnderline: true,
-              style: {
-                color: "white",
-                borderBottom: "2px solid rgb(247, 230, 173)",
-              },
-              // placeholderTextColor: "rgba(255, 255, 255, 0.7)",
-            }}
-            inputRef={userIdElement}
-            onChange={(e) => setData({ ...data, field2: e.target.value })}
-          />
           <TextField
             margin="dense"
             variant="standard"

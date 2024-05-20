@@ -18,9 +18,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from "@mui/material/IconButton";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 
 export default function CreateEventPage() {
@@ -38,6 +39,7 @@ export default function CreateEventPage() {
   const coordinatorCountElement = useRef(null);
   const staffMemberCountElement = useRef(null);
   const helperCountElement = useRef(null);
+  const {user} = useContext(AuthContext);
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     // Handle the uploaded file
@@ -46,7 +48,14 @@ export default function CreateEventPage() {
   };
   const addEvent = async(body) => {
     try{
-      const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , body);
+      const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , body , {
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+      );
       console.log(res);
       toast.success("Data Added Successfully"); 
     }catch(err){
@@ -71,7 +80,7 @@ export default function CreateEventPage() {
     start_date : formattedFromDate,
     end_date : formattedToDate,
     event_description : descriptionElement.current.value,
-    user_id : 1111,
+    user_id : user?.user_id,
     role_name : "coordinator",
     team_name : teamNameElement.current.value,
     team_size : teamSizeElement.current.value,

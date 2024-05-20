@@ -6,6 +6,9 @@ const AuthProvider = ({ children }) => {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [user, setUser] = useState(null);
   const [shopIds, setShopIds] = useState([]);
+  const [eventIds , setEventIds] = useState([]);
+  const [activeEvent , setActiveEvent] = useState(null);
+
 
 
   const logout = async () => {
@@ -32,7 +35,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isEmailVerified, setIsEmailVerified, user, setUser, logout,setShopIds }}>
+    <AuthContext.Provider value={{ isEmailVerified, setIsEmailVerified, user, setUser, logout,setShopIds , setEventIds , eventIds ,setActiveEvent , activeEvent}}>
       {children}
     </AuthContext.Provider>
   );

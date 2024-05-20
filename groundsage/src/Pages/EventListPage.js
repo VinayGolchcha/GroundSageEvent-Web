@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Loading from "../Component/Loading";
+import { AuthContext } from "../ContextApi/AuthContext";
+import EditEvent from "../Component/event/EditEvent";
 
 
 
@@ -18,19 +20,40 @@ export default function EventListPage() {
   const [select, setSelect] = useState(false);
   const [eventListLength, setEventListLength] = useState("Show More...");
   const [isLoading , setIsLoading] = useState(true);
+  const [selectedId , setSelectedId] = useState(null);
+  const [selectedItem , setSelectedItem] = useState(null);
+  const [isEdit , setIsEdit] = useState(false);
+  const {user , setEventIds , eventIds} = useContext(AuthContext);
 
-
- 
- 
+  const handleEditEventApi = async (body) => {
+    try{
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/event/update-event/${selectedId}`,
+        body
+      );
+      console.log(res);
+      console.log(selectedId);
+    }catch(err){
+      console.log(err);
+      toast.error(err);
+    }
+  }
   const fetchEvents = async () => {
     try{
-      const res = await axios.get("https://groundsageevent-be.onrender.com/api/v1/event/get-all-event");
-      setEventList(res.data.data);
+      const res = await axios.get(`https://groundsageevent-be.onrender.com/api/v1/event/get-all-user-event/${user?.user_id}` , { headers: {
+        'authorization': user?.token,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    } });
+      const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}));
+      setEventList(newEventList);
+      setEventIds(newEventList.map((item) => ( {id : item?.id , event_name : item?.event_name } )));
+      console.log(eventIds);
       setIsLoading(false);
       toast.success("events fetched successfully");
     }catch(err){
       console.log(err);
-      toast.error(err);
+      toast.error(err?.response.data.message);
       setIsLoading(false);
     }
   }
@@ -50,7 +73,7 @@ export default function EventListPage() {
 
   const handleClick = () => {
     if (eventListLength === "Show More...") {
-      setEndpoint(eventList.length);
+      setEndpoint(eventList?.length);
       setEventListLength("Show Less...");
     } else if (eventListLength === "Show Less...") {
       setEndpoint(3);
@@ -58,9 +81,18 @@ export default function EventListPage() {
     }
   };
 
+  const handleEditEvent = () => {
+    const ele = eventList?.filter(item => item.isSelected === true);
+    console.log(ele);
+    setSelectedId(ele[0]?.id);
+    setSelectedItem(ele[0]);
+    setIsEdit(true);
+    
+  }
   const handleCheckboxChange = (index) => {
+    console.log(index)
     const newEventList = eventList.map((item, i) => {
-      if (i === index) {
+      if (item?.id === index) {
         return { ...item, isSelected: !item.isSelected };
       }
       return item;
@@ -90,6 +122,8 @@ export default function EventListPage() {
   };
 
   return (
+    <>
+    { isEdit === true ? (<EditEvent selectedItem = {selectedItem} handleSaveEvent = {handleEditEventApi} />) : (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
@@ -127,7 +161,7 @@ export default function EventListPage() {
           All Events
         </Typography>
       </Box>
-      {eventList.length !== 0 && (
+      {eventList?.length !== 0 && (
         <Box
           sx={{
             margin: { xs: "20px", md: "2% 18%" },
@@ -187,12 +221,15 @@ export default function EventListPage() {
             }}
           >
             {select === true ? (
+              <>
+              <img src="edit-image.png" alt="edit Icon" style={{ padding: "2px", height: "23px" }} onClick={handleEditEvent}/>
               <img
                 src="deleteIcon.png"
                 alt="delete Icon"
                 style={{ padding: "2px", height: "30px" }}
                 onClick={handleDelete}
               />
+              </>
             ) : (
               <Link to="/create-event"><img src="add-icon.png" alt="add-icon" /></Link>
             )}
@@ -228,7 +265,7 @@ export default function EventListPage() {
                     variant="outlined"
                     color="neutral"
                     checked={item.isSelected}
-                    onChange={() => handleCheckboxChange(index)}
+                    onChange={() => handleCheckboxChange(item?.id)}
                     inputProps={{ "aria-label": "controlled" }}
                   />
                 )}
@@ -277,7 +314,7 @@ export default function EventListPage() {
           </Box>
         );
       })}
-      {eventList.length === 0 && (
+      {eventList?.length === 0 && (
         <Box>
           <Box
             sx={{
@@ -285,6 +322,7 @@ export default function EventListPage() {
               alignItems: "center",
               justifyContent: "center",
               width: "60vw",
+              width : "100%"
             }}
           >
             <Box
@@ -295,6 +333,7 @@ export default function EventListPage() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                
               }}
             >
               <img src="event-management-1.png" />
@@ -328,7 +367,7 @@ export default function EventListPage() {
           </Link>
         </Box>
       )}
-      {eventList.length !== 0 && (
+      {eventList?.length !== 0 && (
         <Typography
           textAlign="center"
           sx={{
@@ -341,6 +380,7 @@ export default function EventListPage() {
           {eventListLength}
         </Typography>
       )}
-    </Box>
+    </Box>)}
+    </>
   );}
 

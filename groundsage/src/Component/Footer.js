@@ -1,7 +1,18 @@
 import React from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+  if (
+    location.pathname === "/" ||
+    location.pathname === "/entermail" ||
+    location.pathname === "/signin" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/"
+  ) {
+    return null;
+  }
   return (
     <div style={{ background: "rgb(78, 101, 100)" }}>
       <Box
