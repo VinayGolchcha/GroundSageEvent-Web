@@ -29,7 +29,7 @@ export default function CreateEventPage() {
   const [openCalendar2, setOpenCalendar2] = useState(false);
   const [fromDate , setFromDate] = useState("2022-04-20");
   const [toDate , setToDate] = useState("2022-04-20");
-  const [file, setFIle] = useState();
+  const [file, setFIle] = useState([]);
   const eventNameElement = useRef(null);
   const fromDateElement = useRef(null);
   const toDateElement = useRef(null);
@@ -41,18 +41,25 @@ export default function CreateEventPage() {
   const helperCountElement = useRef(null);
   const {user} = useContext(AuthContext);
   const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+    const files = Array.from(event.target.files);
     // Handle the uploaded file
+    console.log(files);
+    setFIle(files);
     console.log(file);
-    setFIle(file);
   };
   const addEvent = async(body) => {
     try{
-      const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , body , {
+      const formData = new FormData();
+      Object.keys(body).forEach((key) => {
+        formData.append(key , body[key]);
+      })
+      file.forEach((f) => {
+        formData.append("files" , f);
+      })
+      const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , formData , {
         headers: {
           'authorization': `${user?.token}`, // Ensure the token format is correct
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
         }
       }
       );
@@ -86,7 +93,8 @@ export default function CreateEventPage() {
     team_size : teamSizeElement.current.value,
     coordinator_count : coordinatorCountElement.current.value,
     staff_members_count : staffMemberCountElement.current.value,
-    helpers_count : helperCountElement.current.value
+    helpers_count : helperCountElement.current.value,
+    files : file
    }
    console.log(body);
    addEvent(body);
@@ -285,7 +293,7 @@ export default function CreateEventPage() {
               id="upload-text"
               label="Add Event Image (Format: png, jpg)"
               variant="standard"
-              value={file && file.name}
+              value={file && file.map((item) => item.name)}
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
@@ -322,6 +330,7 @@ export default function CreateEventPage() {
                       id="upload-file"
                       style={{ display: "none" }}
                       accept="image/*"
+                      multiple
                       onChange={handleFileUpload}
                     />
                   </IconButton>
@@ -394,7 +403,19 @@ export default function CreateEventPage() {
                 },
                 width: "100%",
                 margin: "10px 0px ",
-              }}
+              } 
+                 
+            }
+            InputProps={{
+              style: {
+                color: "rgb(255, 255, 255)",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
               id="standard-basic"
               label="Team Size"
               variant="standard"
@@ -423,6 +444,16 @@ export default function CreateEventPage() {
                 },
                 width: "50%",
                 margin: "10px 0px ",
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                },
               }}
               inputRef={coordinatorCountElement}
               id="standard-basic"
@@ -453,6 +484,16 @@ export default function CreateEventPage() {
                 width: "50%",
                 margin: "10px 0px ",
               }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                },
+              }}
               id="standard-basic"
               label="Count"
               variant="standard"
@@ -480,6 +521,16 @@ export default function CreateEventPage() {
                 },
                 width: "50%",
                 margin: "10px 0px ",
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                },
               }}
               inputRef={helperCountElement}
               id="standard-basic"

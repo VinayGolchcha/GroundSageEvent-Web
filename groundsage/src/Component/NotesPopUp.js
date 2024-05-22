@@ -18,7 +18,7 @@ const AddNotes = ({ open, onClose, onSave , user }) => {
 
   const handleSave = () => {
     const body = {
-     event_id : 1114,
+     event_id : 1163,
      user_id : user?.user_id,
      notes_heading : notesHeadingElement.current.value,
      notes_description : notesDescriptionElement.current.value,

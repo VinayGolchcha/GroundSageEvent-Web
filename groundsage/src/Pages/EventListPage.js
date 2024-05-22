@@ -23,13 +23,21 @@ export default function EventListPage() {
   const [selectedId , setSelectedId] = useState(null);
   const [selectedItem , setSelectedItem] = useState(null);
   const [isEdit , setIsEdit] = useState(false);
-  const {user , setEventIds , eventIds} = useContext(AuthContext);
+  const {user , setEventIds , eventIds , setEvents} = useContext(AuthContext);
+  console.log(user);
 
   const handleEditEventApi = async (body) => {
     try{
+      const formData = new FormData();
+      Object.keys(body).forEach((key) => {
+        formData.append(key , body[key]);
+      })
+      // file.forEach((f) => {
+      //   formData.append("files" , f);
+      // })
       const res = await axios.post(
         `${process.env.REACT_APP_API_URI}/event/update-event/${selectedId}`,
-        body
+        formData
       );
       console.log(res);
       toast.success(res?.data?.data , {
@@ -53,11 +61,14 @@ export default function EventListPage() {
         'Accept' : 'application/json',
         'Content-Type': 'application/json'
     } });
+    console.log(res?.data?.data);
+      setEvents(res?.data?.data) ;
       const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}));
       setEventList(newEventList);
       setEventIds(newEventList.map((item) => ( {id : item?.id , event_name : item?.event_name } )));
       console.log(eventIds);
       setIsLoading(false);
+      console.log(res)
       toast.success("events fetched successfully");
     }catch(err){
       console.log(err);

@@ -28,8 +28,8 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
   console.log(selectedItem);
     const [openCalendar1, setOpenCalendar1] = useState(false);
     const [openCalendar2, setOpenCalendar2] = useState(false);
-    const [fromDate , setFromDate] = useState(dayjs(selectedItem.start_date));
-    const [toDate , setToDate] = useState(dayjs(selectedItem.end_date));
+    const [fromDate , setFromDate] = useState(dayjs(selectedItem?.start_date));
+    const [toDate , setToDate] = useState(dayjs(selectedItem?.end_date));
     const [file, setFIle] = useState();
     const {user} = useContext(AuthContext);
     const eventNameElement = useRef(null);
@@ -51,10 +51,10 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
 
 
     const handleFileUpload = (event) => {
-      const file = event.target.files[0];
+      const files = Array.from(event.target.files);
       // Handle the uploaded file
-      console.log(file);
-      setFIle(file);
+      console.log(file)
+      setFIle(files);
     };
     // const addEvent = async(body) => {
     //   try{
@@ -83,10 +83,12 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
           start_date : formattedFromDate,
           end_date : formattedToDate,
           event_description : descriptionElement.current.value,
+          files : file
           // user_id : user?.user_id,
         }
      console.log(body);
      handleSaveEvent(body);
+     
     }
     return (
       <Box sx={{ backgroundColor: "rgb(66, 92, 90)"  , height : "100vh",}}>
@@ -196,6 +198,10 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                       "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
                         borderRadius : "0px",
                         borderBottom: " 1px solid rgb(188, 189, 163)",
+                      },
+                      "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                        paddingLeft : "1px",
+                        color : "white"
                       }
                     }}
                     defaultValue={selectedItem?.start_date}
@@ -255,6 +261,10 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                           "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
                             borderRadius : "0px",
                             borderBottom: " 1px solid rgb(188, 189, 163)",
+                          },
+                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                            paddingLeft : "1px",
+                            color : "white"
                           }
 
                     }}

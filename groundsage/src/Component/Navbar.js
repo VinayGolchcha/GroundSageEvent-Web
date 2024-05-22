@@ -15,9 +15,9 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
 
 const pages = ["Events", "Shops", "Teams", "Transaction", "Notes", "Reports"];
-const settings = ["Visit Profile", "Logout"];
+const settings = ["Event Atrangi" ,"Visit Profile", "Logout" ];
 
-function Navbar() {
+function Navbar({ handleOpen}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { logout } = React.useContext(AuthContext);
@@ -226,7 +226,7 @@ function Navbar() {
                         onClick={() => {
                           (setting === "Visit Profile" &&
                             navigate("/Profile")) ||
-                            (setting === "Logout" && handleLogout());
+                            (setting === "Logout" && handleLogout()) || (setting === "Event Atrangi" && handleOpen());
                         }}
                       >
                         {setting}

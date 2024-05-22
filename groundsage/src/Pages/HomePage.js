@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { AuthContext } from "../ContextApi/AuthContext";
+import axios from "axios";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -40,9 +41,10 @@ function getStyles(name, personName, theme) {
 
 
 export default function HomePage() {
-  const theme = useTheme();
+
   const [personName, setPersonName] = React.useState([]);
-  const {eventIds , setActiveEvent ,activeEvent} = React.useContext(AuthContext);
+  const {eventIds , setActiveEvent ,activeEvent , event , user} = React.useContext(AuthContext);
+  console.log(event);
 
   const handleChange = (event) => {
     const {
@@ -125,52 +127,7 @@ export default function HomePage() {
           Prashant
         </Typography>
       </Box>
-      <Box
-        sx={{
-          marginRight: { xs: '0', md: '25%' }, // No margin on right for small screens
-          marginTop: { xs: '20px', md: '0' }, // Add top margin for small screens
-          textAlign: { xs: 'center', md: 'right' }, // Center the select box on small screens
-        }}
-      >
-        <FormControl sx={{ m: 1, width: { xs: '100%', sm: 200, md: 160 }, mt: 3 }}>
-          <Select
-            displayEmpty
-            value={personName}
-            onChange={handleChange}
-            input={<OutlinedInput />}
-            renderValue={(selected) => {
-              if (selected.length === 0) {
-                return <em>Pick an event</em>;
-              }
-
-              return selected.join(', ');
-            }}
-            MenuProps={MenuProps}
-            inputProps={{ 'aria-label': 'Without label' }}
-            sx={{
-              backgroundColor: 'rgb(255, 255, 255)',
-              fontFamily: 'Aoboshi One',
-              borderRadius: '8px',
-              width: '100%', // Ensure select box takes full width on small screens
-            }}
-          >
-            <MenuItem disabled value="">
-              <em>Pick an event</em>
-            </MenuItem>
-            {eventIds?.map((name) => (
-              <MenuItem
-                key={name}
-                value={name?.event_name}
-                style={getStyles(name, personName, theme)}
-                sx={{ fontFamily: 'Aoboshi One' }}
-                onSelect={() => handleSelection(name?.id)}
-              >
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
+      
     </Box>
       
       <Box sx={{ margin: "0% 18%" , display : "flex" , justifyContent : "space-between" , fontSize : "1.6rem" , padding : "5px 0px" , color : "rgb(165, 170, 170)"}}>

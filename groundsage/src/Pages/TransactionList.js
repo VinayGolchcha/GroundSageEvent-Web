@@ -13,8 +13,7 @@ const TransactionList = () => {
 
   const [activeButton, setActiveButton] = useState("income");
   const [transactionData, setTransactionData] = useState([]);
-  const  date = new Date();
-  console.log(date);
+
 
   const handleButtonClick = (button) => {
     setActiveButton(button);

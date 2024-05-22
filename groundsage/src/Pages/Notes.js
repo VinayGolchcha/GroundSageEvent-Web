@@ -44,14 +44,6 @@ const Notes = () => {
       setEventList(newEventList);
       console.log(eventList);
       setIsLoading(false)
-      toast.success("Notes fetched successfully", {
-        style: {
-          // Change font color
-          fontSize: "16px", // Change font size
-          fontFamily: "Inter", // Change font family
-          fontWeight: "600", // Change font weight
-          color: "rgb(66, 92, 90)",
-        },});
     }catch(err){
       setIsLoading(false);
       toast.error(err.message);
