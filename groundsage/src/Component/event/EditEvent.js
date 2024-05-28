@@ -22,6 +22,10 @@ import {
   import { toast } from "react-toastify";
   import axios from "axios";
 import { AuthContext } from "../../ContextApi/AuthContext";
+import ClearIcon from "@mui/icons-material/Clear";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
   
 
 export default function EditEvent({ selectedItem , handleSaveEvent}){
@@ -30,7 +34,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
     const [openCalendar2, setOpenCalendar2] = useState(false);
     const [fromDate , setFromDate] = useState(dayjs(selectedItem?.start_date));
     const [toDate , setToDate] = useState(dayjs(selectedItem?.end_date));
-    const [file, setFIle] = useState();
+    const [file, setFIle] = useState(selectedItem?.original_filename);
     const {user} = useContext(AuthContext);
     const eventNameElement = useRef(null);
     const fromDateElement = useRef(null);
@@ -66,6 +70,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
     //     toast.error(err);
     //   }
     // }
+    const handleClearFile = (index) => {
+      setFIle((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    };
     const handleSave = () => {
       let formattedFromDate = fromDateElement.current.value.split('/');
       let temp = formattedFromDate[0];
@@ -308,12 +315,12 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                 variant="standard"
                 defaultValue={selectedItem?.event_description}
               />
-  
+            <div>
               <TextField
                 id="upload-text"
                 label="Add Event Image (Format: png, jpg)"
                 variant="standard"
-                value={file && file.name}
+                value={file}
                 sx={{
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
@@ -356,6 +363,24 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                   ),
                 }}
               />
+              <List>
+            {file?.map((file, index) => (
+              <ListItem key={index} sx={{ padding: 0, marginTop: 1 }}>
+                <ListItemText
+                  primary={file.name}
+                  sx={{ color: "rgb(255, 255, 255)" }}
+                />
+                <IconButton
+                  edge="end"
+                  onClick={() => handleClearFile(index)}
+                  sx={{ color: "rgb(188, 189, 163)" }}
+                >
+                  <ClearIcon />
+                </IconButton>
+              </ListItem>
+            ))}
+          </List>
+              </div>
             </Box>
             </Box>
             <Box

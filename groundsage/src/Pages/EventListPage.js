@@ -15,6 +15,7 @@ import EditEvent from "../Component/event/EditEvent";
 export default function EventListPage() {
   const navigate = useNavigate();
   const [eventList, setEventList] = useState([]);
+  const [file, setFIle] = useState([]);
   const [endpoint, setEndpoint] = useState(3);
   const [allselect, setAllselect] = useState(false);
   const [select, setSelect] = useState(false);
@@ -23,8 +24,10 @@ export default function EventListPage() {
   const [selectedId , setSelectedId] = useState(null);
   const [selectedItem , setSelectedItem] = useState(null);
   const [isEdit , setIsEdit] = useState(false);
-  const {user , setEventIds , eventIds , setEvents} = useContext(AuthContext);
+  const {user , setEventIds , eventIds , setEvents , setActiveEvent , setActiveEventId, activeEventId} = useContext(AuthContext);
   console.log(user);
+  
+  const today = new Date();
 
   const handleEditEventApi = async (body) => {
     try{
@@ -32,9 +35,9 @@ export default function EventListPage() {
       Object.keys(body).forEach((key) => {
         formData.append(key , body[key]);
       })
-      // file.forEach((f) => {
-      //   formData.append("files" , f);
-      // })
+      file.forEach((f) => {
+        formData.append("files" , f);
+      })
       const res = await axios.post(
         `${process.env.REACT_APP_API_URI}/event/update-event/${selectedId}`,
         formData
@@ -59,11 +62,13 @@ export default function EventListPage() {
       const res = await axios.get(`https://groundsageevent-be.onrender.com/api/v1/event/get-all-user-event/${user?.user_id}` , { headers: {
         'authorization': user?.token,
         'Accept' : 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        role_id : user?.role_id
     } });
-    console.log(res?.data?.data);
-      setEvents(res?.data?.data) ;
-      const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}));
+      let eventList = res?.data?.data;
+      eventList = eventList.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setEvents(eventList);
+      const newEventList = eventList?.map((item) => ({...item , isSelected : false}));
       setEventList(newEventList);
       setEventIds(newEventList.map((item) => ( {id : item?.id , event_name : item?.event_name } )));
       console.log(eventIds);
@@ -72,7 +77,7 @@ export default function EventListPage() {
       toast.success("events fetched successfully");
     }catch(err){
       console.log(err);
-      toast.error(err?.response.data.message);
+      toast.error(err?.response?.data.message);
       setIsLoading(false);
     }
   }

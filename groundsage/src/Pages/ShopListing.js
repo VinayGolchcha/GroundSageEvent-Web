@@ -37,7 +37,7 @@ const ShopListing = () => {
   //   if (filter === "vacant") return !shop.occupied;
   //   return true;handleFilterChange
   // });
-  const filteredShops = shopCards.filter((shop) => {
+  const filteredShops = shopCards?.filter((shop) => {
     if (filter === "all") {
       // If filter is "all", show all shops (vacant and occupied) for the selected dome
       if (activeDom === "all" || shop.dome === activeDom) {
@@ -92,7 +92,7 @@ const ShopListing = () => {
 
     // Toggle selection status
     if (isSelected) {
-      setSelectedShops(selectedShops.filter((shop) => shop.id !== shopId)); // Deselect shop
+      setSelectedShops(selectedShops?.filter((shop) => shop.id !== shopId)); // Deselect shop
     } else {
       // Find the shop object with the corresponding id
       const shop = shopCards.find((shop) => shop.id === shopId);
@@ -139,7 +139,7 @@ const ShopListing = () => {
       .then((responses) => {
         console.log("Shops deleted successfully");
         setSelectedShops([]);
-        const updatedShopCards = shopCards.filter((shop) => !selectedShops.some((selectedShop) => selectedShop.id === shop.id));
+        const updatedShopCards = shopCards?.filter((shop) => !selectedShops.some((selectedShop) => selectedShop.id === shop.id));
         setShopCards(updatedShopCards);
         toast.success("Shop Deleted Successfully")
         setSelectMode(false);
@@ -374,7 +374,7 @@ const ShopListing = () => {
             marginRight: { xs: "0px", md: "190px" },
           }}
         >
-          {filteredShops.slice(0, displayCount).map((shop, index) => (
+          {filteredShops?.slice(0, displayCount).map((shop, index) => (
             <Box
               key={index}
               onClick={(event) => handleCardClick(index, filteredShops, event)} // Redirect to description page on card click
@@ -497,7 +497,7 @@ const ShopListing = () => {
             </Box>
           ))}
         </Box>
-        {!showMore && filteredShops.length > displayCount && (
+        {!showMore && filteredShops?.length > displayCount && (
           <Typography
             onClick={handleShowMore}
             sx={{

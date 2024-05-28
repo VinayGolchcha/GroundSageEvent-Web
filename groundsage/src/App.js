@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SplashScreenPage from "./Pages/SplashScreenPage";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
@@ -55,15 +55,19 @@ function getStyles(name, personName, theme) {
 
 const App = () => {
   const theme = useTheme();
-  const {eventIds , setActiveEvent ,activeEvent , event , user} = React.useContext(AuthContext);
+  const {eventIds , setActiveEvent ,activeEvent , event , user , activeEventId , setActiveEventId} = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [personName, setPersonName] = React.useState([]);
+  useEffect(()=> {
+    setActiveEventId(activeEvent[0]?.id)
+  },[])
+  console.log(activeEventId)
   const handleSelection = (id) => {
-    setActiveEvent(id);
-    console.log(activeEvent);
+    setActiveEventId(id);
   }
+  console.log(activeEvent);
   const handleChange = (event) => {
     const {
       target: { value },
@@ -75,7 +79,7 @@ const App = () => {
   };
   return (
     <div>
-      <Navbar handleOpen={handleOpen} handleClose = {handleClose} />
+      <Navbar handleOpen={handleOpen} handleClose = {handleClose} isActive = {activeEvent} activeEventId = {activeEventId}/>
       <Modal
         open={open}
         onClose={handleClose}
@@ -112,17 +116,17 @@ const App = () => {
             }}
           >
             <MenuItem disabled value="">
-              <em>Pick an event</em>
+              <em>{activeEvent.length === 0 ? <>Pick an event</> : activeEvent[0].event_name}</em>
             </MenuItem>
-            {eventIds?.map((name) => (
+            {activeEvent?.slice(0,activeEvent.length - 1).map((name) => (
               <MenuItem
-                key={name}
+                key={name.id}
                 value={name?.event_name}
                 style={getStyles(name, personName, theme)}
                 sx={{ fontFamily: 'Aoboshi One' }}
-                onSelect={() => handleSelection(name?.id)}
+                onClick={() => handleSelection(name.id)}
               >
-                {name}
+                {name.event_name}
               </MenuItem>
             ))}
           </Select>

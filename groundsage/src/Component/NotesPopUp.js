@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Dialog, DialogTitle, TextField, Box } from "@mui/material";
 import { toast } from "react-toastify";
 
-const AddNotes = ({ open, onClose, onSave , user }) => {
+const AddNotes = ({ open, onClose, onSave , user , activeEventId }) => {
   const currentDate = new Date();
   const now = currentDate.toISOString().split('T')[0];
   const [data, setData] = useState({
@@ -18,7 +18,7 @@ const AddNotes = ({ open, onClose, onSave , user }) => {
 
   const handleSave = () => {
     const body = {
-     event_id : 1163,
+     event_id : activeEventId,
      user_id : user?.user_id,
      notes_heading : notesHeadingElement.current.value,
      notes_description : notesDescriptionElement.current.value,

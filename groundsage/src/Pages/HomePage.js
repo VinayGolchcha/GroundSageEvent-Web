@@ -1,7 +1,6 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../Component/Footer";
-import * as React from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { AuthContext } from "../ContextApi/AuthContext";
 import axios from "axios";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -41,11 +41,66 @@ function getStyles(name, personName, theme) {
 
 
 export default function HomePage() {
+  const theme = useTheme();
+  const [personName, setPersonName] = useState([]);
+  const [activeEventsList , setActiveEventsList] = useState([]);
+  const {eventIds , setActiveEvent ,activeEvent , setEvents,events , user , setActiveEventId , activeEventId} = useContext(AuthContext);
+  let today = new Date();
+  console.log(user);
+  let len ;
+  console.log(events)
 
-  const [personName, setPersonName] = React.useState([]);
-  const {eventIds , setActiveEvent ,activeEvent , event , user} = React.useContext(AuthContext);
-  console.log(event);
+  const newActiveEvent =  events?.filter((event) => {
+    const endDate = new Date(event.end_date);
+    return endDate.valueOf() >= today.valueOf();
+});
 
+// const fetchEvents = async () => {
+//   try{
+//     const res = await axios.get(`https://groundsageevent-be.onrender.com/api/v1/event/get-all-user-event/${user?.user_id}` , { headers: {
+//       'authorization': user?.token,
+//       'Accept' : 'application/json',
+//       'Content-Type': 'application/json', 
+//       role_id : user?.role_id
+//   } });
+//     let eventList = res?.data?.data;
+//     setEvents(eventList);
+//   //   const newEventList = eventList?.filter((event) => {
+//   //     const endDate = new Date(event.end_date);
+//   //     return endDate.valueOf() >= today.valueOf();
+//   // });
+//   // setActiveEventsList(newEventList);
+//   // setActiveEvent(newEventList);
+//   }catch(err){
+//     console.log(err);
+//   }
+// }
+
+useEffect(()=> {
+  fecthApiHome();
+},[])
+console.log(activeEvent);
+
+  const fecthApiHome = async() => {
+    try{
+      const res = await axios.get(`https://groundsageevent-be.onrender.com/api/v1/home/home-page/${user?.user_id}`, {
+        headers : {
+          'authorization': user?.token,
+          'Accept' : 'application/json',
+          'Content-Type': 'application/json', 
+          role_id : user?.role_id
+        }
+      });
+      console.log(res)
+      setActiveEvent(res?.data?.data);
+      setActiveEventId(res?.data?.data[0].id);
+      len =  activeEvent.length-1;
+      console.log(len)
+    }catch(err){
+      console.log(err);
+    }
+  }
+  
   const handleChange = (event) => {
     const {
       target: { value },
@@ -55,30 +110,27 @@ export default function HomePage() {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
-  const [events, setEvents] = useState([
-    {
-      event: "Event Name 1",
-      description:
-        "Celebration with different cuisines from different regions. Do come and enjoy to your hearts.",
-    },
-    {
-      event: "Event Name 2",
-      description: "Event Description...........................",
-    },
-    {
-      event: "Event Name 3",
-      description:
-        "Celebration with different cuisines from different regions. Do come and enjoy to your hearts.",
-    },
-    {
-      event: "Event Name 4",
-      description: "Event Description...........................",
-    },
-  ]);
-  const handleSelection = (id) => {
-    setActiveEvent(id);
-    console.log(activeEvent);
-  }
+  // const [activeEvents, setEvents] = useState([
+  //   {
+  //     event: "Event Name 1",
+  //     description:
+  //       "Celebration with different cuisines from different regions. Do come and enjoy to your hearts.",
+  //   },
+  //   {
+  //     event: "Event Name 2",
+  //     description: "Event Description...........................",
+  //   },
+  //   {
+  //     event: "Event Name 3",
+  //     description:
+  //       "Celebration with different cuisines from different regions. Do come and enjoy to your hearts.",
+  //   },
+  //   {
+  //     event: "Event Name 4",
+  //     description: "Event Description...........................",
+  //   },
+  // ]);
+
   return (
     <Box
       sx={{
@@ -122,21 +174,27 @@ export default function HomePage() {
         <Typography
           variant="h5"
           color="rgb(254, 240, 180)"
-          sx={{ marginBottom: '10px', width: 'fit-content' }}
+          sx={{ marginBottom: '10px', width: 'fit-content' , [theme.breakpoints.down('400')]: {
+            width : "100%",
+            textAlign : 'center'
+          }, }}
         >
-          Prashant
+          {activeEvent[activeEvent.length - 1]?.username.toUpperCase()}
         </Typography>
       </Box>
       
     </Box>
       
-      <Box sx={{ margin: "0% 18%" , display : "flex" , justifyContent : "space-between" , fontSize : "1.6rem" , padding : "5px 0px" , color : "rgb(165, 170, 170)"}}>
+      <Box sx={{ margin: "0% 18%" , display : "flex" , justifyContent : "space-between" , fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.2rem"} , padding : "5px 0px" , color : "rgb(165, 170, 170)"}}>
         <Box sx={{margin : "0px 8px"}}>Live Events</Box>
-        <Box sx={{fontSize : "1.4rem" ,marginRight : "13%"}}>See All <img src="/Images/Vector-1.png"/> </Box>
+        <Box sx={{fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.2rem"} ,marginRight : "13%"}}>See All <img src="/Images/Vector-1.png"/> </Box>
       </Box>
-      <Box sx={{ margin: "1% 18%" }}>
+      <Box sx={{ margin: "1% 18%" , paddingBottom : "16px"}}>
         <Grid container spacing={2}>
-          {events.map((item, index) => {
+          {activeEvent?.map((item, index) => {
+            if(index === activeEvent.length -1 ){
+              return;
+            }
             return (
               <Grid item lg={6} md={6} sm={6} xs={12} key={index}>
                 <Box
@@ -196,10 +254,10 @@ export default function HomePage() {
                       color="rgb(254, 240, 180)"
                       sx={{ fontFamily: "Aoboshi One", margin: "5px 0px" }}
                     >
-                      {item.event}
+                      {item?.event_name}
                     </Typography>
                     <Typography color="rgb(43, 40, 73)" sx={{ fontFamily: "Poppins" }}>
-                      {item.description}
+                      {item?.event_description}
                     </Typography>
                   </Box>
                 </Box>

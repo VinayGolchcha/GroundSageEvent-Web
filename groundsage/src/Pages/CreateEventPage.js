@@ -27,8 +27,10 @@ import { AuthContext } from "../ContextApi/AuthContext";
 export default function CreateEventPage() {
   const [openCalendar1, setOpenCalendar1] = useState(false);
   const [openCalendar2, setOpenCalendar2] = useState(false);
-  const [fromDate , setFromDate] = useState("2022-04-20");
-  const [toDate , setToDate] = useState("2022-04-20");
+  const [fromDate , setFromDate] = useState(dayjs(new Date()));
+  const [toDate , setToDate] = useState();
+  const [fromDateSelected , setFormDateSelected] = useState(false);
+  const [toDateSelected , setToDateSelected] = useState(false);
   const [file, setFIle] = useState([]);
   const eventNameElement = useRef(null);
   const fromDateElement = useRef(null);
@@ -40,6 +42,17 @@ export default function CreateEventPage() {
   const staffMemberCountElement = useRef(null);
   const helperCountElement = useRef(null);
   const {user} = useContext(AuthContext);
+  const today = new Date();
+
+  const handleOpenCalender1 = () => {
+    setOpenCalendar1(true);
+    setFormDateSelected(true);
+  }
+
+  const handleOpenCalender2 = () => {
+    setOpenCalendar2(true);
+    setToDateSelected(true);
+  }
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     // Handle the uploaded file
@@ -56,10 +69,12 @@ export default function CreateEventPage() {
       file.forEach((f) => {
         formData.append("files" , f);
       })
+      console.log(formData);
       const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , formData , {
         headers: {
           'authorization': `${user?.token}`, // Ensure the token format is correct
           'Accept': 'application/json',
+          role_id : user?.role_id
         }
       }
       );
@@ -76,19 +91,20 @@ export default function CreateEventPage() {
     formattedFromDate[0] = formattedFromDate[1]
     formattedFromDate[1] = temp;
     formattedFromDate = formattedFromDate.reverse().join('-');
-    let formattedToDate = fromDateElement.current.value.split('/');
+    let formattedToDate = toDateElement.current.value.split('/');
     let tempTodate = formattedToDate[0];
     formattedToDate[0] = formattedToDate[1]
     formattedToDate[1] = tempTodate;
     formattedToDate = formattedToDate.reverse().join('-');
-    
+    console.log("from Date" , formattedFromDate);
+    console.log("from Date" , formattedToDate);
   const  body = { 
     event_name : eventNameElement.current.value,
     start_date : formattedFromDate,
     end_date : formattedToDate,
     event_description : descriptionElement.current.value,
     user_id : user?.user_id,
-    role_name : "coordinator",
+    role_name : user?.role_name,
     team_name : teamNameElement.current.value,
     team_size : teamSizeElement.current.value,
     coordinator_count : coordinatorCountElement.current.value,
@@ -154,6 +170,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
+                  fontSize : "20px"
                 },
               }}
               id="standard-basic"
@@ -166,10 +183,20 @@ export default function CreateEventPage() {
                 variant="standard"
                 sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
               >
-                <InputLabel id="from-date-label" sx={{color : "white"}}>From Date</InputLabel>
+                {fromDateSelected === false && <InputLabel id="from-date-label" sx={{color : "white"
+                    ,
+                    ...(fromDateElement && {
+                      
+                        color : "white",
+                        opacity : "0.2",
+                        paddingLeft : "100px"
+                      ,
+                    } ) ,
+                  }}>From Date</InputLabel>}
                 <DatePicker
                   labelId="from-date-label"
                   value={dayjs(fromDate)}
+                  minDate={dayjs(today)}
                   onChange={(newValue) => setFromDate(newValue.$d.toISOString().split('T')[0])} // Handle onChange event if needed
                   open={openCalendar1}
                   onOpen={() => setOpenCalendar1(true)}
@@ -182,7 +209,7 @@ export default function CreateEventPage() {
                           <img
                             src="image-4.png"
                             style={{ cursor: "pointer" }}
-                            onClick={() => setOpenCalendar1(true)}
+                            onClick={handleOpenCalender1}
                           />
                         ),
                       },
@@ -192,16 +219,25 @@ export default function CreateEventPage() {
                     "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
                       border: "none",
                       borderRadius: "none",
-                      borderBottom: " 1px solid rgb(188, 189, 163)",
+
                     },
                     "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
                       color: "white",
                     },
-                    "& :hover": {
+                  //   "& :hover": {
+                  //     borderBottom: " 1px solid rgb(188, 189, 163)",
+                  //   },
+                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                      color : "white"
+                    },
+
+                    "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
+                      borderRadius : "0px",
                       borderBottom: " 1px solid rgb(188, 189, 163)",
                     },
                     "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
-                        opacity : "0"
+                      paddingLeft : "1px",
+                      color : "white"
                     }
                   }}
                 />
@@ -212,12 +248,20 @@ export default function CreateEventPage() {
                 variant="standard"
                 sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
               >
-                <InputLabel id="from-date-label" sx={{color : "white"}}>To date</InputLabel>
+                {toDateSelected === false && <InputLabel id="from-date-label" sx={{color : "white",
+                    ...(fromDateElement && {
+                      
+                        color : "white",
+                        opacity : "0.2",
+                        paddingLeft : "100px"
+                      ,
+                    } ) ,}}>To date</InputLabel>}
                 <DatePicker
                   labelId="to-date-label"
                   value={dayjs(toDate)}
                   onChange={(newValue) => setToDate(newValue.$d.toISOString().split('T')[0])} // Handle onChange event if needed
                   open={openCalendar2}
+                  minDate={dayjs(fromDate)}
                   onOpen={() => setOpenCalendar2(true)}
                   onClose={() => setOpenCalendar2(false)}
                   inputRef={toDateElement}
@@ -228,7 +272,7 @@ export default function CreateEventPage() {
                           <img
                             src="image-4.png"
                             style={{ cursor: "pointer" }}
-                            onClick={() => setOpenCalendar2(true)}
+                            onClick={handleOpenCalender2}
                           />
                         ),
                       },
@@ -238,16 +282,25 @@ export default function CreateEventPage() {
                     "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
                       border: "none",
                       borderRadius: "none",
-                      borderBottom: " 1px solid rgb(188, 189, 163)",
+
                     },
                     "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
                       color: "white",
                     },
-                    "& :hover": {
+                  //   "& :hover": {
+                  //     borderBottom: " 1px solid rgb(188, 189, 163)",
+                  //   },
+                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                      color : "white"
+                    },
+
+                    "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
+                      borderRadius : "0px",
                       borderBottom: " 1px solid rgb(188, 189, 163)",
                     },
                     "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
-                        opacity : "0"
+                      paddingLeft : "1px",
+                      color : "white"
                     }
                   }}
                 />
@@ -282,6 +335,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
+                  fontSize : "20px"
                 },
               }}
               inputRef={descriptionElement}
@@ -336,6 +390,12 @@ export default function CreateEventPage() {
                   </IconButton>
                 ),
               }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize : "20px"
+                },
+              }}
             />
           </Grid>
           <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -377,6 +437,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
+                  fontSize : "20px"
                 },
               }}
               inputRef={teamNameElement}
@@ -414,6 +475,7 @@ export default function CreateEventPage() {
             InputLabelProps={{
               style: {
                 color: "white",
+                fontSize : "20px"
               },
             }}
               id="standard-basic"
@@ -453,6 +515,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
+                  fontSize : "20px"
                 },
               }}
               inputRef={coordinatorCountElement}
@@ -492,6 +555,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
+                  fontSize : "20px"
                 },
               }}
               id="standard-basic"
@@ -530,6 +594,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
+                  fontSize : "20px"
                 },
               }}
               inputRef={helperCountElement}

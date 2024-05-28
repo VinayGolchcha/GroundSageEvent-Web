@@ -25,11 +25,22 @@ const Notes = () => {
   const [isEditPopupOpen , setIsEditPopupOpen] = useState(false);
   const [selectedId , setSelectedId] = useState(null);
   const [selectedItem , setSelectedItem] = useState(null);
-  const {user} = useContext(AuthContext);
-  
+  const {user , activeEventId} = useContext(AuthContext);
+  console.log(user);
+  console.log(activeEventId);
   const deleteNoteByMultipleId = async (ids) => {
+    console.log(ids)
     try{
-      const res = axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note` , { data : {ids}});
+      const res = axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note`  ,{
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          role_id : user?.role_id
+        },
+        data: { ids }
+      }
+      );
       console.log(res);
       fetchNotes();
     }catch(err){
@@ -39,7 +50,13 @@ const Notes = () => {
   }
   const fetchNotes = async () => {
     try{
-      const res = await axios.get(`${process.env.REACT_APP_API_URI}/note/fetch-notes`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/note/fetch-notes/${user?.user_id}/${activeEventId}`, {
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      });
       const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}))
       setEventList(newEventList);
       console.log(eventList);
@@ -72,7 +89,14 @@ const Notes = () => {
 
   const handleSaveEditNote = async (body) => {
     try{
-      const res = await axios.put(`${process.env.REACT_APP_API_URI}/note/update-note/${selectedId}` , body);
+      const res = await axios.put(`${process.env.REACT_APP_API_URI}/note/update-note/${selectedId}` , body ,{
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          role_id : user?.role_id
+        }
+      });
       console.log(res);
       toast.success(res?.data.data, {
         style: {
@@ -103,7 +127,15 @@ const Notes = () => {
 
     // setEventList([newItem, ...eventList]);
     try{
-      const res = await axios.post(`${process.env.REACT_APP_API_URI}/note/create-note` , body);
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/note/create-note` , body ,{
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          role_id : user?.role_id
+        }
+      }
+       );
       setIsPopupOpen(false);
       console.log(res);
       toast.success("Note added successfully!", {
@@ -243,7 +275,7 @@ const Notes = () => {
 
       <Box>
         {" "}
-        {eventList.length !== 0 && (
+        {eventList?.length !== 0 && (
           <Box
             sx={{
               margin: "2% 18%",
@@ -324,7 +356,7 @@ const Notes = () => {
           </Box>
         )}
         {eventList
-          .slice(0, showAll ? eventList.length : maxItems)
+          ?.slice(0, showAll ? eventList?.length : maxItems)
           .map((item, index) => {
             return (
               <Box
@@ -417,7 +449,7 @@ const Notes = () => {
               </Box>
             );
           })}
-        {eventList.length > maxItems && (
+        {eventList?.length > maxItems && (
           <Typography
             sx={{
               color: "white",
@@ -435,6 +467,7 @@ const Notes = () => {
       <AddNotes
         open={isPopupOpen}
         user={user}
+        activeEventId = {activeEventId}
         onClose={() => setIsPopupOpen(false)}
         onSave={handleSaveNote}
       />

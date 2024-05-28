@@ -8,7 +8,8 @@ const AuthProvider = ({ children }) => {
   const [shopIds, setShopIds] = useState([]);
   const [eventIds , setEventIds] = useState([]);
   const [events , setEvents] = useState([]);
-  const [activeEvent , setActiveEvent] = useState(null);
+  const [activeEvent , setActiveEvent] = useState([]);
+  const [activeEventId ,setActiveEventId] = useState(null);
 
 
 
@@ -36,7 +37,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isEmailVerified, setIsEmailVerified, user, setUser, logout,setShopIds , setEventIds , eventIds ,setActiveEvent , activeEvent , events , setEvents}}>
+    <AuthContext.Provider value={{ isEmailVerified, setIsEmailVerified, user, setUser, logout,setShopIds , setEventIds , eventIds ,setActiveEvent , activeEvent , events , setEvents , activeEventId , setActiveEventId }}>
       {children}
     </AuthContext.Provider>
   );

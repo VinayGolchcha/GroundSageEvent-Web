@@ -14,15 +14,26 @@ import MenuItem from "@mui/material/MenuItem";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
 
-const pages = ["Events", "Shops", "Teams", "Transaction", "Notes", "Reports"];
-const settings = ["Event Atrangi" ,"Visit Profile", "Logout" ];
+const pages = [ "Home" , "Events", "Shops", "Teams", "Transaction", "Notes", "Reports"];
 
-function Navbar({ handleOpen}) {
+function Navbar({ handleOpen , isActive , activeEventId}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [currentActiveEventName , setCurrentActiveEventName] = React.useState(null);
   const { logout } = React.useContext(AuthContext);
-  const location = useLocation();
+  const [settings , setSettings ] = React.useState(["Event Atrangi" ,"Visit Profile", "Logout"]);
+  const location = useLocation(); 
   const navigate = useNavigate();
+  console.log(isActive);
+  // React.useEffect(()=> {
+  //   const currentActiveEvent = isActive?.filter((item) => (item.id === activeEventId));
+  //   console.log(currentActiveEvent);
+  //   let newActiveEvent = currentActiveEvent.length === 0 ? "Event Atrangi" : currentActiveEvent[0].event_name;
+  //   setCurrentActiveEventName(newActiveEvent);
+  //   console.log(currentActiveEventName)
+  //   const newSettings = [currentActiveEventName ,"Visit Profile", "Logout"];
+  //   setSettings(newSettings)
+  // } , [activeEventId])
   if (
     location.pathname === "/" ||
     location.pathname === "/entermail" ||
