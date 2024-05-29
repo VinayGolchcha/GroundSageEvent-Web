@@ -363,7 +363,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                   ),
                 }}
               />
-              <List>
+              {/* <List>
             {file?.map((file, index) => (
               <ListItem key={index} sx={{ padding: 0, marginTop: 1 }}>
                 <ListItemText
@@ -379,7 +379,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                 </IconButton>
               </ListItem>
             ))}
-          </List>
+          </List> */}
               </div>
             </Box>
             </Box>

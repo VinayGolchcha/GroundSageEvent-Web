@@ -64,7 +64,10 @@ export default function CreateEventPage() {
     try{
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
-        formData.append(key , body[key]);
+        
+          formData.append(key , body[key]);
+        
+        
       })
       file.forEach((f) => {
         formData.append("files" , f);

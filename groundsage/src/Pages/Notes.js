@@ -69,7 +69,7 @@ const Notes = () => {
 
   useEffect(()=>{
     fetchNotes();
-  },[])
+  },[activeEventId])
   const maxItems = 3;
 
   const handleOpenPopup = () => {

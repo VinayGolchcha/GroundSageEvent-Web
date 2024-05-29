@@ -160,7 +160,7 @@ const IncomeList = () => {
                 alt="add-icon"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
-                  navigate("/transaction");
+                  navigate("/create-transaction");
                 }}
               />
             )}

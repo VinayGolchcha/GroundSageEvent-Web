@@ -25,6 +25,7 @@ function Navbar({ handleOpen , isActive , activeEventId}) {
   const location = useLocation(); 
   const navigate = useNavigate();
   console.log(isActive);
+  console.log(activeEventId)
   // React.useEffect(()=> {
   //   const currentActiveEvent = isActive?.filter((item) => (item.id === activeEventId));
   //   console.log(currentActiveEvent);

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SplashScreenPage from "./Pages/SplashScreenPage";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
@@ -60,6 +60,7 @@ const App = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [personName, setPersonName] = React.useState([]);
+  const [eventName , setEventName] = useState();
   useEffect(()=> {
     setActiveEventId(activeEvent[0]?.id)
   },[])
@@ -145,12 +146,12 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/description/:shopIndex" element={<DescriptionPage />} />
         <Route path="/refferalcode" element={<ReferralCodePage />} />
-        <Route path="/transaction" element={<TransactionPage />} />
+        <Route path="/create-transaction" element={<TransactionPage />} />
         <Route path="/rental-agreement" element={<RentalAgreementPage />} />
         <Route path="/Events" element={<EventListPage />} />
         <Route path="/createshop" element={<CreateShopPage />} />
         <Route path="/notes" element={<Notes />} />
-        <Route path="/transactionlist" element={<TransactionList />} />
+        <Route path="/transaction" element={<TransactionList />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/incomereport" element={<IncomeReports />} />
         <Route path="/occupancyreport" element={<OccupancyReport />} />

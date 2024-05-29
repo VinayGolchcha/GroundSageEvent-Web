@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Typography, Box, Button } from "@mui/material";
 import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,29 +7,33 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import ExpensesList from "../Component/ExpensesList";
 import IncomeList from "../Component/IncomeList";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const TransactionList = () => {
   const navigate = useNavigate();
 
   const [activeButton, setActiveButton] = useState("income");
   const [transactionData, setTransactionData] = useState([]);
+  const {user , activeEventId} = useContext(AuthContext);
 
-
+  console.log(user);
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
   useEffect(() => {
     // Fetch transaction data from the API
     fetch(
-      "https://groundsageevent-be.onrender.com/api/v1/transaction/fetch-transaction",
+      "https://groundsageevent-be.onrender.com/api/v1/transaction/fetch-all-transaction",
       {
         method: "POST",
         headers: {
+          'authorization': user?.token,
+          'Accept' : 'application/json',
           "Content-Type": "application/json",
+          role_id : user?.role_id
         },
         body: JSON.stringify({
-          transaction_id: 1111,
-          event_id: 1111,
+          event_id: activeEventId,
         }),
       }
     )

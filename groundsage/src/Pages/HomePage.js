@@ -75,6 +75,12 @@ export default function HomePage() {
 //     console.log(err);
 //   }
 // }
+const forrmattedDate = (data) => {
+  let date = new Date(data);
+  const array = date.toString().split(" ");
+  date = array.slice(1,3).join(" ");
+  return date
+}
 
 useEffect(()=> {
   fecthApiHome();
@@ -234,7 +240,7 @@ console.log(activeEvent);
                           paddingRight: "2%",
                         }}
                       >
-                        10 June
+                        {forrmattedDate(item?.start_date)}
                       </Box>
                       <img
                         src="/home/Group-33311.png"
@@ -243,7 +249,7 @@ console.log(activeEvent);
                       />
                     </Box>
                     <img
-                      src="/home/imag-84.png"
+                      src={item?.image_url === null ? "/home/imag-84.png" : item?.image_url}
                       alt=""
                       style={{ borderRadius: "8px", width: "100%" }}
                     />
