@@ -1,7 +1,20 @@
 import React from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  if (
+    location.pathname === "/" ||
+    location.pathname === "/entermail" ||
+    location.pathname === "/signin" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/verification" ||
+    location.pathname === "/forgetpassword"
+  ) {
+    return null;
+  }
   return (
     <div style={{ background: "rgb(78, 101, 100)" }}>
       <Box
@@ -11,104 +24,104 @@ const Footer = () => {
           justifyContent: { xs: "center", md: "space-between" },
           alignItems: "center", // Center vertically
           textAlign: "center", //
-          margin: {xs:"0px 10px",md:"0px 50px 0px 50px"},
+          margin: { xs: "0px 10px", md: "0px 50px 0px 50px" },
           paddingTop: "20px",
         }}
       >
-        <Box sx={{display:{xs:"flex"},justifyContent:"space-between",}}>
-        <Box>
-          <img
-            src="../../../Images/logo_1 1.png"
-            alt="Right Arrow"
-            style={{ marginRight: "5px", width: "45%" }} // Adjust margin between image and text
-          />
-          <Typography
-            sx={{
-              color: "rgb(255, 255, 255)",
-              fontFamily: "Inter",
-              lineHeight: "1",
-              marginTop: "10px",
-              fontWeight: "600",
-            }}
-          >
-            Your One-Stop Solution for
-            <br /> Seamless Event Management!
-          </Typography>
-        </Box>
-        <Box sx={{ marginLeft: { xs: "0", md: "20%" } }}>
-          <Typography
-            sx={{
-              color: "rgb(255, 255, 255)",
-              fontFamily: "Inter",
-              lineHeight: "1",
-              marginTop: "10px",
-              fontWeight: "500",
-              fontSize: "20px", 
-              marginBottom: "20px",
-            }}
-          >
-            Your Review is important to us{" "}
-          </Typography>
-          <TextField
-            id="filled-basic"
-            label="Email"
-            variant="filled"
-            size="small"
-            InputProps={{
-              disableUnderline: true,
-              style: { color: "white", margin: "1px" },
-            }}
-            InputLabelProps={{ style: { color: "white" } }} // Change label color
-            sx={{
-              margin: "5px",
-              // width: "130%",
-              borderRadius: "4px",
-              background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
-            }}
-          />
-          <br />
-          <TextField
-            id="filled-basic"
-            label="review"
-            variant="filled"
-            size="small"
-            InputProps={{
-              disableUnderline: true,
-              style: { color: "white", margin: "1px" },
-            }}
-            InputLabelProps={{ style: { color: "white" } }} // Change label color
-            sx={{
-              margin: "5px",
-              // width: "130%",
-              borderRadius: "4px",
-              background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
-            }}
-          />
-          <Button
-            variant="contained"
-            sx={{
-              background: "rgb(247, 230, 173)",
-              color: "rgb(91, 94, 97)",
-              padding: "5px 40px 5px 30px",
-              display: "flex",
-              // margin: "10px 0px 0px 2%",
-              margin: "10px auto", // Center button
-              alignItems: "center",
-              borderRadius: "4px", // Add border radius
-              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)", // Add box shadow
-              fontSize: "16px",
-              "&:hover": {
-                backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
-                color: "rgb(50, 50, 50)", // Change text color on hover
-                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
-              },
-            }}
-          >
-            Send
-          </Button>
-        </Box>
+        <Box sx={{ display: { xs: "flex" }, justifyContent: "space-between" }}>
+          <Box>
+            <img
+              src="../../../Images/logo_1 1.png"
+              alt="Right Arrow"
+              style={{ marginRight: "5px", width: "45%" }} // Adjust margin between image and text
+            />
+            <Typography
+              sx={{
+                color: "rgb(255, 255, 255)",
+                fontFamily: "Inter",
+                lineHeight: "1",
+                marginTop: "10px",
+                fontWeight: "600",
+              }}
+            >
+              Your One-Stop Solution for
+              <br /> Seamless Event Management!
+            </Typography>
+          </Box>
+          <Box sx={{ marginLeft: { xs: "0", md: "20%" } }}>
+            <Typography
+              sx={{
+                color: "rgb(255, 255, 255)",
+                fontFamily: "Inter",
+                lineHeight: "1",
+                marginTop: "10px",
+                fontWeight: "500",
+                fontSize: "20px",
+                marginBottom: "20px",
+              }}
+            >
+              Your Review is important to us{" "}
+            </Typography>
+            <TextField
+              id="filled-basic"
+              label="Email"
+              variant="filled"
+              size="small"
+              InputProps={{
+                disableUnderline: true,
+                style: { color: "white", margin: "1px" },
+              }}
+              InputLabelProps={{ style: { color: "white" } }} // Change label color
+              sx={{
+                margin: "5px",
+                // width: "130%",
+                borderRadius: "4px",
+                background: "rgb(115, 135, 135)",
+                border: "1px solid rgb(188, 189, 163)", // Add border color
+              }}
+            />
+            <br />
+            <TextField
+              id="filled-basic"
+              label="review"
+              variant="filled"
+              size="small"
+              InputProps={{
+                disableUnderline: true,
+                style: { color: "white", margin: "1px" },
+              }}
+              InputLabelProps={{ style: { color: "white" } }} // Change label color
+              sx={{
+                margin: "5px",
+                // width: "130%",
+                borderRadius: "4px",
+                background: "rgb(115, 135, 135)",
+                border: "1px solid rgb(188, 189, 163)", // Add border color
+              }}
+            />
+            <Button
+              variant="contained"
+              sx={{
+                background: "rgb(247, 230, 173)",
+                color: "rgb(91, 94, 97)",
+                padding: "5px 40px 5px 30px",
+                display: "flex",
+                // margin: "10px 0px 0px 2%",
+                margin: "10px auto", // Center button
+                alignItems: "center",
+                borderRadius: "4px", // Add border radius
+                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)", // Add box shadow
+                fontSize: "16px",
+                "&:hover": {
+                  backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+                  color: "rgb(50, 50, 50)", // Change text color on hover
+                  boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+                },
+              }}
+            >
+              Send
+            </Button>
+          </Box>
         </Box>
         <Box>
           <img
@@ -127,7 +140,7 @@ const Footer = () => {
           fontSize: "16px",
           fontFamily: "Outfit",
           letterSpacing: "0pxf",
-          marginRight:{xs:"0",lg:"10%"}
+          marginRight: { xs: "0", lg: "10%" },
         }}
       >
         © 2024 All Rights Reserved

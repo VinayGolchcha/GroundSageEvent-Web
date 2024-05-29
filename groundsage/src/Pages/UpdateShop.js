@@ -36,7 +36,9 @@ export default function UpdateShopPage() {
   const [image, setImage] = useState(null);
   const [eventData, setEventData] = useState({});
   const location = useLocation();
+  const [file, setFile] = useState([]);
   const selectedShop = location.state && location.state.selectedShop;
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     if (selectedShop) {
@@ -47,6 +49,7 @@ export default function UpdateShopPage() {
         description: selectedShop.description,
         area: selectedShop.area,
         location: selectedShop.location,
+        shop_number: selectedShop.shop_number,
       });
       setShopStatus(selectedShop.status);
     }
@@ -62,35 +65,83 @@ export default function UpdateShopPage() {
   };
 
   const handleSubmit = async () => {
+    const publicIds = location.state && location.state.publicIds;
+
+    console.log(publicIds);
+    const formattedPublicIds =
+      "[" + publicIds.map((id) => `"${id.trim()}"`).join(", ") + "]";
+
+    console.log(formattedPublicIds);
     try {
       // Prepare the updated data
       const updatedData = {
-        dome: eventData.dome,
+        // dome: eventData.dome,
+        shop_number: eventData.shop_number,
         rent: eventData.rent,
         description: eventData.description,
         area: eventData.area,
         location: eventData.location,
         status: shopStatus,
+        // public_ids: formattedPublicIds,
       };
-  
+
+      const formData = new FormData();
+      Object.entries(updatedData).forEach(([key, value]) => {
+        console.log(key, value);
+        formData.append(key, value);
+      });
+
+      if (file.length > 0) {
+        file.forEach((file) => {
+          console.log(file);
+          formData.append("files", file);
+        });
+      } else {
+        // If no new files uploaded, append existing files
+        // publicIds.forEach((id) => {
+        //   // formData.append("public_ids", id);
+        //   formData.append("public_ids", "[\"groundsage/drett21vjz2xssoqsoag\", \"groundsage/k17rmbbikh83zxkfpuwz\"]");
+        // });
+      }
+
+      formData.append(
+        "public_ids",
+        '["groundsage/drett21vjz2xssoqsoag", "groundsage/k17rmbbikh83zxkfpuwz"]'
+      );
+      console.log("Logging FormData contents:");
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
       // Send PUT request to update shop details
-      const response = await axios.put(`https://groundsageevent-be.onrender.com/api/v1/shop/update-shop/${selectedShop.id}/${selectedShop.event_id}`, updatedData);
-  
+      const response = await axios.put(
+        `https://groundsageevent-be.onrender.com/api/v1/shop/update-shop/${selectedShop.id}/${selectedShop.event_id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": user?.token,
+            role_id: user?.role_id,
+          },
+        },
+        formData
+      );
+
       // Check if the request was successful (status code 2xx)
       if (response.status >= 200 && response.status < 300) {
         // Show success message
-        toast.success('Shop details updated successfully!');
+        toast.success("Shop details updated successfully!");
         console.log(response);
+        navigate("/shops");
       } else {
         // If response status is not in the 2xx range, throw an error
-        throw new Error('Failed to update shop details. Please try again.');
+        throw new Error("Failed to update shop details. Please try again.");
       }
     } catch (error) {
       // Show error message if request fails
-      toast.error(error.message || 'Failed to update shop details. Please try again.');
+      toast.error(
+        error.message || "Failed to update shop details. Please try again."
+      );
     }
   };
-  
 
   const handleStatus = () => {
     if (shopStatus === "Vacant") {
@@ -111,8 +162,10 @@ export default function UpdateShopPage() {
   };
 
   const handleFileInputChange = (e) => {
-    const file = e.target.files[0];
-    handleFile(file);
+    // const file = e.target.files[0];
+    const files = Array.from(e.target.files);
+    setFile(files);
+    console.log(files);
   };
 
   const handleFile = (file) => {
@@ -180,7 +233,7 @@ export default function UpdateShopPage() {
               // fontSize: { xs: "30px", md: "46px" },
             }}
           >
-            Shop 01
+            Shop {0 + "" + eventData?.shop_number}
           </Box>{" "}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -214,6 +267,7 @@ export default function UpdateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -250,6 +304,7 @@ export default function UpdateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -287,6 +342,7 @@ export default function UpdateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 label="Shop Description"
@@ -322,6 +378,7 @@ export default function UpdateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -356,6 +413,7 @@ export default function UpdateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -457,6 +515,7 @@ export default function UpdateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -494,6 +553,7 @@ export default function UpdateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -565,8 +625,30 @@ export default function UpdateShopPage() {
             accept="image/*"
             style={{ display: "none" }}
             onChange={handleFileInputChange}
+            multiple
           />
         </div>
+        <Box
+          sx={{
+            padding: "20px 0px",
+            cursor: "pointer",
+            textAlign: "center",
+            color: "white",
+          }}
+          onClick={() => document.getElementById("fileInput").click()}
+        >
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "bold", fontSize: { xs: "16px", md: "20px" } }}
+          >
+            Drag and drop a file here or click to select a file
+          </Typography>
+          <Box sx={{ marginTop: "10px", color: "rgb(188, 189, 163)" }}>
+            {file?.length === 0
+              ? "No files selected."
+              : file?.map((f) => f.name).join(", ")}
+          </Box>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -582,6 +664,11 @@ export default function UpdateShopPage() {
               color: "rgb(91, 94, 97)",
               minWidth: "200px",
               fontWeight: "600",
+              "&:hover": {
+                backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+                color: "rgb(50, 50, 50)", // Change text color on hover
+                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+              },
             }}
             onClick={handleSubmit}
           >

@@ -34,7 +34,15 @@ const icons = [
   "Group 33713.png",
   "Group 33709.png",
 ];
-const iconsPath = ['/incomereport',]
+
+const iconsPath = [
+  "/incomereport",
+  "/expensereport",
+  "/outstandingreport",
+  "/netpayablereport",
+  "/tenantsreport",
+  "/occupancyreport",
+];
 const Reports = () => {
   const navigate = useNavigate();
   const [chartType, setChartType] = useState("year");
@@ -125,7 +133,7 @@ const Reports = () => {
     <div
       style={{
         background: "rgb(66, 92, 90)",
-        minHeight: "100vh",
+        // minHeight: "100vh",
         padding: "20px",
       }}
     >
@@ -145,7 +153,7 @@ const Reports = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: {xs:"40px",md:"56px"},
+          fontSize: { xs: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: "-70px",
@@ -155,15 +163,23 @@ const Reports = () => {
       >
         Reports
       </Typography>
-      <div
-        style={{
+      <Box
+        sx={{
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-between",
           margin: "0px 5% 5px 5%",
         }}
       >
-        <div style={{ background: "#fff", padding: "20px", width: "45%" }}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            background: "#fff",
+            padding: "20px",
+            width: { xs: "90%", md: "45%" },
+            marginBottom: { xs: "20px", md: "0" },
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
               variant="h6"
               gutterBottom
@@ -171,14 +187,14 @@ const Reports = () => {
                 fontFamily: "Inter",
                 color: "rgb(34, 34, 34)",
                 fontWeight: "600",
-                fontSize: "22px",
+                fontSize: { xs: "18px", md: "22px" },
                 margin: "0px 10px 20px 0px",
               }}
             >
               Total Income
             </Typography>
-            <div
-              style={{
+            <Box
+              sx={{
                 marginLeft: "20px",
                 width: "25%",
                 background: "rgba(217, 217, 217, 0.3)",
@@ -204,10 +220,10 @@ const Reports = () => {
                 <MenuItem value="year">Year</MenuItem>
                 <MenuItem value="month">Month</MenuItem>
               </Select>
-            </div>
-          </div>
-          <div style={{ width: "100%", height: "40vh" }}>
-            <ResponsiveContainer sx={{ width: "35%" }}>
+            </Box>
+          </Box>
+          <Box sx={{ width: "100%", height: "40vh" }}>
+            <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>
                 <XAxis dataKey={xAxisDataKey} />
                 <YAxis />
@@ -216,11 +232,11 @@ const Reports = () => {
                 <Bar dataKey="income" fill="rgb(63, 128, 101)" barSize={30} />
               </BarChart>
             </ResponsiveContainer>
-          </div>
-        </div>
-        <Card sx={{ width: "49%" }}>
+          </Box>
+        </Box>
+        <Card sx={{ width: { xs: "100%", md: "49%" } }}>
           <CardContent>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 variant="h6"
                 gutterBottom
@@ -228,13 +244,13 @@ const Reports = () => {
                   fontFamily: "Inter",
                   color: "rgb(34, 34, 34)",
                   fontWeight: "600",
-                  fontSize: "22px",
+                  fontSize: { xs: "18px", md: "22px" },
                   marginLeft: "5%",
                 }}
               >
                 Income chart basis on Type
               </Typography>
-              <div style={{ marginLeft: "20px", width: "20%" }}>
+              <Box sx={{ marginLeft: "20px", width: "20%" }}>
                 <Select
                   value={selectedPieOption}
                   onChange={handlePieOptionChange}
@@ -257,44 +273,47 @@ const Reports = () => {
                     </MenuItem>
                   ))}
                 </Select>
-              </div>
-            </div>
-            <div
-              style={{ display: "flex", alignItems: "center", width: "40%" }}
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              <div style={{ flex: 1 }}>
-                <PieChart width={300} height={300}>
-                  <RechartsTooltip position="top" />
-                  <RechartsLegend verticalAlign="top" height={46} />
-                  <Pie
-                    dataKey="value"
-                    data={expenseData}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={100}
-                    fill="#8884d8"
-                    label
-                  >
-                    {expenseData.map((entry, index) => (
-                      <Cell
-                        key={`slice-${index}`}
-                        data={entry}
-                        fill={entry.fill}
-                      />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </div>
-            </div>
+              <PieChart width={300} height={300}>
+                <RechartsTooltip position="top" />
+                <RechartsLegend verticalAlign="top" height={46} />
+                <Pie
+                  dataKey="value"
+                  data={expenseData}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  fill="#8884d8"
+                  label
+                >
+                  {expenseData.map((entry, index) => (
+                    <Cell
+                      key={`slice-${index}`}
+                      data={entry}
+                      fill={entry.fill}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </Box>
           </CardContent>
         </Card>
-      </div>
+      </Box>
       <Box>
         <Typography
           sx={{
             color: "rgb(155, 181, 199)",
             textAlign: "center",
-            fontSize: "36px",
+            fontSize: { xs: "24px", md: "36px" },
             fontFamily: "Aoboshi One",
             fontWeight: "400",
             marginTop: "20px",
@@ -303,18 +322,28 @@ const Reports = () => {
           See All Reports
         </Typography>
         <Box
-          style={{
+          sx={{
             display: "flex",
             justifyContent: "space-evenly",
+            flexWrap: "wrap",
             margin: "25px 9% 5px 8%",
           }}
         >
           {icons.map((icon, idx) => {
             return (
-              <img
+              <Box
+                component="img"
+                key={idx}
                 src={`../../../Images/${icon}`}
-                alt="Right Arrow"
-                style={{ height: "9vw", cursor: "pointer" }}
+                alt="Icon"
+                sx={{
+                  height: { xs: "23vw", md: "9vw" },
+                  cursor: "pointer",
+                  margin: "5px",
+                }}
+                onClick={() => {
+                  navigate(`${iconsPath[idx]}`);
+                }}
               />
             );
           })}

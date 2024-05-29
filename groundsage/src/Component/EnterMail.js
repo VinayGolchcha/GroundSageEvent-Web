@@ -9,7 +9,7 @@ import {
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Navigate, useNavigate,useLocation } from "react-router-dom";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -39,7 +39,9 @@ const EnterMail = () => {
       // If successful response, show success message
       console.log(response);
       toast.success("OTP sent successfully!");
-      navigate("/verification", { state: { email} });
+      navigate("/verification", {
+        state: { parentRoute: "entermail", email: email },
+      });
       // You can add further logic here like redirecting to OTP verification page
     } catch (error) {
       // Handle error
@@ -49,7 +51,7 @@ const EnterMail = () => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "rgb(66, 92, 90)" }}>
+    <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
       <ToastContainer />
       <Box
         sx={{
@@ -58,10 +60,23 @@ const EnterMail = () => {
           justifyContent: "space-around",
           flexDirection: { xs: "column-reverse", md: "row" },
           // justifyContent:"space-around",
-          paddingTop: "5%",
+          padding: { xs: "20px", md: "50px" },
         }}
       >
-        <Box sx={{ marginTop: "50px", width: "25%" }}>
+        <Box
+          sx={{
+            marginTop: { xs: "0px", md: "40px" },
+            // width: { xs: "100%", md: "50%" },
+            display: { xs: "flex", md: "block" },
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: { xs: "20px", md: "90px" },
+            width: { xs: "100%", md: "30%" },
+            marginLeft:{xs:"0px",md:"3%"}
+          }}
+        >
+          {" "}
           <Typography
             sx={{
               color: "rgb(165, 170, 174)", // Set label color to white
@@ -92,7 +107,11 @@ const EnterMail = () => {
             onChange={(e) => setEmail(e.target.value)}
             label={
               <Box
-                sx={{ display: "flex", alignItems: "center", height: "100%" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  height: "100%",
+                }}
               >
                 <img
                   src="../../Images/Message.png"
@@ -115,12 +134,10 @@ const EnterMail = () => {
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)", // Add border color
-              marginBottom: "15px",
+              marginTop: { xs: "0px", md: "15px" },
             }}
           />
-
           <br />
-
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               variant="contained"
@@ -128,7 +145,7 @@ const EnterMail = () => {
                 background: "rgb(247, 230, 173)",
                 color: "rgb(91, 94, 97)",
                 padding: "13px 50px 13px 90px",
-                marginTop: "40px",
+                marginTop: { xs: "0px", md: "40px" },
                 display: "flex",
                 alignItems: "center",
                 borderRadius: "4px", // Add border radius
@@ -156,7 +173,9 @@ const EnterMail = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: "5%",
+            width: { xs: "100%", md: "70%" },
+            margin: { xs: "20px 0", md: "0px 0px 0px 50px" },
+            marginTop: { xs: "20px", md: "50px" },
           }}
         >
           <Box
@@ -166,7 +185,7 @@ const EnterMail = () => {
             sx={{
               marginRight: { xs: "0", lg: "25%" },
               margin: { xs: "10px 20px 10px 20px", md: "0" },
-              width: { xs: "100%", md: "110%" },
+              width: { xs: "100%", md: "70%" },
             }}
           />
         </Box>

@@ -21,201 +21,70 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useState } from "react";
 
 export default function RentalAgreementPage() {
-    const [openCalendar1, setOpenCalendar1] = useState(false);
-    const [openCalendar2, setOpenCalendar2] = useState(false);
-    const [file , setFIle] = useState();
-    const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        // Handle the uploaded file
-        console.log(file);
-        setFIle(file);
-      };
-    
-    return (
-        <Box sx={{backgroundColor : "rgb(66, 92, 90)"}}>
-            <Typography variant="h3" sx={{
-                color : "rgb(247, 230, 173)",
-                textAlign : "center", 
-                padding : "20px 0px",
-                fontWeight : "600",
-                textShadow: "0 6px rgba(81,67,21,0.8)"
-            }}>Rental Agreement</Typography>
-            <Box sx={{display : "flex" , justifyContent : "center" , margin : "10px 0px", alignItems : "center"}}>
-               <img src="Rectangle-4242.png" alt="Shop Image" style={{border : "20px solid rgb(78, 101, 100)" , borderRadius: "10px" , position : "relative" , width : "70%"}}/>
-               <Typography variant="h4" sx={{position : "absolute" , top : "205px" , color : "rgb(255, 255, 255)"}}>Shop 01</Typography>
-            </Box>
-            <Box sx={{display : "flex" , justifyContent : "center" }}>
-                <Grid container spacing={4} sx={{margin : "0% 10%"}}>
-                <Grid item lg={6} md={6} sm ={6} xs={12}>
-                    <Typography variant="h4" sx={{color : "rgb(155, 181, 199)" , margin : "20px 0px"}}>Tenant Information</Typography>
-                <TextField sx = {{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                  color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
-                style: {
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-              style: {
-                color: "white",
-              },}}
-            id="standard-basic" label="name" variant="standard" />
-            <TextField sx = {{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                  color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
-                style: {
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-              style: {
-                color: "white",
-              },}}
-            id="standard-basic" label="phone number" variant="standard" />
-            <TextField sx = {{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                  color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width : "100%",
-                margin : "10px 0px "
-            }}id="standard-basic" 
-            InputProps={{
-                style: {
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-              style: {
-                color: "white",
-              },}}
-            label="email" variant="standard" />
-            <TextField sx = {{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                  color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
-                style: {
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-              style: {
-                color: "white",
-              },}}
-            id="standard-basic" label="address" variant="standard" />
-            
-    <TextField
-        id="upload-text"
-        label="Upload an image"
-        variant="standard"
-        value={file && file.name}
-        sx = {{
-            "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                color : "rgb(255, 255, 255)"
-            },
-            "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before" : {
-                borderBottom : "1px solid rgb(188, 189, 163)"
-            } ,
-            '& label.Mui-focused': {
-                color: 'rgb(255, 255, 255)', // Color of the label when focused
-            },
-            '& .MuiInput-underline:after': {
-                borderBottomColor: 'rgb(188, 189, 163)', // Color of the bottom border when focused
-            },
-            '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-                borderBottomColor: 'rgb(188, 189, 163)', // Color of the bottom border on hover
-            },
-            width : "100%",
-            margin : "10px 0px "
+  const [openCalendar1, setOpenCalendar1] = useState(false);
+  const [openCalendar2, setOpenCalendar2] = useState(false);
+  const [file, setFIle] = useState();
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    // Handle the uploaded file
+    console.log(file);
+    setFIle(file);
+  };
+
+  return (
+    <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
+      <Typography
+        variant="h3"
+        sx={{
+          color: "rgb(247, 230, 173)",
+          textAlign: "center",
+          padding: "20px 0px",
+          fontWeight: "600",
+          textShadow: "0 6px rgba(81,67,21,0.8)",
         }}
-        InputProps={{
-            style: {
-                color: "rgb(255, 255, 255)",
-              },
-          endAdornment: (
-            <IconButton
-              edge="end"
-              component="label"
-              htmlFor="upload-file"
-              sx={{color : "rgb(188, 189, 163)"}}
+      >
+        Rental Agreement
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          margin: "10px 0px",
+          alignItems: "center",
+        }}
+      >
+        <img
+          src="Rectangle-4242.png"
+          alt="Shop Image"
+          style={{
+            border: "20px solid rgb(78, 101, 100)",
+            borderRadius: "10px",
+            position: "relative",
+            width: "70%",
+          }}
+        />
+        <Typography
+          variant="h4"
+          sx={{
+            position: "absolute",
+            top: "205px",
+            color: "rgb(255, 255, 255)",
+          }}
+        >
+          Shop 01
+        </Typography>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Grid container spacing={4} sx={{ margin: "0% 10%" }}>
+          <Grid item lg={6} md={6} sm={6} xs={12}>
+            <Typography
+              variant="h4"
+              sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" }}
             >
-              <AttachFileIcon />
-              <input
-                type="file"
-                id="upload-file"
-                style={{ display: 'none' }}
-                accept="image/*"
-                onChange={handleFileUpload}
-              />
-            </IconButton>
-          ),
-        }}
-      />   
-                </Grid>
-                <Grid item lg={6} md={6} sm ={6} xs={12}>
-                <Typography variant="h4" sx={{color : "rgb(155, 181, 199)" , margin : "20px 0px"}}>Rent Information</Typography>
-                <TextField sx = {{
+              Tenant Information
+            </Typography>
+            <TextField
+              sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                 },
@@ -231,19 +100,220 @@ export default function RentalAgreementPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
                 },
               }}
               InputLabelProps={{
-              style: {
-                color: "white",
-              },}}
-            id="standard-basic" label="amount" variant="standard" />
+                style: {
+                  color: "white",
+                  fontSize: "20px",
+                },
+              }}
+              id="standard-basic"
+              label="name"
+              variant="standard"
+            />
+            <TextField
+              sx={{
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize: "20px",
+                },
+              }}
+              id="standard-basic"
+              label="phone number"
+              variant="standard"
+            />
+            <TextField
+              sx={{
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              id="standard-basic"
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize: "20px",
+                },
+              }}
+              label="email"
+              variant="standard"
+            />
+            <TextField
+              sx={{
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize: "20px",
+                },
+              }}
+              id="standard-basic"
+              label="address"
+              variant="standard"
+            />
+
+            <TextField
+              id="upload-text"
+              label="Upload an image"
+              variant="standard"
+              value={file && file.name}
+              sx={{
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+                endAdornment: (
+                  <IconButton
+                    edge="end"
+                    component="label"
+                    htmlFor="upload-file"
+                    sx={{ color: "rgb(188, 189, 163)" }}
+                  >
+                    <AttachFileIcon />
+                    <input
+                      type="file"
+                      id="upload-file"
+                      style={{ display: "none" }}
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                    />
+                  </IconButton>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item lg={6} md={6} sm={6} xs={12}>
+            <Typography
+              variant="h4"
+              sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" }}
+            >
+              Rent Information
+            </Typography>
+            <TextField
+              sx={{
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize: "20px",
+                },
+              }}
+              id="standard-basic"
+              label="amount"
+              variant="standard"
+            />
             {/* <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color : "rgb(255, 255, 255)"

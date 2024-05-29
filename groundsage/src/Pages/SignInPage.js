@@ -5,11 +5,11 @@ import {
   Button,
   TextField,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Navigate, useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextApi/AuthContext";
@@ -18,14 +18,8 @@ const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const { isEmailVerified, setIsEmailVerified, setUser } =
     useContext(AuthContext);
-
-  const [verificationStarted, setVerificationStarted] = useState(false);
-
-  // const [isEmailVerifiedAfterCheck, setIsEmailVerifiedAfterCheck] =
-  //   useState(false);
   const navigate = useNavigate();
 
   const checkEmailVerificationStatus = async () => {
@@ -47,19 +41,12 @@ const SignInPage = () => {
       console.log(data);
 
       if (response.ok) {
-        // Email is verified, proceed with sign-in
-        // handleSubmit();
-        // Set email verification status after additional check
         const isEmailVerified = data.data?.is_email_verified === 1;
-        // Update state or handle the email verification status accordingly
         setIsEmailVerified(isEmailVerified);
       } else {
-        // Email is not verified, display error message
-        console.log(response);
         toast.error(data.message || "Email verification failed.");
       }
     } catch (error) {
-      // Display error message using toast
       toast.error("An error occurred while checking email verification.");
     }
   };
@@ -67,7 +54,6 @@ const SignInPage = () => {
   const handleSubmit = async () => {
     checkEmailVerificationStatus();
     try {
-      // Perform login API call
       const response = await fetch(
         "https://groundsageevent-be.onrender.com/api/v1/profile/login",
         {
@@ -83,48 +69,68 @@ const SignInPage = () => {
       );
       const data = await response.json();
 
-      // Check if login was successful
       if (response.ok) {
-        // Display success message using toast
         toast.success("Login successful");
-        // Redirect to dashboard or home page
-        // Example: navigate("/dashboard");
-        // const userId = data?.data?.[0]?.user_id;
         const userData = data?.data?.[0];
         setUser(userData);
-        navigate('/shops');
+        console.log(userData);
+        navigate("/profile");
       } else {
-        // Display error message using toast
         toast.error(data.message || "Login failed. Please try again.");
       }
     } catch (error) {
-      // Display error message using toast
       toast.error("An error occurred. Please try again.");
     }
   };
 
   const handleVerify = async () => {
-    // setVerificationStarted(true);
-    navigate("/entermail", { state: { isEmailVerified } });
+    try {
+      const response = await fetch(
+        "https://groundsageevent-be.onrender.com/api/v1/profile/send-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to send OTP");
+        console.log(response);
+      }
+
+      navigate("/verification", {
+        state: { parentRoute: "signin", email: email },
+      });
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+    }
   };
+
   return (
     <div>
       <ToastContainer />
-
       <Box
         sx={{
           display: "flex",
           background: "rgb(66, 92, 90)",
           justifyContent: "space-around",
           flexDirection: { xs: "column-reverse", md: "row" },
-          // justifyContent:"space-around",
-          minheight: "100vh",
+          minHeight: "100vh",
+          padding: { xs: "20px 20px 20px 20px", md: "0px 50px 0px 50px" },
         }}
       >
-        <Box sx={{ marginTop: "50px", width: "25%" }}>
+        <Box
+          sx={{
+            marginTop: { xs: "20px", md: "50px" },
+            width: { xs: "100%", md: "50%" },
+          }}
+        >
           <Typography
             sx={{
-              color: "rgb(165, 170, 174)", // Set label color to white
+              color: "rgb(165, 170, 174)",
               textAlign: "left",
               fontSize: { lg: "30px", sm: "25px", xs: "18px" },
               margin: "30px 0px 20px 10px",
@@ -134,12 +140,6 @@ const SignInPage = () => {
           </Typography>
           <TextField
             id="email"
-            label="Email"
-            variant="filled"
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={checkEmailVerificationStatus}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -154,20 +154,12 @@ const SignInPage = () => {
             }
             variant="filled"
             fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={checkEmailVerificationStatus}
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
-            }}
-            InputLabelProps={{ style: { color: "white" } }} // Change label color
-            sx={{
-              margin: "5px",
-              // width: "130%",
-              borderRadius: "4px",
-              background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
-              marginBottom: "15px",
-            }}
-            InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <Button
@@ -175,7 +167,6 @@ const SignInPage = () => {
                     color={isEmailVerified ? "success" : "primary"}
                     onClick={handleVerify}
                     sx={{
-                      // backgroundColor: "rgb(115, 135, 135)",
                       color: isEmailVerified ? "green" : "#162D3A",
                       fontWeight: 600,
                     }}
@@ -185,16 +176,18 @@ const SignInPage = () => {
                 </InputAdornment>
               ),
             }}
+            InputLabelProps={{ style: { color: "white" } }}
+            sx={{
+              margin: "5px",
+              borderRadius: "4px",
+              background: "rgb(115, 135, 135)",
+              border: "1px solid rgb(188, 189, 163)",
+              marginBottom:{xs:"10px",md:"15px"},
+              width: { xs: "100%", md: "60%" },
+            }}
           />
-          <br />
           <TextField
             id="password"
-            label="Password"
-            variant="filled"
-            fullWidth
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -218,6 +211,8 @@ const SignInPage = () => {
             variant="filled"
             fullWidth
             type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
@@ -243,13 +238,12 @@ const SignInPage = () => {
             InputLabelProps={{ style: { color: "white" } }}
             sx={{
               margin: "5px",
-              // width: "130%",
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
+              border: "1px solid rgb(188, 189, 163)",
+              width: { xs: "100%", md: "60%" },
             }}
           />
-
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             <Typography
               variant="body2"
@@ -257,29 +251,36 @@ const SignInPage = () => {
                 color: "white",
                 marginTop: 1,
                 cursor: "pointer",
+                width: { xs: "100%", md: "60%" },
               }}
-              onClick={() => navigate("/forgetpassword")}
+              onClick={() => navigate("/entermail")}
             >
               Forgot Password?
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: { xs: "100%", md: "60%" },
+            }}
+          >
             <Button
               variant="contained"
               sx={{
                 background: "rgb(247, 230, 173)",
                 color: "rgb(91, 94, 97)",
-                padding: "13px 50px 13px 90px",
+                padding: "13px 100px",
                 marginTop: "40px",
                 display: "flex",
                 alignItems: "center",
-                borderRadius: "4px", // Add border radius
-                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)", // Add box shadow
+                borderRadius: "4px",
+                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)",
                 fontSize: "16px",
                 "&:hover": {
-                  backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
-                  color: "rgb(50, 50, 50)", // Change text color on hover
-                  boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+                  backgroundColor: "rgb(247, 230, 173)",
+                  color: "rgb(50, 50, 50)",
+                  boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)",
                 },
               }}
               onClick={handleSubmit}
@@ -288,34 +289,36 @@ const SignInPage = () => {
               <img
                 src="../../../Images/Group 4.svg"
                 alt="Right Arrow"
-                style={{ marginLeft: "50px" }}
+                style={{ marginLeft: "20px" }}
               />
             </Button>
           </Box>
           <Typography
             sx={{
-              color: "rgb(165, 170, 174)", // Set label color to white
+              color: "rgb(165, 170, 174)",
               fontSize: { lg: "20px", sm: "20px", xs: "16px" },
               marginTop: "40px",
               textAlign: "center",
+              width: { xs: "100%", md: "60%" },
             }}
           >
             OR
           </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <img
-              src="../../../Images/Group 33505.png"
-              alt="Google Login"
-              style={{ marginLeft: "0%", cursor: "pointer" }}
-            />
-          </Box>
-          <div
-            style={{
+          <Box
+            sx={{
               display: "flex",
-              // alignItems: "center",
               justifyContent: "center",
+              width: { xs: "100%", md: "60%" },
             }}
           >
+            <Box
+              component="img"
+              src="../../../Images/Group 33505.png"
+              alt="Google Login"
+              style={{ cursor: "pointer" }}
+            />
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center",width: { xs: "100%", md: "60%" } }}>
             <Typography
               sx={{
                 color: "rgb(165, 170, 174)",
@@ -323,11 +326,11 @@ const SignInPage = () => {
                 textAlign: "center",
               }}
             >
-              Don’t have an account?{" "}
+              Don’t have an account?
             </Typography>
             <Typography
               sx={{
-                color: "rgb(247, 230, 173)", // Change color for the "Sign Up" link
+                color: "rgb(247, 230, 173)",
                 marginLeft: "10px",
                 fontSize: { lg: "18px", sm: "18px", xs: "16px" },
                 cursor: "pointer",
@@ -336,22 +339,23 @@ const SignInPage = () => {
             >
               Sign Up
             </Typography>
-          </div>
+          </Box>
         </Box>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "left",
+            alignItems: "center",
+            width: { xs: "100%", md: "70%" },
+            margin: { xs: "10px 0", md: "0" },
           }}
         >
           <Box
             component="img"
             src="../../../Images/calendar-5402487_1280 2.svg"
-            alt="Right Arrow"
+            alt="Calendar"
             sx={{
-              marginRight: { xs: "0", lg: "25%" },
-              margin: { xs: "10px 20px 10px 20px", md: "0" },
-              width: { xs: "100%", md: "110%" },
+              width: { xs: "100%", md: "80%" },
             }}
           />
         </Box>

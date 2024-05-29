@@ -106,6 +106,7 @@ export default function EventListPage() {
             marginTop: "-20px",
             fontFamily: "Outfit",
             textShadow: "0 6px rgba(81,67,21,0.8)",
+            fontSize: { xs: "40px", md: "56px" },
           }}
         >
           All Events
