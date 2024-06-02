@@ -1,7 +1,36 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { useContext, useRef } from "react";
+import { AuthContext } from "../../ContextApi/AuthContext";
 
 export default function ShopRental(){
+  const addItemEle = useRef(null);
+  const amtDueEle = useRef(null);
+  const recievedAmtEle = useRef(null);
+  const outstandingAmtEle = useRef(null);
+  const remarkEle = useRef(null);
+  const {addTransection} = useContext(AuthContext);
+  const handleSave = () => {
+    const body = {
+
+      item : addItemEle.current.value.toString(),             //shop no in string
+      decided_amount : amtDueEle.current.value,  // amount due
+      entered_amount : recievedAmtEle.current.value,   // recieved amount
+      outstanding_amount : outstandingAmtEle.current.value,   // outstanding amount
+      remarks : remarkEle.current.value
+    }
+    addTransection(body);
+  }
     return(
+      <>
         <Grid item xs={6}>
             <FormControl variant="standard" sx={{ minWidth: 120 , width : "100%" , margin : "10px 0px "}}>
                 <InputLabel id="demo-simple-select-standard-label" style={{ color: 'white' }}>select shop</InputLabel>
@@ -10,6 +39,7 @@ export default function ShopRental(){
                 id="demo-simple-select-standard"
                 label="select shop"
                 disableUnderline
+                inputRef={addItemEle}
                 sx={{width : "100%" , borderBottom : "1px solid rgb(188, 189, 163)" , "& .MuiSelect-icon" : {
                     color : "rgb(188, 189, 163)" , "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root" : {
                         color : "white"
@@ -23,9 +53,9 @@ export default function ShopRental(){
                 <MenuItem value="">
                     <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={2}>Two</MenuItem>
+                <MenuItem value={1}>One</MenuItem>
+                <MenuItem value={3}>Three</MenuItem>
                 </Select>
             </FormControl>
             <TextField
@@ -57,6 +87,7 @@ export default function ShopRental(){
               style: {
                 color: "white",
               },}}
+              inputRef={amtDueEle}
               id="standard-basic"
               label="amount due"
               variant="standard"
@@ -81,6 +112,7 @@ export default function ShopRental(){
                 width: "70%",
                 margin: "10px 0px ",
               }}
+              inputRef={recievedAmtEle}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
@@ -114,6 +146,7 @@ export default function ShopRental(){
                 width: "70%",
                 margin: "10px 0px ",
               }}
+              inputRef={outstandingAmtEle}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
@@ -147,6 +180,7 @@ export default function ShopRental(){
                 width: "100%",
                 margin: "10px 0px ",
               }}
+              inputRef={remarkEle}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
@@ -160,7 +194,32 @@ export default function ShopRental(){
               label="remarks"
               variant="standard"
             />
-            <Grid item xs={6}></Grid>
+
           </Grid>
+          <Grid item xs={12}>
+          <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%",
+                  margin: "20px 0px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "rgb(247, 230, 173) ",
+                    color: "rgb(91, 94, 97)",
+                    minWidth: "200px",
+                    fontSize : "20px",
+                    fontWeight : "600"
+                  }}
+                  onClick={handleSave}
+                >
+                  Save
+                </Button>
+              </Box>
+              </Grid>
+              </>
     );
 }

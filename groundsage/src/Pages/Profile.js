@@ -55,11 +55,19 @@ const Profile = () => {
       <Box
         sx={{
           display: "flex",
-          width: "100vw", // Adjust as needed
+          // width: "100vw", // Adjust as needed
           // justifyContent:"space-around"
         }}
       >
-        <Box sx={{ width: "20%" }}>
+        <Box
+          sx={{
+            width: "20%",
+            // display:"flex",
+            // // justifyContent: "center", // Center items horizontally
+            // alignItems: "flex-start", // Align items to the start vertically
+            marginTop: "15px",
+          }}
+        >
           {" "}
           {/* Adjust sidebar width */}
           <Sidbar
@@ -67,7 +75,7 @@ const Profile = () => {
             activeContent={content}
           />
         </Box>
-        <Box sx={{ width: "60%" }}>
+        <Box sx={{ width: "80%" }}>
           {" "}
           {/* Adjust content area width */}
           {renderContent()}

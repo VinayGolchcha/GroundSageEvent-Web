@@ -38,9 +38,20 @@ export default function EventListPage() {
       file.forEach((f) => {
         formData.append("files" , f);
       })
+      const publicIds = body?.public_id;
+      publicIds.forEach((id) => {
+        formData.append('public_ids', id);
+      });
+
       const res = await axios.post(
         `${process.env.REACT_APP_API_URI}/event/update-event/${selectedId}`,
-        formData
+        formData , {
+          headers: {
+            'authorization': `${user?.token}`, // Ensure the token format is correct
+            'Accept': 'application/json',
+            role_id : user?.role_id
+          }
+        }
       );
       console.log(res);
       toast.success(res?.data?.data , {
@@ -194,6 +205,7 @@ export default function EventListPage() {
             marginTop: "-20px",
             fontFamily: "Outfit",
             textShadow: "0 6px rgba(81,67,21,0.8)",
+            fontSize: { xs: "40px", md: "56px" },
           }}
         >
           All Events

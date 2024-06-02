@@ -5,7 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { useNavigate } from "react-router-dom";
 
-const ExpensesList = () => {
+const ExpensesList = ({data , deletedItem}) => {
   const navigate = useNavigate();
   const [expenses, setExpenses] = useState([
     {
@@ -156,8 +156,8 @@ const ExpensesList = () => {
           </Box>
         </Box>
       )}
-      {expenses
-        .slice(0, showAll ? expenses.length : maxItems)
+      {data
+        ?.slice(0, showAll ? expenses.length : maxItems)
         .map((item, index) => {
           return (
             <Box
@@ -223,7 +223,7 @@ const ExpensesList = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Type: {item.Type}
+                      Type: {item.type}
                     </Typography>
                     <Typography
                       sx={{
@@ -232,7 +232,7 @@ const ExpensesList = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Item: {item.Item}
+                      Item: {item.tag}
                     </Typography>
                   </div>
                   <div
@@ -256,7 +256,7 @@ const ExpensesList = () => {
                           },
                         }}
                       >
-                        {item.Amount}
+                        {item.entered_amount}
                       </Button>
                       <Typography
                         sx={{
@@ -285,7 +285,7 @@ const ExpensesList = () => {
                           },
                         }}
                       >
-                        {item.Balance_Payable}
+                        {item.outstanding_amount}
                       </Button>
                       <Typography
                         sx={{

@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,9 +30,10 @@ const VisuallyHiddenInput = styled("input")({
 
 export default function CreateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-  const {setShopIds} = useContext(AuthContext)
+  const { setShopIds, lastShopNumber,setLastShopNumber } = useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
+  const [file, setFile] = useState([]);
   const [eventData, setEventData] = useState({
     event_id: 1111,
     description: "",
@@ -41,8 +42,11 @@ export default function CreateShopPage() {
     dome: "",
     location: "",
     status: "Vacant",
-    shop_number: Math.floor(Math.random() * 50) + 1, // Generate random shop number between 1 and 50
+    shop_number: lastShopNumber, // Generate random shop number between 1 and 50
+    files: file,
   });
+
+  const [lastShopNumberFetched, setLastShopNumberFetched] = useState(false); // State to track whether the last shop number has been fetched
 
   const handleInputChange = (e, field) => {
     const newValue = e.target.value;
@@ -51,12 +55,70 @@ export default function CreateShopPage() {
       [field]: newValue,
     }));
   };
+  useEffect(() => {
+    // Fetch the last shop number when the component mounts
+    if (!lastShopNumberFetched) {
+      fetchLastShopNumber();
+    }
+  }, [lastShopNumberFetched]);
+
+  const fetchLastShopNumber = async () => {
+    try {
+      const response = await axios.get(
+        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number"
+      );
+      if (response && response.data && response.data.success) {
+        const shopNumber = response.data.data.shop_number;
+        setLastShopNumber(shopNumber);
+        setLastShopNumberFetched(true);
+        console.log(lastShopNumber);
+      }
+    } catch (error) {
+      console.error("Error fetching last shop number:", error);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
+      if (!lastShopNumberFetched) {
+        // If the last shop number has not been fetched yet, fetch it first
+        await fetchLastShopNumber();
+      }
+
+      // Increment the last shop number to get the new shop number
+      const newShopNumber = lastShopNumber;
+
+      // Set the new shop number in eventData
+      // Set the new shop number in eventData
+      const updatedEventData = {
+        ...eventData,
+        shop_number: newShopNumber,
+      };
+
+
+      // Create a FormData object
+      const formData = new FormData();
+
+      // Append each key-value pair from eventData to formData
+      Object.entries(updatedEventData).forEach(([key, value]) => {
+        console.log(key, value);
+        formData.append(key, value);
+      });
+
+      // Assuming 'files' is an array of File objects
+      file.forEach((file) => {
+        console.log(file);
+        formData.append("files", file);
+      });
+
+      console.log("Logging FormData contents:");
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
+
       const response = await axios.post(
         "https://groundsageevent-be.onrender.com/api/v1/shop/create-shop",
-        eventData
+        formData
       );
 
       if (response.status === 200) {
@@ -69,10 +131,11 @@ export default function CreateShopPage() {
           dome: "",
           location: "",
           status: "Vacant",
-          shop_number:8,
+          shop_number: "",
         });
         setShopIds(response.data.data.shop_id);
-        console.log(response.data.data.shop_id)
+        console.log(response.data.data.shop_id);
+        navigate("/shops");
       } else {
         toast.error("Failed to create shop. Please try again later.");
         console.error("Error creating shop: Invalid response code");
@@ -117,8 +180,10 @@ export default function CreateShopPage() {
   };
 
   const handleFileInputChange = (e) => {
-    const file = e.target.files[0];
-    handleFile(file);
+    // const file = e.target.files[0];
+    const files = Array.from(e.target.files);
+    setFile(files);
+    console.log(files);
   };
 
   const handleFile = (file) => {
@@ -186,7 +251,7 @@ export default function CreateShopPage() {
               // fontSize: { xs: "30px", md: "46px" },
             }}
           >
-            Shop 01
+            Shop {0 + "" + lastShopNumber}
           </Box>{" "}
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -220,6 +285,7 @@ export default function CreateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -256,6 +322,7 @@ export default function CreateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -293,6 +360,7 @@ export default function CreateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 label="Shop Description"
@@ -328,6 +396,7 @@ export default function CreateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -362,6 +431,7 @@ export default function CreateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -463,6 +533,7 @@ export default function CreateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -500,6 +571,7 @@ export default function CreateShopPage() {
                 InputLabelProps={{
                   style: {
                     color: "white",
+                    fontSize: "20px",
                   },
                 }}
                 id="standard-basic"
@@ -571,6 +643,8 @@ export default function CreateShopPage() {
             accept="image/*"
             style={{ display: "none" }}
             onChange={handleFileInputChange}
+            // value={file}
+            multiple
           />
         </div>
         <Box
@@ -588,6 +662,11 @@ export default function CreateShopPage() {
               color: "rgb(91, 94, 97)",
               minWidth: "200px",
               fontWeight: "600",
+              "&:hover": {
+                backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+                color: "rgb(50, 50, 50)", // Change text color on hover
+                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+              },
             }}
             onClick={handleSubmit}
           >

@@ -11,13 +11,16 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLocation } from "react-router-dom";
 
 const ForgetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const location = useLocation();
+  const { parentRoute, email } = location.state || {};
 
   const handleForgetPassword = async () => {
     console.log(email);
@@ -59,19 +62,30 @@ const ForgetPassword = () => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column-reverse", md: "row" },
           background: "rgb(66, 92, 90)",
           // justifyContent:"space-around",
-          height: "100vh",
+          padding: { xs: "20px 20px 20px 20px", md: "0px 50px 0px 50px" },
+          minHeight: "100vh",
         }}
       >
-        
-        <Box sx={{ marginTop: "50px", width: "23%", marginLeft: "8%" }}>
+        <Box
+          sx={{
+            marginTop: { xs: "20px", md: "50px" },
+            // width: { xs: "100%", md: "50%" },
+            display: { xs: "flex", md: "block" },
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            width: { xs: "100%", md: "30%" },
+          }}
+        >
           <Typography
             sx={{
               color: "rgb(165, 170, 174)", // Set label color to white
               textAlign: "left",
               fontSize: { lg: "30px", sm: "25px", xs: "18px" },
-              margin: "50px 0px 20px 10px",
+              margin: { xs: "0px", md: "50px 0px 20px 10px" },
             }}
           >
             Reset Password
@@ -89,11 +103,11 @@ const ForgetPassword = () => {
           </Typography>
           <TextField
             id="email"
-            label="Email"
             variant="filled"
             fullWidth
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            disabled
+            // onChange={(e) => setEmail(e.target.value)}
             label={
               <Box
                 sx={{ display: "flex", alignItems: "center", height: "100%" }}
@@ -106,27 +120,23 @@ const ForgetPassword = () => {
                 <Typography sx={{ color: "white" }}>Email</Typography>
               </Box>
             }
-            variant="filled"
-            fullWidth
+
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
             }}
             InputLabelProps={{ style: { color: "white" } }} // Change label color
             sx={{
-              margin: "5px",
+              // margin: "5px",
               // width: "130%",
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)", // Add border color
-              marginBottom: "15px",
+              marginBottom: { xs: "10px", md: "15px" },
             }}
           />
-
-          <br />
           <TextField
             id="password"
-            label="password"
             variant="filled"
             fullWidth
             value={password}
@@ -151,8 +161,7 @@ const ForgetPassword = () => {
                 <Typography sx={{ color: "white" }}>Your password</Typography>
               </Box>
             }
-            variant="filled"
-            fullWidth
+
             type={showPassword ? "text" : "password"}
             InputProps={{
               disableUnderline: true,
@@ -178,19 +187,16 @@ const ForgetPassword = () => {
             }}
             InputLabelProps={{ style: { color: "white" } }}
             sx={{
-              margin: "5px",
+              // margin: "5px",
               // width: "130%",
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)", // Add border color
-              marginBottom: "15px",
+              marginBottom: { xs: "10px", md: "15px" },
             }}
           />
           <TextField
             id="confirmPassword"
-            label="confirmPassword"
-            variant="filled"
-            fullWidth
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             label={
@@ -242,7 +248,7 @@ const ForgetPassword = () => {
             }}
             InputLabelProps={{ style: { color: "white" } }}
             sx={{
-              margin: "5px",
+              // margin: "5px",
               // width: "130%",
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
@@ -279,11 +285,20 @@ const ForgetPassword = () => {
             </Button>
           </Box>
         </Box>
-        <Box>
-          <img
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: { xs: "100%", md: "70%" },
+            margin: { xs: "20px 0", md: "0" },
+          }}
+        >
+          <Box
+            component="img"
             src="../../../Images/audit-7476720_1280 2.svg"
             alt="Right Arrow"
-            style={{ marginTop: "18%", marginLeft: "35%", width: "110%" }}
+            sx={{ width: { xs: "100%", md: "70%" } }}
           />
         </Box>
       </Box>

@@ -16,16 +16,23 @@ import { AuthContext } from "../ContextApi/AuthContext";
 
 const pages = [ "Home" , "Events", "Shops", "Teams", "Transaction", "Notes", "Reports"];
 
-function Navbar({ handleOpen , isActive , activeEventId}) {
+function Navbar({ handleOpen , isActive , activeEventId , activeEventName}) {
+  console.log("activeEventname" ,activeEventName)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [currentActiveEventName , setCurrentActiveEventName] = React.useState(null);
   const { logout } = React.useContext(AuthContext);
-  const [settings , setSettings ] = React.useState(["Event Atrangi" ,"Visit Profile", "Logout"]);
+  const [settings , setSettings ] = React.useState([]);
+  const [eventName , setEventName] = React.useState(null);
   const location = useLocation(); 
   const navigate = useNavigate();
   console.log(isActive);
   console.log(activeEventId)
+  React.useState(() => {
+    const newArray = [activeEventName ,"Visit Profile", "Logout"]
+    setSettings(newArray);
+    setEventName(activeEventName)
+  },[activeEventName])
   // React.useEffect(()=> {
   //   const currentActiveEvent = isActive?.filter((item) => (item.id === activeEventId));
   //   console.log(currentActiveEvent);
@@ -39,7 +46,9 @@ function Navbar({ handleOpen , isActive , activeEventId}) {
     location.pathname === "/" ||
     location.pathname === "/entermail" ||
     location.pathname === "/signin" ||
-    location.pathname === "/signup"
+    location.pathname === "/signup" ||
+    location.pathname === "/verification" ||
+    location.pathname === "/forgetpassword"
   ) {
     return null;
   }
@@ -75,7 +84,7 @@ function Navbar({ handleOpen , isActive , activeEventId}) {
     <div>
       <AppBar
         position="static"
-        sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none"  }}
+        sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none" }}
       >
           <Toolbar disableGutters>
             {/* <NavLink to="/" style={{ textDecoration: "none" }}> */}
@@ -182,73 +191,75 @@ function Navbar({ handleOpen , isActive , activeEventId}) {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0,marginRight:"50px",}}>
-                  <Avatar alt="" src="../../Component/profile..png" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                PaperProps={{
-                  sx: {
-                    background: "rgb(219,216,216)",
-                  },
-                }}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Tooltip title="Open settings">
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0, marginRight: "50px" }}
               >
-                <Box
-                  sx={{
-                    background: "rgb(219, 216, 216)",
-                    margin: "0",
-                    padding: "0",
-                  }}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography
-                        textAlign="center"
-                        sx={{
-                          color: "rgb(151, 151, 151)",
-                          fontFamily: "Inter",
-                          lineHeight: "1",
-                          marginTop: "0px",
-                          fontSize: "16px",
-                          padding: "7px",
-                          borderRadius: "6px",
-                          fontWeight: "700",
-                          transition: "background-color 0.3s, color 0.3s",
-                          "&:hover": {
-                            color: "rgb(247, 230, 173)",
-                            backgroundColor: "rgb(151, 151, 151)",
-                          },
-                        }}
-                        onClick={() => {
-                          (setting === "Visit Profile" &&
-                            navigate("/Profile")) ||
-                            (setting === "Logout" && handleLogout()) || (setting === "Event Atrangi" && handleOpen());
-                        }}
-                      >
-                        {setting}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Box>
-              </Menu>
-            </Box>
-          </Toolbar>
+                <Avatar alt="" src="../../Component/profile..png" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              PaperProps={{
+                sx: {
+                  background: "rgb(219,216,216)",
+                },
+              }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <Box
+                sx={{
+                  background: "rgb(219, 216, 216)",
+                  margin: "0",
+                  padding: "0",
+                }}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography
+                      textAlign="center"
+                      sx={{
+                        color: "rgb(151, 151, 151)",
+                        fontFamily: "Inter",
+                        lineHeight: "1",
+                        marginTop: "0px",
+                        fontSize: "16px",
+                        padding: "7px",
+                        borderRadius: "6px",
+                        fontWeight: "700",
+                        transition: "background-color 0.3s, color 0.3s",
+                        "&:hover": {
+                          color: "rgb(247, 230, 173)",
+                          backgroundColor: "rgb(151, 151, 151)",
+                        },
+                      }}
+                      onClick={() => {
+                        (setting === "Visit Profile" && navigate("/Profile")) ||
+                          (setting === "Logout" && handleLogout()) || (((setting===null)?activeEventName:setting) && handleOpen());
+                      }}
+                    >
+                      {(setting===null)?activeEventName:setting}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Box>
+            </Menu>
+          </Box>
+        </Toolbar>
       </AppBar>
     </div>
   );

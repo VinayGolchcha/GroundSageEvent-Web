@@ -12,15 +12,8 @@ import "./Slider.css";
 // import required modules
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
-export default function App() {
-  const images = [
-    "Rectangle 4246.svg",
-    "Rectangle 4246 (1).svg",
-    "Rectangle 4246 (2).svg",
-    "Rectangle 4246 (3).svg",
-    "Rectangle 4246 (4).svg",
-    // Add more image URLs as needed
-  ];
+export default function App({images}) {
+
   return (
     <>
       <Swiper
@@ -41,7 +34,7 @@ export default function App() {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
-            <img src={`../../Images/${image}`} alt={`Slide ${index + 1}`} />
+            <img src={image} alt={`Slide ${index + 1}`} />
           </SwiperSlide>
         ))}
       </Swiper>

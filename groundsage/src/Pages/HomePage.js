@@ -44,7 +44,7 @@ export default function HomePage() {
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
   const [activeEventsList , setActiveEventsList] = useState([]);
-  const {eventIds , setActiveEvent ,activeEvent , setEvents,events , user , setActiveEventId , activeEventId} = useContext(AuthContext);
+  const {eventIds , setActiveEventName, setActiveEvent ,activeEvent , setEvents,events , user , setActiveEventId , activeEventId ,} = useContext(AuthContext);
   let today = new Date();
   console.log(user);
   let len ;
@@ -100,6 +100,7 @@ console.log(activeEvent);
       console.log(res)
       setActiveEvent(res?.data?.data);
       setActiveEventId(res?.data?.data[0].id);
+      setActiveEventName(res?.data?.data[0].event_name);
       len =  activeEvent.length-1;
       console.log(len)
     }catch(err){

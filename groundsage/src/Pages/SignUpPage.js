@@ -5,11 +5,11 @@ import {
   Button,
   TextField,
   InputAdornment,
+  IconButton,
 } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,7 +33,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async () => {
     if (formData.password !== formData.confirmPassword) {
-      toast.error("ConfirmPassword and Password doesnot match");
+      toast.error("Confirm password and password do not match");
       return;
     }
     console.log("Form data:", formData);
@@ -68,9 +68,7 @@ const SignUpPage = () => {
         } else {
           const errorMessage =
             data.message || "Registration failed. Please try again.";
-          // console.error(errorMessage);
           toast.error(errorMessage || "An error occurred");
-
         }
       }
     } catch (error) {
@@ -87,23 +85,24 @@ const SignUpPage = () => {
           background: "rgb(66, 92, 90)",
           justifyContent: "space-around",
           flexDirection: { xs: "column-reverse", md: "row" },
-          // height: "100vh",
-          padding: { xs: "15px", md: "none" },
+          minHeight: "100vh",
+          padding: { xs: "20px 20px 20px 20px", md: "0px 50px 0px 50px" },
         }}
       >
         <Box
           sx={{
-            marginTop: "50px",
-            width: { xs: "100%", md: "25%" },
+            marginTop: { xs: "20px", md: "50px" },
+            // width: { xs: "100%", md: "50%" },
             display: { xs: "flex", md: "block" },
             justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
+            width: { xs: "100%", md: "30%" },
           }}
         >
           <Typography
             sx={{
-              color: "rgb(165, 170, 174)", // Set label color to white
+              color: "rgb(165, 170, 174)",
               textAlign: "left",
               fontSize: { lg: "30px", sm: "25px", xs: "18px" },
               margin: "20px 0px 20px 10px",
@@ -128,21 +127,21 @@ const SignUpPage = () => {
             }
             variant="filled"
             fullWidth
+            value={formData.username}
+            onChange={handleChange}
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
             }}
-            InputLabelProps={{ style: { color: "white" } }} // Change label color
+            InputLabelProps={{ style: { color: "white" } }}
             sx={{
               margin: "5px",
               width: { xs: "80%", md: "100%" },
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
-              marginBottom: "10px",
+              border: "1px solid rgb(188, 189, 163)",
+              marginBottom:{xs:"10px",md:"15px"}
             }}
-            value={formData.username}
-            onChange={handleChange}
           />
           <TextField
             id="email"
@@ -161,24 +160,22 @@ const SignUpPage = () => {
             }
             variant="filled"
             fullWidth
+            value={formData.email}
+            onChange={handleChange}
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
             }}
-            InputLabelProps={{ style: { color: "white" } }} // Change label color
+            InputLabelProps={{ style: { color: "white" } }}
             sx={{
               margin: "5px",
               width: { xs: "80%", md: "100%" },
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
-              marginBottom: "10px",
+              border: "1px solid rgb(188, 189, 163)",
+              marginBottom:{xs:"10px",md:"15px"}
             }}
-            value={formData.email}
-            onChange={handleChange}
           />
-
-          <br />
           <TextField
             id="password"
             name="password"
@@ -235,8 +232,8 @@ const SignUpPage = () => {
               width: { xs: "80%", md: "100%" },
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
-              marginBottom: "10px",
+              border: "1px solid rgb(188, 189, 163)",
+              marginBottom:{xs:"10px",md:"15px"}
             }}
           />
           <TextField
@@ -297,7 +294,7 @@ const SignUpPage = () => {
               width: { xs: "80%", md: "100%" },
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
-              border: "1px solid rgb(188, 189, 163)", // Add border color
+              border: "1px solid rgb(188, 189, 163)",
             }}
           />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -310,13 +307,13 @@ const SignUpPage = () => {
                 marginTop: "25px",
                 display: "flex",
                 alignItems: "center",
-                borderRadius: "4px", // Add border radius
-                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)", // Add box shadow
+                borderRadius: "4px",
+                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)",
                 fontSize: "16px",
                 "&:hover": {
-                  backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
-                  color: "rgb(50, 50, 50)", // Change text color on hover
-                  boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+                  backgroundColor: "rgb(247, 230, 173)",
+                  color: "rgb(50, 50, 50)",
+                  boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)",
                 },
               }}
               onClick={handleSubmit}
@@ -331,7 +328,7 @@ const SignUpPage = () => {
           </Box>
           <Typography
             sx={{
-              color: "rgb(165, 170, 174)", // Set label color to white
+              color: "rgb(165, 170, 174)",
               fontSize: { lg: "20px", sm: "20px", xs: "16px" },
               marginTop: "15px",
               textAlign: "center",
@@ -343,28 +340,28 @@ const SignUpPage = () => {
             <img
               src="../../../Images/Group 33505.png"
               alt="Google Login"
-              style={{ marginLeft: "0", cursor: "pointer", width: "30%" }}
+              // style={{ marginLeft: "0", cursor: "pointer", width: "30%" }}
             />
           </Box>
-          <div
-            style={{
+          <Box
+            sx={{
               display: "flex",
-              // alignItems: "center",
               justifyContent: "center",
+              alignItems: "center",
+              // marginTop: "5px",
             }}
           >
             <Typography
               sx={{
                 color: "rgb(165, 170, 174)",
                 fontSize: { lg: "18px", sm: "18px", xs: "16px" },
-                textAlign: "center",
               }}
             >
-              Already have an account?{" "}
+              Already have an account?
             </Typography>
             <Typography
               sx={{
-                color: "rgb(247, 230, 173)", // Change color for the "Sign Up" link
+                color: "rgb(247, 230, 173)",
                 marginLeft: "10px",
                 fontSize: { lg: "18px", sm: "18px", xs: "16px" },
                 cursor: "pointer",
@@ -373,22 +370,23 @@ const SignUpPage = () => {
             >
               Sign In
             </Typography>
-          </div>
+          </Box>
         </Box>
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
+            width: { xs: "100%", md: "50%" },
+            margin: { xs: "10px 0", md: "0" },
           }}
         >
           <Box
             component="img"
             src="../../../Images/calendar-5402487_1280 2.svg"
-            alt="Right Arrow"
+            alt="Calendar"
             sx={{
-              marginRight: { xs: "0", lg: "25%" },
-              margin: { xs: "10px 20px 10px 20px", md: "0" },
-              width: { xs: "100%", md: "115%" },
+              width: { xs: "100%", md: "80%" },
             }}
           />
         </Box>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Box, Button } from "@mui/material";
 
-const Sidbar = ({ onItemClick,activeContent }) => {
+const Sidbar = ({ onItemClick, activeContent }) => {
   const [content, setContent] = useState(""); // State to track current content
 
   const buttons = [
@@ -23,66 +23,64 @@ const Sidbar = ({ onItemClick,activeContent }) => {
   ];
 
   return (
-    <div>
-      <Box
-        sx={{
-          // position: "fixed",
-          // top: "50%",
-          // transform: "translateY(-50%)",
-          // top: "60%",
-          // transform: "translateY(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          backgroundColor: "rgba(188, 188, 188, 0.21)",
-          boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-          borderRadius: "45px", // Adjust the border radius as needed
-          margin: "20px 0px 0px 30px",
-          padding: "5px",
-          // opacity:"20%"
-          maxWidth:"fit-content"
-        }}
-      >
-        {buttons.map((button, index) => (
-          <Button
-            key={index}
-            color="primary"
-            sx={{
-              marginBottom: "30px",
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              textDecoration:
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        backgroundColor: "rgba(188, 188, 188, 0.21)",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+        borderRadius: "45px", // Adjust the border radius as needed
+        margin: { xs: "50px 0px 0px 10px", sm: "20px 10px 0px 30px" },
+        padding: "2px",
+        maxWidth: "fit-content",
+        width: "1",
+      }}
+    >
+      {buttons.map((button, index) => (
+        <Button
+          key={index}
+          color="primary"
+          sx={{
+            marginBottom: "30px",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            textDecoration:
               activeContent === button.id
-                          ? "underline rgb(247, 230, 173)"
-                          : "none",
-            }}
-            onClick={() => onItemClick(button.id)}
-          >
-            <img
-              src={button.imageSrc}
-              alt={button.content.toLowerCase()}
-              // style={{ margin: "4px 0px 10px 0px", width: "100%" }}
-            />
-            {button.content.split("\n").map((line, i) => (
-              <Typography
-                variant="button"
-                sx={{
-                  color: "rgb(255, 255, 255)",
-                  lineHeight: "0.6",
-                  fontWeight: "600",
-                  fontFamily: "Inter",
-                }}
-                key={i}
-              >
-                {i > 0 ? <br /> : null}
-                {line}{" "}
-              </Typography>
-            ))}
-          </Button>
-        ))}
-      </Box>
-    </div>
+                ? "underline rgb(247, 230, 173)"
+                : "none",
+            fontSize: { xs: "0.7rem", sm: "1rem" }, // Adjust font size for xs devices
+            padding: { xs: "5px", sm: "10px" }, // Adjust padding for xs devices
+          }}
+          onClick={() => onItemClick(button.id)}
+        >
+          <img
+            src={button.imageSrc}
+            alt={button.content.toLowerCase()}
+            style={{ width: "100%", maxWidth: { xs: "30px", sm: "50px" } }} // Adjust image size for xs devices
+          />
+          {button.content.split("\n").map((line, i) => (
+            <Typography
+              variant="button"
+              sx={{
+                color: "rgb(255, 255, 255)",
+                lineHeight: "0.6",
+                fontWeight: "600",
+                fontFamily: "Inter",
+                fontSize: { xs: "0.7rem", sm: "1rem" }, // Adjust font size for xs devices
+                textAlign: "center",
+                marginTop:"5px",
+              }}
+              key={i}
+            >
+              {i > 0 ? <br /> : null}
+              {line}
+            </Typography>
+          ))}
+        </Button>
+      ))}
+    </Box>
   );
 };
 

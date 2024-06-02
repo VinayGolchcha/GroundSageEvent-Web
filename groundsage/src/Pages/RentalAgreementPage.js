@@ -142,10 +142,10 @@ export default function RentalAgreementPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
                 },
@@ -171,10 +171,10 @@ export default function RentalAgreementPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
                 },
@@ -200,10 +200,11 @@ export default function RentalAgreementPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
-                width : "100%",
-                margin : "10px 0px "
-            }}id="standard-basic" 
-            InputProps={{
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              id="standard-basic"
+              InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
                 },
@@ -229,10 +230,10 @@ export default function RentalAgreementPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
                 },
@@ -309,10 +310,10 @@ export default function RentalAgreementPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
-                width : "100%",
-                margin : "10px 0px "
-            }}
-            InputProps={{
+                width: "100%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
                 },

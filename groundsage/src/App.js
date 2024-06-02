@@ -55,7 +55,7 @@ function getStyles(name, personName, theme) {
 
 const App = () => {
   const theme = useTheme();
-  const {eventIds , setActiveEvent ,activeEvent , event , user , activeEventId , setActiveEventId} = React.useContext(AuthContext);
+  const {eventIds , setActiveEvent , setActiveEventName,activeEvent , event , user ,activeEventName, activeEventId , setActiveEventId} = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -65,8 +65,9 @@ const App = () => {
     setActiveEventId(activeEvent[0]?.id)
   },[])
   console.log(activeEventId)
-  const handleSelection = (id) => {
-    setActiveEventId(id);
+  const handleSelection = (name) => {
+    setActiveEventId(name.id);
+    setActiveEventName(name.event_name);
   }
   console.log(activeEvent);
   const handleChange = (event) => {
@@ -80,7 +81,7 @@ const App = () => {
   };
   return (
     <div>
-      <Navbar handleOpen={handleOpen} handleClose = {handleClose} isActive = {activeEvent} activeEventId = {activeEventId}/>
+      <Navbar handleOpen={handleOpen} handleClose = {handleClose} isActive = {activeEvent} activeEventId = {activeEventId} activeEventName={activeEventName}/>
       <Modal
         open={open}
         onClose={handleClose}
@@ -125,7 +126,7 @@ const App = () => {
                 value={name?.event_name}
                 style={getStyles(name, personName, theme)}
                 sx={{ fontFamily: 'Aoboshi One' }}
-                onClick={() => handleSelection(name.id)}
+                onClick={() => handleSelection(name)}
               >
                 {name.event_name}
               </MenuItem>

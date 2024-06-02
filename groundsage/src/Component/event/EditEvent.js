@@ -34,7 +34,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
     const [openCalendar2, setOpenCalendar2] = useState(false);
     const [fromDate , setFromDate] = useState(dayjs(selectedItem?.start_date));
     const [toDate , setToDate] = useState(dayjs(selectedItem?.end_date));
-    const [file, setFIle] = useState(selectedItem?.original_filename);
+    const [file, setFIle] = useState(selectedItem?.images);
     const {user} = useContext(AuthContext);
     const eventNameElement = useRef(null);
     const fromDateElement = useRef(null);
@@ -42,6 +42,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
     const descriptionElement = useRef(null);
     const [fromDateSelected , setFormDateSelected] = useState(false);
     const [toDateSelected , setToDateSelected] = useState(false);
+    const publicIds = [];
     const handleOpenCalender1 = () => {
       setOpenCalendar1(true);
       setFormDateSelected(true);
@@ -52,7 +53,13 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
       setToDateSelected(true);
     }
 
-
+    const handleDeleteClick = (item) => {
+      const newFile = file?.filter((i) => i.public_id != item?.public_id);
+      setFIle(newFile);
+      console.log(file);
+      publicIds.push(item?.public_id);
+      console.log(publicIds);
+    }
 
     const handleFileUpload = (event) => {
       const files = Array.from(event.target.files);
@@ -90,7 +97,8 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
           start_date : formattedFromDate,
           end_date : formattedToDate,
           event_description : descriptionElement.current.value,
-          files : file
+          files : file,
+          public_ids : publicIds
           // user_id : user?.user_id,
         }
      console.log(body);
@@ -320,7 +328,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                 id="upload-text"
                 label="Add Event Image (Format: png, jpg)"
                 variant="standard"
-                value={file}
+                value={file.map((item) => item?.original_filename)}
                 sx={{
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
@@ -339,6 +347,11 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                   },
                   width: "100%",
                   margin: "10px 0px ",
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: "white",
+                  },
                 }}
                 InputProps={{
                   style: {
@@ -363,6 +376,20 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                   ),
                 }}
               />
+              <div>
+                {file?.map((item) => {
+                  return(
+                  <div>
+                    <span style={{color : "white"}}>{item?.original_filename}</span>
+                    <img
+                    src="deleteIcon.png"
+                    alt="delete Icon"
+                    style={{ padding: "4px", height: "15px", cursor: "pointer" }}
+                    onClick={() => handleDeleteClick(item)}
+                  />
+                  </div>);
+                })}
+              </div>
               {/* <List>
             {file?.map((file, index) => (
               <ListItem key={index} sx={{ padding: 0, marginTop: 1 }}>

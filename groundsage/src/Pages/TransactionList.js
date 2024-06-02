@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import ExpensesList from "../Component/ExpensesList";
 import IncomeList from "../Component/IncomeList";
 import { AuthContext } from "../ContextApi/AuthContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const TransactionList = () => {
   const navigate = useNavigate();
@@ -16,6 +18,20 @@ const TransactionList = () => {
   const [transactionData, setTransactionData] = useState([]);
   const {user , activeEventId} = useContext(AuthContext);
 
+  const deleteTransection = async (id) => {
+    try{
+      const res = await axios.delete(`${process.env.REACT_APP_API_URI}/transaction/delete-transaction/${id}/${activeEventId}` ,{ headers: {
+        'authorization': user?.token,
+        'Accept' : 'application/json',
+        "Content-Type": "application/json",
+        role_id : user?.role_id
+      }})
+      toast.error(res?.data?.message);
+    }catch(err){
+      throw(err);
+    }
+  }
+
   console.log(user);
   const handleButtonClick = (button) => {
     setActiveButton(button);
@@ -23,7 +39,7 @@ const TransactionList = () => {
   useEffect(() => {
     // Fetch transaction data from the API
     fetch(
-      "https://groundsageevent-be.onrender.com/api/v1/transaction/fetch-all-transaction",
+      `${process.env.REACT_APP_API_URI}/transaction/fetch-all-transaction`,
       {
         method: "POST",
         headers: {
@@ -144,8 +160,8 @@ const TransactionList = () => {
           EXPENSE
         </Button>
       </div>
-      {activeButton === "income" && <IncomeList data={transactionData} />}
-      {activeButton === "expenses" && <ExpensesList data={transactionData} />}
+      {activeButton === "income" && <IncomeList data={transactionData?.filter((item)=> item?.tag === "income")} deleteTransection = {deleteTransection}/>}
+      {activeButton === "expenses" && <ExpensesList data={transactionData?.filter((item)=> item?.tag === "expense")} deleteTransection = {deleteTransection}/>}
     </div>
   );
 };
