@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +21,7 @@ const ForgetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const location = useLocation();
   const { parentRoute, email } = location.state || {};
+  const navigate = useNavigate();
 
   const handleForgetPassword = async () => {
     console.log(email);
@@ -44,6 +45,7 @@ const ForgetPassword = () => {
         // Password reset successful, handle accordingly (e.g., redirect)
         console.log(response);
         toast.success(response.message);
+        navigate("/signin");
       } else {
         // Password reset failed, handle error
         console.log(response);
@@ -62,7 +64,7 @@ const ForgetPassword = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column-reverse", md: "row" },
+          flexDirection: { xs: "column", md: "row" },
           background: "rgb(66, 92, 90)",
           // justifyContent:"space-around",
           padding: { xs: "20px 20px 20px 20px", md: "0px 50px 0px 50px" },
@@ -84,7 +86,12 @@ const ForgetPassword = () => {
             sx={{
               color: "rgb(165, 170, 174)", // Set label color to white
               textAlign: "left",
-              fontSize: { lg: "30px", sm: "25px", xs: "18px" },
+              fontSize: {
+                lg: "40px",
+                sm: "35px",
+                xs: "28px",
+              },
+
               margin: { xs: "0px", md: "50px 0px 20px 10px" },
             }}
           >

@@ -103,7 +103,7 @@ export default function EventListPage() {
             fontWeight: "600",
             width: "100%",
             // padding: "30px",
-            marginTop: "-20px",
+            marginTop: { xs: "0px", md: "-20px" },
             fontFamily: "Outfit",
             textShadow: "0 6px rgba(81,67,21,0.8)",
             fontSize: { xs: "40px", md: "56px" },

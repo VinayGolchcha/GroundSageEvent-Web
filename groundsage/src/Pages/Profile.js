@@ -24,20 +24,28 @@ const Profile = () => {
   };
 
   return (
-    <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
-      <img
+    <Box
+      sx={{
+        background: "rgb(66, 92, 90)",
+        pb: "30px",
+        width: "100%",
+        overflowX: "hidden",
+      }}
+    >
+      <Box
+        component="img"
         src="../../Images/arrow-left.png"
         alt="Share"
-        style={{
+        sx={{
           cursor: "pointer",
           width: "45px",
-          margin: "10px 0px 0px 20px",
+          margin: { xs: "10px 0px 0px 10px", md: "10px 0px 0px 10px" },
         }}
         onClick={() => {
           navigate(-1); // Navigate back by one step in the history stack
         }}
       />
-      <div style={{ flex: 1, paddingLeft: "20px", maxWidth: "100vw" }}>
+      <div style={{ flex: 1, paddingLeft: "20px" }}>
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -45,7 +53,7 @@ const Profile = () => {
             fontSize: { xs: "40px", md: "56px" },
             fontFamily: "Inter",
             fontWeight: "700",
-            marginTop: "-30px",
+            marginTop: { xs: "0px", md: "-30px" },
             textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           }}
         >
@@ -55,33 +63,34 @@ const Profile = () => {
       <Box
         sx={{
           display: "flex",
-          // width: "100vw", // Adjust as needed
-          // justifyContent:"space-around"
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "center", md: "flex-start" },
+          justifyContent: "center",
         }}
       >
         <Box
           sx={{
-            width: "20%",
-            // display:"flex",
-            // // justifyContent: "center", // Center items horizontally
-            // alignItems: "flex-start", // Align items to the start vertically
+            width: { xs: "100%", md: "20%" },
+            display: "flex",
+            justifyContent: { xs: "center", md: "flex-start" },
             marginTop: "15px",
           }}
         >
-          {" "}
-          {/* Adjust sidebar width */}
           <Sidbar
             onItemClick={(content) => setContent(content)}
             activeContent={content}
           />
         </Box>
-        <Box sx={{ width: "80%" }}>
-          {" "}
-          {/* Adjust content area width */}
+        <Box
+          sx={{
+            width: { xs: "100%", md: "80%" },
+            marginTop: { xs: "20px", md: "0" },
+          }}
+        >
           {renderContent()}
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 

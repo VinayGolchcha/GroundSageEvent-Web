@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Box, Button, CircularProgress } from "@mui/material";
 import { Checkbox } from "@mui/material";
 import Footer from "../Component/Footer";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import Axios for making HTTP requests
-import { toast } from "react-toastify";
+import axios from "axios"; // Import Axios for making HTTP requests 
 import NoShop from "../Component/NoShop";
 import { AuthContext } from "../ContextApi/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 // import Slider from "../Component/Slider";
 const ShopListing = () => {
@@ -30,6 +30,7 @@ const ShopListing = () => {
 
   const [Doms, setDoms] = useState([]); // State to store the Doms array
   const [shopCards, setShopCards] = useState([]); // State to store shop data
+  const [loading, setLoading] = useState(true);
 
   // const filteredShops = shopCards.filter((shop) => {
   //   if (filter === "all") return true; // Return true for all shops when filter is "all"
@@ -63,7 +64,7 @@ const ShopListing = () => {
   useEffect(() => {
     const fetchShops = async () => {
       try {
-        const id = 1183;
+        const id = 1112;
         const response = await axios.get(
           `https://groundsageevent-be.onrender.com/api/v1/shop/fetch-all-shop/${id}`,
           {
@@ -74,14 +75,24 @@ const ShopListing = () => {
             },
           }
         );
-        setShopCards(response.data.data);
-        const uniqueDomes = new Set();
-        response.data.data.forEach((shop) => {
-          uniqueDomes.add(shop.dome);
-        });
-        setDoms(Array.from(uniqueDomes));
+        if (response.data.success) {
+          setShopCards(response.data.data);
+          const uniqueDomes = new Set();
+          response.data.data.forEach((shop) => {
+            uniqueDomes.add(shop.dome);
+          });
+          setDoms(Array.from(uniqueDomes));
+          setLoading(false); // Set loading to false when data is fetched successfully
+          toast.success("Shops fetched successfully!");
+        } else {
+          // If the response indicates no data found, set loading to false
+          setLoading(false);
+          toast.error(response.data.message); // Notify user about the error
+        }
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching data:", error);
+        toast.error("Failed to fetch shops!");
       }
     };
 
@@ -191,10 +202,12 @@ const ShopListing = () => {
         setShopCards(updatedShopCards);
         setSelectedShops([]);
         toast.success("Shop Deleted Successfully");
+        toast.success("Shop deleted successfully!");
         setSelectMode(false);
       })
       .catch((error) => {
         console.error("Error deleting shops:", error);
+        toast.error("Failed to delete shops!");
       });
   };
 
@@ -208,6 +221,24 @@ const ShopListing = () => {
     // Set default filter to "all" when component mounts
     setFilter("all");
   }, []);
+
+  if (loading) {
+    // Show a loading indicator while the data is being fetched
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          backgroundColor: "rgb(66, 92, 90)",
+        }}
+      >
+        <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
+      </Box>
+    );
+  }
+
   return (
     <div>
       <div
@@ -217,6 +248,8 @@ const ShopListing = () => {
           boxShadow: "0px 4px 6px rgba(255, 251, 251, 0.11)", // Adding outside shadow
         }}
       >
+        <ToastContainer />
+
         {/* <div style={{display:"flex"}}> */}
         <img
           src="../../Images/arrow-left.png"
@@ -237,14 +270,14 @@ const ShopListing = () => {
             fontSize: { xs: "40px", md: "56px" },
             fontFamily: "Inter",
             fontWeight: "700",
-            marginTop: "-40px",
+            marginTop: { xs: "10px", md: "-40px" },
             textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           }}
         >
           Shops List
         </Typography>
         {/* </div> */}
-        {shopCards.length > 0 ? (
+        {shopCards?.length > 0 ? (
           <Box>
             <Box
               sx={{
@@ -260,6 +293,7 @@ const ShopListing = () => {
                 sx={{
                   borderColor: "rgb(247, 230, 173)",
                   width: { xs: "150px", sm: "175px" },
+                  height: "42px", // Set the height for all buttons
                   color: activeDom === "all" ? "rgb(91, 94, 97)" : "white",
                   background:
                     activeDom === "all" ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
@@ -270,6 +304,7 @@ const ShopListing = () => {
                         ? "transparent"
                         : "rgb(247, 230, 173)",
                   },
+                  margin: "5px",
                 }}
                 onClick={() => activeDom !== "all" && handleDomClick("all")}
               >
@@ -282,6 +317,7 @@ const ShopListing = () => {
                   sx={{
                     borderColor: "rgb(247, 230, 173)",
                     width: { xs: "150px", sm: "175px" },
+                    height: "42px", // Set the height for all buttons
                     color: activeDom === dom ? "rgb(91, 94, 97)" : "white",
                     background:
                       activeDom === dom ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
@@ -292,7 +328,7 @@ const ShopListing = () => {
                           ? "transparent"
                           : "rgb(247, 230, 173)",
                     },
-                    marginTop: "10px",
+                    margin: "5px",
                   }}
                   onClick={() => handleDomClick(dom)}
                 >
@@ -427,6 +463,12 @@ const ShopListing = () => {
                       selectedShops.length < filteredShops.length
                     }
                     onChange={handleSelectAll}
+                    sx={{
+                      color: "#ffffff", // Change checkbox color to white
+                      "&.Mui-checked": {
+                        color: "#ffffff", // Change tick color to white when checkbox is checked
+                      },
+                    }}
                   />
                 )}
               </Box>
@@ -488,6 +530,12 @@ const ShopListing = () => {
                         (selectedShop) => selectedShop.id === shop.id
                       )}
                       onChange={() => toggleShopSelection(shop.id)}
+                      sx={{
+                        color: "#ffffff", // Change checkbox color to white
+                        "&.Mui-checked": {
+                          color: "#ffffff", // Change tick color to white when checkbox is checked
+                        },
+                      }}
                     />
                   )}
                   <div

@@ -9,7 +9,9 @@ import {
   Select,
   TextField,
   Typography,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -64,12 +66,18 @@ export default function UpdateShopPage() {
     }));
   };
 
-  const handleSubmit = async () => {
-    const publicIds = location.state && location.state.publicIds;
+  const imageUrls = location.state && location.state.imageUrls;
+  const publicIds = imageUrls.map((image) => image.public_id);
+  const [publicId, setPublicId] = useState(publicIds);
+  const [deletedPublicIds, setDeletedPublicIds] = useState([]);
+  const [images, setImages] = useState(imageUrls);
 
-    console.log(publicIds);
-    const formattedPublicIds =
-      "[" + publicIds.map((id) => `"${id.trim()}"`).join(", ") + "]";
+  const handleSubmit = async () => {
+    console.log(imageUrls);
+    let formattedPublicIds = [];
+
+    formattedPublicIds =
+      "[" + deletedPublicIds?.map((id) => `"${id.trim()}"`).join(", ") + "]";
 
     console.log(formattedPublicIds);
     try {
@@ -82,7 +90,7 @@ export default function UpdateShopPage() {
         area: eventData.area,
         location: eventData.location,
         status: shopStatus,
-        // public_ids: formattedPublicIds,
+        public_ids: formattedPublicIds,
       };
 
       const formData = new FormData();
@@ -104,10 +112,7 @@ export default function UpdateShopPage() {
         // });
       }
 
-      formData.append(
-        "public_ids",
-        '["groundsage/drett21vjz2xssoqsoag", "groundsage/k17rmbbikh83zxkfpuwz"]'
-      );
+      // formData.append("public_ids", "");
       console.log("Logging FormData contents:");
       formData.forEach((value, key) => {
         console.log(key, value);
@@ -115,14 +120,14 @@ export default function UpdateShopPage() {
       // Send PUT request to update shop details
       const response = await axios.put(
         `https://groundsageevent-be.onrender.com/api/v1/shop/update-shop/${selectedShop.id}/${selectedShop.event_id}`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             "x-access-token": user?.token,
             role_id: user?.role_id,
           },
-        },
-        formData
+        }
       );
 
       // Check if the request was successful (status code 2xx)
@@ -150,7 +155,23 @@ export default function UpdateShopPage() {
       setShopStatus("Vacant");
     }
   };
-
+  const handleRemoveFile = (index) => {
+    setFile((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+  };
+  const handleRemoveFile2 = (id, index) => {
+    setImages((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+    const newPublicIds = publicId.filter((public_id) => public_id !== id);
+    setPublicId(newPublicIds);
+    setDeletedPublicIds((prevIds) => [...prevIds, id]); // Add to deleted public IDs
+  };
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -216,26 +237,43 @@ export default function UpdateShopPage() {
         >
           Update Shop
         </Typography>
-        <Typography
-          variant="h4"
+        <Box
           sx={{
+            // margin: "0px 8px",
             margin: "1% 13%",
-            color: "rgba(174, 174, 174, 0.83)",
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            textAlign: "center",
+            justifyContent: "left",
+            alignItems: "left",
             // fontSize: { xs: "30px", md: "46px" },
           }}
         >
-          Enter the details for
-          <Box
+          <Typography
+            variant="h4"
             sx={{
-              color: "rgb(250, 236, 191)",
-              margin: "0px 8px",
+              color: "rgba(174, 174, 174, 0.83)",
+              textAlign: "center",
               // fontSize: { xs: "30px", md: "46px" },
+              fontSize: { xs: "27px", md: "35px" },
             }}
           >
-            Shop {0 + "" + eventData?.shop_number}
-          </Box>{" "}
-        </Typography>
+            Enter the details for
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "rgb(250, 236, 191)",
+              marginLeft: "10px",
+              textAlign: "center",
+              fontSize: { xs: "27px", md: "35px" },
+            }}
+          >
+            {" "}
+            Shop {eventData?.shop_number}
+          </Typography>
+        </Box>{" "}
+        {/* "groundsage/elwrljn13ltbamdptxqf" */}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Grid container spacing={4} sx={{ margin: "0% 10%" }}>
             <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -568,11 +606,13 @@ export default function UpdateShopPage() {
         <Typography sx={{ margin: "1% 13%", fontSize: "20px", color: "white" }}>
           Shop images
         </Typography>
-        <div
-          style={{
-            margin: "0% 13%",
+        <Box
+          sx={{
+            margin: { xs: "0% 18%", md: "0% 13%" },
+            // width:"50%",
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <label
@@ -604,18 +644,20 @@ export default function UpdateShopPage() {
                     width: "100%",
                     display: "flex",
                     justifyContent: "center",
+                    marginBottom: "20px",
                   }}
                 >
                   <img src="Fill-1.png" alt="cloud-icon" />
                 </div>
-                <p
-                  style={{
+                <Typography
+                  sx={{
                     color: "rgba(255, 255, 255, 0.32)",
-                    fontSize: "1.5rem",
+                    fontSize: { xs: "1.3rem", md: "1.5rem" },
+                    textAlign: "center",
                   }}
                 >
                   Drag upload/ browse your shop image
-                </p>
+                </Typography>
               </Box>
             )}
           </label>
@@ -627,27 +669,48 @@ export default function UpdateShopPage() {
             onChange={handleFileInputChange}
             multiple
           />
-        </div>
-        <Box
-          sx={{
-            padding: "20px 0px",
-            cursor: "pointer",
-            textAlign: "center",
-            color: "white",
-          }}
-          onClick={() => document.getElementById("fileInput").click()}
-        >
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", fontSize: { xs: "16px", md: "20px" } }}
-          >
-            Drag and drop a file here or click to select a file
-          </Typography>
-          <Box sx={{ marginTop: "10px", color: "rgb(188, 189, 163)" }}>
-            {file?.length === 0
-              ? "No files selected."
-              : file?.map((f) => f.name).join(", ")}
-          </Box>
+        </Box>
+        <Box>
+          {images.map((file, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <Typography sx={{ color: "white", marginRight: "10px" }}>
+                {file.original_filename}
+              </Typography>
+              <IconButton
+                onClick={() => handleRemoveFile2(file.public_id, index)}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          ))}
+        </Box>
+        <Box>
+          {file.map((file, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <Typography sx={{ color: "white", marginRight: "10px" }}>
+                {file.name}
+              </Typography>
+              <IconButton onClick={() => handleRemoveFile(index)}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          ))}
         </Box>
         <Box
           sx={{

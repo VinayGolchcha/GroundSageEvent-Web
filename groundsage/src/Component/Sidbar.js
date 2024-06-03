@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Typography, Box, Button } from "@mui/material";
 
 const Sidbar = ({ onItemClick, activeContent }) => {
-  const [content, setContent] = useState(""); // State to track current content
-
   const buttons = [
     {
       id: "about",
@@ -26,15 +24,16 @@ const Sidbar = ({ onItemClick, activeContent }) => {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
+        flexDirection: { xs: "row", md: "column" },
+        alignItems: { xs: "center", md: "flex-start" },
+        justifyContent: { xs: "center", sm: "flex-start" },
         backgroundColor: "rgba(188, 188, 188, 0.21)",
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-        borderRadius: "45px", // Adjust the border radius as needed
-        margin: { xs: "50px 0px 0px 10px", sm: "20px 10px 0px 30px" },
+        borderRadius: "45px",
+        margin: { xs: "10px 0px 0px 10px", md: "20px 10px 0px 30px" },
         padding: "2px",
         maxWidth: "fit-content",
-        width: "1",
+        width: "100%",
       }}
     >
       {buttons.map((button, index) => (
@@ -42,7 +41,7 @@ const Sidbar = ({ onItemClick, activeContent }) => {
           key={index}
           color="primary"
           sx={{
-            marginBottom: "30px",
+            margin: { xs: "0 10px", sm: "0 0 30px 0" },
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
@@ -50,15 +49,19 @@ const Sidbar = ({ onItemClick, activeContent }) => {
               activeContent === button.id
                 ? "underline rgb(247, 230, 173)"
                 : "none",
-            fontSize: { xs: "0.7rem", sm: "1rem" }, // Adjust font size for xs devices
-            padding: { xs: "5px", sm: "10px" }, // Adjust padding for xs devices
+            fontSize: { xs: "0.7rem", sm: "1rem" },
+            padding: { xs: "5px", sm: "10px" },
           }}
           onClick={() => onItemClick(button.id)}
         >
-          <img
+          <Box
+            component="img"
             src={button.imageSrc}
             alt={button.content.toLowerCase()}
-            style={{ width: "100%", maxWidth: { xs: "30px", sm: "50px" } }} // Adjust image size for xs devices
+            sx={{
+              width: { xs: "50%", md: "90%" },
+              // maxWidth: { xs: "30px", sm: "50px" },
+            }}
           />
           {button.content.split("\n").map((line, i) => (
             <Typography
@@ -68,9 +71,9 @@ const Sidbar = ({ onItemClick, activeContent }) => {
                 lineHeight: "0.6",
                 fontWeight: "600",
                 fontFamily: "Inter",
-                fontSize: { xs: "0.7rem", sm: "1rem" }, // Adjust font size for xs devices
+                fontSize: { xs: "0.7rem", sm: "1rem" },
                 textAlign: "center",
-                marginTop:"5px",
+                marginTop: "5px",
               }}
               key={i}
             >

@@ -28,7 +28,7 @@ const Footer = () => {
           paddingTop: "20px",
         }}
       >
-        <Box sx={{ display: { xs: "flex" }, justifyContent: "space-between" }}>
+        <Box sx={{ display: { xs: "flex" }, justifyContent: "space-between",alignItems:"center" }}>
           <Box>
             <img
               src="../../../Images/logo_1 1.png"

@@ -29,9 +29,10 @@ const Verification = () => {
     return () => clearInterval(interval); // Clean up the interval on unmount
   }, [isTimerRunning]);
 
+  const { parentRoute, email } = location.state || {};
   const handleSend = async () => {
     try {
-      const { parentRoute, email } = location.state || {};
+  
 
       const response = await fetch(
         "https://groundsageevent-be.onrender.com/api/v1/profile/verify-email",
@@ -101,11 +102,11 @@ const Verification = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column-reverse", md: "row" },
+          flexDirection: { xs: "column", md: "row" },
           background: "rgb(66, 92, 90)",
           minHeight: "100vh",
           padding: { xs: "20px 20px 0px 20px", md: "0px 50px 0px 50px" },
-          overflow:"hidden",
+          overflow: "hidden",
         }}
       >
         <Box
@@ -124,7 +125,11 @@ const Verification = () => {
             sx={{
               color: "rgb(165, 170, 174)",
               textAlign: "left",
-              fontSize: { lg: "30px", sm: "25px", xs: "18px" },
+              fontSize: {
+                lg: "40px",
+                sm: "35px",
+                xs: "28px",
+              },
               margin: { xs: "10px 0px 0px 10px", md: "50px 0px 0px 10px" },
             }}
           >
@@ -133,12 +138,12 @@ const Verification = () => {
           <Typography
             sx={{
               color: "rgb(165, 170, 174)",
-              textAlign: { xs: "center", md: "left" },
+              textAlign: { xs: "center", md: "center" },
               fontSize: { lg: "20px", sm: "20px", xs: "18px" },
               margin: "20px 0px 30px 0px",
             }}
           >
-            We’ve sent you the verification code on ssoni3445@gmail.com
+            We’ve sent you the verification code on {email}
           </Typography>
           <Box
             sx={{
