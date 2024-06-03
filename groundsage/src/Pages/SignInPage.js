@@ -18,8 +18,8 @@ const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isEmailVerified, setIsEmailVerified, setUser } =
-    useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const navigate = useNavigate();
 
   const checkEmailVerificationStatus = async () => {
@@ -117,7 +117,7 @@ const SignInPage = () => {
           display: "flex",
           background: "rgb(66, 92, 90)",
           justifyContent: "space-around",
-          flexDirection: { xs: "column-reverse", md: "row" },
+          flexDirection: { xs: "column", md: "row" },
           minHeight: "100vh",
           padding: { xs: "20px 20px 20px 20px", md: "0px 50px 0px 50px" },
         }}
@@ -132,7 +132,7 @@ const SignInPage = () => {
             sx={{
               color: "rgb(165, 170, 174)",
               textAlign: "left",
-              fontSize: { lg: "30px", sm: "25px", xs: "18px" },
+              fontSize: { lg: "40px", sm: "35px", xs: "28px" },
               margin: "30px 0px 20px 10px",
             }}
           >
@@ -171,7 +171,9 @@ const SignInPage = () => {
                       fontWeight: 600,
                     }}
                   >
-                    {isEmailVerified ? "Email Verified" : "Verify Email"}
+                    {isEmailVerified && email.length > 0
+                      ? "Email Verified"
+                      : "Verify Email"}
                   </Button>
                 </InputAdornment>
               ),
@@ -182,7 +184,7 @@ const SignInPage = () => {
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)",
-              marginBottom:{xs:"10px",md:"15px"},
+              marginBottom: { xs: "10px", md: "15px" },
               width: { xs: "100%", md: "60%" },
             }}
           />
@@ -293,7 +295,7 @@ const SignInPage = () => {
               />
             </Button>
           </Box>
-          <Typography
+          {/* <Typography
             sx={{
               color: "rgb(165, 170, 174)",
               fontSize: { lg: "20px", sm: "20px", xs: "16px" },
@@ -303,7 +305,7 @@ const SignInPage = () => {
             }}
           >
             OR
-          </Typography>
+          </Typography> */}
           <Box
             sx={{
               display: "flex",
@@ -311,14 +313,21 @@ const SignInPage = () => {
               width: { xs: "100%", md: "60%" },
             }}
           >
-            <Box
+            {/* <Box
               component="img"
               src="../../../Images/Group 33505.png"
               alt="Google Login"
-              style={{ cursor: "pointer" }}
-            />
+              style={{ cursor: "pointer" }} */}
+            {/* /> */}
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "center",width: { xs: "100%", md: "60%" } }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: { xs: "100%", md: "60%" },
+              marginBottom: "15px",
+            }}
+          >
             <Typography
               sx={{
                 color: "rgb(165, 170, 174)",

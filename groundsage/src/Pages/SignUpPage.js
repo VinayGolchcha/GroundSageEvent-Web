@@ -56,7 +56,7 @@ const SignUpPage = () => {
       if (response.ok) {
         console.log("Registration successful", response);
         toast.success("Registration successful");
-        // navigate("/signin");
+        navigate("/signin");
       } else {
         console.log("Registration failed");
         const data = await response.json();
@@ -84,7 +84,7 @@ const SignUpPage = () => {
           display: "flex",
           background: "rgb(66, 92, 90)",
           justifyContent: "space-around",
-          flexDirection: { xs: "column-reverse", md: "row" },
+          flexDirection: { xs: "column", md: "row" },
           minHeight: "100vh",
           padding: { xs: "20px 20px 20px 20px", md: "0px 50px 0px 50px" },
         }}
@@ -104,7 +104,8 @@ const SignUpPage = () => {
             sx={{
               color: "rgb(165, 170, 174)",
               textAlign: "left",
-              fontSize: { lg: "30px", sm: "25px", xs: "18px" },
+              // fontSize: { lg: "30px", sm: "25px", xs: "18px" },
+              fontSize: { lg: "40px", sm: "35px", xs: "28px" },
               margin: "20px 0px 20px 10px",
             }}
           >
@@ -349,6 +350,7 @@ const SignUpPage = () => {
               justifyContent: "center",
               alignItems: "center",
               // marginTop: "5px",
+              marginBottom:"15px"
             }}
           >
             <Typography

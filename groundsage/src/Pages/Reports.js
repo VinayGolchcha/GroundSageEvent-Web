@@ -156,7 +156,7 @@ const Reports = () => {
           fontSize: { xs: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
-          marginTop: "-70px",
+          marginTop: {xs:"0px",md:"-40px"},
           textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           marginBottom: "20px",
         }}

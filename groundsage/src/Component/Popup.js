@@ -1,33 +1,43 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Dialog, DialogTitle, TextField, Box } from "@mui/material";
-import { toast } from "react-toastify";
+import { AuthContext } from "../ContextApi/AuthContext";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const SimplePopup = ({ open, onClose, onSave }) => {
-  const user_id = 1112;
-  const referralCodeElement = useRef(null);
+  const [referralCode, setReferralCode] = useState('');
+  const { user } = useContext(AuthContext);
+  const apiUrl = process.env.REACT_APP_API_URI;
 
-  const joinTeamWithRefferal = async (body) => {
-    try{
-      const res = await axios.post(`${process.env.REACT_APP_API_URI}/event/join-team-with-referral-code` , body);
-      toast.success(res?.data.data.message);
-    }catch(err){
-      console.log(err)
-      toast.error(err)
+  const handleSave = async () => {
+    try {
+      const response = await axios.post(`${apiUrl}/event/join-team-with-referral-code`, {
+        user_id: user?.user_id,
+        referral_code: referralCode
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": user?.token,
+          role_id: user?.role_id,
+        }
+      });
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+        onSave && onSave(response.data.data);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error("An error occurred while trying to join the team.");
+      console.error("Error joining team with referral code:", error);
     }
-  }
-
-  const handleSave = () => {
-    const body = {
-      user_id : user_id,
-      referral_code : referralCodeElement?.current.value
-    } 
-    joinTeamWithRefferal(body)
-    // Call the onSave function with the data
-    // onSave(data);
   };
+
   return (
     <div>
+      <ToastContainer />
       <Dialog open={open} onClose={onClose}>
         <Box
           sx={{
@@ -38,15 +48,13 @@ const SimplePopup = ({ open, onClose, onSave }) => {
         >
           <img
             src="../../Images/icons8-cross-96 2 (1).png"
-            alt="add"
+            alt="close"
             style={{
-              // width: "20px",
               cursor: "pointer",
               paddingTop: "10px",
               position: "absolute",
               right: "10px",
             }}
-            // onClick={handleOpenPopup} // Add onClick event to open the popup
             onClick={onClose}
           />
           <DialogTitle
@@ -64,20 +72,16 @@ const SimplePopup = ({ open, onClose, onSave }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            placeholder="add referral code "
-            inputRef={referralCodeElement}
+            placeholder="Add referral code"
             InputProps={{
               disableUnderline: true,
               style: {
                 color: "white",
                 borderBottom: "2px solid rgb(247, 230, 173)",
-                "&:focus": {
-                  borderBottomColor: "rgb(0, 150, 136)",
-                },
               },
-              placeholderTextColor: "rgba(255, 255, 255, 0.7)",
             }}
-            />
+            onChange={(e) => setReferralCode(e.target.value)}
+          />
           <div
             style={{
               display: "flex",
@@ -90,21 +94,16 @@ const SimplePopup = ({ open, onClose, onSave }) => {
               sx={{
                 background: "rgb(247, 230, 173)",
                 color: "rgb(91, 94, 97)",
-                padding: "10px 40px 10px 40px",
-                display: "flex",
-                margin: "10px 0px 0px 2%",
+                padding: "10px 40px",
                 fontWeight: "600",
-                alignItems: "center",
                 borderRadius: "1px",
-                // boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)",
                 fontSize: "16px",
                 "&:hover": {
                   backgroundColor: "rgb(247, 230, 173)",
                   color: "rgb(50, 50, 50)",
-                  // boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)",
                 },
               }}
-              onClick={handleSave} // Call handleSave function when Save button is clicked
+              onClick={handleSave}
             >
               SAVE
             </Button>

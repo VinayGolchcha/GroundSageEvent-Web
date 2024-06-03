@@ -42,36 +42,37 @@ const AuthProvider = ({ children }) => {
     }
   }
   const [isEmailVerified, setIsEmailVerified] = useState(() => {
-    const saved = localStorage.getItem('isEmailVerified');
+    const saved = localStorage.getItem("isEmailVerified");
     return saved !== null ? JSON.parse(saved) : false;
   });
   const [lastShopNumber, setLastShopNumber] = useState(() => {
-    const saved = localStorage.getItem('lastShopNumber');
+    const saved = localStorage.getItem("lastShopNumber");
     return saved !== null ? JSON.parse(saved) : null;
   });
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('user');
+    const saved = localStorage.getItem("user");
     return saved !== null ? JSON.parse(saved) : null;
   });
   const [shopIds, setShopIds] = useState(() => {
-    const saved = localStorage.getItem('shopIds');
+    const saved = localStorage.getItem("shopIds");
     return saved !== null ? JSON.parse(saved) : [];
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem('isEmailVerified', JSON.stringify(isEmailVerified));
+    localStorage.setItem("isEmailVerified", JSON.stringify(isEmailVerified));
   }, [isEmailVerified]);
 
   useEffect(() => {
-    localStorage.setItem('lastShopNumber', JSON.stringify(lastShopNumber));
+    localStorage.setItem("lastShopNumber", JSON.stringify(lastShopNumber));
   }, [lastShopNumber]);
 
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   useEffect(() => {
-    localStorage.setItem('shopIds', JSON.stringify(shopIds));
+    localStorage.setItem("shopIds", JSON.stringify(shopIds));
   }, [shopIds]);
 
   const logout = async () => {
@@ -79,13 +80,16 @@ const AuthProvider = ({ children }) => {
 
     const token = user.token;
     try {
-      const response = await fetch(`https://groundsageevent-be.onrender.com/api/v1/profile/logout/${user.user_id}`, {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": token,
-        },
-      });
+      const response = await fetch(
+        `https://groundsageevent-be.onrender.com/api/v1/profile/logout/${user.user_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token,
+          },
+        }
+      );
 
       if (response.ok) {
         setIsEmailVerified(false);
@@ -93,12 +97,13 @@ const AuthProvider = ({ children }) => {
         setShopIds([]);
         setLastShopNumber(null);
         localStorage.clear();
-        console.log('Logout successful');
+        navigate("/signin");
+        console.log("Logout successful");
       } else {
-        console.error('Failed to logout');
+        console.error("Failed to logout");
       }
     } catch (error) {
-      console.error('Error logging out:', error);
+      console.error("Error logging out:", error);
     }
   };
 

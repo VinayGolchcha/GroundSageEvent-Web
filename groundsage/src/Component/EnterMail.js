@@ -58,7 +58,7 @@ const EnterMail = () => {
           display: "flex",
           background: "rgb(66, 92, 90)",
           justifyContent: "space-around",
-          flexDirection: { xs: "column-reverse", md: "row" },
+          flexDirection: { xs: "column", md: "row" },
           // justifyContent:"space-around",
           padding: { xs: "20px", md: "50px" },
         }}
@@ -81,7 +81,7 @@ const EnterMail = () => {
             sx={{
               color: "rgb(165, 170, 174)", // Set label color to white
               textAlign: "left",
-              fontSize: { lg: "30px", sm: "25px", xs: "18px" },
+              fontSize: { lg: "40px", sm: "35px", xs: "28px" },
               margin: "30px 0px 20px 10px",
             }}
           >

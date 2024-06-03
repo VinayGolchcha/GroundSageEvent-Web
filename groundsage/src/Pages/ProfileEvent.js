@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
 import { AuthContext } from "../ContextApi/AuthContext";
 
 const ProfileEvent = () => {
@@ -8,6 +8,7 @@ const ProfileEvent = () => {
   const [endpoint, setEndpoint] = useState(4);
   const [eventListLength, setEventListLength] = useState("Show More...");
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch data from the API
@@ -28,9 +29,12 @@ const ProfileEvent = () => {
         if (data.success) {
           const formattedEvents = data.data.map((event) => ({
             eventType: event.event_name,
-            date: `${formatDate(event.start_date)} - ${formatDate(event.end_date)}`,
+            date: `${formatDate(event.start_date)} - ${formatDate(
+              event.end_date
+            )}`,
           }));
           setEventList(formattedEvents);
+          setLoading(false);
         } else {
           console.error("Failed to fetch user data:", data.message);
         }
@@ -55,11 +59,46 @@ const ProfileEvent = () => {
     }
   };
 
+  if (loading) {
+    // Show a loading indicator while the data is being fetched
+    return (
+      <>
+        <Box
+          sx={{
+            display: { xs: "none", md: "block" },
+            position: "absolute",
+            top: "50%",
+            left: "50%", // 20% from the left side of the screen
+            transform: "translate(-50%, -50%)", // Centering horizontally and vertically
+            backgroundColor: "rgb(66, 92, 90)",
+            borderRadius: "50%",
+            padding: "20px",
+          }}
+        >
+          <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
+        </Box>
+        <Box
+          sx={{
+            display: { xs: "flex", md: "none" },
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgb(66, 92, 90)",
+          }}
+        >
+          <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
+        </Box>
+      </>
+    );
+  }
+
   return (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
-        padding: { xs: "10px", md: "20px" },
+        display: { xs: "flex", md: "block" },
+        flexDirection: { xs: "column" },
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       {eventList.slice(0, endpoint).map((item, index) => (
@@ -67,8 +106,8 @@ const ProfileEvent = () => {
           key={index}
           sx={{
             backgroundColor: "rgb(66, 92, 90)",
-            margin: "2% auto",
-            marginLeft: "25px",
+            marginTop: "2%",
+            // marginLeft: "25px",
             border: "2px solid rgba(0, 0, 0, 0.16)",
             borderRadius: "10px",
             padding: { xs: "8px", md: "16px" },
@@ -128,6 +167,7 @@ const ProfileEvent = () => {
             fontFamily: "Roboto",
             marginTop: "20px",
             fontSize: { xs: "1.0rem", md: "1.2rem" },
+            marginRight: { xs: "0px", md: "20%" },
           }}
           onClick={handleClick}
         >

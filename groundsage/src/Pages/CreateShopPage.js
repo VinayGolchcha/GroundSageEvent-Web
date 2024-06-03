@@ -9,12 +9,15 @@ import {
   Select,
   TextField,
   Typography,
+  IconButton,
 } from "@mui/material";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextApi/AuthContext";
+import CloseIcon from '@mui/icons-material/Close'; // Import the CloseIcon
+
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -28,15 +31,16 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
+
 export default function CreateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-  const { setShopIds, lastShopNumber,setLastShopNumber } = useContext(AuthContext);
+  const { setShopIds, lastShopNumber, setLastShopNumber, user } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [file, setFile] = useState([]);
-  const {user} = useContext(AuthContext);
   const [eventData, setEventData] = useState({
-    event_id: 1183,
+    event_id: 1112,
     description: "",
     area: null,
     rent: null,
@@ -66,7 +70,14 @@ export default function CreateShopPage() {
   const fetchLastShopNumber = async () => {
     try {
       const response = await axios.get(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number"
+        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": user?.token,
+            role_id: user?.role_id,
+          },
+        }
       );
       if (response && response.data && response.data.success) {
         const shopNumber = response.data.data.shop_number;
@@ -96,7 +107,6 @@ export default function CreateShopPage() {
         shop_number: newShopNumber,
       };
 
-
       // Create a FormData object
       const formData = new FormData();
 
@@ -119,12 +129,13 @@ export default function CreateShopPage() {
 
       const response = await axios.post(
         "https://groundsageevent-be.onrender.com/api/v1/shop/create-shop",
-        formData , {
-          headers : {
-            'authorization': `${user?.token}`, // Ensure the token format is correct
-            'Accept': 'application/json',
-            role_id : user?.role_id
-          }
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-access-token": user?.token,
+            role_id: user?.role_id,
+          },
         }
       );
 
@@ -141,7 +152,6 @@ export default function CreateShopPage() {
           shop_number: "",
         });
         setShopIds(response.data.data.shop_id);
-        console.log(response.data.data.shop_id);
         navigate("/shops");
       } else {
         toast.error("Failed to create shop. Please try again later.");
@@ -185,7 +195,13 @@ export default function CreateShopPage() {
   const handleDragOver = (e) => {
     e.preventDefault();
   };
-
+  const handleRemoveFile = (index) => {
+    setFile((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+  };
   const handleFileInputChange = (e) => {
     // const file = e.target.files[0];
     const files = Array.from(e.target.files);
@@ -241,26 +257,42 @@ export default function CreateShopPage() {
         >
           Add New Shop
         </Typography>
-        <Typography
-          variant="h4"
+        <Box
           sx={{
+            // margin: "0px 8px",
             margin: "1% 13%",
-            color: "rgba(174, 174, 174, 0.83)",
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            textAlign: "center",
+            justifyContent: "left",
+            alignItems: "left",
             // fontSize: { xs: "30px", md: "46px" },
           }}
         >
-          Enter the details for
-          <Box
+          <Typography
+            variant="h4"
             sx={{
-              color: "rgb(250, 236, 191)",
-              margin: "0px 8px",
+              color: "rgba(174, 174, 174, 0.83)",
+              textAlign: "center",
               // fontSize: { xs: "30px", md: "46px" },
+              fontSize: { xs: "27px", md: "35px" },
             }}
           >
-            Shop {0 + "" + lastShopNumber}
-          </Box>{" "}
-        </Typography>
+            Enter the details for
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "rgb(250, 236, 191)",
+              marginLeft: "10px",
+              textAlign: "center",
+              fontSize: { xs: "27px", md: "35px" },
+            }}
+          >
+            {" "}
+            Shop {lastShopNumber}
+          </Typography>
+        </Box>{" "}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Grid container spacing={4} sx={{ margin: "0% 10%" }}>
             <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -653,7 +685,28 @@ export default function CreateShopPage() {
             // value={file}
             multiple
           />
+         
         </div>
+        <Box>
+        {file.map((file, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent:"center",
+              marginBottom: "10px",
+            }}
+          >
+            <Typography sx={{ color: "white", marginRight: "10px" }}>
+              {file.name}
+            </Typography>
+            <IconButton onClick={() => handleRemoveFile(index)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        ))}
+      </Box>
         <Box
           sx={{
             display: "flex",

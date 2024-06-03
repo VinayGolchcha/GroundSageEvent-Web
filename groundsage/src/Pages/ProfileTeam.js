@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import { CircularProgress } from "@mui/material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import SimplePopup from "../Component/Popup";
@@ -12,7 +13,9 @@ const ProfileTeam = () => {
   const [count, setCount] = useState(0);
   const [members, setMembers] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [eventList, setEventList] = useState([
     {
@@ -54,8 +57,9 @@ const ProfileTeam = () => {
       .then((data) => {
         if (data.success) {
           const userDataFromApi = data.data;
-          
+          setData(userDataFromApi);
           console.log(userDataFromApi);
+          setLoading(false);
         } else {
           console.error("Failed to fetch user data:", data.message);
         }
@@ -91,7 +95,6 @@ const ProfileTeam = () => {
     setExpandedStates(newExpandedStates);
   };
 
-
   const chunkArray = (array, size) => {
     const chunkedArray = [];
     for (let i = 0; i < array.length; i += size) {
@@ -103,66 +106,105 @@ const ProfileTeam = () => {
   const handleSavePopupData = (data) => {
     console.log("Popup data saved:", data);
     handlePopupClose();
-    navigate("/profile");
   };
 
+  if (loading) {
+    // Show a loading indicator while the data is being fetched
+    return (
+      <>
+      <Box
+        sx={{
+          display: { xs: "none", md: "block" },
+          position: "absolute",
+          top: "50%",
+          left: "50%", // 20% from the left side of the screen
+          transform: "translate(-50%, -50%)", // Centering horizontally and vertically
+          backgroundColor: "rgb(66, 92, 90)",
+          borderRadius: "50%",
+          padding: "20px",
+        }}
+      >
+        <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
+      </Box>
+        <Box
+          sx={{
+            display: { xs: "flex", md: "none" },
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgb(66, 92, 90)",
+          }}
+        >
+          <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
+        </Box>
+        </>
+      );
+  }
   return (
-    <Box sx={{ backgroundColor: "rgb(66, 92, 90)", pb: 4,width:{xs:"100%",sm:"90%"} }}>
+    <Box
+      sx={{
+        backgroundColor: "rgb(66, 92, 90)",
+        pb: 4,
+        width: { xs: "100%", sm: "90%" },
+      }}
+    >
       <Box sx={{ px: { xs: 2, md: 4 }, py: 2 }}>
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column-reverse", md: "row" },
             justifyContent: { xs: "center", md: "flex-start" },
             flexWrap: "wrap",
             gap: 2,
             mb: 2,
             // marginLeft: { xs: 0, md: "7%" },
-            
           }}
         >
-          <Box
-            sx={{
-              border: "2px solid grey",
-              backgroundColor: "rgb(125, 144, 143)",
-              p: 2,
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-            }}
-            onClick={() => setMembers((members) => members + 1)}
-          >
-            <Typography
-              variant="h6"
-              sx={{ color: "white", textAlign: "center" }}
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{
+                border: "2px solid grey",
+                backgroundColor: "rgb(125, 144, 143)",
+                p: 2,
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                marginRight: "20px",
+              }}
+              // onClick={() => setMembers((members) => members + 1)}
             >
-              {members}
-              <br />
-              <Typography sx={{ color: "rgb(174, 174, 174)" }}>
-                Teams
+              <Typography
+                variant="h6"
+                sx={{ color: "white", textAlign: "center" }}
+              >
+                {data?.count?.team_count}
+                <br />
+                <Typography sx={{ color: "rgb(174, 174, 174)" }}>
+                  Teams
+                </Typography>
               </Typography>
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              border: "2px solid grey",
-              backgroundColor: "rgb(125, 144, 143)",
-              p: 2,
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-            }}
-            onClick={() => setCount((count) => count + 1)}
-          >
-            <Typography
-              variant="h6"
-              sx={{ color: "white", textAlign: "center" }}
+            </Box>
+            <Box
+              sx={{
+                border: "2px solid grey",
+                backgroundColor: "rgb(125, 144, 143)",
+                p: 2,
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+              // onClick={() => setCount((count) => count + 1)}
             >
-              {count}
-              <br />
-              <Typography sx={{ color: "rgb(174, 174, 174)" }}>
-                Events
+              <Typography
+                variant="h6"
+                sx={{ color: "white", textAlign: "center" }}
+              >
+                {data?.count?.event_count}
+                <br />
+                <Typography sx={{ color: "rgb(174, 174, 174)" }}>
+                  Events
+                </Typography>
               </Typography>
-            </Typography>
+            </Box>
           </Box>
           <Box
             sx={{
@@ -186,7 +228,7 @@ const ProfileTeam = () => {
           variant="h5"
           sx={{ color: "grey", mt: 2, textAlign: "center" }}
         >
-          Prashant Pandey has worked with these following members:
+          {user.user_name} has worked with these following members:
         </Typography>
         <Box
           sx={{
@@ -197,7 +239,7 @@ const ProfileTeam = () => {
             px: { xs: 2, md: 4 },
           }}
         >
-          {eventList.slice(0, endpoint).map((item, index) => (
+          {data?.event_data?.slice(0, endpoint).map((event, index) => (
             <Box
               key={index}
               sx={{
@@ -209,7 +251,7 @@ const ProfileTeam = () => {
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row" },
                 justifyContent: "space-between",
-                // width:{xs:"100%",sm:"90%"} 
+                // width:{xs:"100%",sm:"90%"}
               }}
             >
               <Typography
@@ -219,7 +261,7 @@ const ProfileTeam = () => {
                   fontFamily: "Poppins",
                 }}
               >
-                {item.eventType}
+                {event.event_name}
                 <Typography
                   sx={{
                     padding: "5px",
@@ -227,7 +269,7 @@ const ProfileTeam = () => {
                     color: "rgb(174, 174, 174)",
                   }}
                 >
-                  {item.teams.length} members
+                  {event.member_count} members
                 </Typography>
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -237,10 +279,10 @@ const ProfileTeam = () => {
                   sx={{ mt: "5px", cursor: "pointer" }}
                   onClick={() => handleExpandList(index)}
                 >
-                  {item.teams.slice(0, 5).map((team, idx) => (
-                    <Avatar key={idx}>{team}</Avatar>
+                  {event?.members.slice(0, 5).map((member, idx) => (
+                    <Avatar key={idx}>{member.charAt(0).toUpperCase()}</Avatar>
                   ))}
-                  {item.teams.length > 5 && (
+                  {event?.members.length > 5 && (
                     <>
                       {[...Array(3)].map((_, idx) => (
                         <img
@@ -248,7 +290,7 @@ const ProfileTeam = () => {
                           src="../../Images/Vector (1).png"
                           alt="ellipsis"
                           style={{
-                            width: "8px",
+                            width: "5px",
                             height: "8px",
                             marginTop: "20px",
                           }}
@@ -258,12 +300,14 @@ const ProfileTeam = () => {
                   )}
                 </Stack>
                 {expandedStates[index] &&
-                  item.teams.length > 5 &&
-                  chunkArray(item.teams.slice(5), 5).map(
+                  event?.members?.length > 5 &&
+                  chunkArray(event?.members?.slice(5), 5).map(
                     (chunk, chunkIndex) => (
                       <Stack key={chunkIndex} direction="row" spacing={1}>
-                        {chunk.map((team, idx) => (
-                          <Avatar key={idx}>{team}</Avatar>
+                        {chunk.map((member, idx) => (
+                          <Avatar key={idx}>
+                            {member.charAt(0).toUpperCase()}
+                          </Avatar>
                         ))}
                       </Stack>
                     )
@@ -271,7 +315,7 @@ const ProfileTeam = () => {
               </Box>
             </Box>
           ))}
-          {eventList.length > 4 && (
+          {data?.event_data?.length > 4 && (
             <Typography
               textAlign="center"
               sx={{

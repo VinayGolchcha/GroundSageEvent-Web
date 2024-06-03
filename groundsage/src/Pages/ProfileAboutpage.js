@@ -71,8 +71,12 @@ const ProfileAboutpage = () => {
   return (
     <Box
       sx={{
-        width: { xs: "80%", md: "60%" },
-        margin: { xs: "15px 50px", md: "0" },
+        width: { xs: "100%", md: "60%" },
+        // margin: { xs: "15px 50px", md: "0" },
+        display: { xs: "flex", md: "block" },
+        flexDirection: { xs: "column" },
+        justifyContent: "center",
+        alignItems: "center",
         textAlign: { xs: "center", md: "left" },
       }}
     >
@@ -103,7 +107,7 @@ const ProfileAboutpage = () => {
             marginTop: { xs: "20px", md: "0" },
           }}
         >
-          Prabhat Gupta
+          {user.user_name}
         </Typography>
       </Box>
       <Box
@@ -129,9 +133,10 @@ const ProfileAboutpage = () => {
             sx={{
               width: { xs: "100%", md: "450px" },
               marginBottom: "25px",
-              "& .MuiInputBase-root.Mui-disabled": {
-                color: "white", // Change font color to white
-              },
+              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+                {
+                  WebkitTextFillColor: "#FFFFFF",
+                },
             }}
             value={userData.email}
             disabled // Set disabled attribute to true
@@ -146,7 +151,7 @@ const ProfileAboutpage = () => {
             InputProps={{
               disableUnderline: true,
               style: {
-                color: "rgb(255, 255, 255)",
+                color: "white",
                 fontWeight: "400",
                 fontSize: "21px",
                 fontFamily: "Outfit",
@@ -154,11 +159,12 @@ const ProfileAboutpage = () => {
                 borderRadius: "10px",
               },
               "& .MuiInputBase-root.Mui-disabled": {
-                color: "white", // Change font color to white
+                WebkitTextFillColor: "#FFFFFF",
               },
             }}
           />
-           <TextField
+
+          <TextField
             label="Role:"
             variant="filled"
             fullWidth
@@ -166,11 +172,12 @@ const ProfileAboutpage = () => {
             sx={{
               width: { xs: "100%", md: "450px" },
               marginBottom: "25px",
-              "& .MuiInputBase-root.Mui-disabled": {
-                color: "white", // Change font color to white
-              },
+              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+                {
+                  WebkitTextFillColor: "#FFFFFF",
+                },
             }}
-            value={userData.role_name}
+            value={userData.role}
             disabled // Set disabled attribute to true
             InputLabelProps={{
               style: {
@@ -193,7 +200,11 @@ const ProfileAboutpage = () => {
               "& .MuiInputBase-root.Mui-disabled": {
                 color: "white", // Change font color to white
               },
-            }} />
+              "&:disabled": {
+                color: "white", // Change font color to white when disabled
+              },
+            }}
+          />
           <TextField
             label="Current Team:"
             variant="filled"
@@ -201,7 +212,14 @@ const ProfileAboutpage = () => {
             size="small"
             fullWidth
             disabled // Set disabled attribute to true
-            sx={{ width: { xs: "100%", md: "450px" }, marginBottom: "25px" }}
+            sx={{
+              width: { xs: "100%", md: "450px" },
+              marginBottom: "25px",
+              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+                {
+                  WebkitTextFillColor: "#FFFFFF",
+                },
+            }}
             InputLabelProps={{
               style: {
                 color: "white",
@@ -229,7 +247,14 @@ const ProfileAboutpage = () => {
             variant="filled"
             size="small"
             fullWidth
-            sx={{ width: { xs: "100%", md: "450px" }, marginBottom: "25px" }}
+            sx={{
+              width: { xs: "100%", md: "450px" },
+              marginBottom: "25px",
+              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+                {
+                  WebkitTextFillColor: "#FFFFFF",
+                },
+            }}
             InputLabelProps={{
               style: {
                 color: "white",
@@ -278,7 +303,9 @@ const ProfileAboutpage = () => {
             color: "rgb(91, 94, 97)",
             padding: "10px 40px",
             display: "flex",
-            margin: "10px 25% 0px 2%",
+            margin: { xs: "0", md: "10px 25% 0px 2%" },
+            justifyContent: "center",
+            alignItems: "center",
             alignItems: "center",
             borderRadius: "1px",
             boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)",

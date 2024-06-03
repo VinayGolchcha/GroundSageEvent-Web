@@ -22,12 +22,11 @@ const DescriptionPage = () => {
   };
 
   const handleEdit = () => {
-    const publicIds = imageUrls.map((image) => image.public_id);
 
     navigate("/update-shop", {
       state: {
         selectedShop: selectedShop,
-        publicIds: publicIds,
+        imageUrls: imageUrls,
       },
     });
   };
@@ -234,6 +233,27 @@ const DescriptionPage = () => {
           }}
         >
           Go to Rental
+        </Button>
+        <Button
+          size="large"
+          variant="contained" // Make the button contained if active dom
+          sx={{
+            color: "rgb(91, 94, 97)",
+            background: "rgb(247, 230, 173)",
+            marginTop: "20px",
+            marginLeft: "10px",
+            marginBottom: "5px",
+            "&:hover": {
+              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+              color: "rgb(50, 50, 50)", // Change text color on hover
+              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+            },
+          }}
+          onClick={() => {
+            // navigate("/rental-agreement");
+          }}
+        >
+          Edit Rental agreement
         </Button>
         <Button
           size="large"
