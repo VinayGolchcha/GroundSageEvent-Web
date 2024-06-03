@@ -42,7 +42,8 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
     const descriptionElement = useRef(null);
     const [fromDateSelected , setFormDateSelected] = useState(false);
     const [toDateSelected , setToDateSelected] = useState(false);
-    const publicIds = [];
+    const [publicIds, setPublicIds] = useState([]);
+
     const handleOpenCalender1 = () => {
       setOpenCalendar1(true);
       setFormDateSelected(true);
@@ -56,8 +57,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
     const handleDeleteClick = (item) => {
       const newFile = file?.filter((i) => i.public_id != item?.public_id);
       setFIle(newFile);
-      console.log(file);
-      publicIds.push(item?.public_id);
+      setPublicIds((prevPublicIds) => [...prevPublicIds , item?.public_id]);
       console.log(publicIds);
     }
 
@@ -81,6 +81,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
       setFIle((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
     const handleSave = () => {
+      console.log("save evenet is called");
       let formattedFromDate = fromDateElement.current.value.split('/');
       let temp = formattedFromDate[0];
       formattedFromDate[0] = formattedFromDate[1]
@@ -91,14 +92,14 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
       formattedToDate[0] = formattedToDate[1]
       formattedToDate[1] = tempTodate;
       formattedToDate = formattedToDate.reverse().join('-');
-
+        const formattedPublicIds = "[" + publicIds?.map((id) => `"${id.trim()}"`).join(",")+"]";
         const  body = { 
           event_name : eventNameElement.current.value,
           start_date : formattedFromDate,
           end_date : formattedToDate,
           event_description : descriptionElement.current.value,
           files : file,
-          public_ids : publicIds
+          public_ids : formattedPublicIds
           // user_id : user?.user_id,
         }
      console.log(body);
@@ -353,6 +354,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                     color: "white",
                   },
                 }}
+                
                 InputProps={{
                   style: {
                     color: "rgb(255, 255, 255)",
@@ -370,6 +372,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
                         id="upload-file"
                         style={{ display: "none" }}
                         accept="image/*"
+                        multiple
                         onChange={handleFileUpload}
                       />
                     </IconButton>

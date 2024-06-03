@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 export default function SaffSalary() {
   const addItemEle = useRef(null);
@@ -29,6 +30,7 @@ export default function SaffSalary() {
   }
   return (
     <>
+    <ToastContainer/>
     <Grid item xs={6}>
       <TextField
         sx={{

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 export default function ShopRental(){
   const addItemEle = useRef(null);
@@ -31,6 +32,7 @@ export default function ShopRental(){
   }
     return(
       <>
+      <ToastContainer/>
         <Grid item xs={6}>
             <FormControl variant="standard" sx={{ minWidth: 120 , width : "100%" , margin : "10px 0px "}}>
                 <InputLabel id="demo-simple-select-standard-label" style={{ color: 'white' }}>select shop</InputLabel>

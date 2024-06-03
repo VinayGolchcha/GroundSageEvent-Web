@@ -43,7 +43,7 @@ const IncomeList = ({data , deleteTransection }) => {
   const handleIncomeDelete = () => {
     const newArray = Income?.filter((item) => !item.isSelected);
     const deletedItem = Income?.filter((item) => item.isSelected);
-    if(deletedItem.length >0){
+    if(deletedItem?.length >0){
 
       console.log(deletedItem , deletedItem[0]?._id);
       deleteTransection(deletedItem[0]?._id);
@@ -61,7 +61,7 @@ const IncomeList = ({data , deleteTransection }) => {
   return (
     <Box>
       {" "}
-      {Income.length !== 0 && (
+      {Income?.length !== 0 && (
         <Box
           sx={{
             margin: { xs: "20px", md: "2% 18%" },
@@ -144,7 +144,7 @@ const IncomeList = ({data , deleteTransection }) => {
           </Box>
         </Box>
       )}
-      {Income?.slice(0, showAll ? Income.length : maxItems).map(
+      {Income?.slice(0, showAll ? Income?.length : maxItems).map(
         (item, index) => {
           return (
             <Box
@@ -256,7 +256,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           fontSize: { xs: "13px", md: "20px" },
                         }}
                       >
-                        Decided Amount
+                        Amount Due
                       </Typography>
                     </div>
                     <div>
@@ -313,7 +313,7 @@ const IncomeList = ({data , deleteTransection }) => {
 
                         }}
                       >
-                        Entered Amount
+                        Recieved Amount
                       </Typography>
                     </div>
                   </div>
@@ -323,7 +323,7 @@ const IncomeList = ({data , deleteTransection }) => {
           );
         }
       )}
-      {Income.length > maxItems && (
+      {Income?.length > maxItems && (
         <Typography
           sx={{
             color: "white",

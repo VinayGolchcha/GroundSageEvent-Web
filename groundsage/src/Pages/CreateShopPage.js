@@ -34,8 +34,9 @@ export default function CreateShopPage() {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [file, setFile] = useState([]);
+  const {user} = useContext(AuthContext);
   const [eventData, setEventData] = useState({
-    event_id: 1111,
+    event_id: 1183,
     description: "",
     area: null,
     rent: null,
@@ -118,7 +119,13 @@ export default function CreateShopPage() {
 
       const response = await axios.post(
         "https://groundsageevent-be.onrender.com/api/v1/shop/create-shop",
-        formData
+        formData , {
+          headers : {
+            'authorization': `${user?.token}`, // Ensure the token format is correct
+            'Accept': 'application/json',
+            role_id : user?.role_id
+          }
+        }
       );
 
       if (response.status === 200) {

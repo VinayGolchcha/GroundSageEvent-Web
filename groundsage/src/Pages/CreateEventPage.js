@@ -19,7 +19,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from "@mui/material/IconButton";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useContext, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { AuthContext } from "../ContextApi/AuthContext";
 
@@ -64,14 +64,13 @@ export default function CreateEventPage() {
     try{
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
-        
           formData.append(key , body[key]);
-        
-        
       })
-      file.forEach((f) => {
-        formData.append("files" , f);
-      })
+      if(file.length > 0) {
+        file.forEach((f) => {
+          formData.append("files" , f);
+        })
+      }
       console.log(formData);
       const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , formData , {
         headers: {
@@ -101,6 +100,17 @@ export default function CreateEventPage() {
     formattedToDate = formattedToDate.reverse().join('-');
     console.log("from Date" , formattedFromDate);
     console.log("from Date" , formattedToDate);
+    if(parseInt(teamSizeElement.current.value) !== parseInt(coordinatorCountElement.current.value) + parseInt(staffMemberCountElement.current.value) + parseInt(helperCountElement.current.value) ){
+      toast.warning("sum of the coordinator count , staffmember count , helper count should be equals to team size", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        }});
+        return;
+    }
   const  body = { 
     event_name : eventNameElement.current.value,
     start_date : formattedFromDate,
@@ -113,13 +123,13 @@ export default function CreateEventPage() {
     coordinator_count : coordinatorCountElement.current.value,
     staff_members_count : staffMemberCountElement.current.value,
     helpers_count : helperCountElement.current.value,
-    files : file
    }
    console.log(body);
    addEvent(body);
   }
   return (
     <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
+      <ToastContainer/>
       <Typography
         variant="h3"
         sx={{

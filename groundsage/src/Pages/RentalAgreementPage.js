@@ -18,9 +18,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import IconButton from "@mui/material/IconButton";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { AuthContext, AuthProvider } from "../ContextApi/AuthContext";
 
 export default function RentalAgreementPage() {
     const [openCalendar1, setOpenCalendar1] = useState(false);
@@ -35,6 +36,43 @@ export default function RentalAgreementPage() {
     const [toDate , setToDate] = useState(dayjs());
     const [file , setFIle] = useState();
     const [rentMode , setRentMode] = useState(null);
+    const {user , activeEventId} = useContext(AuthContext);
+    const [isEdit , setIsEdit] = useState(false);
+    const [rentalObj , setRentalObj] = useState(null);
+    const fetchRentalAgree = async () => {
+      try{
+        const res = await axios.post(`${process.env.REACT_APP_API_URI}/rentalagreement/fetch-rental-agreement` , {
+          event_id : 1183,
+          shop_id : 1147
+        } , {
+          headers: {
+            'Authorization': `${user?.token}`, // Ensure the token format is correct
+            'Accept': 'application/json',
+            'role_id': user?.role_id
+          }
+        });
+        if(res?.data?.data?.length > 0){
+          const obj = res?.data?.data[0];
+          setRentalObj(obj);
+          setName(obj.tenant_name);
+          setPhoneNo(obj.tenant_phone_number);
+          setEmail(obj.tenant_email);
+          setAddress(obj.tenant_address)
+          setAmount(obj.rent_amount);
+          setRentMode(obj.rent_mode);
+          setStartDate(dayjs(obj.start_date));
+          setEndDate(dayjs(obj.end_date));
+        }
+        console.log(res);
+        setIsEdit(true);
+      }catch(err){
+        console.log(err);
+      }
+    }
+
+    useEffect(()=> {
+      fetchRentalAgree();
+    },[])
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
@@ -43,8 +81,18 @@ export default function RentalAgreementPage() {
         setFIle(file);
       };
     const addRental = async (body) => {
+      const formData = new FormData();
+      Object.keys(body).forEach((key) => {
+        formData.append(key , body[key]);
+      })
       try{
-        const res = await axios.post(`${process.env.REACT_APP_API_URI}/rentalagreement/add-rental-agreement`, body);
+        const res = await axios.post(`${process.env.REACT_APP_API_URI}/rentalagreement/add-rental-agreement`, formData , {
+          headers : {
+            'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+          }
+        });
         console.log(res);
         toast.success(res?.data?.message , {
           style: {
@@ -55,9 +103,8 @@ export default function RentalAgreementPage() {
             color: "rgb(66, 92, 90)",
           }});
       }catch(err){
-        console.log(err);
-        console.log(err?.response?.data?.errors[0]?.msg)
-        toast.error(err?.response?.data?.errors[0]?.msg , {
+        console.log(err)
+        toast.error(err?.response?.data, {
           style: {
             // Change font color
             fontSize: "16px", // Change font size
@@ -65,6 +112,70 @@ export default function RentalAgreementPage() {
             fontWeight: "600", // Change font weight
             color: "rgb(66, 92, 90)",
           }});
+      }
+    }
+
+    const handleDelete = async () => {
+      if(rentalObj !== null){
+        const body = {
+            _id : rentalObj?.agreement_id
+          };
+        console.log(body);
+        try{
+          const res = await axios.delete(`${process.env.REACT_APP_API_URI}/rentalagreement/delete-rental-agreement` , {
+            headers : {
+              'authorization': `${user?.token}`, // Ensure the token format is correct
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              role_id : user?.role_id
+              },
+              data : body
+          }  );
+          toast.error(res?.data?.message  , {
+            style: {
+              // Change font color
+              fontSize: "16px", // Change font size
+              fontFamily: "Inter", // Change font family
+              fontWeight: "600", // Change font weight
+              color: "rgb(66, 92, 90)",
+            }})
+            fetchRentalAgree();
+        }catch(err){
+          console.log(err);
+        }
+      }
+      
+    }
+
+    const handleEdit = async () =>{
+      const reqStartDateFormat = startDate?.toISOString().split("T")[0];
+      const reqEndDateFormat = endDate?.toISOString().split("T")[0];
+      const body = {
+        rent_amount : amount,
+        rent_mode : rentMode,
+        start_date : reqStartDateFormat,
+        end_date : reqEndDateFormat
+      }
+      const shopid = 1147;
+      const eventid = 1183;
+      try{
+        const res = await axios.put(`${process.env.REACT_APP_API_URI}/rentalagreement/edit-rental-agreement/${shopid}/${eventid}` , body , {
+          headers : {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+          }
+        })
+      toast.success(res?.data?.message  , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        }})
+      }catch(err){
+        console.log(err);
       }
     }
     const handleSave = () => {
@@ -90,13 +201,13 @@ export default function RentalAgreementPage() {
         phone_number : phoneNo,
         address : address,
         id_document : "http://www.ABC123456.com",
-        shop_id : 1111,
-        tenant_id : 1112,
+        shop_id : 1147,
         start_date : fromDate,
         end_date : toDate,
         rent_amount : amount,
         rent_mode : rentMode,
-        event_id : 1115
+        event_id : 1183,
+        file : file
     }
     addRental(body);
     setStartDate("");
@@ -144,6 +255,7 @@ export default function RentalAgreementPage() {
                 },
                 width: "100%",
                 margin: "10px 0px ",
+                color: "white"
               }}
               InputProps={{
                 style: {
@@ -154,6 +266,8 @@ export default function RentalAgreementPage() {
               style: {
                 color: "white",
               },}}
+              value={rentalObj?.tenant_name}
+              disabled={isEdit}
             id="standard-basic" label="name" variant="standard" onChange={(e) => setName(e.target.value)} />
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -183,6 +297,8 @@ export default function RentalAgreementPage() {
               style: {
                 color: "white",
               },}}
+              value={rentalObj?.tenant_phone_number}
+              disabled={isEdit}
             id="standard-basic" label="phone number" variant="standard" onChange={(e) => setPhoneNo(e.target.value)}/>
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -213,6 +329,8 @@ export default function RentalAgreementPage() {
               style: {
                 color: "white",
               },}}
+              value={rentalObj?.tenant_email}
+              disabled={isEdit}
             label="email" variant="standard" onChange={(e) => setEmail(e.target.value)}/>
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -242,9 +360,11 @@ export default function RentalAgreementPage() {
               style: {
                 color: "white",
               },}}
+              value={rentalObj?.tenant_address}
+              disabled={isEdit}
             id="standard-basic" label="address" variant="standard" onChange={(e) => setAddress(e.target.value)}/>
             
-    <TextField
+    {!isEdit && <TextField
         id="upload-text"
         label="Upload an image"
         variant="standard"
@@ -290,7 +410,7 @@ export default function RentalAgreementPage() {
             </IconButton>
           ),
         }}
-      />   
+      />  } 
                 </Grid>
                 <Grid item lg={6} md={6} sm ={6} xs={12}>
                 <Typography variant="h4" sx={{color : "rgb(155, 181, 199)" , margin : "20px 0px"}}>Rent Information</Typography>
@@ -318,6 +438,7 @@ export default function RentalAgreementPage() {
                   color: "rgb(255, 255, 255)",
                 },
               }}
+              value={amount}
               InputLabelProps={{
               style: {
                 color: "white",
@@ -358,6 +479,7 @@ export default function RentalAgreementPage() {
                 label="rent mode"
                 disableUnderline
                 onChange={(e) => setRentMode(e.target.value)}
+                value={rentMode}
                 sx={{
                   width: "100%",
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -429,7 +551,7 @@ export default function RentalAgreementPage() {
                 {/* <InputLabel id="from-date-label">From date</InputLabel> */}
                 <DatePicker
                   labelId="from-date-label"
-                  value={dayjs(startDate)}
+                  value={dayjs(endDate)}
                   onChange={(newValue) => setEndDate(newValue?.$d)} // Handle onChange event if needed
                   open={openCalendar2}
                   onOpen={() => setOpenCalendar2(true)}
@@ -473,7 +595,7 @@ export default function RentalAgreementPage() {
               margin: "20px 0px",
             }}
           >
-            <Button
+            {isEdit === false &&<Button
               variant="contained"
               sx={{
                 backgroundColor: "rgb(247, 230, 173) ",
@@ -484,7 +606,34 @@ export default function RentalAgreementPage() {
               onClick={handleSave}
             >
               Save
+            </Button>}
+            {isEdit && <>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "rgb(247, 230, 173) ",
+                color: "rgb(91, 94, 97)",
+                minWidth: "200px",
+                fontWeight: "600",
+                marginRight : "2%"
+              }}
+              onClick={handleEdit}
+            >
+              Edit
             </Button>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "rgb(247, 230, 173) ",
+                color: "rgb(91, 94, 97)",
+                minWidth: "200px",
+                fontWeight: "600",
+              }}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+            </>}
           </Box>
         </Grid>
       </Box>

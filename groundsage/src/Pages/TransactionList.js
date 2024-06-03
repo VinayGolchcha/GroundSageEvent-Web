@@ -9,7 +9,7 @@ import ExpensesList from "../Component/ExpensesList";
 import IncomeList from "../Component/IncomeList";
 import { AuthContext } from "../ContextApi/AuthContext";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const TransactionList = () => {
   const navigate = useNavigate();
@@ -26,7 +26,14 @@ const TransactionList = () => {
         "Content-Type": "application/json",
         role_id : user?.role_id
       }})
-      toast.error(res?.data?.message);
+      toast.error(res?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        }});
     }catch(err){
       throw(err);
     }
@@ -66,6 +73,7 @@ const TransactionList = () => {
 
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
+      <ToastContainer />
       <img
         src="../../Images/arrow-left.png"
         alt="Share"

@@ -5,32 +5,13 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { useNavigate } from "react-router-dom";
 
-const ExpensesList = ({data , deletedItem}) => {
+const ExpensesList = ({data , deleteTransection}) => {
   const navigate = useNavigate();
-  const [expenses, setExpenses] = useState([
-    {
-      Type: "Expense Type",
-      Item: "Expense Description",
-      Amount: "1000",
-      Balance_Payable: "1000",
-      isSelected: false, // Add isSelected property and set it to false
-    },
-    {
-      Type: "Expense Type",
-      Item: "Expense Description",
-      Amount: "1000",
-      Balance_Payable: "1000",
-      isSelected: false, // Add isSelected property and set it to false
-    },
-    {
-      Type: "Expense Type",
-      Item: "Expense Description",
-      Amount: "1000",
-      Balance_Payable: "1000",
-      isSelected: false, // Add isSelected property and set it to false
-    },
-    // Add more expense items here as needed
-  ]);
+  const [expenses, setExpenses] = useState([]);
+  useEffect(() => {
+    const newData = data?.map((item) => ({...item , isSelected : false}))
+    setExpenses(newData);
+  },[data])
 
   const [allselect, setAllselect] = useState(false);
   const [select, setSelect] = useState(false);
@@ -62,6 +43,13 @@ const ExpensesList = ({data , deletedItem}) => {
 
   const handleExpenseDelete = () => {
     const newArray = expenses.filter((item) => !item.isSelected);
+    const deletedItem = expenses?.filter((item) => item.isSelected);
+    console.log(deletedItem)
+    if(deletedItem?.length >0){
+
+      console.log(deletedItem , deletedItem[0]?._id);
+      deleteTransection(deletedItem[0]?._id);
+    }
     setExpenses(newArray);
   };
 
@@ -75,7 +63,7 @@ const ExpensesList = ({data , deletedItem}) => {
   return (
     <Box>
       {" "}
-      {expenses.length !== 0 && (
+      {expenses?.length !== 0 && (
         <Box
           sx={{
             margin: { xs: "20px", md: "2% 18%" },
@@ -150,14 +138,17 @@ const ExpensesList = ({data , deletedItem}) => {
                 src="add-icon.png"
                 alt="add-icon"
                 style={{ cursor: "pointer" }}
-                onClick={()=>{navigate('/transaction')}}
+                onClick={() => {
+                  navigate("/create-transaction");
+                }}
               />
+             
             )}
           </Box>
         </Box>
       )}
-      {data
-        ?.slice(0, showAll ? expenses.length : maxItems)
+      {expenses
+        ?.slice(0, showAll ? expenses?.length : maxItems)
         .map((item, index) => {
           return (
             <Box
@@ -268,7 +259,7 @@ const ExpensesList = ({data , deletedItem}) => {
 
                         }}
                       >
-                        Amount
+                        Entered Amount
                       </Typography>
                     </div>
                     <div>
@@ -305,7 +296,7 @@ const ExpensesList = ({data , deletedItem}) => {
             </Box>
           );
         })}
-      {expenses.length > maxItems && (
+      {expenses?.length > maxItems && (
         <Typography
           sx={{
             color: "white",

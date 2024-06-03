@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -27,7 +28,15 @@ const AuthProvider = ({ children }) => {
           role_id : user?.role_id
         }
       });
-      console.log(res);
+      toast.success("Transection added successfully", {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          }
+      })
     }catch(err){
       console.log(err);
     }

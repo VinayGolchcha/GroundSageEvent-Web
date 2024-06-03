@@ -25,23 +25,25 @@ export default function EventListPage() {
   const [selectedItem , setSelectedItem] = useState(null);
   const [isEdit , setIsEdit] = useState(false);
   const {user , setEventIds , eventIds , setEvents , setActiveEvent , setActiveEventId, activeEventId} = useContext(AuthContext);
-  console.log(user);
   
   const today = new Date();
 
   const handleEditEventApi = async (body) => {
     try{
+      console.log(body);
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
         formData.append(key , body[key]);
       })
-      file.forEach((f) => {
+      const files = body?.files;
+      files.forEach((f) => {
         formData.append("files" , f);
       })
-      const publicIds = body?.public_id;
-      publicIds.forEach((id) => {
-        formData.append('public_ids', id);
-      });
+      const publicIds = body?.public_ids;
+      console.log(publicIds);
+      // publicIds.forEach((id) => {
+        // formData.append('public_ids', publicIds); 
+      // });
 
       const res = await axios.post(
         `${process.env.REACT_APP_API_URI}/event/update-event/${selectedId}`,

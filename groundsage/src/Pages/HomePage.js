@@ -246,13 +246,13 @@ console.log(activeEvent);
                       <img
                         src="/home/Group-33311.png"
                         height="55%"
-                        style={{ marginRight: "3%" }}
+                        style={{ marginRight: "3%" , }}
                       />
                     </Box>
                     <img
                       src={item?.image_url === null ? "/home/imag-84.png" : item?.image_url}
                       alt=""
-                      style={{ borderRadius: "8px", width: "100%" }}
+                      style={{ borderRadius: "8px",maxHeight : "200px" , maxWidth : "200px" , width: "100%"   ,height : "100%" , objectFit : "cover" }}
                     />
                   </Box>
                   <Box sx={{ padding: "4px" }}>

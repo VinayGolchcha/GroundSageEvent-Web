@@ -145,7 +145,7 @@ const ShopListing = () => {
   };
   const handleSelectAll = () => {
     // If all shops are already selected, deselect all; otherwise, select all
-    if (selectedShops.length === filteredShops.length) {
+    if (selectedShops?.length === filteredShops?.length) {
       setSelectedShops([]);
     } else {
       setSelectedShops(filteredShops.map((shop) => shop)); // Add complete shop objects
@@ -244,7 +244,7 @@ const ShopListing = () => {
           Shops List
         </Typography>
         {/* </div> */}
-        {shopCards.length > 0 ? (
+        {shopCards?.length > 0 ? (
           <Box>
             <Box
               sx={{
@@ -421,10 +421,10 @@ const ShopListing = () => {
                 </Button>
                 {selectMode && (
                   <Checkbox
-                    checked={selectedShops.length === filteredShops.length}
+                    checked={selectedShops?.length === filteredShops?.length}
                     indeterminate={
-                      selectedShops.length > 0 &&
-                      selectedShops.length < filteredShops.length
+                      selectedShops?.length > 0 &&
+                      selectedShops?.length < filteredShops?.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -591,7 +591,7 @@ const ShopListing = () => {
                 </Box>
               ))}
             </Box>
-            {!showMore && filteredShops.length > displayCount && (
+            {!showMore && filteredShops?.length > displayCount && (
               <Typography
                 onClick={handleShowMore}
                 sx={{
