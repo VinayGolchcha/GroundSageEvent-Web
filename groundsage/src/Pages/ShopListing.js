@@ -1,191 +1,167 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Typography, Box, Button, CircularProgress } from "@mui/material";
-import { Checkbox } from "@mui/material";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
+import {
+  Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Checkbox,
+} from "@mui/material";
 import Footer from "../Component/Footer";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import Axios for making HTTP requests 
+import axios from "axios"; // Import Axios for making HTTP requests
 import NoShop from "../Component/NoShop";
 import { AuthContext } from "../ContextApi/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
-// import Slider from "../Component/Slider";
 const ShopListing = () => {
   const [filter, setFilter] = useState("all");
   const [showMore, setShowMore] = useState(false);
   const [displayCount, setDisplayCount] = useState(9);
-  const [activeDom, setActiveDom] = useState("all"); // State to store active dom, initially set to "all"
-  const [selectedShops, setSelectedShops] = useState([]); // State to store selected shop cards
+  const [activeDom, setActiveDom] = useState("all");
+  const [selectedShops, setSelectedShops] = useState([]);
   const [selectMode, setSelectMode] = useState(false);
-  const { setLastShopNumber, user } = useContext(AuthContext);
-
+  const { setLastShopNumber, user, activeEventId } = useContext(AuthContext);
+  console.log(activeEventId);
   const navigate = useNavigate();
 
-  const handleCardClick = (shopIndex, shopDetails, event) => {
-    if (event.target.tagName === "INPUT" && event.target.type === "checkbox") {
-      return; // If checkbox clicked, do nothing
-    }
-    // Redirect to description page with shop index and details as route state
-    navigate(`/description/${shopIndex}`, { state: { shopDetails } });
-  };
-
-  const [Doms, setDoms] = useState([]); // State to store the Doms array
-  const [shopCards, setShopCards] = useState([]); // State to store shop data
+  const [Doms, setDoms] = useState([]);
+  const [shopCards, setShopCards] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // const filteredShops = shopCards.filter((shop) => {
-  //   if (filter === "all") return true; // Return true for all shops when filter is "all"
-
-  //   if (activeDom && shop.dom !== activeDom) return false;
-  //   // if (filter === "all") return true;
-  //   if (filter === "occupied") return shop.occupied;
-  //   if (filter === "vacant") return !shop.occupied;
-  //   return true;handleFilterChange
-  // });
-  const filteredShops = shopCards?.filter((shop) => {
-    if (filter === "all") {
-      // If filter is "all", show all shops (vacant and occupied) for the selected dome
-      if (activeDom === "all" || shop.dome === activeDom) {
-        return true;
+  const fetchShops = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `https://groundsageevent-be.onrender.com/api/v1/shop/fetch-all-shop/${activeEventId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": user?.token,
+            role_id: user?.role_id,
+          },
+        }
+      );
+      if (response.data.success) {
+        setShopCards(response.data.data);
+        const uniqueDomes = new Set();
+        response.data.data.forEach((shop) => {
+          uniqueDomes.add(shop.dome);
+        });
+        setDoms(Array.from(uniqueDomes));
+        setLoading(false);
+        toast.success("Shops fetched successfully!");
       } else {
-        return false;
+        setLoading(false);
+        toast.error(response.data.message);
       }
-    } else {
-      // If filter is "vacant" or "occupied", filter based on shop status and selected dome
-      if (activeDom === "all" || shop.dome === activeDom) {
-        return filter === "vacant"
-          ? shop.status === "Vacant"
-          : shop.status === "Occupied";
-      } else {
-        return false;
-      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+      toast.error("Failed to fetch shops!");
     }
-  });
+  }, [user]);
+
+  const fetchLastShopNumber = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": user?.token,
+            role_id: user?.role_id,
+          },
+        }
+      );
+      if (response && response.data && response.data.success) {
+        const shopNumber = response.data.data.shop_number;
+        setLastShopNumber(shopNumber);
+      }
+    } catch (error) {
+      console.error("Error fetching last shop number:", error);
+    }
+  }, [user]);
 
   useEffect(() => {
-    const fetchShops = async () => {
-      try {
-        const id = 1112;
-        const response = await axios.get(
-          `https://groundsageevent-be.onrender.com/api/v1/shop/fetch-all-shop/${id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "x-access-token": user?.token,
-              role_id: user?.role_id,
-            },
-          }
-        );
-        if (response.data.success) {
-          setShopCards(response.data.data);
-          const uniqueDomes = new Set();
-          response.data.data.forEach((shop) => {
-            uniqueDomes.add(shop.dome);
-          });
-          setDoms(Array.from(uniqueDomes));
-          setLoading(false); // Set loading to false when data is fetched successfully
-          toast.success("Shops fetched successfully!");
-        } else {
-          // If the response indicates no data found, set loading to false
-          setLoading(false);
-          toast.error(response.data.message); // Notify user about the error
-        }
-      } catch (error) {
-        setLoading(false);
-        console.error("Error fetching data:", error);
-        toast.error("Failed to fetch shops!");
-      }
-    };
-
-    const fetchLastShopNumber = async () => {
-      try {
-        const response = await axios.get(
-          "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "x-access-token": user?.token,
-              role_id: user?.role_id,
-            },
-          }
-        );
-        if (response && response.data && response.data.success) {
-          const shopNumber = response.data.data.shop_number;
-          setLastShopNumber(shopNumber);
-        }
-      } catch (error) {
-        console.error("Error fetching last shop number:", error);
-      }
-    };
-
     fetchShops();
     fetchLastShopNumber();
+  }, [fetchShops, fetchLastShopNumber]);
+
+  const filteredShops = useMemo(
+    () =>
+      shopCards.filter((shop) => {
+        if (filter === "all") {
+          return activeDom === "all" || shop.dome === activeDom;
+        }
+        return (
+          (activeDom === "all" || shop.dome === activeDom) &&
+          (filter === "vacant"
+            ? shop.status === "vacant"
+            : shop.status === "Occupied")
+        );
+      }),
+    [shopCards, filter, activeDom]
+  );
+
+  const handleFilterChange = useCallback((filterType) => {
+    setFilter(filterType);
+    setDisplayCount(9);
   }, []);
 
-  const handleFilterChange = (filterType) => {
-    setFilter(filterType);
-    setDisplayCount(9); // Reset display count when filter changes
-  };
+  const toggleShopSelection = useCallback(
+    (shopId) => {
+      setSelectedShops((prevSelectedShops) => {
+        const isSelected = prevSelectedShops.some((shop) => shop.id === shopId);
+        if (isSelected) {
+          return prevSelectedShops.filter((shop) => shop.id !== shopId);
+        } else {
+          const shop = shopCards.find((shop) => shop.id === shopId);
+          return shop ? [...prevSelectedShops, shop] : prevSelectedShops;
+        }
+      });
+    },
+    [shopCards]
+  );
 
-  const toggleShopSelection = (shopId) => {
-    console.log("Toggling selection for shopId:", shopId);
+  const handleToggleSelectMode = useCallback(() => {
+    setSelectMode((prevSelectMode) => !prevSelectMode);
+    setSelectedShops([]);
+  }, []);
 
-    // Check if shop is already selected
-    const isSelected = selectedShops.some((shop) => shop.id === shopId);
-    console.log("Is selected:", isSelected);
-
-    // Toggle selection status
-    if (isSelected) {
-      setSelectedShops(selectedShops.filter((shop) => shop.id !== shopId)); // Deselect shop
-    } else {
-      // Find the shop object with the corresponding id
-      const shop = shopCards.find((shop) => shop.id === shopId);
-      console.log("Shop:", shop);
-      if (shop) {
-        setSelectedShops([...selectedShops, shop]); // Select shop by adding its data to selectedShops
-      }
-    }
-  };
-
-  useEffect(() => {
-    console.log("Selected Shops:", selectedShops);
-  }, [selectedShops]);
-
-  const handleToggleSelectMode = () => {
-    setSelectMode(!selectMode); // Toggle select mode
-    setSelectedShops([]); // Clear selected shops when entering or exiting select mode
-  };
-  const handleSelectAll = () => {
-    // If all shops are already selected, deselect all; otherwise, select all
+  const handleSelectAll = useCallback(() => {
     if (selectedShops.length === filteredShops.length) {
       setSelectedShops([]);
     } else {
-      setSelectedShops(filteredShops.map((shop) => shop)); // Add complete shop objects
+      setSelectedShops(filteredShops);
     }
-  };
+  }, [selectedShops, filteredShops]);
 
-  const handleShowMore = () => {
+  const handleShowMore = useCallback(() => {
     setShowMore(true);
-    setDisplayCount(displayCount + 9); // Increment display count by 9 when "Show more" is clicked
-  };
+    setDisplayCount((prevDisplayCount) => prevDisplayCount + 9);
+  }, []);
 
-  const handleShowLess = () => {
+  const handleShowLess = useCallback(() => {
     setShowMore(false);
-    setDisplayCount(9); // Reset display count to 9 when "Show less" is clicked
-  };
+    setDisplayCount(9);
+  }, []);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     const shopIds = selectedShops.map((shop) => ({
       shop_id: shop.id,
-      event_id: shop.event_id, // Assuming `event_id` is available in shop data
+      event_id: shop.event_id,
     }));
-
-    console.log(shopIds);
 
     axios
       .delete(
         "https://groundsageevent-be.onrender.com/api/v1/shop/delete-shop",
         {
-          data: { ids: shopIds }, // Wrap shopIds in an object with key "ids"
+          data: { ids: shopIds },
           headers: {
             "Content-Type": "application/json",
             "x-access-token": user?.token,
@@ -194,7 +170,6 @@ const ShopListing = () => {
         }
       )
       .then((response) => {
-        console.log("Shops deleted successfully");
         const updatedShopCards = shopCards.filter(
           (shop) =>
             !selectedShops.some((selectedShop) => selectedShop.id === shop.id)
@@ -202,26 +177,31 @@ const ShopListing = () => {
         setShopCards(updatedShopCards);
         setSelectedShops([]);
         toast.success("Shop Deleted Successfully");
-        toast.success("Shop deleted successfully!");
         setSelectMode(false);
       })
       .catch((error) => {
         console.error("Error deleting shops:", error);
         toast.error("Failed to delete shops!");
       });
-  };
+  }, [selectedShops, shopCards, user]);
 
-  const handleDomClick = (dom) => {
-    console.log(dom);
-    setActiveDom(dom === activeDom ? "" : dom); // Toggle active dom
-    setFilter(dom === "all" ? "all" : "dom"); // Set filter to "dom" if a dome is clicked, else set to "all"
-    setFilter("all");
+  const handleDomClick = useCallback(
+    (dom) => {
+      setActiveDom(dom === activeDom ? "" : dom);
+      setFilter("all");
+    },
+    [activeDom]
+  );
+  const handleCardClick = (shopIndex, shopDetails, event) => {
+    if (event.target.tagName === "INPUT" && event.target.type === "checkbox") {
+      return; // If checkbox clicked, do nothing
+    }
+    // Redirect to description page with shop index and details as route state
+    navigate(`/description/${shopIndex}`, { state: { shopDetails } });
   };
   useEffect(() => {
-    // Set default filter to "all" when component mounts
     setFilter("all");
   }, []);
-
   if (loading) {
     // Show a loading indicator while the data is being fetched
     return (
@@ -457,10 +437,10 @@ const ShopListing = () => {
                 </Button>
                 {selectMode && (
                   <Checkbox
-                    checked={selectedShops.length === filteredShops.length}
+                    checked={selectedShops?.length === filteredShops?.length}
                     indeterminate={
-                      selectedShops.length > 0 &&
-                      selectedShops.length < filteredShops.length
+                      selectedShops?.length > 0 &&
+                      selectedShops?.length < filteredShops?.length
                     }
                     onChange={handleSelectAll}
                     sx={{
@@ -639,7 +619,7 @@ const ShopListing = () => {
                 </Box>
               ))}
             </Box>
-            {!showMore && filteredShops.length > displayCount && (
+            {!showMore && filteredShops?.length > displayCount && (
               <Typography
                 onClick={handleShowMore}
                 sx={{

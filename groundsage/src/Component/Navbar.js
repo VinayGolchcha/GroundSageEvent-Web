@@ -14,25 +14,50 @@ import MenuItem from "@mui/material/MenuItem";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
 
-const pages = ["Events", "Shops", "Teams", "Transaction", "Notes", "Reports"];
-const settings = ["Visit Profile", "Logout"];
+const pages = [
+  "Home",
+  "Events",
+  "Shops",
+  "Teams",
+  "Transaction",
+  "Notes",
+  "Reports",
+];
 
-function Navbar() {
+function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
+  console.log("activeEventname", activeEventName);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [currentActiveEventName, setCurrentActiveEventName] =
+    React.useState(null);
   const { logout } = React.useContext(AuthContext);
+  const [settings, setSettings] = React.useState([]);
+  const [eventName, setEventName] = React.useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-
+  console.log(isActive);
+  console.log(activeEventId);
+  React.useState(() => {
+    const newArray = [activeEventName, "Visit Profile", "Logout"];
+    setSettings(newArray);
+    setEventName(activeEventName);
+  }, [activeEventName]);
+  // React.useEffect(()=> {
+  //   const currentActiveEvent = isActive?.filter((item) => (item.id === activeEventId));
+  //   console.log(currentActiveEvent);
+  //   let newActiveEvent = currentActiveEvent.length === 0 ? "Event Atrangi" : currentActiveEvent[0].event_name;
+  //   setCurrentActiveEventName(newActiveEvent);
+  //   console.log(currentActiveEventName)
+  //   const newSettings = [currentActiveEventName ,"Visit Profile", "Logout"];
+  //   setSettings(newSettings)
+  // } , [activeEventId])
   if (
-    [
-      "/",
-      "/entermail",
-      "/signin",
-      "/signup",
-      "/verification",
-      "/forgetpassword",
-    ].includes(location.pathname)
+    location.pathname === "/" ||
+    location.pathname === "/entermail" ||
+    location.pathname === "/signin" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/verification" ||
+    location.pathname === "/forgetpassword"
   ) {
     return null;
   }
@@ -63,26 +88,29 @@ function Navbar() {
   };
 
   return (
-    <AppBar
-      position="static"
-      sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none" }}
-    >
-      <Container maxWidth="xl">
+    <div>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none" }}
+      >
         <Toolbar disableGutters>
+          {/* <NavLink to="/" style={{ textDecoration: "none" }}> */}
           <Box
             component="img"
             src="../../../Images/logo_1 1.png"
             alt="logo"
             sx={{
               height: "45px",
-              display: { xs: "block", md: "block" },
-              // mr: 2,
+              // display: { xs: "none", md: "block" },
+              // justifyContent: "leftwid",
+              // alignItems:"left",
+              marginLeft: "20px",
             }}
           />
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
+          {/* </NavLink>   */}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>            <IconButton
               size="large"
-              aria-label="open menu"
+              aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -93,23 +121,29 @@ function Navbar() {
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
               keepMounted
-              transformOrigin={{ vertical: "top", horizontal: "left" }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">
-                    <NavLink
-                      to={`/${page.toLowerCase()}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {page}
-                    </NavLink>
-                  </Typography>
+                  <NavLink
+                    to={`/${page.toLowerCase()}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {page}
+                  </NavLink>{" "}
                 </MenuItem>
               ))}
             </Menu>
@@ -125,12 +159,16 @@ function Navbar() {
             {pages.map((page) => (
               <NavLink
                 key={page}
-                to={`/${page.toLowerCase()}`}
+                to={page.toLowerCase()} // Make sure pathnames are lowercase
                 style={{ textDecoration: "none" }}
               >
                 <Button
                   sx={{
                     my: 2,
+                    // justifyContent: "space-around",
+                    // width: "150px",
+                    // display: "flex",
+                    // justifyContent: "space-between",
                     color: location.pathname.includes(page.toLowerCase())
                       ? "rgb(247, 230, 173)"
                       : "white",
@@ -152,292 +190,81 @@ function Navbar() {
               </NavLink>
             ))}
           </Box>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="" src="../../Component/profile..png" />{" "}
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0, marginRight: "20px" }}
+              >
+                <Avatar alt="" src="../../Component/profile..png" />
               </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
-              PaperProps={{ sx: { background: "rgb(219,216,216)" } }}
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              PaperProps={{
+                sx: {
+                  background: "rgb(219,216,216)",
+                },
+              }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
               keepMounted
-              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography
-                    textAlign="center"
-                    sx={{
-                      color: "rgb(151, 151, 151)",
-                      fontFamily: "Inter",
-                      fontSize: "16px",
-                      p: 1,
-                      borderRadius: 1,
-                      fontWeight: "700",
-                      transition: "background-color 0.3s, color 0.3s",
-                      "&:hover": {
-                        color: "rgb(247, 230, 173)",
-                        backgroundColor: "rgb(151, 151, 151)",
-                      },
-                    }}
-                    onClick={() => {
-                      if (setting === "Visit Profile") navigate("/profile");
-                      if (setting === "Logout") handleLogout();
-                    }}
-                  >
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
+              <Box
+                sx={{
+                  background: "rgb(219, 216, 216)",
+                  margin: "0",
+                  padding: "0",
+                }}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography
+                      textAlign="center"
+                      sx={{
+                        color: "rgb(151, 151, 151)",
+                        fontFamily: "Inter",
+                        lineHeight: "1",
+                        marginTop: "0px",
+                        fontSize: "16px",
+                        padding: "7px",
+                        borderRadius: "6px",
+                        fontWeight: "700",
+                        transition: "background-color 0.3s, color 0.3s",
+                        "&:hover": {
+                          color: "rgb(247, 230, 173)",
+                          backgroundColor: "rgb(151, 151, 151)",
+                        },
+                      }}
+                      onClick={() => {
+                        (setting === "Visit Profile" && navigate("/Profile")) ||
+                          (setting === "Logout" && handleLogout()) ||
+                          ((setting === null ? activeEventName : setting) &&
+                            handleOpen());
+                      }}
+                    >
+                      {setting === null ? activeEventName : setting}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Box>
             </Menu>
           </Box>
         </Toolbar>
-      </Container>
-    </AppBar>
+      </AppBar>
+    </div>
   );
 }
 
 export default Navbar;
-
-// import * as React from "react";
-// import AppBar from "@mui/material/AppBar";
-// import Box from "@mui/material/Box";
-// import Toolbar from "@mui/material/Toolbar";
-// import IconButton from "@mui/material/IconButton";
-// import Typography from "@mui/material/Typography";
-// import Menu from "@mui/material/Menu";
-// import MenuIcon from "@mui/icons-material/Menu";
-// import Container from "@mui/material/Container";
-// import Avatar from "@mui/material/Avatar";
-// import Button from "@mui/material/Button";
-// import Tooltip from "@mui/material/Tooltip";
-// import MenuItem from "@mui/material/MenuItem";
-// import { useNavigate, NavLink, useLocation } from "react-router-dom";
-
-// const pages = ["Events", "Shops", "Teams", "Transaction", "Notes"];
-// const settings = ["Visit Profile", "Logout"];
-
-// function Navbar() {
-//   const [anchorElNav, setAnchorElNav] = React.useState(null);
-//   const [anchorElUser, setAnchorElUser] = React.useState(null);
-//   const [activePage, setActivePage] = React.useState(""); // Default to the first page
-//   const navigate = useNavigate();
-
-//   const location = useLocation();
-//   // React.useEffect(() => {
-//   //   // Get the path name from the location object
-//   //   const pathName = location.pathname;
-//   //   console.log(pathName);
-//   //   // Find the active page based on the path name
-//   //   const activePage = pages.find(page => pathName.includes(page.toLowerCase()));
-//   //   console.log(activePage);
-//   //   // Set the active page
-//   //   setActivePage(activePage || "");
-//   // }, [location]);
-
-//   // Do not render navbar on the root ("/") route
-//   if (location.pathname === "/") {
-//     return null;
-//   }
-
-//   const handleOpenNavMenu = (event) => {
-//     setAnchorElNav(event.currentTarget);
-//   };
-//   const handleOpenUserMenu = (event) => {
-//     setAnchorElUser(event.currentTarget);
-//   };
-
-//   const handleCloseNavMenu = () => {
-//     setAnchorElNav(null);
-//   };
-
-//   const handleCloseUserMenu = () => {
-//     setAnchorElUser(null);
-//   };
-//   const handlePageClick = (page) => {
-//     setActivePage(page);
-//     handleCloseNavMenu();
-//   };
-
-//   return (
-//     <div>
-//       <AppBar
-//         position="static"
-//         sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none" }}
-//       >
-//         <Container maxWidth="xl">
-//           <Toolbar disableGutters>
-//             <NavLink to="/" style={{ textDecoration: "none" }}>
-//               <Box
-//                 component="img"
-//                 src="../../../Images/logo_1 1.png"
-//                 alt="Right Arrow"
-//                 sx={{
-//                   marginRight: "5px",
-//                   height: "45px",
-//                   display: { xs: "none", md: "flex" },
-//                 }} // Adjust margin between image and text
-//               />
-//             </NavLink>
-//             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-//               <IconButton
-//                 size="large"
-//                 aria-label="account of current user"
-//                 aria-controls="menu-appbar"
-//                 aria-haspopup="true"
-//                 onClick={handleOpenNavMenu}
-//                 color="black"
-//               >
-//                 <MenuIcon />
-//               </IconButton>
-//               <Menu
-//                 id="menu-appbar"
-//                 anchorEl={anchorElNav}
-//                 anchorOrigin={{
-//                   vertical: "bottom",
-//                   horizontal: "left",
-//                 }}
-//                 keepMounted
-//                 transformOrigin={{
-//                   vertical: "top",
-//                   horizontal: "left",
-//                 }}
-//                 open={Boolean(anchorElNav)}
-//                 onClose={handleCloseNavMenu}
-//                 sx={{
-//                   display: { xs: "block", md: "none" },
-//                 }}
-//               >
-//                 {pages.map((page) => (
-//                   <MenuItem key={page} onClick={handleCloseNavMenu}>
-//                     <Typography textAlign="center">{page}</Typography>
-//                   </MenuItem>
-//                 ))}
-//               </Menu>
-//             </Box>
-//             <Box
-//               component="img"
-//               src="../../../Images/logo_1 1.png"
-//               alt="Right Arrow"
-//               sx={{
-//                 marginRight: "5px",
-//                 height: "45px",
-//                 display: { xs: "flex", md: "none" },
-//               }} // Adjust margin between image and text
-//             />
-//             <Box
-//               sx={{
-//                 flexGrow: 1,
-//                 display: { xs: "none", md: "flex" },
-//                 marginLeft: "15%",
-//               }}
-//             >
-//               {pages.map((page) => (
-//                 <NavLink
-//                   to={page.toLowerCase()} // Make sure pathnames are lowercase
-//                   style={{ textDecoration: "none" }}
-//                 >
-//                   {console.log(page)}
-//                   <Button
-//                     key={page}
-//                     onClick={() => handlePageClick(page)}
-//                     sx={{
-//                       my: 2,
-//                       display: "block",
-//                       justifyContent: "space-around",
-//                       width: "150px",
-//                       color:
-//                         activePage === page ? "rgb(247, 230, 173)" : "white",
-//                       fontSize: "18px",
-//                       fontFamily: "Inter",
-//                       fontWeight: activePage === page ? "700" : "500",
-//                       textDecoration:
-//                         activePage === page
-//                           ? "underline rgb(247, 230, 173)"
-//                           : "none",
-//                       textTransform: "none",
-//                     }}
-//                   >
-//                     {page}
-//                   </Button>
-//                 </NavLink>
-//               ))}
-//             </Box>
-
-//             <Box sx={{ flexGrow: 0 }}>
-//               <Tooltip title="Open settings">
-//                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-//                   <Avatar alt="" src="../../Component/profile..png" />
-//                 </IconButton>
-//               </Tooltip>
-//               <Menu
-//                 sx={{ mt: "45px" }}
-//                 id="menu-appbar"
-//                 anchorEl={anchorElUser}
-//                 PaperProps={{
-//                   sx: {
-//                     background: "rgb(219,216,216)",
-//                   },
-//                 }}
-//                 anchorOrigin={{
-//                   vertical: "top",
-//                   horizontal: "right",
-//                 }}
-//                 keepMounted
-//                 transformOrigin={{
-//                   vertical: "top",
-//                   horizontal: "right",
-//                 }}
-//                 open={Boolean(anchorElUser)}
-//                 onClose={handleCloseUserMenu}
-//               >
-//                 <Box
-//                   sx={{
-//                     background: "rgb(219, 216, 216)",
-//                     margin: "0",
-//                     padding: "0",
-//                   }}
-//                 >
-//                   {settings.map((setting) => (
-//                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
-//                       <Typography
-//                         textAlign="center"
-//                         sx={{
-//                           color: "rgb(151, 151, 151)",
-//                           fontFamily: "Inter",
-//                           lineHeight: "1",
-//                           marginTop: "0px",
-//                           fontSize: "16px",
-//                           padding: "7px",
-//                           borderRadius: "6px",
-//                           fontWeight: "700",
-//                           transition: "background-color 0.3s, color 0.3s", // Add transition for smooth effect
-//                           "&:hover": {
-//                             color: "rgb(247, 230, 173)", // Change text color on hover
-//                             backgroundColor: "rgb(151, 151, 151)", // Change background color on hover
-//                           },
-//                         }}
-//                         onClick={() => {
-//                           setting === "Visit Profile" && navigate("/Profile");
-//                         }}
-//                       >
-//                         {setting}
-//                       </Typography>
-//                     </MenuItem>
-//                   ))}
-//                 </Box>
-//               </Menu>
-//             </Box>
-//           </Toolbar>
-//         </Container>
-//       </AppBar>
-//     </div>
-//   );
-// }
-// export default Navbar;

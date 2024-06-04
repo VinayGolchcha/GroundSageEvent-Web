@@ -326,8 +326,8 @@ const SignUpPage = () => {
                 style={{ marginLeft: "50px" }}
               />
             </Button>
-          </Box>
-          <Typography
+           </Box>
+          {/*<Typography
             sx={{
               color: "rgb(165, 170, 174)",
               fontSize: { lg: "20px", sm: "20px", xs: "16px" },
@@ -343,13 +343,13 @@ const SignUpPage = () => {
               alt="Google Login"
               // style={{ marginLeft: "0", cursor: "pointer", width: "30%" }}
             />
-          </Box>
+          </Box> */}
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              // marginTop: "5px",
+              marginTop: "20px",
               marginBottom:"15px"
             }}
           >

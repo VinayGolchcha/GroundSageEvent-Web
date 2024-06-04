@@ -1,62 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Typography, Box } from "@mui/material";
 import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Component/Loading";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import EditEventPopUp from "../Component/note/EditEventPopUp";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const Notes = () => {
   const [eventList, setEventList] = useState([
-    {
-      date: " 13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-    {
-      date: "13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-    {
-      date: " 13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-    {
-      date: " 13th Jun 2024",
-      eventType: "FOOD EVENT  - Transaction",
-      eventDes:
-        "Salary for staff out for this month. Rent collected. New Rods needed for replacement. More tickets needed on the counter. Rent for shop 2 pending.",
-      isSelected: false,
-    },
-
-    // {
-    //   date: " 13th Jun 2024",
-    //   eventType: "FOOD EVENT  - Transaction",
-    //   eventDes: "Celebration with different cuisines from different regions...",
-    //   isSelected: false,
-    // },
-    // {
-    //   date: " 13th Jun 2024",
-    //   eventType: "FOOD EVENT  - Transaction",
-    //   eventDes: "Celebration with different cuisines from different regions...",
-    //   isSelected: false,
-    //   isSelected: false,
-    // },
-    // {
-    //   date: " 13th Jun 2024",
-    //   eventType: "FOOD EVENT  - Transaction",
-    //   eventDes: "Celebration with different cuisines from different regions...",
-    //   isSelected: false,
-    // },
   ]);
   // const [endpoint, setEndpoint] = useState(3)
   const [allselect, setAllselect] = useState(false);
@@ -64,6 +21,55 @@ const Notes = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
+  const [isLoading , setIsLoading] = useState(true);
+  const [isEditPopupOpen , setIsEditPopupOpen] = useState(false);
+  const [selectedId , setSelectedId] = useState(null);
+  const [selectedItem , setSelectedItem] = useState(null);
+  const {user , activeEventId} = useContext(AuthContext);
+  console.log(user);
+  console.log(activeEventId);
+  const deleteNoteByMultipleId = async (ids) => {
+    console.log(ids)
+    try{
+      const res = axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note`  ,{
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          role_id : user?.role_id
+        },
+        data: { ids }
+      }
+      );
+      console.log(res);
+      fetchNotes();
+    }catch(err){
+      toast.error(err);
+    }
+
+  }
+  const fetchNotes = async () => {
+    try{
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/note/fetch-notes/${user?.user_id}/${activeEventId}`, {
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      });
+      const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}))
+      setEventList(newEventList);
+      console.log(eventList);
+      setIsLoading(false)
+    }catch(err){
+      setIsLoading(false);
+      toast.error(err.message);
+    }
+  }
+
+  useEffect(()=>{
+    fetchNotes();
+  },[activeEventId])
   const maxItems = 3;
 
   const handleOpenPopup = () => {
@@ -73,34 +79,107 @@ const Notes = () => {
   const refreshPage = () => {
     window.location.reload(false);
   }
+  
+  const forrmattedDate = (data) => {
+    let date = new Date(data);
+    const array = date.toString().split(" ");
+    date = array.slice(1,4).join(" ");
+    return date
+  }
 
-  const handleSaveNote = (newData) => {
-    const formattedDate = new Date().toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
+  const handleSaveEditNote = async (body) => {
+    try{
+      const res = await axios.put(`${process.env.REACT_APP_API_URI}/note/update-note/${selectedId}` , body ,{
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          role_id : user?.role_id
+        }
+      });
+      console.log(res);
+      toast.success(res?.data.data, {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },});
+        fetchNotes();
+    }catch(err){
+      console.log(err);
+    }
+  }
+  const handleSaveNote = async (body) => {
+    // const formattedDate = new Date().toLocaleDateString("en-US", {
+    //   day: "numeric",
+    //   month: "short",
+    //   year: "numeric",
+    // });
 
-    const newItem = {
-      date: formattedDate,
-      eventType: newData.field1 || "",
-      eventDes: newData.field2 || "",
-      isSelected: false,
-    };
+    // const newItem = {
+    //   date: formattedDate,
+    //   eventType: newData.field1 || "",
+    //   eventDes: newData.field2 || "",
+    //   isSelected: false,
+    // };
 
-    setEventList([newItem, ...eventList]);
-    setIsPopupOpen(false);
-    toast.success("Note added successfully!", {
-      style: {
-        // Change font color
-        fontSize: "16px", // Change font size
-        fontFamily: "Inter", // Change font family
-        fontWeight: "600", // Change font weight
-        color: "rgb(66, 92, 90)",
-      },
-    }); // Use toast to show success message
+    // setEventList([newItem, ...eventList]);
+    try{
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/note/create-note` , body ,{
+        headers: {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          role_id : user?.role_id
+        }
+      }
+       );
+      setIsPopupOpen(false);
+      console.log(res);
+      toast.success("Note added successfully!", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },});
+        fetchNotes();
+    }catch(err){
+      console.log(err.message);
+    }
+    
+     // Use toast to show success message
   };
 
+  const deleteNoteById = async(id) => {
+    try{
+      const res = await axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note/${id}` , {
+        headers : {
+        'authorization': user?.token,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+        }
+      });
+      console.log(res);
+      toast.success(res.data.message, {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      }); // Use toast to show success message
+      fetchNotes();
+    }catch(err){
+      toast.error(err);
+      console.log(err);
+    }
+  }
   const handleAllChange = () => {
     const newEventList = eventList.map((item) => ({
       ...item,
@@ -119,38 +198,51 @@ const Notes = () => {
   //     setEventListLength("Show More...");
   //   }
   // };
+  const handleEditOpenPopup = () => {
+    const ele = eventList?.filter(item => item.isSelected === true);
+    if(ele.length > 1){
+      toast.warning("Cannot edit the multiple notes ", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      })
+      return ;
+    }
+    setSelectedId(ele[0]?._id);
+    setSelectedItem(ele[0]);
+    setIsEditPopupOpen(!isEditPopupOpen);
+  }
 
   const handleCheckboxChange = (index) => {
     const newEventList = eventList.map((item, i) => {
-      if (i === index) {
-        return { ...item, isSelected: !item.isSelected };
+      if (item._id === index) {
+        return { ...item, isSelected: true };
       }
       return item;
     });
+    console.log(newEventList)
     setEventList(newEventList);
   };
 
   const handleDelete = () => {
-    const newArray = eventList.filter((item) => item.isSelected !== true);
-    setEventList(newArray);
-    toast.success("Note Deleted successfully!", {
-      style: {
-        // Change font color
-        fontSize: "16px", // Change font size
-        fontFamily: "Inter", // Change font family
-        fontWeight: "600", // Change font weight
-        color: "rgb(66, 92, 90)",
-      },
-      // Other options like position, autoClose, etc.
-    }); // Use toast to show success message
-  };
+    const ele = eventList?.filter(item => item.isSelected === true);
+
+      const ids = ele?.map(item => item?._id);
+      deleteNoteByMultipleId(ids);}
   const handleSelectChange = () => {
     setSelect(!select);
   };
-  
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+  if(isLoading){
+    return(<Loading/>)
+  }else{
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
       <ToastContainer position="bottom-right" style={{ color: "red" }} />
@@ -170,7 +262,7 @@ const Notes = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: {xs:"40px",md:"56px"},
+          fontSize: "56px",
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: {xs:"0px",md:"-40px"},
@@ -183,10 +275,10 @@ const Notes = () => {
 
       <Box>
         {" "}
-        {eventList.length !== 0 && (
+        {eventList?.length !== 0 && (
           <Box
             sx={{
-              margin: {xs:"20px",md:"2% 18%"},
+              margin: "2% 18%",
               padding: "0px 15px",
               display: "flex",
               justifyContent: "space-between",
@@ -243,12 +335,15 @@ const Notes = () => {
               }}
             >
               {select === true ? (
-                <img
-                  src="deleteIcon.png"
-                  alt="delete Icon"
-                  style={{ padding: "2px", height: "30px", cursor: "pointer" }}
-                  onClick={handleDelete}
-                />
+                <>
+                  <ModeEditIcon sx={{color : "white" , cursor : "pointer"}} onClick={handleEditOpenPopup}/>
+                  <img
+                    src="deleteIcon.png"
+                    alt="delete Icon"
+                    style={{ padding: "2px", height: "30px", cursor: "pointer" }}
+                    onClick={handleDelete}
+                  />
+                </>
               ) : (
                 <img
                   src="add-icon.png"
@@ -261,14 +356,14 @@ const Notes = () => {
           </Box>
         )}
         {eventList
-          .slice(0, showAll ? eventList.length : maxItems)
+          ?.slice(0, showAll ? eventList?.length : maxItems)
           .map((item, index) => {
             return (
               <Box
                 key={index}
                 sx={{
                   backgroundColor: "rgb(66, 92, 90)",
-                  margin: {xs:"20px",md:"2% 18%"},
+                  margin: "2% 18%",
                   border: "2px solid rgba(0, 0, 0, 0.16)",
                   borderRadius: "10px",
                   padding: "15px",
@@ -295,7 +390,7 @@ const Notes = () => {
                         variant="outlined"
                         color="neutral"
                         checked={item.isSelected}
-                        onChange={() => handleCheckboxChange(index)}
+                        onChange={() => handleCheckboxChange(item?._id)}
                         inputProps={{ "aria-label": "controlled" }}
                       />
                     )}
@@ -323,38 +418,38 @@ const Notes = () => {
                       sx={{
                         color: "rgb(216, 217, 217)",
                         fontWeight: "600",
-                        fontSize: {xs:"20px",md:"24px"},
+                        fontSize: "24px",
                         fontFamily: "Poppins",
                       }}
                     >
-                      {item.eventType}
+                      {item?.notes_heading}
                     </Typography>
                     <Typography
                       sx={{
                         color: "rgb(254, 240, 180)",
-                        fontSize: {xs:"16px",md:"24px"},
+                        fontSize: "1.2rem",
                         fontFamily: "Poppins",
                         textAlign: "right",
                         marginTop: "-10px",
                       }}
                     >
-                      {item.date}
+                      {forrmattedDate(item?.date)}
                     </Typography>
                   </div>
                   <Typography
                     sx={{
                       color: "rgb(216, 217, 217)",
                       fontFamily: "Poppins",
-                      width: {xs:"80%",md:"65%"},
+                      width: "65%",
                     }}
                   >
-                    {item.eventDes}
+                    {item?.notes_description}
                   </Typography>
                 </Box>
               </Box>
             );
           })}
-        {eventList.length > maxItems && (
+        {eventList?.length > maxItems && (
           <Typography
             sx={{
               color: "white",
@@ -371,11 +466,19 @@ const Notes = () => {
       </Box>
       <AddNotes
         open={isPopupOpen}
+        user={user}
+        activeEventId = {activeEventId}
         onClose={() => setIsPopupOpen(false)}
         onSave={handleSaveNote}
       />
+      <EditEventPopUp
+      open={isEditPopupOpen}
+      onClose={() => setIsEditPopupOpen(false)}
+      onSave={handleSaveEditNote}
+      item = {selectedItem}
+      />
     </div>
-  );
+  );}
 };
 
 export default Notes;

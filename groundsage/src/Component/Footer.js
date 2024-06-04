@@ -15,6 +15,7 @@ const Footer = () => {
   ) {
     return null;
   }
+
   return (
     <div style={{ background: "rgb(78, 101, 100)" }}>
       <Box

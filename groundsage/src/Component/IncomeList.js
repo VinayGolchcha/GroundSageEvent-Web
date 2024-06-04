@@ -5,43 +5,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const IncomeList = () => {
+const IncomeList = ({data , deleteTransection }) => {
   const navigate = useNavigate();
-  const [Income, setIncome] = useState([
-    {
-      Type: "Shop Rental ",
-      Item: "Shop Number 01",
-      Decided: "2000",
-      Outstanding: "2000",
-      Entered: "2000",
-      isSelected: false, // Add isSelected property and set it to false
-    },
-    {
-      Type: "Shop Rental ",
-      Item: "Shop Number 01",
-      Decided: "2000",
-      Outstanding: "2000",
-      Entered: "2000",
-      isSelected: false, // Add isSelected property and set it to false
-    },
-    {
-      Type: "Shop Rental ",
-      Item: "Shop Number 01",
-      Decided: "2000",
-      Outstanding: "2000",
-      Entered: "2000",
-      isSelected: false, // Add isSelected property and set it to false
-    },
-    {
-      Type: "Shop Rental ",
-      Item: "Shop Number 01",
-      Decided: "2000",
-      Outstanding: "2000",
-      Entered: "2000",
-      isSelected: false, // Add isSelected property and set it to false
-    },
-  ]);
+  const [Income, setIncome] = useState([]);
   // const [endpoint, setEndpoint] = useState(3)
+  useEffect(() => {
+    const newData = data?.map((item) => ({...item , isSelected : false}))
+    setIncome(newData);
+  },[data])
 
   const [allselect, setAllselect] = useState(false);
   const [select, setSelect] = useState(false);
@@ -60,7 +31,7 @@ const IncomeList = () => {
   };
 
   const handleIncomeCheckboxChange = (index) => {
-    const newIncome = Income.map((item, i) => {
+    const newIncome = Income?.map((item, i) => {
       if (i === index) {
         return { ...item, isSelected: !item.isSelected };
       }
@@ -70,7 +41,13 @@ const IncomeList = () => {
   };
 
   const handleIncomeDelete = () => {
-    const newArray = Income.filter((item) => !item.isSelected);
+    const newArray = Income?.filter((item) => !item.isSelected);
+    const deletedItem = Income?.filter((item) => item.isSelected);
+    if(deletedItem?.length >0){
+
+      console.log(deletedItem , deletedItem[0]?._id);
+      deleteTransection(deletedItem[0]?._id);
+    }
     setIncome(newArray);
   };
 
@@ -84,7 +61,7 @@ const IncomeList = () => {
   return (
     <Box>
       {" "}
-      {Income.length !== 0 && (
+      {Income?.length !== 0 && (
         <Box
           sx={{
             margin: { xs: "20px", md: "2% 18%" },
@@ -160,14 +137,14 @@ const IncomeList = () => {
                 alt="add-icon"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
-                  navigate("/transaction");
+                  navigate("/create-transaction");
                 }}
               />
             )}
           </Box>
         </Box>
       )}
-      {Income.slice(0, showAll ? Income.length : maxItems).map(
+      {Income?.slice(0, showAll ? Income?.length : maxItems).map(
         (item, index) => {
           return (
             <Box
@@ -233,7 +210,7 @@ const IncomeList = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Type: {item.Type}
+                      Type: {item.type}
                     </Typography>
                     <Typography
                       sx={{
@@ -242,7 +219,7 @@ const IncomeList = () => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Item: {item.Item}
+                      Item: Shop Number{item.item}
                     </Typography>
                   </div>
                   <div
@@ -268,7 +245,7 @@ const IncomeList = () => {
                           },
                         }}
                       >
-                        {item.Decided}
+                        {item.decided_amount}
                       </Button>
                       <Typography
                         sx={{
@@ -279,7 +256,7 @@ const IncomeList = () => {
                           fontSize: { xs: "13px", md: "20px" },
                         }}
                       >
-                        Decided Amount
+                        Amount Due
                       </Typography>
                     </div>
                     <div>
@@ -296,7 +273,7 @@ const IncomeList = () => {
                           },
                         }}
                       >
-                        {item.Decided}
+                        {item.outstanding_amount}
                       </Button>
                       <Typography
                         sx={{
@@ -324,7 +301,7 @@ const IncomeList = () => {
                           },
                         }}
                       >
-                        {item.Decided}
+                        {item.entered_amount}
                       </Button>
                       <Typography
                         sx={{
@@ -336,7 +313,7 @@ const IncomeList = () => {
 
                         }}
                       >
-                        Entered Amount
+                        Recieved Amount
                       </Typography>
                     </div>
                   </div>
@@ -346,7 +323,7 @@ const IncomeList = () => {
           );
         }
       )}
-      {Income.length > maxItems && (
+      {Income?.length > maxItems && (
         <Typography
           sx={{
             color: "white",

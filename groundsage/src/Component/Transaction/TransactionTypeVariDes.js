@@ -1,13 +1,17 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FormsData from "./FormsData";
-export default function   TransactionTypeVariDes({list}){
+import { AuthContext } from "../../ContextApi/AuthContext";
+export default function TransactionTypeVariDes({list}){
     const [transactionTypeVariant , setTransactionTypeVariant] = useState(list[0]);
+    const {setTransectionType} = useContext(AuthContext);
     useEffect(() => {
       setTransactionTypeVariant(list[0]); // Reset to the first item when list changes
+      setTransectionType(list[0]);
     }, [list]);
     const handleClick = (val) => {
-        setTransactionTypeVariant(val)
+        setTransactionTypeVariant(val);
+        setTransectionType(val);
     }
     return(
         <>

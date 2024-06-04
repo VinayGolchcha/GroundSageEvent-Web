@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Typography, Box, Button } from "@mui/material";
 import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,28 +7,56 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import ExpensesList from "../Component/ExpensesList";
 import IncomeList from "../Component/IncomeList";
+import { AuthContext } from "../ContextApi/AuthContext";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const TransactionList = () => {
   const navigate = useNavigate();
 
   const [activeButton, setActiveButton] = useState("income");
   const [transactionData, setTransactionData] = useState([]);
+  const {user , activeEventId} = useContext(AuthContext);
 
+  const deleteTransection = async (id) => {
+    try{
+      const res = await axios.delete(`${process.env.REACT_APP_API_URI}/transaction/delete-transaction/${id}/${activeEventId}` ,{ headers: {
+        'authorization': user?.token,
+        'Accept' : 'application/json',
+        "Content-Type": "application/json",
+        role_id : user?.role_id
+      }})
+      toast.error(res?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        }});
+    }catch(err){
+      throw(err);
+    }
+  }
+
+  console.log(user);
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
   useEffect(() => {
     // Fetch transaction data from the API
     fetch(
-      "https://groundsageevent-be.onrender.com/api/v1/transaction/fetch-transaction",
+      `${process.env.REACT_APP_API_URI}/transaction/fetch-all-transaction`,
       {
         method: "POST",
         headers: {
+          'authorization': user?.token,
+          'Accept' : 'application/json',
           "Content-Type": "application/json",
+          role_id : user?.role_id
         },
         body: JSON.stringify({
-          transaction_id: 1111,
-          event_id: 1111,
+          event_id: activeEventId,
         }),
       }
     )
@@ -45,6 +73,7 @@ const TransactionList = () => {
 
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
+      <ToastContainer />
       <img
         src="../../Images/arrow-left.png"
         alt="Share"
@@ -139,8 +168,8 @@ const TransactionList = () => {
           EXPENSE
         </Button>
       </div>
-      {activeButton === "income" && <IncomeList data={transactionData} />}
-      {activeButton === "expenses" && <ExpensesList data={transactionData} />}
+      {activeButton === "income" && <IncomeList data={transactionData?.filter((item)=> item?.tag === "income")} deleteTransection = {deleteTransection}/>}
+      {activeButton === "expenses" && <ExpensesList data={transactionData?.filter((item)=> item?.tag === "expense")} deleteTransection = {deleteTransection}/>}
     </div>
   );
 };

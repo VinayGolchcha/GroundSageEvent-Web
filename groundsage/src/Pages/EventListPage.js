@@ -1,37 +1,103 @@
-import { useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import Loading from "../Component/Loading";
+import { AuthContext } from "../ContextApi/AuthContext";
+import EditEvent from "../Component/event/EditEvent";
+
+
 
 export default function EventListPage() {
   const navigate = useNavigate();
-  const [eventList, setEventList] = useState([
-    {
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      date: "13th April 2024 - 13th Jun 2024",
-    },
-    {
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      date: "13th April 2024 - 13th Jun 2024",
-    },
-    {
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      date: "13th April 2024 - 13th Jun 2024",
-    },
-    {
-      eventType: "FOOD EVENT",
-      eventDes: "Celebration with different cuisines from different regions...",
-      date: "13th April 2024 - 13th Jun 2024",
-    },
-  ]);
+  const [eventList, setEventList] = useState([]);
+  const [file, setFIle] = useState([]);
   const [endpoint, setEndpoint] = useState(3);
   const [allselect, setAllselect] = useState(false);
   const [select, setSelect] = useState(false);
   const [eventListLength, setEventListLength] = useState("Show More...");
+  const [isLoading , setIsLoading] = useState(true);
+  const [selectedId , setSelectedId] = useState(null);
+  const [selectedItem , setSelectedItem] = useState(null);
+  const [isEdit , setIsEdit] = useState(false);
+  const {user , setEventIds , eventIds , setEvents , setActiveEvent , setActiveEventId, activeEventId} = useContext(AuthContext);
+  
+  const today = new Date();
+
+  const handleEditEventApi = async (body) => {
+    try{
+      console.log(body);
+      const formData = new FormData();
+      Object.keys(body).forEach((key) => {
+        formData.append(key , body[key]);
+      })
+      const files = body?.files;
+      files.forEach((f) => {
+        formData.append("files" , f);
+      })
+      const publicIds = body?.public_ids;
+      console.log(publicIds);
+      // publicIds.forEach((id) => {
+        // formData.append('public_ids', publicIds); 
+      // });
+
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/event/update-event/${selectedId}`,
+        formData , {
+          headers: {
+            'authorization': `${user?.token}`, // Ensure the token format is correct
+            'Accept': 'application/json',
+            role_id : user?.role_id
+          }
+        }
+      );
+      console.log(res);
+      toast.success(res?.data?.data , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        }});
+        setIsEdit(!isEdit);
+    }catch(err){
+      console.log(err);
+      toast.error(err);
+    }
+  }
+  const fetchEvents = async () => {
+    try{
+      const res = await axios.get(`https://groundsageevent-be.onrender.com/api/v1/event/get-all-user-event/${user?.user_id}` , { headers: {
+        'authorization': user?.token,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json',
+        role_id : user?.role_id
+    } });
+      let eventList = res?.data?.data;
+      eventList = eventList.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setEvents(eventList);
+      const newEventList = eventList?.map((item) => ({...item , isSelected : false}));
+      setEventList(newEventList);
+      setEventIds(newEventList.map((item) => ( {id : item?.id , event_name : item?.event_name } )));
+      console.log(eventIds);
+      setIsLoading(false);
+      console.log(res)
+      toast.success("events fetched successfully");
+    }catch(err){
+      console.log(err);
+      toast.error(err?.response?.data.message);
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(()=> {
+    fetchEvents();
+  },[])
 
   const handleAllChange = () => {
     const newEventList = eventList.map((item) => ({
@@ -44,7 +110,7 @@ export default function EventListPage() {
 
   const handleClick = () => {
     if (eventListLength === "Show More...") {
-      setEndpoint(eventList.length);
+      setEndpoint(eventList?.length);
       setEventListLength("Show Less...");
     } else if (eventListLength === "Show Less...") {
       setEndpoint(3);
@@ -52,9 +118,31 @@ export default function EventListPage() {
     }
   };
 
+  const handleEditEvent = () => {
+    const ele = eventList?.filter(item => item.isSelected === true);
+    console.log(ele);
+    if(ele.length > 1) {
+      toast.warning("Cannot Edit the multiple Events" , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      });
+      return
+    }
+    setSelectedId(ele[0]?.id);
+    setSelectedItem(ele[0]);
+    setIsEdit(true);
+    
+  }
   const handleCheckboxChange = (index) => {
+    console.log(index)
     const newEventList = eventList.map((item, i) => {
-      if (i === index) {
+      if (item?.id === index) {
         return { ...item, isSelected: !item.isSelected };
       }
       return item;
@@ -71,9 +159,21 @@ export default function EventListPage() {
   };
   const refreshPage = () => {
     window.location.reload(false);
+  }
+  const forrmattedDate = (data) => {
+    let date = new Date(data);
+    const array = date.toString().split(" ");
+    date = array.slice(1,4).join(" ");
+    return date
+  }
+  if(isLoading){
+    return (<Loading/>);
+  }else{
   };
 
   return (
+    <>
+    { isEdit === true ? (<EditEvent selectedItem = {selectedItem} handleSaveEvent = {handleEditEventApi} />) : (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
@@ -82,7 +182,8 @@ export default function EventListPage() {
         // minHeight: "100vh",
         padding: "20px 20px 50px 20px",
       }}
-    >
+    >     
+      <ToastContainer position="bottom-right" style={{ color: "red" }} />
       <img
         src="../../Images/arrow-left.png"
         alt="Share"
@@ -112,7 +213,7 @@ export default function EventListPage() {
           All Events
         </Typography>
       </Box>
-      {eventList.length !== 0 && (
+      {eventList?.length !== 0 && (
         <Box
           sx={{
             margin: { xs: "20px", md: "2% 18%" },
@@ -172,19 +273,22 @@ export default function EventListPage() {
             }}
           >
             {select === true ? (
-              <img
+              <>
+              <img src="edit-image.png" alt="edit Icon" style={{ padding: "2px", height: "23px" }} onClick={handleEditEvent}/>
+              {/* <img
                 src="deleteIcon.png"
                 alt="delete Icon"
                 style={{ padding: "2px", height: "30px" }}
                 onClick={handleDelete}
-              />
+              /> */}
+              </>
             ) : (
-              <img src="add-icon.png" alt="add-icon" />
+              <Link to="/create-event"><img src="add-icon.png" alt="add-icon" /></Link>
             )}
           </Box>
         </Box>
       )}
-      {eventList.slice(0, endpoint).map((item, index) => {
+      {eventList?.slice(0, endpoint).map((item, index) => {
         return (
           <Box
             key={index}
@@ -213,7 +317,7 @@ export default function EventListPage() {
                     variant="outlined"
                     color="neutral"
                     checked={item.isSelected}
-                    onChange={() => handleCheckboxChange(index)}
+                    onChange={() => handleCheckboxChange(item?.id)}
                     inputProps={{ "aria-label": "controlled" }}
                   />
                 )}
@@ -241,7 +345,7 @@ export default function EventListPage() {
                   fontFamily: "Poppins",
                 }}
               >
-                {item.date}
+                {forrmattedDate(item?.created_at)}
               </Typography>
               <Typography
                 sx={{
@@ -251,18 +355,18 @@ export default function EventListPage() {
                   fontFamily: "Poppins",
                 }}
               >
-                {item.eventType}
+                {item?.event_name}
               </Typography>
               <Typography
                 sx={{ color: "rgb(216, 217, 217)", fontFamily: "Poppins" }}
               >
-                {item.eventDes}
+                {item?.event_description}
               </Typography>
             </Box>
           </Box>
         );
       })}
-      {eventList.length === 0 && (
+      {eventList?.length === 0 && (
         <Box>
           <Box
             sx={{
@@ -270,6 +374,7 @@ export default function EventListPage() {
               alignItems: "center",
               justifyContent: "center",
               width: "60vw",
+              width : "100%"
             }}
           >
             <Box
@@ -280,6 +385,7 @@ export default function EventListPage() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                
               }}
             >
               <img src="event-management-1.png" />
@@ -297,20 +403,23 @@ export default function EventListPage() {
           >
             No Events Added
           </Typography>
-          <Typography
-            textAlign="center"
-            sx={{
-              fontSize: "1.3rem",
-              margin: "25px 0px",
-              color: "rgb(216, 217, 217)",
-              fontFamily: "Poppins",
-            }}
-          >
-            Click here to create....
-          </Typography>
+          <Link to="/create-event">
+            <Typography
+              textAlign="center"
+              sx={{
+                fontSize: "1.3rem",
+                margin: "25px 0px",
+                color: "rgb(216, 217, 217)",
+                fontFamily: "Poppins",
+                cursor : "pointer"
+              }}
+            >
+              Click here to create....
+            </Typography>
+          </Link>
         </Box>
       )}
-      {eventList.length !== 0 && (
+      {eventList?.length !== 0 && (
         <Typography
           textAlign="center"
           sx={{
@@ -323,6 +432,7 @@ export default function EventListPage() {
           {eventListLength}
         </Typography>
       )}
-    </Box>
-  );
-}
+    </Box>)}
+    </>
+  );}
+

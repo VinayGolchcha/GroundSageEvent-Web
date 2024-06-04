@@ -3,12 +3,14 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TransactionTypeVari from "../Component/Transaction/TransactionTypeVari";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 export default function TransactionPage() {
   const navigate = useNavigate();
+  const {transectionTag , setTransectionTag} = useContext(AuthContext);
   const containedStyle = {
     backgroundColor: "rgb(247, 230, 173)",
     color: "rgb(91, 94, 97)",
@@ -18,6 +20,9 @@ export default function TransactionPage() {
     color: "rgb(255, 255, 255)",
     border: "1px solid rgb(254, 240, 180)",
   };
+  useEffect(()=> {
+    setTransectionTag("expense")
+  },[])
   const [transactions, setTransactions] = useState([{
     type: "income",
     vari: "contained",
@@ -35,9 +40,11 @@ export default function TransactionPage() {
     if (index === 0) {
       newList[index].vari = "contained";
       newList[1].vari = "outlined";
+      setTransectionTag("expense");
     } else {
       newList[index].vari = "contained";
       newList[0].vari = "outlined";
+      setTransectionTag("income");
     }
     setTransactions(newList);
   };

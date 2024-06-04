@@ -100,7 +100,6 @@ const EnterMail = () => {
           </Typography>
           <TextField
             id="email"
-            label="Email"
             variant="filled"
             fullWidth
             value={email}
@@ -121,8 +120,6 @@ const EnterMail = () => {
                 <Typography sx={{ color: "white" }}>Email</Typography>
               </Box>
             }
-            variant="filled"
-            fullWidth
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },

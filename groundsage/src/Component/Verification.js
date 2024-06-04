@@ -6,11 +6,13 @@ import { AuthContext } from "../ContextApi/AuthContext";
 const Verification = () => {
   const [otp, setOtp] = useState(["", "", "", ""]); // Initialize state for 4 digits
   const otpFields = useRef([]); // Ref to store references of OTP text fields
-  const [timer, setTimer] = useState(0); // Initial timer value
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timer, setTimer] = useState(20); // Initial timer value set to 20 seconds
+  const [isTimerRunning, setIsTimerRunning] = useState(true);
   const { setIsEmailVerified } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { parentRoute, email } = location.state || {};
 
   useEffect(() => {
     let interval;
@@ -29,11 +31,8 @@ const Verification = () => {
     return () => clearInterval(interval); // Clean up the interval on unmount
   }, [isTimerRunning]);
 
-  const { parentRoute, email } = location.state || {};
   const handleSend = async () => {
     try {
-  
-
       const response = await fetch(
         "https://groundsageevent-be.onrender.com/api/v1/profile/verify-email",
         {
@@ -49,8 +48,6 @@ const Verification = () => {
         throw new Error("Failed to verify OTP");
       }
 
-      console.log(response);
-      console.log(parentRoute);
       setIsEmailVerified(true);
       if (parentRoute === "signin") {
         navigate("/signin"); // Redirect to sign in screen
@@ -60,40 +57,52 @@ const Verification = () => {
         }); // Redirect to forget password screen
       }
     } catch (error) {
-      // Handle error
       console.error("Error verifying OTP:", error);
-      // toast.error("Failed to verify OTP. Please try again.");
     }
   };
 
-  const handleResend = () => {
-    // Implement logic to resend the code here
-    // For demonstration, we'll just restart the timer
-    setTimer(20); // Reset the timer to 20 seconds
-    setIsTimerRunning(true); // Start the timer
+  const handleResend = async () => {
+    try {
+      const response = await fetch(
+        "https://groundsageevent-be.onrender.com/api/v1/profile/send-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to resend OTP");
+      }
+
+      setTimer(20); // Reset the timer to 20 seconds
+      setIsTimerRunning(true); // Start the timer
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+    }
   };
 
   const handleChange = (index, value, event) => {
     const newOtp = [...otp];
     newOtp[index] = value;
 
-    // Replace "-" with an empty string when user starts typing
     if (value !== "-") {
       setOtp(newOtp);
     }
 
-    // Handle backspace key or clearing the field
     if ((event.key === "Backspace" && index > 0) || value === "") {
       const previousIndex = index - 1;
       if (previousIndex >= 0) {
-        otpFields.current[previousIndex].focus(); // Move focus to the previous field if exists
+        otpFields.current[previousIndex].focus();
       }
     }
 
-    // Auto move to next field if digit entered and not the last field
     if (value.length === 1 && index < 3) {
       const nextIndex = index + 1;
-      otpFields.current[nextIndex].focus(); // Move focus to the next field
+      otpFields.current[nextIndex].focus();
     }
   };
 
@@ -103,6 +112,7 @@ const Verification = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
+          justifyContent:{xs:"center"},
           background: "rgb(66, 92, 90)",
           minHeight: "100vh",
           padding: { xs: "20px 20px 0px 20px", md: "0px 50px 0px 50px" },
@@ -113,12 +123,10 @@ const Verification = () => {
           sx={{
             marginTop: { xs: "20px", md: "100px" },
             width: { xs: "100%", md: "30%" },
-            padding: { xs: "20px", md: "0" },
             display: "flex",
             flexDirection: "column",
+            alignItems:{xs:"center",md:"start"},
             alignItems: "center",
-            // marginLeft: "3%",
-            // marginRight:{xs:"20%",md:"0%"}
           }}
         >
           <Typography
@@ -155,7 +163,7 @@ const Verification = () => {
             {otp.map((digit, index) => (
               <TextField
                 key={index}
-                value={digit} // Display "-" if the field is empty
+                value={digit}
                 onChange={(e) => handleChange(index, e.target.value, e)}
                 variant="outlined"
                 size="small"
@@ -173,13 +181,14 @@ const Verification = () => {
                 }}
                 inputProps={{
                   maxLength: 1,
-                  style: { textAlign: "center" },
+                  style: { textAlign: "center", color:"white" },
                 }}
                 InputProps={{
                   style: { textAlign: "center" },
                 }}
+                InputLabelProps={{ style: { color: "white" } }} 
                 autoFocus={index === 0}
-                inputRef={(el) => (otpFields.current[index] = el)} // Assign ref to the field
+                inputRef={(el) => (otpFields.current[index] = el)}
               />
             ))}
           </Box>
@@ -213,18 +222,22 @@ const Verification = () => {
           </Box>
           <Typography
             onClick={handleResend}
-            disabled={timer !== 0}
             sx={{
-              // marginLeft: "18%",
               color: "rgb(165, 170, 174)",
               marginTop: "10px",
               cursor: timer === 0 ? "pointer" : "not-allowed",
             }}
           >
-            Re-send code in{" "}
-            <span style={{ color: "rgb(247, 230, 173)" }}>{`0:${
-              timer < 10 ? "0" + timer : timer
-            }`}</span>
+            {timer === 0 ? (
+              "Re-send code"
+            ) : (
+              <>
+                Re-send code in{" "}
+                <span style={{ color: "rgb(247, 230, 173)" }}>{`0:${
+                  timer < 10 ? "0" + timer : timer
+                }`}</span>
+              </>
+            )}
           </Typography>
         </Box>
         <Box
@@ -242,7 +255,6 @@ const Verification = () => {
             alt="Verification Illustration"
             sx={{
               width: { xs: "100%", md: "70%" },
-              // maxWidth: "500px",
             }}
           />
         </Box>

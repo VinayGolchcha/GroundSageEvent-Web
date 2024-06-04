@@ -16,8 +16,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextApi/AuthContext";
-import CloseIcon from '@mui/icons-material/Close'; // Import the CloseIcon
-
+import CloseIcon from "@mui/icons-material/Close"; // Import the CloseIcon
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -31,16 +30,15 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-
 export default function CreateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-  const { setShopIds, lastShopNumber, setLastShopNumber, user } =
+  const { setShopIds, lastShopNumber, setLastShopNumber, user, activeEventId } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [file, setFile] = useState([]);
   const [eventData, setEventData] = useState({
-    event_id: 1112,
+    event_id: activeEventId,
     description: "",
     area: null,
     rent: null,
@@ -685,28 +683,27 @@ export default function CreateShopPage() {
             // value={file}
             multiple
           />
-         
         </div>
         <Box>
-        {file.map((file, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent:"center",
-              marginBottom: "10px",
-            }}
-          >
-            <Typography sx={{ color: "white", marginRight: "10px" }}>
-              {file.name}
-            </Typography>
-            <IconButton onClick={() => handleRemoveFile(index)}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        ))}
-      </Box>
+          {file.map((file, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <Typography sx={{ color: "white", marginRight: "10px" }}>
+                {file.name}
+              </Typography>
+              <IconButton onClick={() => handleRemoveFile(index)}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          ))}
+        </Box>
         <Box
           sx={{
             display: "flex",

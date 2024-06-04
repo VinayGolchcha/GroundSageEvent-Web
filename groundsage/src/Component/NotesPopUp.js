@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Dialog, DialogTitle, TextField, Box } from "@mui/material";
+import { toast } from "react-toastify";
 
-const AddNotes = ({ open, onClose, onSave }) => {
+const AddNotes = ({ open, onClose, onSave , user , activeEventId }) => {
+  const currentDate = new Date();
+  const now = currentDate.toISOString().split('T')[0];
   const [data, setData] = useState({
     field1: "",
     field2: "",
     field3: "",
     field4: "",
   });
+  const eventIdElement = useRef(null);
+  const notesHeadingElement = useRef(null);
+  const notesDescriptionElement = useRef(null);
+
 
   const handleSave = () => {
-    const formattedDate = new Date().toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-
-    const newData = {
-      date: formattedDate,
-      ...data,
+    const body = {
+     event_id : activeEventId,
+     user_id : user?.user_id,
+     notes_heading : notesHeadingElement.current.value,
+     notes_description : notesDescriptionElement.current.value,
+     date : now
     };
+    // const formattedDate = new Date().toLocaleDateString("en-US", {
+    //   day: "numeric",
+    //   month: "short",
+    //   year: "numeric",
+    // });
 
-    onSave(newData);
+    // const newData = {
+    //   date: formattedDate,
+    //   ...data,
+    // };
+
+    onSave(body);
   };
 
   return (
@@ -62,23 +76,7 @@ const AddNotes = ({ open, onClose, onSave }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            // placeholder="EventType"
-            InputProps={{
-              disableUnderline: true,
-              style: {
-                color: "white",
-                borderBottom: "2px solid rgb(247, 230, 173)",
-              },
-              placeholderTextColor: "rgba(255, 255, 255, 0.7)",
-            }}
-            value={data.field1}
-            onChange={(e) => setData({ ...data, field1: e.target.value })}
-          />
-          <TextField
-            margin="dense"
-            variant="standard"
-            fullWidth
-            // placeholder="EventDes"
+            placeholder="Notes Heading"
             InputProps={{
               disableUnderline: true,
               style: {
@@ -87,30 +85,14 @@ const AddNotes = ({ open, onClose, onSave }) => {
               },
               // placeholderTextColor: "rgba(255, 255, 255, 0.7)",
             }}
-            value={data.field2}
-            onChange={(e) => setData({ ...data, field2: e.target.value })}
-          />
-          <TextField
-            margin="dense"
-            variant="standard"
-            fullWidth
-            // placeholder="Field 3"
-            InputProps={{
-              disableUnderline: true,
-              style: {
-                color: "white",
-                borderBottom: "2px solid rgb(247, 230, 173)",
-              },
-              // placeholderTextColor: "rgba(255, 255, 255, 0.7)",
-            }}
-            value={data.field3}
+            inputRef={notesHeadingElement}
             onChange={(e) => setData({ ...data, field3: e.target.value })}
           />
           <TextField
             margin="dense"
             variant="standard"
             fullWidth
-            // placeholder="Field 4"
+            placeholder="notes description"
             InputProps={{
               disableUnderline: true,
               style: {
@@ -119,7 +101,7 @@ const AddNotes = ({ open, onClose, onSave }) => {
               },
               placeholderTextColor: "rgba(255, 255, 255, 0.7)",
             }}
-            value={data.field4}
+            inputRef={notesDescriptionElement}
             onChange={(e) => setData({ ...data, field4: e.target.value })}
           />
           <div

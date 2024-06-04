@@ -110,7 +110,6 @@ const ForgetPassword = () => {
           </Typography>
           <TextField
             id="email"
-            label="Email"
             variant="filled"
             fullWidth
             value={email}
@@ -128,8 +127,7 @@ const ForgetPassword = () => {
                 <Typography sx={{ color: "white" }}>Email</Typography>
               </Box>
             }
-            variant="filled"
-            fullWidth
+
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
@@ -142,11 +140,14 @@ const ForgetPassword = () => {
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)", // Add border color
               marginBottom: { xs: "10px", md: "15px" },
+              "& .css-10botns-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+              {
+                WebkitTextFillColor: "#FFFFFF",
+              },
             }}
           />
           <TextField
             id="password"
-            label="password"
             variant="filled"
             fullWidth
             value={password}
@@ -171,8 +172,7 @@ const ForgetPassword = () => {
                 <Typography sx={{ color: "white" }}>Your password</Typography>
               </Box>
             }
-            variant="filled"
-            fullWidth
+
             type={showPassword ? "text" : "password"}
             InputProps={{
               disableUnderline: true,
@@ -208,9 +208,6 @@ const ForgetPassword = () => {
           />
           <TextField
             id="confirmPassword"
-            label="confirmPassword"
-            variant="filled"
-            fullWidth
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             label={

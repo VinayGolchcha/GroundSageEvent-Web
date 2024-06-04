@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   FormControl,
   Grid,
   InputLabel,
@@ -6,9 +8,29 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { useContext, useRef } from "react";
+import { AuthContext } from "../../ContextApi/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 export default function Others() {
-  return (
+  const addItemEle = useRef(null);
+  const amtDueEle = useRef(null);
+  const recievedAmtEle = useRef(null);
+  const outstandingAmtEle = useRef(null);
+  const remarkEle = useRef(null);
+  const {addTransection} = useContext(AuthContext);
+  const handleSave = () => {
+    const body = {
+      item : addItemEle.current.value,             //shop no in string
+      decided_amount : amtDueEle.current.value,  // amount due
+      entered_amount : recievedAmtEle.current.value,   // recieved amount
+      outstanding_amount : outstandingAmtEle.current.value,   // outstanding amount
+      remarks : remarkEle.current.value
+    }
+    addTransection(body);
+  }
+  return (<>
+  <ToastContainer/>
     <Grid item xs={6}>
       <TextField
         sx={{
@@ -30,6 +52,7 @@ export default function Others() {
           width: "100%",
           margin: "10px 0px ",
         }}
+        inputRef={addItemEle}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
@@ -65,6 +88,7 @@ export default function Others() {
           width: "70%",
           margin: "10px 0px ",
         }}
+        inputRef={amtDueEle}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
@@ -77,7 +101,7 @@ export default function Others() {
           },
         }}
         id="standard-basic"
-        label="decided amount"
+        label="amount due"
         variant="standard"
       />
       <TextField
@@ -111,8 +135,9 @@ export default function Others() {
             fontSize: "20px",
           },
         }}
+        inputRef={recievedAmtEle}
         id="standard-basic"
-        label="entered amount"
+        label="recieved amount"
         variant="standard"
       />
       <TextField
@@ -135,6 +160,7 @@ export default function Others() {
           width: "70%",
           margin: "10px 0px ",
         }}
+        inputRef={outstandingAmtEle}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
@@ -181,11 +207,37 @@ export default function Others() {
             fontSize: "20px",
           },
         }}
+        inputRef={remarkEle}
         id="standard-basic"
         label="remarks"
         variant="standard"
       />
-      <Grid item xs={6}></Grid>
+
     </Grid>
-  );
-}
+    <Grid item xs={12}>
+    <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+            margin: "20px 0px",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "rgb(247, 230, 173) ",
+              color: "rgb(91, 94, 97)",
+              minWidth: "200px",
+              fontSize : "20px",
+              fontWeight : "600"
+            }}
+            onClick={handleSave}
+          >
+            Save
+          </Button>
+        </Box>
+        </Grid>
+        </>
+  );}
+

@@ -284,6 +284,7 @@ const SignInPage = () => {
                   color: "rgb(50, 50, 50)",
                   boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)",
                 },
+                marginBottom:"25px"
               }}
               onClick={handleSubmit}
             >
@@ -306,7 +307,7 @@ const SignInPage = () => {
           >
             OR
           </Typography> */}
-          <Box
+          {/* <Box
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -319,7 +320,7 @@ const SignInPage = () => {
               alt="Google Login"
               style={{ cursor: "pointer" }} */}
             {/* /> */}
-          </Box>
+          {/* </Box> */} 
           <Box
             sx={{
               display: "flex",
