@@ -22,7 +22,7 @@ const IncomeList = ({data , deleteTransection }) => {
 
   const maxItems = 3;
   const handleAllIncomeChange = () => {
-    const newIncome = Income.map((item) => ({
+    const newIncome = Income?.map((item) => ({
       ...item,
       isSelected: !allIncomeSelected,
     }));

@@ -32,7 +32,7 @@ export default function App({images}) {
         modules={[EffectCoverflow, Pagination]}
         className="mySwiper"
       >
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <SwiperSlide key={index}>
             <img src={image} alt={`Slide ${index + 1}`} />
           </SwiperSlide>

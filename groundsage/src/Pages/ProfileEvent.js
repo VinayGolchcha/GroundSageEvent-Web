@@ -27,7 +27,7 @@ const ProfileEvent = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          const formattedEvents = data.data.map((event) => ({
+          const formattedEvents = data?.data.map((event) => ({
             eventType: event.event_name,
             date: `${formatDate(event.start_date)} - ${formatDate(
               event.end_date
@@ -101,7 +101,7 @@ const ProfileEvent = () => {
         alignItems: "center",
       }}
     >
-      {eventList.slice(0, endpoint).map((item, index) => (
+      {eventList?.slice(0, endpoint).map((item, index) => (
         <Box
           key={index}
           sx={{

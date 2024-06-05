@@ -153,7 +153,7 @@ const Reports = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: { xs: "40px", md: "56px" },
+          fontSize: { xs: "30px", sm: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: {xs:"0px",md:"-40px"},

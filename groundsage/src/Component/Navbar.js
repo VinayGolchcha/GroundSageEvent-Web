@@ -135,7 +135,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {pages?.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <NavLink
                     to={`/${page.toLowerCase()}`}
@@ -155,7 +155,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
               margin: "0px 10% 0px 10%",
             }}
           >
-            {pages.map((page) => (
+            {pages?.map((page) => (
               <NavLink
                 key={page}
                 to={page.toLowerCase()} // Make sure pathnames are lowercase
@@ -196,7 +196,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, marginRight: "20px" }}
               >
-                <Avatar alt={user.user_name} src="../../Component/profile..png" />
+                <Avatar alt={user?.user_name} src="../../Component/profile..png" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -227,7 +227,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
                   padding: "0",
                 }}
               >
-                {settings.map((setting) => (
+                {settings?.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography
                       textAlign="center"

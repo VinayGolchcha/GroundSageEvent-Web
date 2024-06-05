@@ -305,7 +305,7 @@ const ProfileAboutpage = () => {
             margin:"10%"
           }}
         >
-          {userData.username_initials}
+          {userData?.username_initials}
         </Typography>
       </Box>
       <Box

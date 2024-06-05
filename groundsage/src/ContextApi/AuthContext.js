@@ -4,49 +4,26 @@ import React, { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const AuthContext = createContext();
-
+const safeJSONParse = (value, defaultValue) => {
+  try {
+    return value ? JSON.parse(value) : defaultValue;
+  } catch (e) {
+    console.error("Error parsing JSON:", e);
+    return defaultValue;
+  }
+};
 const AuthProvider = ({ children }) => {
-  const [eventIds, setEventIds] = useState(() => {
-    const saved = localStorage.getItem("eventIds");
-    return saved !== null ? JSON.parse(saved) : [];
-  });
+  const [eventIds, setEventIds] = useState(() => safeJSONParse(localStorage.getItem("eventIds"), []));
   const [events, setEvents] = useState([]);
-  const [activeEvent, setActiveEvent] = useState(() => {
-    const saved = localStorage.getItem("activeEvent");
-    return saved !== null ? JSON.parse(saved) : [];
-  });
-  const [activeEventId, setActiveEventId] = useState(() => {
-    const saved = localStorage.getItem("activeEventId");
-    return saved !== null ? JSON.parse(saved) : null;
-  });
-  const [activeEventName, setActiveEventName] = useState(() => {
-    const saved = localStorage.getItem("activeEventName");
-    return saved !== null ? JSON.parse(saved) : null;
-  });
-  const [transectionTag, setTransectionTag] = useState(() => {
-    const saved = localStorage.getItem("transectionTag");
-    return saved !== null ? JSON.parse(saved) : null;
-  });
-  const [transectionType, setTransectionType] = useState(() => {
-    const saved = localStorage.getItem("transectionType");
-    return saved !== null ? JSON.parse(saved) : null;
-  });
-  const [isEmailVerified, setIsEmailVerified] = useState(() => {
-    const saved = localStorage.getItem("isEmailVerified");
-    return saved !== null ? JSON.parse(saved) : false;
-  });
-  const [lastShopNumber, setLastShopNumber] = useState(() => {
-    const saved = localStorage.getItem("lastShopNumber");
-    return saved !== null ? JSON.parse(saved) : null;
-  });
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem("user");
-    return saved !== null ? JSON.parse(saved) : null;
-  });
-  const [shopIds, setShopIds] = useState(() => {
-    const saved = localStorage.getItem("shopIds");
-    return saved !== null ? JSON.parse(saved) : [];
-  });
+  const [activeEvent, setActiveEvent] = useState(() => safeJSONParse(localStorage.getItem("activeEvent"), []));
+  const [activeEventId, setActiveEventId] = useState(() => safeJSONParse(localStorage.getItem("activeEventId"), null));
+  const [activeEventName, setActiveEventName] = useState(() => safeJSONParse(localStorage.getItem("activeEventName"), null));
+  const [transectionTag, setTransectionTag] = useState(() => safeJSONParse(localStorage.getItem("transectionTag"), null));
+  const [transectionType, setTransectionType] = useState(() => safeJSONParse(localStorage.getItem("transectionType"), null));
+  const [isEmailVerified, setIsEmailVerified] = useState(() => safeJSONParse(localStorage.getItem("isEmailVerified"), false));
+  const [lastShopNumber, setLastShopNumber] = useState(() => safeJSONParse(localStorage.getItem("lastShopNumber"), null));
+  const [user, setUser] = useState(() => safeJSONParse(localStorage.getItem("user"), null));
+  const [shopIds, setShopIds] = useState(() => safeJSONParse(localStorage.getItem("shopIds"), []));
   const navigate = useNavigate();
 
   useEffect(() => {

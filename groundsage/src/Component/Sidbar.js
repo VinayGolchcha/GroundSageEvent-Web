@@ -36,7 +36,7 @@ const Sidbar = ({ onItemClick, activeContent }) => {
         width: "100%",
       }}
     >
-      {buttons.map((button, index) => (
+      {buttons?.map((button, index) => (
         <Button
           key={index}
           color="primary"
