@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
   colors,
-  CircularProgress
 } from "@mui/material";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -285,38 +284,6 @@ export default function RentalAgreementPage() {
     setAmount("");
     setEmail("");
     setName("");
-<<<<<<< HEAD
-    setPhoneNo("")
-    }
-    if (loading) {
-      // Show a loading indicator while the data is being fetched
-      return (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            backgroundColor: "rgb(66, 92, 90)",
-          }}
-        >
-          <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
-        </Box>
-      );
-    }
-    
-    return (
-      <>
-        <Box sx={{backgroundColor : "rgb(66, 92, 90)"}}>
-            <Typography variant="h3" sx={{
-                color : "rgb(247, 230, 173)",
-                textAlign : "center", 
-                padding : "20px 0px",
-                fontWeight : "600",
-                textShadow: "0 6px rgba(81,67,21,0.8)"
-            }}>Rental Agreement</Typography>
-            {loading ? <div style={{heigth : "100vh" , width : "100vw"}}> </div> : <>
-=======
     setPhoneNo("");
   };
 
@@ -352,7 +319,6 @@ export default function RentalAgreementPage() {
           <div> </div>
         ) : (
           <>
->>>>>>> 477b17eb016306bc08fa1569b510adc34b32a11d
             <ToastContainer position="bottom-right" style={{ color: "red" }} />
             <Box
               sx={{
