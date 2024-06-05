@@ -11,6 +11,7 @@ import {
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Others() {
   const addItemEle = useRef(null);
@@ -18,7 +19,8 @@ export default function Others() {
   const recievedAmtEle = useRef(null);
   const outstandingAmtEle = useRef(null);
   const remarkEle = useRef(null);
-  const {addTransection} = useContext(AuthContext);
+  const {addTransection , isSucessTransection} = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleSave = () => {
     const body = {
       item : addItemEle.current.value,             //shop no in string
@@ -28,6 +30,9 @@ export default function Others() {
       remarks : remarkEle.current.value
     }
     addTransection(body);
+    if(isSucessTransection){
+      navigate("/transaction");
+    }
   }
   return (<>
   <ToastContainer/>

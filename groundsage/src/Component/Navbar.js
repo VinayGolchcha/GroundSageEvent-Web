@@ -249,7 +249,7 @@ function Navbar({ handleOpen , isActive , activeEventId , activeEventName}) {
                       }}
                       onClick={() => {
                         (setting === "Visit Profile" && navigate("/Profile")) ||
-                          (setting === "Logout" && handleLogout()) || (((setting===null)?activeEventName:setting) && handleOpen());
+                          (setting === "Logout" && handleLogout()) || (((setting===null)&&activeEventName) && handleOpen());
                       }}
                     >
                       {(setting===null)?activeEventName:setting}

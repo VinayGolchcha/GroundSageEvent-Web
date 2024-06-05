@@ -35,8 +35,8 @@ export default function EventListPage() {
       Object.keys(body).forEach((key) => {
         formData.append(key , body[key]);
       })
-      const files = body?.files;
-      files.forEach((f) => {
+      
+      file.forEach((f) => {
         formData.append("files" , f);
       })
       const publicIds = body?.public_ids;
@@ -173,7 +173,7 @@ export default function EventListPage() {
 
   return (
     <>
-    { isEdit === true ? (<EditEvent selectedItem = {selectedItem} handleSaveEvent = {handleEditEventApi} />) : (
+    { isEdit === true ? (<EditEvent selectedItem = {selectedItem} handleSaveEvent = {handleEditEventApi} setFile = {setFIle}/>) : (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",

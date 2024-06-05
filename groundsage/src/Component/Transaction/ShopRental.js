@@ -8,17 +8,21 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ToastContainer } from "react-toastify";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ShopRental(){
   const addItemEle = useRef(null);
   const amtDueEle = useRef(null);
   const recievedAmtEle = useRef(null);
   const outstandingAmtEle = useRef(null);
+  const navigate = useNavigate();
   const remarkEle = useRef(null);
-  const {addTransection} = useContext(AuthContext);
+  const {addTransection , activeEventId , user , isSucessTransection} = useContext(AuthContext);
+  const [shopNo , setShopNo] = useState([]);
   const handleSave = () => {
     const body = {
 
@@ -29,7 +33,29 @@ export default function ShopRental(){
       remarks : remarkEle.current.value
     }
     addTransection(body);
+    if(isSucessTransection){
+      navigate("/transaction");
+    }
   }
+  const fetchAllShop = async() => {
+    try{
+      const res = await axios.get(`${process.env.REACT_APP_API_URI}/shop/fetch-all-shop/${activeEventId}` , {
+        headers : {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      });
+      console.log(res?.data?.data);
+      const shopList = res?.data?.data
+      setShopNo(shopList.map((i) => i.shop_number));
+    }catch(err){
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    fetchAllShop();
+  },[])
     return(
       <>
       <ToastContainer/>
@@ -55,9 +81,8 @@ export default function ShopRental(){
                 <MenuItem value="">
                     <em>None</em>
                 </MenuItem>
-                <MenuItem value={2}>Two</MenuItem>
-                <MenuItem value={1}>One</MenuItem>
-                <MenuItem value={3}>Three</MenuItem>
+                {shopNo.map((i , idx) => <MenuItem key={idx} value={i}>{i}</MenuItem>)}
+
                 </Select>
             </FormControl>
             <TextField

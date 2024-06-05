@@ -214,6 +214,7 @@ const DescriptionPage = () => {
           alignItems: "center",
         }}
       >
+        {selectedShop.status === "vacant" && 
         <Button
           size="large"
           variant="contained" // Make the button contained if active dom
@@ -229,11 +230,12 @@ const DescriptionPage = () => {
             },
           }}
           onClick={() => {
-            navigate("/rental-agreement");
+            navigate(`/rental-agreement/${shopDetails.id}`);
           }}
         >
           Go to Rental
-        </Button>
+        </Button>}
+        {selectedShop.status === "occupied" &&
         <Button
           size="large"
           variant="contained" // Make the button contained if active dom
@@ -249,12 +251,13 @@ const DescriptionPage = () => {
               boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
             },
           }}
+        
           onClick={() => {
             // navigate("/rental-agreement");
           }}
         >
           Edit Rental agreement
-        </Button>
+        </Button>}
         <Button
           size="large"
           variant="contained"

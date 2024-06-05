@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
@@ -12,6 +13,7 @@ const AuthProvider = ({ children }) => {
   const [activeEventName , setActiveEventName] = useState(null);
   const [transectionTag , setTransectionTag] = useState(null);
   const [transectionType , setTransectionType] = useState(null);
+  const [isSucessTransection , setIsSucessTransection] = useState(false);
 
   const addTransection = async(body) => {
     const newbody = {
@@ -36,7 +38,8 @@ const AuthProvider = ({ children }) => {
             fontWeight: "600", // Change font weight
             color: "rgb(66, 92, 90)",
           }
-      })
+      });
+      setIsSucessTransection(true);
     }catch(err){
       console.log(err);
     }
@@ -108,7 +111,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{activeEventName , setActiveEventName ,  isEmailVerified, setIsEmailVerified, user, setUser, logout,setShopIds , setEventIds , eventIds ,setActiveEvent , activeEvent , events , setEvents , activeEventId , setActiveEventId , setLastShopNumber, lastShopNumber  , addTransection , transectionTag , setTransectionTag , transectionType , setTransectionType}}>
+    <AuthContext.Provider value={{isSucessTransection , activeEventName , setActiveEventName ,  isEmailVerified, setIsEmailVerified, user, setUser, logout,setShopIds , setEventIds , eventIds ,setActiveEvent , activeEvent , events , setEvents , activeEventId , setActiveEventId , setLastShopNumber, lastShopNumber  , addTransection , transectionTag , setTransectionTag , transectionType , setTransectionType}}>
 
       {children}
     </AuthContext.Provider>

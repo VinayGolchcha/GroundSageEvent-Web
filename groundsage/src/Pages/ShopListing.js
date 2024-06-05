@@ -17,6 +17,7 @@ const ShopListing = () => {
   const [selectedShops, setSelectedShops] = useState([]); // State to store selected shop cards
   const [selectMode, setSelectMode] = useState(false);
   const { setLastShopNumber, user } = useContext(AuthContext);
+  const {activeEventId } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -64,7 +65,7 @@ const ShopListing = () => {
   useEffect(() => {
     const fetchShops = async () => {
       try {
-        const id = 1112;
+        const id = activeEventId;
         const response = await axios.get(
           `https://groundsageevent-be.onrender.com/api/v1/shop/fetch-all-shop/${id}`,
           {

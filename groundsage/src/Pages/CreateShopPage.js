@@ -34,13 +34,13 @@ const VisuallyHiddenInput = styled("input")({
 
 export default function CreateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-  const { setShopIds, lastShopNumber, setLastShopNumber, user } =
+  const { setShopIds, lastShopNumber, setLastShopNumber, user ,activeEventId } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [file, setFile] = useState([]);
   const [eventData, setEventData] = useState({
-    event_id: 1112,
+    event_id: activeEventId,
     description: "",
     area: null,
     rent: null,

@@ -630,6 +630,9 @@ export default function CreateEventPage() {
             <Button
               variant="contained"
               sx={{
+                ":hover" : {
+                  backgroundColor : "rgb(247, 230, 173)"
+                },
                 backgroundColor: "rgb(247, 230, 173) ",
                 color: "rgb(91, 94, 97)",
                 minWidth: "200px",

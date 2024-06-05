@@ -11,13 +11,15 @@ import {
 import { useContext, useRef } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function SaffSalary() {
   const addItemEle = useRef(null);
   const enterdAmtEle = useRef(null);
   const balancePayAmtEle = useRef(null);
   const remarkEle = useRef(null);
-  const {addTransection} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const {addTransection , isSucessTransection} = useContext(AuthContext);
   const handleSave = () => {
     const body = {
       item : addItemEle.current.value,             //shop no in string
@@ -27,6 +29,9 @@ export default function SaffSalary() {
       remarks : remarkEle.current.value
     }
     addTransection(body);
+    if(isSucessTransection){
+      navigate("/transaction");
+    }
   }
   return (
     <>

@@ -28,7 +28,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
   
 
-export default function EditEvent({ selectedItem , handleSaveEvent}){
+export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
   console.log(selectedItem);
     const [openCalendar1, setOpenCalendar1] = useState(false);
     const [openCalendar2, setOpenCalendar2] = useState(false);
@@ -65,7 +65,8 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
       const files = Array.from(event.target.files);
       // Handle the uploaded file
       console.log(file)
-      setFIle(files);
+      // files coming from the create event page...
+      setFile(files);
     };
     // const addEvent = async(body) => {
     //   try{
@@ -98,7 +99,6 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
           start_date : formattedFromDate,
           end_date : formattedToDate,
           event_description : descriptionElement.current.value,
-          files : file,
           public_ids : formattedPublicIds
           // user_id : user?.user_id,
         }
@@ -424,6 +424,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent}){
               <Button
                 variant="contained"
                 sx={{
+                  ":hover" : {
+                    backgroundColor : "rgb(247, 230, 173)"
+                  },
                   backgroundColor: "rgb(247, 230, 173) ",
                   color: "rgb(91, 94, 97)",
                   minWidth: "200px",

@@ -214,7 +214,7 @@ console.log(activeEvent);
                     overflow : "hidden"
                   }}
                 >
-                  <Box sx={{ position: "relative" }}>
+                  <Box sx={{ position: "relative" , height : "180px"}}>
                     <Box
                       sx={{
                         display: "flex",
@@ -230,7 +230,7 @@ console.log(activeEvent);
                         sx={{
                           marginLeft: "3%",
                           backgroundColor: "rgba(255, 255, 255, 0.7)",
-                          width: "12%",
+                          width: "11%",
                           height: "100%",
                           display: "flex",
                           alignItems: "center",
@@ -252,7 +252,7 @@ console.log(activeEvent);
                     <img
                       src={item?.image_url === null ? "/home/imag-84.png" : item?.image_url}
                       alt=""
-                      style={{ borderRadius: "8px",maxHeight : "200px" , maxWidth : "200px" , width: "100%"   ,height : "100%" , objectFit : "cover" }}
+                      style={{ borderRadius: "8px",maxHeight : "200px"  , width: "100%"   ,height : "100%" , objectFit : "cover" }}
                     />
                   </Box>
                   <Box sx={{ padding: "4px" }}>
