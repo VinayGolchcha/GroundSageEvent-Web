@@ -1,49 +1,36 @@
-import axios from 'axios';
-import React, { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import React, { createContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [eventIds , setEventIds] = useState([]);
-  const [events , setEvents] = useState([]);
-  const [activeEvent , setActiveEvent] = useState([]);
-  const [activeEventId ,setActiveEventId] = useState(null);
-  const [activeEventName , setActiveEventName] = useState(null);
-  const [transectionTag , setTransectionTag] = useState(null);
-  const [transectionType , setTransectionType] = useState(null);
-  const [isSucessTransection , setIsSucessTransection] = useState(false);
-
-  const addTransection = async(body) => {
-    const newbody = {
-      ...body , 
-      event_id : activeEventId,
-      tag : transectionTag,
-      type : transectionType
-    }
-    try{
-      const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/add-transaction` , newbody  , {
-        headers: {
-          'authorization': `${user?.token}`, // Ensure the token format is correct
-          'Accept': 'application/json',
-          role_id : user?.role_id
-        }
-      });
-      toast.success("Transection added successfully", {
-          style: {
-            // Change font color
-            fontSize: "16px", // Change font size
-            fontFamily: "Inter", // Change font family
-            fontWeight: "600", // Change font weight
-            color: "rgb(66, 92, 90)",
-          }
-      });
-      setIsSucessTransection(true);
-    }catch(err){
-      console.log(err);
-    }
-  }
+  const [eventIds, setEventIds] = useState(() => {
+    const saved = localStorage.getItem("eventIds");
+    return saved !== null ? JSON.parse(saved) : [];
+  });
+  const [events, setEvents] = useState([]);
+  const [activeEvent, setActiveEvent] = useState(() => {
+    const saved = localStorage.getItem("activeEvent");
+    return saved !== null ? JSON.parse(saved) : [];
+  });
+  const [activeEventId, setActiveEventId] = useState(() => {
+    const saved = localStorage.getItem("activeEventId");
+    return saved !== null ? JSON.parse(saved) : null;
+  });
+  const [activeEventName, setActiveEventName] = useState(() => {
+    const saved = localStorage.getItem("activeEventName");
+    return saved !== null ? JSON.parse(saved) : null;
+  });
+  const [transectionTag, setTransectionTag] = useState(() => {
+    const saved = localStorage.getItem("transectionTag");
+    return saved !== null ? JSON.parse(saved) : null;
+  });
+  const [transectionType, setTransectionType] = useState(() => {
+    const saved = localStorage.getItem("transectionType");
+    return saved !== null ? JSON.parse(saved) : null;
+  });
   const [isEmailVerified, setIsEmailVerified] = useState(() => {
     const saved = localStorage.getItem("isEmailVerified");
     return saved !== null ? JSON.parse(saved) : false;
@@ -78,6 +65,63 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("shopIds", JSON.stringify(shopIds));
   }, [shopIds]);
 
+  useEffect(() => {
+    localStorage.setItem("eventIds", JSON.stringify(eventIds));
+  }, [eventIds]);
+
+  useEffect(() => {
+    localStorage.setItem("activeEvent", JSON.stringify(activeEvent));
+  }, [activeEvent]);
+
+  useEffect(() => {
+    localStorage.setItem("activeEventId", JSON.stringify(activeEventId));
+  }, [activeEventId]);
+
+  useEffect(() => {
+    localStorage.setItem("activeEventName", JSON.stringify(activeEventName));
+  }, [activeEventName]);
+
+  useEffect(() => {
+    localStorage.setItem("transectionTag", JSON.stringify(transectionTag));
+  }, [transectionTag]);
+
+  useEffect(() => {
+    localStorage.setItem("transectionType", JSON.stringify(transectionType));
+  }, [transectionType]);
+
+  const addTransection = async (body) => {
+    const newbody = {
+      ...body,
+      event_id: activeEventId,
+      tag: transectionTag,
+      type: transectionType,
+    };
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/transaction/add-transaction`,
+        newbody,
+        {
+          headers: {
+            authorization: `${user?.token}`, // Ensure the token format is correct
+            Accept: "application/json",
+            role_id: user?.role_id,
+          },
+        }
+      );
+      toast.success("Transection added successfully", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const logout = async () => {
     if (!user) return;
 
@@ -99,6 +143,11 @@ const AuthProvider = ({ children }) => {
         setUser(null);
         setShopIds([]);
         setLastShopNumber(null);
+        setActiveEvent([]);
+        setActiveEventId(null);
+        setActiveEventName(null);
+        setTransectionTag(null);
+        setTransectionType(null);
         localStorage.clear();
         navigate("/signin");
         console.log("Logout successful");
@@ -111,8 +160,33 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{isSucessTransection , activeEventName , setActiveEventName ,  isEmailVerified, setIsEmailVerified, user, setUser, logout,setShopIds , setEventIds , eventIds ,setActiveEvent , activeEvent , events , setEvents , activeEventId , setActiveEventId , setLastShopNumber, lastShopNumber  , addTransection , transectionTag , setTransectionTag , transectionType , setTransectionType}}>
-
+    <AuthContext.Provider
+      value={{
+        activeEventName,
+        setActiveEventName,
+        isEmailVerified,
+        setIsEmailVerified,
+        user,
+        setUser,
+        logout,
+        setShopIds,
+        setEventIds,
+        eventIds,
+        setActiveEvent,
+        activeEvent,
+        events,
+        setEvents,
+        activeEventId,
+        setActiveEventId,
+        setLastShopNumber,
+        lastShopNumber,
+        addTransection,
+        transectionTag,
+        setTransectionTag,
+        transectionType,
+        setTransectionType,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

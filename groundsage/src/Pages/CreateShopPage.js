@@ -16,8 +16,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextApi/AuthContext";
-import CloseIcon from '@mui/icons-material/Close'; // Import the CloseIcon
-
+import CloseIcon from "@mui/icons-material/Close"; // Import the CloseIcon
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -31,11 +30,10 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-
 export default function CreateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-    const { setShopIds, lastShopNumber, setLastShopNumber, user ,activeEventId } =
-      useContext(AuthContext);
+  const { setShopIds, lastShopNumber, setLastShopNumber, user, activeEventId } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [file, setFile] = useState([]);
@@ -50,7 +48,7 @@ export default function CreateShopPage() {
     shop_number: lastShopNumber, // Generate random shop number between 1 and 50
     files: file,
   });
-
+  const apiUrl = process.env.REACT_APP_API_URI;
   const [lastShopNumberFetched, setLastShopNumberFetched] = useState(false); // State to track whether the last shop number has been fetched
 
   const handleInputChange = (e, field) => {
@@ -70,7 +68,7 @@ export default function CreateShopPage() {
   const fetchLastShopNumber = async () => {
     try {
       const response = await axios.get(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number",
+        `${apiUrl}/shop/fetch-last-shop-number`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -128,7 +126,7 @@ export default function CreateShopPage() {
       });
 
       const response = await axios.post(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/create-shop",
+        `${apiUrl}/shop/create-shop`,
         formData,
         {
           headers: {
@@ -685,28 +683,27 @@ export default function CreateShopPage() {
             // value={file}
             multiple
           />
-         
         </div>
         <Box>
-        {file.map((file, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent:"center",
-              marginBottom: "10px",
-            }}
-          >
-            <Typography sx={{ color: "white", marginRight: "10px" }}>
-              {file.name}
-            </Typography>
-            <IconButton onClick={() => handleRemoveFile(index)}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        ))}
-      </Box>
+          {file.map((file, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <Typography sx={{ color: "white", marginRight: "10px" }}>
+                {file.name}
+              </Typography>
+              <IconButton onClick={() => handleRemoveFile(index)}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          ))}
+        </Box>
         <Box
           sx={{
             display: "flex",

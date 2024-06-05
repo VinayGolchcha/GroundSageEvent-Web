@@ -14,25 +14,33 @@ import MenuItem from "@mui/material/MenuItem";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
 
-const pages = [ "Home" , "Events", "Shops", "Teams", "Transaction", "Notes", "Reports"];
+const pages = [
+  "Home",
+  "Events",
+  "Shops",
+  "Transaction",
+  "Notes",
+  "Reports",
+];
 
-function Navbar({ handleOpen , isActive , activeEventId , activeEventName}) {
-  console.log("activeEventname" ,activeEventName)
+function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
+  console.log("activeEventname", activeEventName);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [currentActiveEventName , setCurrentActiveEventName] = React.useState(null);
-  const { logout } = React.useContext(AuthContext);
-  const [settings , setSettings ] = React.useState([]);
-  const [eventName , setEventName] = React.useState(null);
-  const location = useLocation(); 
+  const [currentActiveEventName, setCurrentActiveEventName] =
+    React.useState(null);
+  const { logout, user } = React.useContext(AuthContext);
+  const [settings, setSettings] = React.useState([]);
+  const [eventName, setEventName] = React.useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
   console.log(isActive);
-  console.log(activeEventId)
+  console.log(activeEventId);
   React.useState(() => {
-    const newArray = [activeEventName ,"Visit Profile", "Logout"]
+    const newArray = [activeEventName, "Visit Profile", "Logout"];
     setSettings(newArray);
-    setEventName(activeEventName)
-  },[activeEventName])
+    setEventName(activeEventName);
+  }, [activeEventName]);
   // React.useEffect(()=> {
   //   const currentActiveEvent = isActive?.filter((item) => (item.id === activeEventId));
   //   console.log(currentActiveEvent);
@@ -68,14 +76,12 @@ function Navbar({ handleOpen , isActive , activeEventId , activeEventName}) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
   const handleLogout = async () => {
     try {
-      // Call logout function from AuthContext
       await logout();
-      // Redirect to the login page or any other page
-      // Example: navigate("/login");
+      navigate("/signin");
     } catch (error) {
-      // Handle logout error
       console.error("Error logging out:", error);
     }
   };
@@ -86,118 +92,111 @@ function Navbar({ handleOpen , isActive , activeEventId , activeEventName}) {
         position="static"
         sx={{ backgroundColor: "rgb(78, 101, 100)", boxShadow: "none" }}
       >
-          <Toolbar disableGutters>
-            {/* <NavLink to="/" style={{ textDecoration: "none" }}> */}
-              <Box
-                component="img"
-                src="../../../Images/logo_1 1.png"
-                alt="logo"
-                sx={{
-                  height: "45px",
-                  display: { xs: "none", md: "block" },
-                  // justifyContent: "leftwid",
-                  // alignItems:"left",
-                  marginLeft:"30px"
-                }}
-              />
-            {/* </NavLink>   */}
-            <Box sx={{  display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="black"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Box
-              component="img"
-              src="../../../Images/logo_1 1.png"
-              alt="Right Arrow"
-              sx={{
-                marginRight: "5px",
-                height: "45px",
-                display: { xs: "flex", md: "none" },
-                justifyContent:"left",
+        <Toolbar disableGutters>
+          {/* <NavLink to="/" style={{ textDecoration: "none" }}> */}
+          <Box
+            component="img"
+            src="../../../Images/logo_1 1.png"
+            alt="logo"
+            sx={{
+              height: "45px",
+              // display: { xs: "none", md: "block" },
+              // justifyContent: "leftwid",
+              // alignItems:"left",
+              marginLeft: "20px",
+            }}
+          />
+          {/* </NavLink>   */}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
               }}
-            />
-            <Box
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "none", md: "flex" },
-                justifyContent: "space-around",
-                marginLeft: "10%",
-                width:"80%"
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
-                <NavLink
-                  key={page}
-                  to={page.toLowerCase()} // Make sure pathnames are lowercase
-                  style={{ textDecoration: "none" }}
-                >
-                  <Button
-                    sx={{
-                      my: 2,
-                      // justifyContent: "space-around",
-                      // width: "150px",
-                      // display: "flex",
-                      // justifyContent: "space-between",
-                      color: location.pathname.includes(page.toLowerCase())
-                        ? "rgb(247, 230, 173)"
-                        : "white",
-                      fontSize: "18px",
-                      fontFamily: "Inter",
-                      fontWeight: location.pathname.includes(page.toLowerCase())
-                        ? "700"
-                        : "500",
-                      textDecoration: location.pathname.includes(
-                        page.toLowerCase()
-                      )
-                        ? "underline rgb(247, 230, 173)"
-                        : "none",
-                      textTransform: "none",
-                    }}
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <NavLink
+                    to={`/${page.toLowerCase()}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
                   >
                     {page}
-                  </Button>
-                </NavLink>
+                  </NavLink>{" "}
+                </MenuItem>
               ))}
-            </Box>
+            </Menu>
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-around",
+              margin: "0px 10% 0px 10%",
+            }}
+          >
+            {pages.map((page) => (
+              <NavLink
+                key={page}
+                to={page.toLowerCase()} // Make sure pathnames are lowercase
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  sx={{
+                    my: 2,
+                    // justifyContent: "space-around",
+                    // width: "150px",
+                    // display: "flex",
+                    // justifyContent: "space-between",
+                    color: location.pathname.includes(page.toLowerCase())
+                      ? "rgb(247, 230, 173)"
+                      : "white",
+                    fontSize: "18px",
+                    fontFamily: "Inter",
+                    fontWeight: location.pathname.includes(page.toLowerCase())
+                      ? "700"
+                      : "500",
+                    textDecoration: location.pathname.includes(
+                      page.toLowerCase()
+                    )
+                      ? "underline rgb(247, 230, 173)"
+                      : "none",
+                    textTransform: "none",
+                  }}
+                >
+                  {page}
+                </Button>
+              </NavLink>
+            ))}
+          </Box>
 
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Tooltip title="Open settings">
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Profile">
               <IconButton
                 onClick={handleOpenUserMenu}
-                sx={{ p: 0, marginRight: "50px" }}
+                sx={{ p: 0, marginRight: "20px" }}
               >
-                <Avatar alt="" src="../../Component/profile..png" />
+                <Avatar alt={user.user_name} src="../../Component/profile..png" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -252,7 +251,7 @@ function Navbar({ handleOpen , isActive , activeEventId , activeEventName}) {
                           (setting === "Logout" && handleLogout()) || (((setting===null)&&activeEventName) && handleOpen());
                       }}
                     >
-                      {(setting===null)?activeEventName:setting}
+                      {setting === null ? activeEventName : setting}
                     </Typography>
                   </MenuItem>
                 ))}

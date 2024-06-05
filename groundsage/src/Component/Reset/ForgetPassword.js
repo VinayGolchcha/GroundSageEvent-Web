@@ -140,6 +140,10 @@ const ForgetPassword = () => {
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)", // Add border color
               marginBottom: { xs: "10px", md: "15px" },
+              "& .css-10botns-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+              {
+                WebkitTextFillColor: "#FFFFFF",
+              },
             }}
           />
           <TextField
