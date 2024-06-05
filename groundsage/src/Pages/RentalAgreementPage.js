@@ -106,8 +106,15 @@ export default function RentalAgreementPage() {
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         // Handle the uploaded file
-        console.log(file);
+        const fsize = file.size;
+        const fileSizeIn = Math.round((fsize / 1024));
+        if (fileSizeIn <= 100) {
+          toast.warning("File too small, please select a file greater than 100kb");
+          return;
+      }else {
         setFIle(file);
+      }
+        console.log(file);
       };
     const addRental = async (body) => {
       const formData = new FormData();
@@ -132,7 +139,11 @@ export default function RentalAgreementPage() {
             color: "rgb(66, 92, 90)",
           }});
       }catch(err){
-        console.log(err)
+        console.log(err);
+        const errArray = err?.response?.data?.errors;
+        errArray?.forEach((err) => {
+          toast.error(err?.msg)
+        }) 
         toast.error(err?.response?.data, {
           style: {
             // Change font color
@@ -206,6 +217,10 @@ export default function RentalAgreementPage() {
         }})
       }catch(err){
         console.log(err);
+        const errArray = err?.response?.data?.errors;
+        errArray?.forEach((err) => {
+          toast.error(err?.msg)
+        }) 
       }
     }
     const handleSave = () => {
@@ -222,9 +237,12 @@ export default function RentalAgreementPage() {
       // var yyyy = endDate?.getFullYear();
       // const toDate = yyyy + '-' + mm + '-' + dd;
       // setToDate(toDate);
-      const fromDate = startDate.toISOString().split("T")[0];
-      const toDate = endDate.toISOString().split("T")[0];
-
+      let fromDate;
+      let toDate;
+      if(startDate && endDate) {
+         fromDate = startDate?.toISOString().split("T")[0];
+         toDate = endDate?.toISOString().split("T")[0];
+      }
       const body = {
         name: name,
         email: email,
@@ -340,6 +358,7 @@ export default function RentalAgreementPage() {
               },}}
               value={rentalObj?.tenant_phone_number}
               disabled={isEdit}
+              type="number"
             id="standard-basic" label="phone number" variant="standard" onChange={(e) => setPhoneNo(e.target.value)}/>
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -375,6 +394,7 @@ export default function RentalAgreementPage() {
               },}}
               value={rentalObj?.tenant_email}
               disabled={isEdit}
+              type="email"
             label="email" variant="standard" onChange={(e) => setEmail(e.target.value)}/>
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -493,6 +513,7 @@ export default function RentalAgreementPage() {
               style: {
                 color: "white",
               },}}
+              type="number"
             id="standard-basic" label="amount" variant="standard" onChange={(e) => setAmount(e.target.value)} />
             {/* <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -564,6 +585,7 @@ export default function RentalAgreementPage() {
                   onOpen={() => setOpenCalendar1(true)}
                   onClose={() => setOpenCalendar1(false)}
                   minDate={dayjs(startDate)}
+                  helperText = {!startDate && "select the start date"}
                   slotProps={{
                     textField: {
                       InputProps: {
@@ -590,6 +612,7 @@ export default function RentalAgreementPage() {
                       borderBottom: " 1px solid rgb(188, 189, 163)",
                     },
                   }}
+                
                 />
               </FormControl>
             </LocalizationProvider>

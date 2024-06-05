@@ -35,7 +35,7 @@ export default function EventListPage() {
       Object.keys(body).forEach((key) => {
         formData.append(key , body[key]);
       })
-      
+
       file.forEach((f) => {
         formData.append("files" , f);
       })
@@ -66,7 +66,12 @@ export default function EventListPage() {
         }});
         setIsEdit(!isEdit);
     }catch(err){
-      console.log(err);
+      console.log(err)
+      const errArray = err?.response?.data?.errors;
+      console.log(errArray);
+      errArray?.forEach((err) => {
+        toast.error(err?.msg)
+      }) 
       toast.error(err);
     }
   }

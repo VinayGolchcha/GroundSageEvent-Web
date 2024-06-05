@@ -83,7 +83,10 @@ export default function CreateEventPage() {
       console.log(res);
       toast.success("Data Added Successfully"); 
     }catch(err){
-      console.log(err);
+      const errArray = err?.response?.data?.errors;
+      errArray?.forEach((err) => {
+        toast.error(err?.msg)
+      }) 
       toast.error(err);
     }
   }
@@ -491,6 +494,7 @@ export default function CreateEventPage() {
                 fontSize : "20px"
               },
             }}
+            type="number"
               id="standard-basic"
               label="Team Size"
               variant="standard"
@@ -531,6 +535,7 @@ export default function CreateEventPage() {
                   fontSize : "20px"
                 },
               }}
+              type="number"
               inputRef={coordinatorCountElement}
               id="standard-basic"
               label="Count"
@@ -571,6 +576,7 @@ export default function CreateEventPage() {
                   fontSize : "20px"
                 },
               }}
+              type="number"
               id="standard-basic"
               label="Count"
               variant="standard"
@@ -610,6 +616,7 @@ export default function CreateEventPage() {
                   fontSize : "20px"
                 },
               }}
+              type="number"
               inputRef={helperCountElement}
               id="standard-basic"
               label="Count"
