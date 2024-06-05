@@ -32,7 +32,7 @@ const TableCell = (props) => {
 
 const OccupancyReport = () => {
   const navigate = useNavigate();
-  const [selectedOption, setSelectedOption] = useState("Shop"); // Set initial value to "Shop"
+  const [selectedOption, setSelectedOption] = useState("shop"); // Set initial value to "Shop"
 
   const options = ["Shop", "Month"];
   const [occupancyData , setOccupancyData] = useState([]);
@@ -40,7 +40,7 @@ const OccupancyReport = () => {
 
   useEffect(()=>{
     try{
-      const res = axios.post(`${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data` , {
+      const res = axios.post(`https://groundsageevent-be.onrender.com/api/v1/shop/fetch-shop-occupancy-data` , {
         flag : selectedOption,
         event_id : activeEventId
       } , {

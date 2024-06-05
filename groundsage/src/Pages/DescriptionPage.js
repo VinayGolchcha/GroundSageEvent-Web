@@ -98,7 +98,7 @@ const DescriptionPage = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: { xs: "30px",sm:"40px", md: "56px" },
+          fontSize: { xs: "30px", sm: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: { xs: "0px", md: "-30px" },
@@ -185,21 +185,45 @@ const DescriptionPage = () => {
               width: "20%",
             }}
           >
-            <Box
-              component="img"
-              src="../../../Images/矢量 180.png"
-              alt="Right Arrow"
-              sx={{
-                width: { xs: "35%", md: "45%" },
-                margin: {xs:"10px 20px 0px 30px",md:"0px 20px 0px 60px"},
-              }}
-            />
+            <div>
+              {selectedShop.status === "vacant" ? (
+                <>
+                  <Box
+                    component="img"
+                    src="../../../Images/矢量 180.png"
+                    alt="Right Arrow"
+                    sx={{
+                      width: { xs: "35%", md: "45%" },
+                      margin: {
+                        xs: "10px 20px 0px 30px",
+                        md: "0px 20px 0px 60px",
+                      },
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <Box
+                    component="img"
+                    src="../../../Images/矢量 182.png"
+                    alt="Right Arrow"
+                    sx={{
+                      width: { xs: "35%", md: "45%" },
+                      margin: {
+                        xs: "10px 20px 0px 30px",
+                        md: "0px 20px 0px 60px",
+                      },
+                    }}
+                  />
+                </>
+              )}
+            </div>
             <Typography
               sx={{
                 color: "rgb(146, 235, 233)",
                 fontWeight: "700",
                 fontSize: { xs: "14px", md: "18px" },
-                margin: {xs:"5px 20px 0px 30px",md:"5px 20px 0px 60px"},
+                margin: { xs: "5px 20px 0px 30px", md: "5px 10px 0px 60px" },
                 textTransform: "uppercase",
               }}
             >
@@ -215,50 +239,51 @@ const DescriptionPage = () => {
           alignItems: "center",
         }}
       >
-        {selectedShop.status === "vacant" && 
-        <Button
-          size="large"
-          variant="contained" // Make the button contained if active dom
-          sx={{
-            color: "rgb(91, 94, 97)",
-            background: "rgb(247, 230, 173)",
-            marginTop: "20px",
-            marginBottom: "5px",
-            "&:hover": {
-              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
-              color: "rgb(50, 50, 50)", // Change text color on hover
-              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
-            },
-          }}
-          onClick={() => {
-            navigate(`/rental-agreement/${shopDetails.id}`);
-          }}
-        >
-          Go to Rental
-        </Button>}
-        {selectedShop.status === "occupied" &&
-        <Button
-          size="large"
-          variant="contained" // Make the button contained if active dom
-          sx={{
-            color: "rgb(91, 94, 97)",
-            background: "rgb(247, 230, 173)",
-            marginTop: "20px",
-            marginLeft: "10px",
-            marginBottom: "5px",
-            "&:hover": {
-              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
-              color: "rgb(50, 50, 50)", // Change text color on hover
-              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
-            },
-          }}
-        
-          onClick={() => {
-            // navigate("/rental-agreement");
-          }}
-        >
-          Edit Rental agreement
-        </Button>}
+        {selectedShop.status === "vacant" && (
+          <Button
+            size="large"
+            variant="contained" // Make the button contained if active dom
+            sx={{
+              color: "rgb(91, 94, 97)",
+              background: "rgb(247, 230, 173)",
+              marginTop: "20px",
+              marginBottom: "5px",
+              "&:hover": {
+                backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+                color: "rgb(50, 50, 50)", // Change text color on hover
+                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+              },
+            }}
+            onClick={() => {
+              navigate(`/rental-agreement/${shopDetails.id}`);
+            }}
+          >
+            Go to Rental
+          </Button>
+        )}
+        {selectedShop.status === "occupied" && (
+          <Button
+            size="large"
+            variant="contained" // Make the button contained if active dom
+            sx={{
+              color: "rgb(91, 94, 97)",
+              background: "rgb(247, 230, 173)",
+              marginTop: "20px",
+              marginLeft: "10px",
+              marginBottom: "5px",
+              "&:hover": {
+                backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+                color: "rgb(50, 50, 50)", // Change text color on hover
+                boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+              },
+            }}
+            onClick={() => {
+              // navigate("/rental-agreement");
+            }}
+          >
+            Edit Rental agreement
+          </Button>
+        )}
         <Button
           size="large"
           variant="contained"

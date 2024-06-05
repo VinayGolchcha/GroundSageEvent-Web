@@ -48,7 +48,7 @@ export default function ShopRental(){
       });
       console.log(res?.data?.data);
       const shopList = res?.data?.data
-      setShopNo(shopList.map((i) => i.shop_number));
+      setShopNo(shopList?.map((i) => i.shop_number));
     }catch(err){
       console.log(err);
     }
@@ -81,7 +81,7 @@ export default function ShopRental(){
                 <MenuItem value="">
                     <em>None</em>
                 </MenuItem>
-                {shopNo.map((i , idx) => <MenuItem key={idx} value={i}>{i}</MenuItem>)}
+                {shopNo?.map((i , idx) => <MenuItem key={idx} value={i}>{i}</MenuItem>)}
 
                 </Select>
             </FormControl>

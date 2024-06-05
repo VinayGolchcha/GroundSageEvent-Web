@@ -74,7 +74,7 @@ export default function TransactionPage() {
           padding: "20px 0px",
           fontWeight : "600", fontFamily : "inter",
           textShadow: "0 6px rgba(81,67,21,0.8)",
-          fontSize: { xs: "40px", md: "56px" },
+          fontSize: { xs: "30px", sm: "40px", md: "56px" },
         }}
       >
         Transactions

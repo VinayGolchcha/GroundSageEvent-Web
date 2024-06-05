@@ -245,7 +245,7 @@ const ShopListing = () => {
           sx={{
             color: "rgb(247, 230, 173)",
             textAlign: "center",
-            fontSize: { xs: "30px",sm:"40px", md: "56px" },
+            fontSize: { xs: "30px", sm: "40px", md: "56px" },
             fontFamily: "Inter",
             fontWeight: "700",
             marginTop: { xs: "10px", md: "-40px" },
@@ -607,11 +607,25 @@ const ShopListing = () => {
                       }}
                     >
                       <Typography>---</Typography>
-                      <img
-                        src="../../../Images/矢量 180.png"
-                        alt="Right Arrow"
-                        style={{ height: "25px" }}
-                      />
+                      <div>
+                        {shop.status === "vacant" ? (
+                          <>
+                            <img
+                              src="../../../Images/矢量 180.png"
+                              alt="Right Arrow"
+                              style={{ height: "25px" }}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <img
+                              src="../../../Images/矢量 182.png"
+                              alt="Right Arrow"
+                              style={{ height: "25px" }}
+                            />
+                          </>
+                        )}
+                      </div>
                     </div>
                   )}
                 </Box>

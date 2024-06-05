@@ -23,7 +23,7 @@ const ExpensesList = ({data , deleteTransection}) => {
 
   // Functions for handling expense list
   const handleAllExpensesChange = () => {
-    const newExpenses = expenses.map((item) => ({
+    const newExpenses = expenses?.map((item) => ({
       ...item,
       isSelected: !allExpensesSelected,
     }));
@@ -32,7 +32,7 @@ const ExpensesList = ({data , deleteTransection}) => {
   };
 
   const handleExpenseCheckboxChange = (index) => {
-    const newExpenses = expenses.map((item, i) => {
+    const newExpenses = expenses?.map((item, i) => {
       if (i === index) {
         return { ...item, isSelected: !item.isSelected };
       }

@@ -709,7 +709,7 @@ export default function CreateShopPage() {
           />
         </div>
         <Box>
-          {file.map((file, index) => (
+          {file?.map((file, index) => (
             <Box
               key={index}
               sx={{

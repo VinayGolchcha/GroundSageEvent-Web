@@ -160,7 +160,7 @@ const Verification = () => {
               marginBottom: "20px",
             }}
           >
-            {otp.map((digit, index) => (
+            {otp?.map((digit, index) => (
               <TextField
                 key={index}
                 value={digit}
