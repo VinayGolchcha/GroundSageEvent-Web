@@ -84,10 +84,12 @@ export default function CreateEventPage() {
         }
       );
       console.log(res);
-      toast.success("Data Added Successfully");
-      navigate("/home");
-    } catch (err) {
-      console.log(err);
+      toast.success("Data Added Successfully"); 
+    }catch(err){
+      const errArray = err?.response?.data?.errors;
+      errArray?.forEach((err) => {
+        toast.error(err?.msg)
+      }) 
       toast.error(err);
     }
   };
@@ -504,6 +506,47 @@ export default function CreateEventPage() {
                 },
                 width: "100%",
                 margin: "10px 0px ",
+              } 
+                 
+            }
+            InputProps={{
+              style: {
+                color: "rgb(255, 255, 255)",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                color: "white",
+                fontSize : "20px"
+              },
+            }}
+            type="number"
+              id="standard-basic"
+              label="Team Size"
+              variant="standard"
+              inputRef={teamSizeElement}
+            />
+
+            <Box
+              sx={{
+                width : "50%",
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "50%",
+                margin: "10px 0px ",
               }}
               InputProps={{
                 style: {
@@ -513,167 +556,95 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
+                  fontSize : "20px"
+                },
+              }}
+              inputRef={coordinatorCountElement}
+              id="standard-basic"
+              label="Count"
+              variant="standard"
+            />
+          <Box sx={{display : "flex" , width : "100%"}}>
+            <Typography sx={{color : "rgb(255, 255, 255)" , width : "50%" , margin: "10px 0px ",alignContent : "end"}}>Role: STAFF MEMBER</Typography>
+            <TextField
+              sx={{
+                width : "50%",
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "50%",
+                margin: "10px 0px ",
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize : "20px"
                 },
               }}
               id="standard-basic"
-              label="Team Size"
+              label="Count"
               variant="standard"
-              inputRef={teamSizeElement}
+              inputRef={staffMemberCountElement}
             />
-
-            <Box
+          </Box>
+          <Box sx={{display : "flex" , width : "100%"}}>
+            <Typography sx={{color : "rgb(255, 255, 255)", width : "50%" , margin: "10px 0px ", alignContent : "end"}}>Role: HELPER</Typography>
+            <TextField
               sx={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-between",
+                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  color: "rgb(255, 255, 255)",
+                },
+                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& label.Mui-focused": {
+                  color: "rgb(255, 255, 255)", // Color of the label when focused
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                },
+                width: "50%",
+                margin: "10px 0px ",
               }}
-            >
-              <Typography
-                sx={{
+              InputProps={{
+                style: {
                   color: "rgb(255, 255, 255)",
-                  width: "50%",
-                  margin: "10px 0px ",
-                  alignContent: "end",
-                }}
-              >
-                Role: COORDINATOR
-              </Typography>
-              <TextField
-                sx={{
-                  width: "50%",
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                    color: "rgb(255, 255, 255)",
-                  },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                    borderBottom: "1px solid rgb(188, 189, 163)",
-                  },
-                  "& label.Mui-focused": {
-                    color: "rgb(255, 255, 255)", // Color of the label when focused
-                  },
-                  "& .MuiInput-underline:after": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                  },
-                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                  },
-                  width: "50%",
-                  margin: "10px 0px ",
-                }}
-                InputProps={{
-                  style: {
-                    color: "rgb(255, 255, 255)",
-                  },
-                }}
-                InputLabelProps={{
-                  style: {
-                    color: "white",
-                    fontSize: {xs:"18px",md:"20px"},
-                  },
-                }}
-                inputRef={coordinatorCountElement}
-                id="standard-basic"
-                label="Count"
-                variant="standard"
-              />
-            </Box>
-            <Box sx={{ display: "flex", width: "100%" }}>
-              <Typography
-                sx={{
-                  color: "rgb(255, 255, 255)",
-                  width: "50%",
-                  margin: "10px 0px ",
-                  alignContent: "end",
-                }}
-              >
-                Role: STAFF MEMBER
-              </Typography>
-              <TextField
-                sx={{
-                  width: "50%",
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                    color: "rgb(255, 255, 255)",
-                  },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                    borderBottom: "1px solid rgb(188, 189, 163)",
-                  },
-                  "& label.Mui-focused": {
-                    color: "rgb(255, 255, 255)", // Color of the label when focused
-                  },
-                  "& .MuiInput-underline:after": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                  },
-                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                  },
-                  width: "50%",
-                  margin: "10px 0px ",
-                }}
-                InputProps={{
-                  style: {
-                    color: "rgb(255, 255, 255)",
-                  },
-                }}
-                InputLabelProps={{
-                  style: {
-                    color: "white",
-                    fontSize: {xs:"18px",md:"20px"},
-                  },
-                }}
-                id="standard-basic"
-                label="Count"
-                variant="standard"
-                inputRef={staffMemberCountElement}
-              />
-            </Box>
-            <Box sx={{ display: "flex", width: "100%" }}>
-              <Typography
-                sx={{
-                  color: "rgb(255, 255, 255)",
-                  width: "50%",
-                  margin: "10px 0px ",
-                  alignContent: "end",
-                }}
-              >
-                Role: HELPER
-              </Typography>
-              <TextField
-                sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                    color: "rgb(255, 255, 255)",
-                  },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                    borderBottom: "1px solid rgb(188, 189, 163)",
-                  },
-                  "& label.Mui-focused": {
-                    color: "rgb(255, 255, 255)", // Color of the label when focused
-                  },
-                  "& .MuiInput-underline:after": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                  },
-                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                  },
-                  width: "50%",
-                  margin: "10px 0px ",
-                }}
-                InputProps={{
-                  style: {
-                    color: "rgb(255, 255, 255)",
-                  },
-                }}
-                InputLabelProps={{
-                  style: {
-                    color: "white",
-                    fontSize: {xs:"18px",md:"20px"},
-                  },
-                }}
-                inputRef={helperCountElement}
-                id="standard-basic"
-                label="Count"
-                variant="standard"
-              />
-            </Box>
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize : "20px"
+                },
+              }}
+              inputRef={helperCountElement}
+              id="standard-basic"
+              label="Count"
+              variant="standard"
+            />
+          </Box>
+
+
           </Grid>
           <Box
             sx={{
@@ -686,6 +657,9 @@ export default function CreateEventPage() {
             <Button
               variant="contained"
               sx={{
+                ":hover" : {
+                  backgroundColor : "rgb(247, 230, 173)"
+                },
                 backgroundColor: "rgb(247, 230, 173) ",
                 color: "rgb(91, 94, 97)",
                 minWidth: "200px",

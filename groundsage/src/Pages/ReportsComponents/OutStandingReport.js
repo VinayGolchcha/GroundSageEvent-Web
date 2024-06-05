@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Typography,
   Box,
@@ -13,6 +13,8 @@ import {
   InputLabel,
 } from "@mui/material"; // Import necessary components
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../ContextApi/AuthContext";
+import axios from "axios";
 
 const TableCell = (props) => {
   return (
@@ -33,6 +35,28 @@ const OutStandingReport = () => {
   const [selectedOption, setSelectedOption] = useState("Year"); // Set initial value to "Year"
 
   const options = ["Year", "Month"];
+  const [outstandingReport , setOutstandingReport] = useState([]);
+  const {activeEventId , user} = useContext(AuthContext);
+
+  useEffect(()=>{
+    try{
+      const res = axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-outstanding-balance` , {
+        flag : selectedOption,
+        event_id : activeEventId,
+        type : "income"
+      } , {
+        headers : {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      });
+      console.log(res);
+    }catch(err){
+      console.log(err);
+    }
+
+  },[])
 
   // Sample data for the table
   const yearlyData = [

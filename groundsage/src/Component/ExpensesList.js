@@ -233,14 +233,14 @@ const ExpensesList = ({data , deleteTransection}) => {
                       justifyContent: "space-evenly",
                     }}
                   >
-                    <div>
+                    <div style={{textAlign : "center"}}>
                       <Button
                         variant="Contained"
                         sx={{
                           color: "rgb(91, 94, 97)",
                           fontFamily: "Inter",
                           background: "rgb(247, 230, 173)",
-                          width: "100%", // Set width to 100%
+                          width: "20px", // Set width to 100%
                           borderRadius: "0px",
                           "&:hover": {
                             backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
@@ -262,14 +262,14 @@ const ExpensesList = ({data , deleteTransection}) => {
                         Entered Amount
                       </Typography>
                     </div>
-                    <div>
+                    <div style={{textAlign : "center"}}>
                       <Button
                         variant="Contained"
                         sx={{
                           color: "rgb(91, 94, 97)",
                           fontFamily: "Inter",
                           background: "rgb(247, 230, 173)",
-                          width: "100%", // Set width to 100%
+                          width: "20px", // Set width to 100%
                           borderRadius: "0px",
                           "&:hover": {
                             backgroundColor: "rgb(247, 230, 173)", // Change background color on hover

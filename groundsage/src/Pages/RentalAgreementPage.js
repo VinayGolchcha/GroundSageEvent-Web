@@ -22,12 +22,14 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext, AuthProvider } from "../ContextApi/AuthContext";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function RentalAgreementPage() {
+    let { shopId } = useParams();
     const [openCalendar1, setOpenCalendar1] = useState(false);
     const [openCalendar2, setOpenCalendar2] = useState(false);
-    const [startDate , setStartDate ] = useState(dayjs());
-    const [endDate , setEndDate] = useState(null);
+    const [startDate , setStartDate ] = useState(dayjs(new Date()));
+    const [endDate , setEndDate] = useState(dayjs(startDate));
     const [name , setName] = useState(null);
     const [phoneNo , setPhoneNo] = useState(null);
     const [email , setEmail] = useState(null);
@@ -39,11 +41,35 @@ export default function RentalAgreementPage() {
     const {user , activeEventId} = useContext(AuthContext);
     const [isEdit , setIsEdit] = useState(false);
     const [rentalObj , setRentalObj] = useState(null);
+    const [shop , setShop] = useState(null);
+    const [loading , setLoading] = useState(true);
+    const navigate = useNavigate();
+    console.log(shopId , typeof shopId);
+    const fetchShopById = async() => {
+      try{
+        const res = await axios.post(`${process.env.REACT_APP_API_URI}/shop/fetch-shop` , {
+          shop_id : parseInt(shopId),
+          event_id : activeEventId
+        } , {
+          headers: {
+            'Authorization': `${user?.token}`, // Ensure the token format is correct
+            'Accept': 'application/json',
+            'role_id': user?.role_id
+          }
+        });
+        if(res?.data?.data?.length > 0 ){
+          setShop(res?.data?.data[1][0].image_url);
+        }
+        
+      }catch(err){
+        throw(err);
+      }
+    }
     const fetchRentalAgree = async () => {
       try{
         const res = await axios.post(`${process.env.REACT_APP_API_URI}/rentalagreement/fetch-rental-agreement` , {
-          event_id : 1183,
-          shop_id : 1147
+          event_id : activeEventId,
+          shop_id : parseInt(shopId)
         } , {
           headers: {
             'Authorization': `${user?.token}`, // Ensure the token format is correct
@@ -62,23 +88,33 @@ export default function RentalAgreementPage() {
           setRentMode(obj.rent_mode);
           setStartDate(dayjs(obj.start_date));
           setEndDate(dayjs(obj.end_date));
+          setIsEdit(true);
         }
         console.log(res);
-        setIsEdit(true);
+        setLoading(false)
       }catch(err){
         console.log(err);
+        setLoading(false);
       }
     }
 
     useEffect(()=> {
+      fetchShopById();
       fetchRentalAgree();
     },[])
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         // Handle the uploaded file
-        console.log(file);
+        const fsize = file.size;
+        const fileSizeIn = Math.round((fsize / 1024));
+        if (fileSizeIn <= 100) {
+          toast.warning("File too small, please select a file greater than 100kb");
+          return;
+      }else {
         setFIle(file);
+      }
+        console.log(file);
       };
     const addRental = async (body) => {
       const formData = new FormData();
@@ -103,7 +139,11 @@ export default function RentalAgreementPage() {
             color: "rgb(66, 92, 90)",
           }});
       }catch(err){
-        console.log(err)
+        console.log(err);
+        const errArray = err?.response?.data?.errors;
+        errArray?.forEach((err) => {
+          toast.error(err?.msg)
+        }) 
         toast.error(err?.response?.data, {
           style: {
             // Change font color
@@ -131,7 +171,7 @@ export default function RentalAgreementPage() {
               },
               data : body
           }  );
-          toast.error(res?.data?.message  , {
+          toast.success(res?.data?.message  , {
             style: {
               // Change font color
               fontSize: "16px", // Change font size
@@ -139,7 +179,8 @@ export default function RentalAgreementPage() {
               fontWeight: "600", // Change font weight
               color: "rgb(66, 92, 90)",
             }})
-            fetchRentalAgree();
+          fetchRentalAgree();
+          navigate(`/description/${shopId}`)
         }catch(err){
           console.log(err);
         }
@@ -156,8 +197,8 @@ export default function RentalAgreementPage() {
         start_date : reqStartDateFormat,
         end_date : reqEndDateFormat
       }
-      const shopid = 1147;
-      const eventid = 1183;
+      const shopid = parseInt(shopId);
+      const eventid = activeEventId;
       try{
         const res = await axios.put(`${process.env.REACT_APP_API_URI}/rentalagreement/edit-rental-agreement/${shopid}/${eventid}` , body , {
           headers : {
@@ -176,37 +217,44 @@ export default function RentalAgreementPage() {
         }})
       }catch(err){
         console.log(err);
+        const errArray = err?.response?.data?.errors;
+        errArray?.forEach((err) => {
+          toast.error(err?.msg)
+        }) 
       }
     }
     const handleSave = () => {
-      console.log(startDate);
-      console.log(endDate);
       
-      var dd = String(startDate?.getDate()).padStart(2, '0');
-      var mm = String(startDate?.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = startDate?.getFullYear();
+      // var dd = String(startDate?.getDate()).padStart(2, '0');
+      // var mm = String(startDate?.getMonth() + 1).padStart(2, '0'); //January is 0!
+      // var yyyy = startDate?.getFullYear();
 
-      const fromDate = yyyy + '-' + mm + '-' + dd;
-      setStartDate(fromDate);
+      // const fromDate = yyyy + '-' + mm + '-' + dd;
+      // setStartDate(fromDate);
 
-      var dd = String(endDate?.getDate()).padStart(2, '0');
-      var mm = String(endDate?.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = endDate?.getFullYear();
-      const toDate = yyyy + '-' + mm + '-' + dd;
-      setToDate(toDate);
-
+      // var dd = String(endDate?.getDate()).padStart(2, '0');
+      // var mm = String(endDate?.getMonth() + 1).padStart(2, '0'); //January is 0!
+      // var yyyy = endDate?.getFullYear();
+      // const toDate = yyyy + '-' + mm + '-' + dd;
+      // setToDate(toDate);
+      let fromDate;
+      let toDate;
+      if(startDate && endDate) {
+         fromDate = startDate?.toISOString().split("T")[0];
+         toDate = endDate?.toISOString().split("T")[0];
+      }
       const body = {
         name: name,
         email: email,
         phone_number : phoneNo,
         address : address,
         id_document : "http://www.ABC123456.com",
-        shop_id : 1147,
+        shop_id : parseInt(shopId),
         start_date : fromDate,
         end_date : toDate,
         rent_amount : amount,
         rent_mode : rentMode,
-        event_id : 1183,
+        event_id : activeEventId,
         file : file
     }
     addRental(body);
@@ -220,6 +268,7 @@ export default function RentalAgreementPage() {
     }
     
     return (
+      <>
         <Box sx={{backgroundColor : "rgb(66, 92, 90)"}}>
             <Typography variant="h3" sx={{
                 color : "rgb(247, 230, 173)",
@@ -228,9 +277,10 @@ export default function RentalAgreementPage() {
                 fontWeight : "600",
                 textShadow: "0 6px rgba(81,67,21,0.8)"
             }}>Rental Agreement</Typography>
+            {loading ? <div> </div> : <>
             <ToastContainer position="bottom-right" style={{ color: "red" }} />
             <Box sx={{display : "flex" , justifyContent : "center" , margin : "10px 0px", alignItems : "center"}}>
-               <img src="Rectangle-4242.png" alt="Shop Image" style={{border : "20px solid rgb(78, 101, 100)" , borderRadius: "10px" , position : "relative" , width : "70%"}}/>
+               <img src={shop} alt="Shop Image" style={{border : "20px solid rgb(78, 101, 100)" , borderRadius: "10px" , position : "relative" , width : "70%"}}/>
                <Typography variant="h4" sx={{position : "absolute" , top : "205px" , color : "rgb(255, 255, 255)"}}>Shop 01</Typography>
             </Box>
             <Box sx={{display : "flex" , justifyContent : "center" }}>
@@ -240,6 +290,9 @@ export default function RentalAgreementPage() {
                 <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                },
+                "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled" : {
+                  WebkitTextFillColor : "white"
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -261,13 +314,16 @@ export default function RentalAgreementPage() {
                 style: {
                   color: "rgb(255, 255, 255)",
                 },
+              
               }}
               InputLabelProps={{
               style: {
                 color: "white",
               },}}
-              value={rentalObj?.tenant_name}
               disabled={isEdit}
+              autoFocus={isEdit}
+              value={rentalObj?.tenant_name}
+              
             id="standard-basic" label="name" variant="standard" onChange={(e) => setName(e.target.value)} />
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -275,6 +331,9 @@ export default function RentalAgreementPage() {
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled" : {
+                  WebkitTextFillColor : "white"
                 },
                 "& label.Mui-focused": {
                   color: "rgb(255, 255, 255)", // Color of the label when focused
@@ -299,10 +358,14 @@ export default function RentalAgreementPage() {
               },}}
               value={rentalObj?.tenant_phone_number}
               disabled={isEdit}
+              type="number"
             id="standard-basic" label="phone number" variant="standard" onChange={(e) => setPhoneNo(e.target.value)}/>
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                },
+                "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled" : {
+                  WebkitTextFillColor : "white"
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -331,6 +394,7 @@ export default function RentalAgreementPage() {
               },}}
               value={rentalObj?.tenant_email}
               disabled={isEdit}
+              type="email"
             label="email" variant="standard" onChange={(e) => setEmail(e.target.value)}/>
             <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -338,6 +402,9 @@ export default function RentalAgreementPage() {
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled" : {
+                  WebkitTextFillColor : "white"
                 },
                 "& label.Mui-focused": {
                   color: "rgb(255, 255, 255)", // Color of the label when focused
@@ -376,6 +443,9 @@ export default function RentalAgreementPage() {
             "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before" : {
                 borderBottom : "1px solid rgb(188, 189, 163)"
             } ,
+            "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled" : {
+              WebkitTextFillColor : "white"
+            },
             '& label.Mui-focused': {
                 color: 'rgb(255, 255, 255)', // Color of the label when focused
             },
@@ -443,6 +513,7 @@ export default function RentalAgreementPage() {
               style: {
                 color: "white",
               },}}
+              type="number"
             id="standard-basic" label="amount" variant="standard" onChange={(e) => setAmount(e.target.value)} />
             {/* <TextField sx = {{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -514,6 +585,7 @@ export default function RentalAgreementPage() {
                   onOpen={() => setOpenCalendar1(true)}
                   onClose={() => setOpenCalendar1(false)}
                   minDate={dayjs(startDate)}
+                  helperText = {!startDate && "select the start date"}
                   slotProps={{
                     textField: {
                       InputProps: {
@@ -540,6 +612,7 @@ export default function RentalAgreementPage() {
                       borderBottom: " 1px solid rgb(188, 189, 163)",
                     },
                   }}
+                
                 />
               </FormControl>
             </LocalizationProvider>
@@ -611,12 +684,17 @@ export default function RentalAgreementPage() {
             <Button
               variant="contained"
               sx={{
+                ":hover" : {
+                  backgroundColor : "rgb(247, 230, 173)"
+                },
                 backgroundColor: "rgb(247, 230, 173) ",
                 color: "rgb(91, 94, 97)",
                 minWidth: "200px",
                 fontWeight: "600",
                 marginRight : "2%"
-              }}
+              }
+             
+            }
               onClick={handleEdit}
             >
               Edit
@@ -624,6 +702,9 @@ export default function RentalAgreementPage() {
             <Button
               variant="contained"
               sx={{
+                ":hover" : {
+                  backgroundColor : "rgb(247, 230, 173)"
+                },
                 backgroundColor: "rgb(247, 230, 173) ",
                 color: "rgb(91, 94, 97)",
                 minWidth: "200px",
@@ -636,7 +717,8 @@ export default function RentalAgreementPage() {
             </>}
           </Box>
         </Grid>
-      </Box>
+      </Box></>}
     </Box>
+    </>
   );
 }

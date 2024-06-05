@@ -148,7 +148,7 @@ const App = () => {
         <Route path="/description/:shopIndex" element={<DescriptionPage />} />
         <Route path="/refferalcode" element={<ReferralCodePage />} />
         <Route path="/create-transaction" element={<TransactionPage />} />
-        <Route path="/rental-agreement" element={<RentalAgreementPage />} />
+        <Route path="/rental-agreement/:shopId" element={<RentalAgreementPage />} />
         <Route path="/Events" element={<EventListPage />} />
         <Route path="/createshop" element={<CreateShopPage />} />
         <Route path="/notes" element={<Notes />} />

@@ -35,8 +35,8 @@ export default function EventListPage() {
       Object.keys(body).forEach((key) => {
         formData.append(key , body[key]);
       })
-      const files = body?.files;
-      files.forEach((f) => {
+
+      file.forEach((f) => {
         formData.append("files" , f);
       })
       const publicIds = body?.public_ids;
@@ -56,7 +56,7 @@ export default function EventListPage() {
         }
       );
       console.log(res);
-      toast.success(res?.data?.data , {
+      toast.success(res?.data?.message , {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -66,7 +66,12 @@ export default function EventListPage() {
         }});
         setIsEdit(!isEdit);
     }catch(err){
-      console.log(err);
+      console.log(err)
+      const errArray = err?.response?.data?.errors;
+      console.log(errArray);
+      errArray?.forEach((err) => {
+        toast.error(err?.msg)
+      }) 
       toast.error(err);
     }
   }
@@ -173,7 +178,7 @@ export default function EventListPage() {
 
   return (
     <>
-    { isEdit === true ? (<EditEvent selectedItem = {selectedItem} handleSaveEvent = {handleEditEventApi} />) : (
+    { isEdit === true ? (<EditEvent selectedItem = {selectedItem} handleSaveEvent = {handleEditEventApi} setFile = {setFIle}/>) : (
     <Box
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
@@ -204,7 +209,7 @@ export default function EventListPage() {
             fontWeight: "600",
             width: "100%",
             // padding: "30px",
-            marginTop: { xs: "0px", md: "-20px" },
+            marginTop: "-20px",
             fontFamily: "Outfit",
             textShadow: "0 6px rgba(81,67,21,0.8)",
             fontSize: { xs: "40px", md: "56px" },

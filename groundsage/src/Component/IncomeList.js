@@ -193,7 +193,7 @@ const IncomeList = ({data , deleteTransection }) => {
                   width: "100%", // Ensure date div takes full width
                 }}
               >
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex" , alignContent : "center"}}>
                   <div
                     style={{
                       display: "flex",
@@ -230,7 +230,7 @@ const IncomeList = ({data , deleteTransection }) => {
                       justifyContent: "space-around",
                     }}
                   >
-                    <div>
+                    <div style={{textAlign : "center", alignContent : "center"}}>
                       <Button
                         variant="Contained"
                         size="small"
@@ -238,7 +238,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           color: "rgb(91, 94, 97)",
                           fontFamily: "Inter",
                           background: "rgb(247, 230, 173)",
-                          width: "100%", // Set width to 100%
+                          width: "20px", // Set width to 100%
                           borderRadius: "0px",
                           "&:hover": {
                             backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
@@ -253,20 +253,21 @@ const IncomeList = ({data , deleteTransection }) => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
-                          fontSize: { xs: "13px", md: "20px" },
+                          fontSize: { xs: "13px", md: "15px" },
                         }}
                       >
                         Amount Due
                       </Typography>
                     </div>
-                    <div>
+                    <div style={{textAlign : "center" , alignContent : "center"}}>
                       <Button
                         variant="Contained"
                         sx={{
                           color: "rgb(91, 94, 97)",
                           fontFamily: "Inter",
                           background: "rgb(247, 230, 173)",
-                          width: "100%", // Set width to 100%
+                          textAlign : "center",
+                          width: "20px", // Set width to 100%
                           borderRadius: "0px",
                           "&:hover": {
                             backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
@@ -281,20 +282,21 @@ const IncomeList = ({data , deleteTransection }) => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
-                          fontSize: { xs: "13px", md: "20px" },
+                          fontSize: { xs: "13px", md: "15px" },
                         }}
                       >
                         Outstanding Amount
                       </Typography>
                     </div>
-                    <div>
+                    <div style={{textAlign : "center", alignContent : "center"}}>
                       <Button
                         variant="Contained"
                         sx={{
                           color: "rgb(91, 94, 97)",
                           fontFamily: "Inter",
                           background: "rgb(247, 230, 173)",
-                          width: "100%", // Set width to 100%
+                          width: "20px",
+                           // Set width to 100%
                           borderRadius: "0px",
                           "&:hover": {
                             backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
@@ -309,7 +311,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           marginTop: "3px",
                           fontFamily: "Poppins",
                           fontWeight: "400",
-                          fontSize: {xs:"13px",md:"20px"},
+                          fontSize: {xs:"13px",md:"15px"},
 
                         }}
                       >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Typography,
   Box,
@@ -13,6 +13,8 @@ import {
   InputLabel,
 } from "@mui/material"; // Import necessary components
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../ContextApi/AuthContext";
 
 const TableCell = (props) => {
   return (
@@ -33,6 +35,27 @@ const OccupancyReport = () => {
   const [selectedOption, setSelectedOption] = useState("Shop"); // Set initial value to "Shop"
 
   const options = ["Shop", "Month"];
+  const [occupancyData , setOccupancyData] = useState([]);
+  const {activeEventId , user} = useContext(AuthContext);
+
+  useEffect(()=>{
+    try{
+      const res = axios.post(`${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data` , {
+        flag : selectedOption,
+        event_id : activeEventId
+      } , {
+        headers : {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      });
+      console.log(res);
+    }catch(err){
+      console.log(err);
+    }
+
+  },[])
 
   // Sample data for the table
   const ShopData = [
