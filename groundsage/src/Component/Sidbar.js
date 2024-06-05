@@ -26,7 +26,7 @@ const Sidbar = ({ onItemClick, activeContent }) => {
         display: "flex",
         flexDirection: { xs: "row", md: "column" },
         alignItems: { xs: "center", md: "flex-start" },
-        justifyContent: { xs: "center", sm: "flex-start" },
+        justifyContent: { xs: "center", md: "flex-start" },
         backgroundColor: "rgba(188, 188, 188, 0.21)",
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
         borderRadius: "45px",
@@ -41,7 +41,7 @@ const Sidbar = ({ onItemClick, activeContent }) => {
           key={index}
           color="primary"
           sx={{
-            margin: { xs: "0 10px", sm: "0 0 30px 0" },
+            margin: { xs: "0 10px", md: "0 0 30px 0" },
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
@@ -49,8 +49,8 @@ const Sidbar = ({ onItemClick, activeContent }) => {
               activeContent === button.id
                 ? "underline rgb(247, 230, 173)"
                 : "none",
-            fontSize: { xs: "0.7rem", sm: "1rem" },
-            padding: { xs: "5px", sm: "10px" },
+            fontSize: { xs: "0.7rem", md: "1rem" },
+            padding: { xs: "5px", md: "10px" },
           }}
           onClick={() => onItemClick(button.id)}
         >
@@ -71,7 +71,7 @@ const Sidbar = ({ onItemClick, activeContent }) => {
                 lineHeight: "0.6",
                 fontWeight: "600",
                 fontFamily: "Inter",
-                fontSize: { xs: "0.7rem", sm: "1rem" },
+                fontSize: { xs: "0.7rem", md: "1rem" },
                 textAlign: "center",
                 marginTop: "5px",
               }}

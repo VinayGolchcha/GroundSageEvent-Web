@@ -15,6 +15,7 @@ const ProfileAboutpage = () => {
     role: "",
     currentTeam: "",
     currentEvent: "",
+    username_initials: "",
   });
   const { user } = useContext(AuthContext);
 
@@ -49,8 +50,8 @@ const ProfileAboutpage = () => {
             role: userDataFromApi.role_name,
             currentTeam: userDataFromApi.team_name,
             currentEvent: userDataFromApi.event_name,
+            username_initials: userDataFromApi.username_initials,
           });
-          console.log(userDataFromApi);
         } else {
           console.error("Failed to fetch user data:", data.message);
         }
@@ -87,7 +88,7 @@ const ProfileAboutpage = () => {
           justifyContent: { md: "space-between" },
         }}
       >
-        <Box
+        {/* <Box
           component="img"
           src="../../../Images/oval_img@2x.png"
           alt="profile"
@@ -96,7 +97,22 @@ const ProfileAboutpage = () => {
             display: { xs: "block", md: "none" },
             margin: { xs: "0 auto", md: "0" },
           }}
-        />
+        /> */}
+        <Typography
+          sx={{
+            color: "rgb(247, 230, 173)",
+            textAlign: "center",
+            fontSize: { xs: "40px", md: "56px" },
+            fontFamily: "Inter",
+            fontWeight: "700",
+            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
+            width: { xs: "50%", md: "25%" },
+            display: { xs: "block", md: "none" },
+            margin: { xs: "0 auto", md: "0" },
+          }}
+        >
+          {userData.username_initials}
+        </Typography>
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -277,16 +293,20 @@ const ProfileAboutpage = () => {
           />
         </Box>
         {/** Ensure the image is hidden on small devices */}
-        <Box
-          component="img"
-          src="../../../Images/oval_img@2x.png"
-          alt="profile"
+        <Typography
           sx={{
+            color: "rgb(247, 230, 173)",
+            textAlign: "center",
+            fontSize: { xs: "40px", md: "56px" },
+            fontFamily: "Inter",
+            fontWeight: "700",
+            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
             display: { xs: "none", md: "block" },
-            width: { md: "50%" },
-            marginTop: { md: "0" },
+            margin:"10%"
           }}
-        />
+        >
+          {userData.username_initials}
+        </Typography>
       </Box>
       <Box
         sx={{

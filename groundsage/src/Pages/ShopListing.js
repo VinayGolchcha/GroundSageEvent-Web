@@ -33,11 +33,12 @@ const ShopListing = () => {
   const [Doms, setDoms] = useState([]);
   const [shopCards, setShopCards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const apiUrl = process.env.REACT_APP_API_URI;
 
   const fetchShops = useCallback(async () => {
     try {
       const response = await axios.get(
-        `https://groundsageevent-be.onrender.com/api/v1/shop/fetch-all-shop/${activeEventId}`,
+        `${apiUrl}/shop/fetch-all-shop/${activeEventId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +70,7 @@ const ShopListing = () => {
   const fetchLastShopNumber = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number",
+        `${apiUrl}/shop/fetch-last-shop-number`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -158,17 +159,14 @@ const ShopListing = () => {
     }));
 
     axios
-      .delete(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/delete-shop",
-        {
-          data: { ids: shopIds },
-          headers: {
-            "Content-Type": "application/json",
-            "x-access-token": user?.token,
-            role_id: user?.role_id,
-          },
-        }
-      )
+      .delete(`${apiUrl}/shop/delete-shop`, {
+        data: { ids: shopIds },
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": user?.token,
+          role_id: user?.role_id,
+        },
+      })
       .then((response) => {
         const updatedShopCards = shopCards.filter(
           (shop) =>

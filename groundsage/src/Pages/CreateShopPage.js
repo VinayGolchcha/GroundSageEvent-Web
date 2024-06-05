@@ -48,7 +48,7 @@ export default function CreateShopPage() {
     shop_number: lastShopNumber, // Generate random shop number between 1 and 50
     files: file,
   });
-
+  const apiUrl = process.env.REACT_APP_API_URI;
   const [lastShopNumberFetched, setLastShopNumberFetched] = useState(false); // State to track whether the last shop number has been fetched
 
   const handleInputChange = (e, field) => {
@@ -68,7 +68,7 @@ export default function CreateShopPage() {
   const fetchLastShopNumber = async () => {
     try {
       const response = await axios.get(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-last-shop-number",
+        `${apiUrl}/shop/fetch-last-shop-number`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export default function CreateShopPage() {
       });
 
       const response = await axios.post(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/create-shop",
+        `${apiUrl}/shop/create-shop`,
         formData,
         {
           headers: {

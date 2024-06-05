@@ -17,23 +17,8 @@ const ProfileTeam = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [eventList, setEventList] = useState([
-    {
-      eventType: "FOOD EVENT",
-      teams: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"],
-    },
-    { eventType: "FOOD EVENT 1", teams: ["D", "E"] },
-    { eventType: "FOOD EVENT 2", teams: ["F", "G", "H"] },
-    { eventType: "FOOD EVENT 3", teams: ["I", "J", "K", "L"] },
-    { eventType: "FOOD EVENT 4", teams: ["M"] },
-    {
-      eventType: "FOOD EVENT 5",
-      teams: ["N", "O", "P", "Q", "R", "P", "Q", "R", "S", "T", "U", "V"],
-    },
-    { eventType: "FOOD EVENT 6", teams: ["S", "T"] },
-  ]);
   const [endpoint, setEndpoint] = useState(4);
-  const [eventListLength, setEventListLength] = useState("Show More...");
+  // const [eventListLength, setEventListLength] = useState("Show More...");
   const [expandedStates, setExpandedStates] = useState(Array(7).fill(false));
 
   useEffect(() => {
@@ -70,13 +55,7 @@ const ProfileTeam = () => {
   }, []);
 
   const handleClick = () => {
-    if (eventListLength === "Show More...") {
-      setEndpoint(eventList.length);
-      setEventListLength("Show Less...");
-    } else {
-      setEndpoint(4);
-      setEventListLength("Show More...");
-    }
+    setEndpoint(endpoint === 4 ? data?.event_data.length : 4);
   };
 
   const navigate = useNavigate();
@@ -112,20 +91,20 @@ const ProfileTeam = () => {
     // Show a loading indicator while the data is being fetched
     return (
       <>
-      <Box
-        sx={{
-          display: { xs: "none", md: "block" },
-          position: "absolute",
-          top: "50%",
-          left: "50%", // 20% from the left side of the screen
-          transform: "translate(-50%, -50%)", // Centering horizontally and vertically
-          backgroundColor: "rgb(66, 92, 90)",
-          borderRadius: "50%",
-          padding: "20px",
-        }}
-      >
-        <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
-      </Box>
+        <Box
+          sx={{
+            display: { xs: "none", md: "block" },
+            position: "absolute",
+            top: "50%",
+            left: "50%", // 20% from the left side of the screen
+            transform: "translate(-50%, -50%)", // Centering horizontally and vertically
+            backgroundColor: "rgb(66, 92, 90)",
+            borderRadius: "50%",
+            padding: "20px",
+          }}
+        >
+          <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
+        </Box>
         <Box
           sx={{
             display: { xs: "flex", md: "none" },
@@ -136,8 +115,8 @@ const ProfileTeam = () => {
         >
           <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
         </Box>
-        </>
-      );
+      </>
+    );
   }
   return (
     <Box
@@ -280,7 +259,10 @@ const ProfileTeam = () => {
                   onClick={() => handleExpandList(index)}
                 >
                   {event?.members.slice(0, 5).map((member, idx) => (
-                    <Avatar key={idx}>{member.charAt(0).toUpperCase()}</Avatar>
+                    <Box key={idx} sx={{ textAlign: "center" }}>
+                      <Avatar>{member.charAt(0).toUpperCase()}</Avatar>
+                      <Typography sx={{ color: "white" }}>{member}</Typography>
+                    </Box>
                   ))}
                   {event?.members.length > 5 && (
                     <>
@@ -305,9 +287,12 @@ const ProfileTeam = () => {
                     (chunk, chunkIndex) => (
                       <Stack key={chunkIndex} direction="row" spacing={1}>
                         {chunk.map((member, idx) => (
-                          <Avatar key={idx}>
-                            {member.charAt(0).toUpperCase()}
-                          </Avatar>
+                          <Box key={idx} sx={{ textAlign: "center" }}>
+                            <Avatar>{member.charAt(0).toUpperCase()}</Avatar>
+                            <Typography sx={{ color: "white" }}>
+                              {member}
+                            </Typography>
+                          </Box>
                         ))}
                       </Stack>
                     )
@@ -325,7 +310,7 @@ const ProfileTeam = () => {
               }}
               onClick={handleClick}
             >
-              {eventListLength}
+              {endpoint === 4 ? "Show More" : "Show Less"}
             </Typography>
           )}
         </Box>

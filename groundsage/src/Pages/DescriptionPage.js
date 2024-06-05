@@ -22,7 +22,6 @@ const DescriptionPage = () => {
   };
 
   const handleEdit = () => {
-
     navigate("/update-shop", {
       state: {
         selectedShop: selectedShop,
@@ -30,24 +29,22 @@ const DescriptionPage = () => {
       },
     });
   };
+  const apiUrl = process.env.REACT_APP_API_URI;
 
   const fetchShopData = async () => {
     try {
-      const response = await fetch(
-        "https://groundsageevent-be.onrender.com/api/v1/shop/fetch-shop",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-access-token": user?.token,
-            role_id: user?.role_id,
-          },
-          body: JSON.stringify({
-            shop_id: shopDetails.id,
-            event_id: shopDetails.event_id,
-          }),
-        }
-      );
+      const response = await fetch(`${apiUrl}/shop/fetch-shop`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": user?.token,
+          role_id: user?.role_id,
+        },
+        body: JSON.stringify({
+          shop_id: shopDetails.id,
+          event_id: shopDetails.event_id,
+        }),
+      });
       const data = await response.json();
       setSelectedShop(data.data[0]); // Assuming shop details are at data[0]
       setImageUrls(data.data[1]); // Assuming images are at data[1]
@@ -101,7 +98,7 @@ const DescriptionPage = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: { xs: "40px", md: "56px" },
+          fontSize: { xs: "30px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: { xs: "0px", md: "-30px" },
@@ -122,8 +119,8 @@ const DescriptionPage = () => {
             borderRadius: "7px",
             display: "flex",
             maxWidth: "fit-content",
-            width: { xs: "80%", md: "90%" },
-            padding: "12px 30px 5px 30px",
+            width: { xs: "90%", md: "90%" },
+            padding: { xs: "15px", md: "12px 30px 5px 30px" },
             marginTop: "10px",
             borderColor: "rgb(112, 141, 161)", // Added border color
           }}
@@ -137,9 +134,9 @@ const DescriptionPage = () => {
               { label: "Rent: ", value: selectedShop.rent },
               { label: "Shop Location: ", value: selectedShop.location },
             ].map((row, index) => (
-              <div
+              <Box
                 key={index}
-                style={{
+                sx={{
                   display: "flex",
                   justifyContent: "left",
                   textTransform: "uppercase",
@@ -176,7 +173,7 @@ const DescriptionPage = () => {
                 >
                   {" " + row.value}
                 </Typography>
-              </div>
+              </Box>
             ))}
           </Box>
           <Box
@@ -188,17 +185,21 @@ const DescriptionPage = () => {
               width: "20%",
             }}
           >
-            <img
+            <Box
+              component="img"
               src="../../../Images/矢量 180.png"
               alt="Right Arrow"
-              style={{ width: "45%", margin: "0px 20px 0px 60px" }}
+              sx={{
+                width: { xs: "35%", md: "45%" },
+                margin: {xs:"10px 20px 0px 30px",md:"0px 20px 0px 60px"},
+              }}
             />
             <Typography
               sx={{
                 color: "rgb(146, 235, 233)",
                 fontWeight: "700",
-                fontSize: "18px",
-                margin: "5px 20px 0px 60px",
+                fontSize: { xs: "14px", md: "18px" },
+                margin: {xs:"5px 20px 0px 30px",md:"5px 20px 0px 60px"},
                 textTransform: "uppercase",
               }}
             >

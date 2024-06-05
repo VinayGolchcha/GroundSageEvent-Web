@@ -18,7 +18,6 @@ const pages = [
   "Home",
   "Events",
   "Shops",
-  "Teams",
   "Transaction",
   "Notes",
   "Reports",
@@ -30,7 +29,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [currentActiveEventName, setCurrentActiveEventName] =
     React.useState(null);
-  const { logout } = React.useContext(AuthContext);
+  const { logout, user } = React.useContext(AuthContext);
   const [settings, setSettings] = React.useState([]);
   const [eventName, setEventName] = React.useState(null);
   const location = useLocation();
@@ -192,12 +191,12 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Profile">
               <IconButton
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, marginRight: "20px" }}
               >
-                <Avatar alt="" src="../../Component/profile..png" />
+                <Avatar alt={user.user_name} src="../../Component/profile..png" />
               </IconButton>
             </Tooltip>
             <Menu

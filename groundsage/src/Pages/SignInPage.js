@@ -74,7 +74,7 @@ const SignInPage = () => {
         const userData = data?.data?.[0];
         setUser(userData);
         console.log(userData);
-        navigate("/profile");
+        navigate("/home");
       } else {
         toast.error(data.message || "Login failed. Please try again.");
       }
