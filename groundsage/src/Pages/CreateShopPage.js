@@ -53,11 +53,28 @@ export default function CreateShopPage() {
 
   const handleInputChange = (e, field) => {
     const newValue = e.target.value;
+
+    // Validation based on field type
+    if (field === "area" || field === "rent") {
+      // Only allow numbers
+      if (!/^\d*\.?\d*$/.test(newValue)) {
+        toast.error("Please enter a valid number.");
+        return;
+      }
+    } else if (field === "description" || field === "dome" || field === "location") {
+      // Only allow strings
+      if (!/^[a-zA-Z\s]*$/.test(newValue)) {
+        toast.error("Please enter valid text.");
+        return;
+      }
+    }
+
     setEventData((prevData) => ({
       ...prevData,
       [field]: newValue,
     }));
   };
+
   useEffect(() => {
     // Fetch the last shop number when the component mounts
     if (!lastShopNumberFetched) {
@@ -203,8 +220,15 @@ export default function CreateShopPage() {
   const handleFileInputChange = (e) => {
     // const file = e.target.files[0];
     const files = Array.from(e.target.files);
-    setFile(files);
-    console.log(files);
+    const validFiles = files.filter((file) => {
+      if (file.size > 100 * 1024) {
+        toast.error(`Image ${file.name} is less than 100kb. Please upload a larger image.`);
+        return false;
+      }
+      return true;
+    });
+    setFile(validFiles);
+    console.log(validFiles);
   };
 
   const handleFile = (file) => {
@@ -250,7 +274,7 @@ export default function CreateShopPage() {
             fontWeight: "600",
             marginTop: "-30px",
             textShadow: "0 6px rgba(81,67,21,0.8)",
-            fontSize: { xs: "40px", md: "56px" },
+            fontSize: { xs: "30px", sm: "40px", md: "56px" },
           }}
         >
           Add New Shop
