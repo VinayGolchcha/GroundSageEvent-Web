@@ -38,10 +38,10 @@ const OutStandingReport = () => {
   const [outstandingReport , setOutstandingReport] = useState([]);
   const {activeEventId , user} = useContext(AuthContext);
 
-  useEffect(()=>{
+  const fecthOutstandingReport = async() => {
     try{
-      const res = axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-outstanding-balance` , {
-        flag : selectedOption,
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-outstanding-balance` , {
+        flag : selectedOption.toLowerCase(),
         event_id : activeEventId,
         type : "income"
       } , {
@@ -51,12 +51,16 @@ const OutStandingReport = () => {
           role_id : user?.role_id
         }
       });
-      console.log(res);
+      setOutstandingReport(res?.data?.data);
+      console.log(outstandingReport);
     }catch(err){
       console.log(err);
     }
+  }
+  useEffect(()=>{
+    fecthOutstandingReport();
 
-  },[])
+  },[selectedOption])
 
   // Sample data for the table
   const yearlyData = [
@@ -290,21 +294,21 @@ const OutStandingReport = () => {
               {/* Data Rows */}
               <TableBody>
                 {selectedOption === "Year"
-                  ? yearlyData.map((data, index) => (
+                  ? outstandingReport?.map((data, index) => (
                       <TableRow key={index}>
-                        <TableCell>{data.year}</TableCell>
-                        <TableCell>{data.totalAmount}</TableCell>
-                        <TableCell>{data.shopRental}</TableCell>
-                        <TableCell>{data.others}</TableCell>
+                        <TableCell>{data?.year}</TableCell>
+                        <TableCell>{data?.total}</TableCell>
+                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
                   : selectedOption === "Month"
-                  ? getLast12MonthsData().map((data, index) => (
+                  ? outstandingReport?.map((data, index) => (
                       <TableRow key={index}>
-                        <TableCell>{data.month}</TableCell>
-                        <TableCell>{data.totalAmount}</TableCell>
-                        <TableCell>{data.shopRental}</TableCell>
-                        <TableCell>{data.others}</TableCell>
+                        <TableCell>{data?.year}</TableCell>
+                        <TableCell>{data?.total}</TableCell>
+                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
                   : null}

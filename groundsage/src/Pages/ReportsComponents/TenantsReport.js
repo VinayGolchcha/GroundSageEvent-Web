@@ -8,9 +8,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Select,
-  MenuItem,
-  InputLabel,
 } from "@mui/material"; // Import necessary components
 import { useNavigate } from "react-router-dom";
 
@@ -55,7 +52,7 @@ const TenantsReport = () => {
       TENANT_ID: 1114,
       TENANT_NAME: "John Doe",
       START_DATE: "01-03-2024",
-      END_DATE: "03-06-2024",
+      END_DATE: "13-06-2024",
     },
     {
       TENANT_ID: 1115,
@@ -65,49 +62,40 @@ const TenantsReport = () => {
     },
     // Add more data as needed
   ];
+
   const heading = ["TENANT ID", "TENANT NAME", "START DATE", "END DATE"];
-  // const oldestDate = TenantsReportData[TenantsReportData.length - 1].START_DATE;
-  // const newestDate = TenantsReportData[0].END_DATE;
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+
   const [oldestDate, setOldestDate] = useState("");
   const [newestDate, setNewestDate] = useState("");
-  
+
   const formatDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
     return `${year}-${month}-${day}`;
-  };  
+  };
+
+  const formatDate2 = (date) => {
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    return new Date(date).toLocaleDateString("en-IN", options);
+  };
 
   const filteredData = TenantsReportData.filter((item) => {
     if (!oldestDate || !newestDate) return true;
+    const oldest = formatDate2(new Date(oldestDate));
+    const newest = formatDate2(new Date(newestDate));
+    console.log(oldest, newest);
+
     const formattedStartDate = formatDate(item.START_DATE);
     const formattedEndDate = formatDate(item.END_DATE);
-    const formattedOldestDate = formatDate(oldestDate);
-    const formattedNewestDate = formatDate(newestDate);
-  
-    const startDate = new Date(formattedStartDate);
-    const endDate = new Date(formattedEndDate);
-    const oldest = new Date(formattedOldestDate);
-    const newest = new Date(formattedNewestDate);
-  
-    oldest.setHours(0, 0, 0, 0);
-    newest.setHours(23, 59, 59, 999);
-  
-    return startDate >= oldest && endDate <= newest;
-  });
- 
 
-  const CustomIcon = (
-    <img
-      src="../../Images/image 87.png" // Change the image path to the desired image
-      alt="Icon"
-      style={{
-        // width: "20px",
-        // height: "20px",
-        margin: "0px 5px 0px -10px",
-      }}
-    />
-  );
+    console.log(oldest, newest, formattedStartDate, formattedEndDate);
+    // Adjusting the time to compare only the dates, not the time
+    // oldest.setHours(0, 0, 0, 0);
+    // newest.setHours(23, 59, 59, 999);
+    // startDate.setHours(0, 0, 0, 0);
+    // endDate.setHours(23, 59, 59, 999);
+
+    return formattedStartDate >= newest && formattedEndDate <= oldest;
+  });
 
   return (
     <div
@@ -133,11 +121,10 @@ const TenantsReport = () => {
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: {xs:"40px",md:"56px"},
+          fontSize: { xs: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: "-75px",
-          //   textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
         }}
       >
         Reports
@@ -148,7 +135,6 @@ const TenantsReport = () => {
           fontSize: "35px",
           fontFamily: "Aoboshi One",
           fontWeight: "400",
-          //   textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           margin: "0px 0px 30px 50px",
           marginLeft: "13%",
         }}
@@ -171,7 +157,6 @@ const TenantsReport = () => {
             background: "rgb(236, 219, 163)",
             padding: "20px",
             borderRadius: "10px",
-            // margin: "20px auto",
             width: "100%",
           }}
         >
@@ -181,7 +166,6 @@ const TenantsReport = () => {
               fontSize: "30px",
               fontFamily: "Inter",
               fontWeight: "600",
-              //   textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
               margin: "0px 0px 0px 10px",
             }}
           >
@@ -224,10 +208,7 @@ const TenantsReport = () => {
                   border: "none",
                   width: "150px", // Adjust width as needed
                 }}
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setNewestDate(e.target.value);
-                }}
+                onChange={(e) => setNewestDate(e.target.value)}
               />
             </span>
           </Typography>
@@ -235,11 +216,9 @@ const TenantsReport = () => {
           {/* Header Row */}
           <TableContainer>
             <Table size="medium" sx={{ border: "none" }}>
-              {" "}
               {/* Remove table border */}
               <TableHead>
                 <TableRow sx={{ borderTop: "1px solid rgba(0, 0, 0, 0.5)" }}>
-                  {" "}
                   {/* Add bottom border with specified color */}
                   {heading.map((h, idx) => {
                     return (

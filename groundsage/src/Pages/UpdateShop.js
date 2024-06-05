@@ -185,10 +185,18 @@ export default function UpdateShopPage() {
   const handleFileInputChange = (e) => {
     // const file = e.target.files[0];
     const files = Array.from(e.target.files);
-    setFile(files);
-    console.log(files);
+    const validFiles = files.filter((file) => {
+      if (file.size > 100 * 1024) {
+        toast.error(
+          `Image ${file.name} is less than 100kb. Please upload a larger image.`
+        );
+        return false;
+      }
+      return true;
+    });
+    setFile(validFiles);
+    console.log(validFiles);
   };
-
   const handleFile = (file) => {
     const reader = new FileReader();
 
@@ -232,7 +240,7 @@ export default function UpdateShopPage() {
             fontWeight: "600",
             marginTop: "-30px",
             textShadow: "0 6px rgba(81,67,21,0.8)",
-            fontSize: { xs: "40px", md: "56px" },
+            fontSize: { xs: "30px", sm: "40px", md: "56px" },
           }}
         >
           Update Shop

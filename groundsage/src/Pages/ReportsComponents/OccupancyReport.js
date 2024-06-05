@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../ContextApi/AuthContext";
+import shadows from "@mui/material/styles/shadows";
 
 const TableCell = (props) => {
   return (
@@ -33,15 +34,13 @@ const TableCell = (props) => {
 const OccupancyReport = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("Shop"); // Set initial value to "Shop"
-
   const options = ["Shop", "Month"];
   const [occupancyData , setOccupancyData] = useState([]);
   const {activeEventId , user} = useContext(AuthContext);
-
-  useEffect(()=>{
+  const fetchReport = async () => {
     try{
-      const res = axios.post(`${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data` , {
-        flag : selectedOption,
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data` , {
+        flag : selectedOption.toLowerCase(),
         event_id : activeEventId
       } , {
         headers : {
@@ -50,46 +49,50 @@ const OccupancyReport = () => {
           role_id : user?.role_id
         }
       });
-      console.log(res);
+      setOccupancyData(res?.data?.data);
     }catch(err){
       console.log(err);
     }
+  }
 
-  },[])
+  useEffect(()=>{
+    fetchReport();
+
+  },[selectedOption])
 
   // Sample data for the table
-  const ShopData = [
-    {
-      Shop_ID: 1110,
-      SHOP_NUMBER: 12,
-      RENTED: true,
-      VACANT: true,
-    },
-    {
-      Shop_ID: 1111,
-      SHOP_NUMBER: 13,
-      RENTED: true,
-      VACANT: false,
-    },
-    {
-      Shop_ID: 1112,
-      SHOP_NUMBER: 14,
-      RENTED: true,
-      VACANT: true,
-    },
-    {
-      Shop_ID: 1113,
-      SHOP_NUMBER: 15,
-      RENTED: false,
-      VACANT: false,
-    },
-    {
-      Shop_ID: 1114,
-      SHOP_NUMBER: 16,
-      RENTED: false,
-      VACANT: true,
-    },
-  ];
+  // const ShopData = [
+  //   {
+  //     Shop_ID: 1110,
+  //     SHOP_NUMBER: 12,
+  //     RENTED: true,
+  //     VACANT: true,
+  //   },
+  //   {
+  //     Shop_ID: 1111,
+  //     SHOP_NUMBER: 13,
+  //     RENTED: true,
+  //     VACANT: false,
+  //   },
+  //   {
+  //     Shop_ID: 1112,
+  //     SHOP_NUMBER: 14,
+  //     RENTED: true,
+  //     VACANT: true,
+  //   },
+  //   {
+  //     Shop_ID: 1113,
+  //     SHOP_NUMBER: 15,
+  //     RENTED: false,
+  //     VACANT: false,
+  //   },
+  //   {
+  //     Shop_ID: 1114,
+  //     SHOP_NUMBER: 16,
+  //     RENTED: false,
+  //     VACANT: true,
+  //   },
+  // ];
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value); // Update selected option
@@ -297,19 +300,19 @@ const OccupancyReport = () => {
               {/* Data Rows */}
               <TableBody>
                 {selectedOption === "Shop"
-                  ? ShopData.map((data, index) => (
+                  ? occupancyData?.map((data, index) => (
                       <TableRow key={index}>
-                        <TableCell>{data.Shop_ID}</TableCell>
-                        <TableCell>{data.SHOP_NUMBER}</TableCell>
-                        <TableCell>{data.RENTED ? "YES" : "-"}</TableCell>
-                        <TableCell>{data.VACANT ? "YES" : "-"}</TableCell>
+                        <TableCell>{data.shop_id}</TableCell>
+                        <TableCell>{data.shop_number}</TableCell>
+                        <TableCell>{data.rented }</TableCell>
+                        <TableCell>{data.vacant }</TableCell>
                       </TableRow>
                     ))
                   : selectedOption === "Month"
-                  ? getLast12MonthsData().map((data, index) => (
+                  ? occupancyData?.map((data, index) => (
                       <TableRow key={index}>
-                        <TableCell>{data.month}</TableCell>
-                        <TableCell>{data.totalShops}</TableCell>
+                        <TableCell>{data.month_year}</TableCell>
+                        <TableCell>{data.total_shops}</TableCell>
                         <TableCell>{data.occupied}</TableCell>
                         <TableCell>{data.vacant}</TableCell>
                       </TableRow>
