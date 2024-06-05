@@ -36,12 +36,13 @@ const OccupancyReport = () => {
   const [selectedOption, setSelectedOption] = useState("Shop"); // Set initial value to "Shop"
   const options = ["Shop", "Month"];
   const [occupancyData , setOccupancyData] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URI;
   const {activeEventId , user} = useContext(AuthContext);
   const fetchReport = async () => {
     try{
       const res = await axios.post(`${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data` , {
         flag : selectedOption.toLowerCase(),
-        event_id : activeEventId
+        event_id : 1112
       } , {
         headers : {
           'authorization': `${user?.token}`, // Ensure the token format is correct

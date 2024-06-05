@@ -41,7 +41,7 @@ const IncomeReports = () => {
     try{
       const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-all-years-data` ,{
         flag : selectedOption.toLowerCase(),
-        event_id : activeEventId,
+        event_id : 1112,
         type : "income"
       } , {
         headers : {
