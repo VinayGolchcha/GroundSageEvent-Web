@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
   colors,
+  CircularProgress
 } from "@mui/material";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -266,6 +267,22 @@ export default function RentalAgreementPage() {
     setName("");
     setPhoneNo("")
     }
+    if (loading) {
+      // Show a loading indicator while the data is being fetched
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            backgroundColor: "rgb(66, 92, 90)",
+          }}
+        >
+          <CircularProgress sx={{ color: "rgb(247, 230, 173)" }} />
+        </Box>
+      );
+    }
     
     return (
       <>
@@ -277,7 +294,7 @@ export default function RentalAgreementPage() {
                 fontWeight : "600",
                 textShadow: "0 6px rgba(81,67,21,0.8)"
             }}>Rental Agreement</Typography>
-            {loading ? <div> </div> : <>
+            {loading ? <div style={{heigth : "100vh" , width : "100vw"}}> </div> : <>
             <ToastContainer position="bottom-right" style={{ color: "red" }} />
             <Box sx={{display : "flex" , justifyContent : "center" , margin : "10px 0px", alignItems : "center"}}>
                <img src={shop} alt="Shop Image" style={{border : "20px solid rgb(78, 101, 100)" , borderRadius: "10px" , position : "relative" , width : "70%"}}/>
