@@ -220,6 +220,7 @@ export default function CreateShopPage() {
   const handleFileInputChange = (e) => {
     // const file = e.target.files[0];
     const files = Array.from(e.target.files);
+    console.log(files,"ldaf;dkf");
     const validFiles = files.filter((file) => {
       if (file.size > 100 * 1024) {
         toast.error(`Image ${file.name} is less than 100kb. Please upload a larger image.`);
