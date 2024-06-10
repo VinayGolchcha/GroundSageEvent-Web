@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Typography,
   TextField,
@@ -25,6 +25,8 @@ import {
   Legend as RechartsLegend,
   Tooltip as RechartsTooltip,
 } from "recharts";
+import axios from "axios";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const icons = [
   "Group 33700.png",
@@ -47,6 +49,61 @@ const Reports = () => {
   const navigate = useNavigate();
   const [chartType, setChartType] = useState("year");
   const [selectedPieOption, setSelectedPieOption] = useState("2022");
+  const {user , activeEventId} = useContext(AuthContext);
+  const [yearlyReport , setYearlyReport] = useState([]);
+  const [pieChartData, setPieChartData] = useState([]);
+  const fetchYearlyReportData = async () => {
+    try{
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-all-years-data` , {
+        flag: chartType,
+        type:"income",
+        event_id: activeEventId
+      },
+      {
+        headers : {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      });
+      if(chartType === "year"){
+        setYearlyReport(res?.data?.data?.map((item) => ( 
+          { year: item?.year, income: item?.total }
+        )));
+      }else{
+        setYearlyReport(res?.data?.data?.map((item) => ( 
+          { month: item?.month, income: item?.total }
+        )));
+      }
+      
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  const fecthYearlyData = async() => {
+    try{
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-yearly-data` , 
+        {
+          year: selectedPieOption,
+          type: "income", // expense or income
+          event_id: activeEventId
+      } ,{
+        headers : {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      })
+      setPieChartData(res?.data?.data);
+    }catch(err){
+      console.log(err);
+    }
+  }
+  useEffect(()=> {
+    fetchYearlyReportData();
+    fecthYearlyData();
+  },[])
 
   // Data representing yearly income
   const yearlyData = [
@@ -77,8 +134,8 @@ const Reports = () => {
     { month: "Dec", income: 16000 },
   ];
   const expenseData = [
-    { name: "Shop Rental", value: 30000, fill: "rgb(236, 219, 163)" },
-    { name: "Others", value: 20000, fill: "rgb(63, 128, 101)" },
+    { name: pieChartData?.shop_rental_total ? "Shop Rental" : "Staff Salary", value: pieChartData?.shop_rental_total ? pieChartData?.shop_rental_total : pieChartData?.staff_salary_total, fill: "rgb(236, 219, 163)" },
+    { name: "Others", value: pieChartData?.others_total, fill: "rgb(63, 128, 101)" },
   ];
   const years = ["2022", "2023", "2024"];
   const months = [
@@ -110,17 +167,18 @@ const Reports = () => {
       }}
     />
   );
-  const data = chartType === "year" ? yearlyData : monthlyData;
+  // const data = chartType === "year" ? yearlyData : monthlyData;
+  const data = yearlyReport;
   const xAxisDataKey = chartType === "year" ? "year" : "month";
   const pieOptions = chartType === "year" ? years : months;
-  const selectedYearData = yearlyData.find(
+  const selectedYearData = yearlyReport?.find(
     (item) => item.year === selectedPieOption
   );
   if (selectedYearData) {
-    expenseData[0].value = selectedYearData.income * 0.6; // Assuming 60% of income is shop rental
-    expenseData[1].value = selectedYearData.income * 0.4; // Assuming 40% of income is others
+    expenseData[0].value = selectedYearData.income * parseInt(expenseData[0].value)/parseInt(pieChartData?.total); // Assuming 60% of income is shop rental
+    expenseData[1].value = selectedYearData.income * parseInt(expenseData[1].value)/parseInt(pieChartData?.total); // Assuming 40% of income is others
   }
-  const selectedMonthData = monthlyData.find(
+  const selectedMonthData = yearlyReport?.find(
     (item) => item.month === selectedPieOption
   );
   if (selectedMonthData) {
@@ -267,9 +325,9 @@ const Reports = () => {
                   // Remove the native select dropdown arrow
                   IconComponent={() => CustomIcon}
                 >
-                  {pieOptions.map((option) => (
+                  {yearlyReport?.map((option) => (
                     <MenuItem key={option} value={option}>
-                      {option}
+                      {chartType === "year" ? option?.year : option?.month?.split(" ")[0]}
                     </MenuItem>
                   ))}
                 </Select>

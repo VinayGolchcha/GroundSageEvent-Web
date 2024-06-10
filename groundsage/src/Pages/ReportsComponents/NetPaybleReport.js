@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Typography,
   Box,
@@ -13,6 +13,8 @@ import {
   InputLabel,
 } from "@mui/material"; // Import necessary components
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../ContextApi/AuthContext";
+import axios from "axios";
 
 const TableCell = (props) => {
   return (
@@ -31,8 +33,34 @@ const TableCell = (props) => {
 const NetPaybleReport = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("Year"); // Set initial value to "Year"
-
+  const {user , activeEventId} = useContext(AuthContext);
+  const [netPaybleReportData , setNetPaybleReportData] = useState([]);
   const options = ["Year", "Month"];
+
+  const fetchNetPaybleReport = async () => {
+    try{
+      const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-all-years-data` ,{
+        flag : selectedOption.toLowerCase(),
+        event_id : 1112,
+        type : "income"
+      } , {
+        headers : {
+          'authorization': `${user?.token}`, // Ensure the token format is correct
+          'Accept': 'application/json',
+          role_id : user?.role_id
+        }
+      });
+      setNetPaybleReportData(res?.data?.data);
+    }catch(err){
+      console.log(err);
+    }
+  
+  }
+
+  useEffect(()=> {
+    fetchNetPaybleReport();
+  },[selectedOption])
+
 
   // Sample data for the table
   const yearlyData = [
@@ -266,21 +294,21 @@ const NetPaybleReport = () => {
               {/* Data Rows */}
               <TableBody>
                 {selectedOption === "Year"
-                  ? yearlyData.map((data, index) => (
+                  ? netPaybleReportData?.map((data, index) => (
                       <TableRow key={index}>
                         <TableCell>{data.year}</TableCell>
-                        <TableCell>{data.totalAmount}</TableCell>
-                        <TableCell>{data.shopRental}</TableCell>
-                        <TableCell>{data.others}</TableCell>
+                        <TableCell>{data.total}</TableCell>
+                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
                   : selectedOption === "Month"
-                  ? getLast12MonthsData().map((data, index) => (
+                  ? netPaybleReportData?.map((data, index) => (
                       <TableRow key={index}>
-                        <TableCell>{data.month}</TableCell>
-                        <TableCell>{data.totalAmount}</TableCell>
-                        <TableCell>{data.shopRental}</TableCell>
-                        <TableCell>{data.others}</TableCell>
+                        <TableCell>{data?.month}</TableCell>
+                        <TableCell>{data?.totalAmount}</TableCell>
+                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
                   : null}
