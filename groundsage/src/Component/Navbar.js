@@ -24,7 +24,6 @@ const pages = [
 ];
 
 function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
-  console.log("activeEventname", activeEventName);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [currentActiveEventName, setCurrentActiveEventName] =
@@ -52,6 +51,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
   // } , [activeEventId])
   if (
     location.pathname === "/" ||
+    location.pathname === "/referral-code" ||
     location.pathname === "/entermail" ||
     location.pathname === "/signin" ||
     location.pathname === "/signup" ||
@@ -248,7 +248,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
                       }}
                       onClick={() => {
                         (setting === "Visit Profile" && navigate("/Profile")) ||
-                          (setting === "Logout" && handleLogout()) || (((setting===null)&&activeEventName) && handleOpen());
+                          (setting === "Logout" && handleLogout()) || (((setting===activeEventName)&&activeEventName) && handleOpen());
                       }}
                     >
                       {setting === null ? activeEventName : setting}

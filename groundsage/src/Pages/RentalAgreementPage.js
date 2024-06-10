@@ -115,8 +115,8 @@ export default function RentalAgreementPage() {
     // Handle the uploaded file
     const fsize = file.size;
     const fileSizeIn = Math.round(fsize / 1024);
-    if (fileSizeIn <= 100) {
-      toast.warning("File too small, please select a file greater than 100kb");
+    if (fileSizeIn >= 100) {
+      toast.warning("File too big, please select a file smaller than or equal to 100kb");
       return;
     } else {
       setFIle(file);
@@ -342,11 +342,10 @@ export default function RentalAgreementPage() {
                 variant="h4"
                 sx={{
                   position: "absolute",
-                  top: "205px",
                   color: "rgb(255, 255, 255)",
                 }}
               >
-                Shop 01
+                Shop {shopId[shopId?.length - 1]}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -392,6 +391,7 @@ export default function RentalAgreementPage() {
                     InputLabelProps={{
                       style: {
                         color: "white",
+                        fontSize : {md : "20px" , xs : "18px"}
                       },
                     }}
                     disabled={isEdit}
@@ -435,6 +435,7 @@ export default function RentalAgreementPage() {
                     InputLabelProps={{
                       style: {
                         color: "white",
+                        fontSize : {md : "20px" , xs : "18px"}
                       },
                     }}
                     value={rentalObj?.tenant_phone_number}
@@ -479,6 +480,7 @@ export default function RentalAgreementPage() {
                     InputLabelProps={{
                       style: {
                         color: "white",
+                        fontSize : {md : "20px" , xs : "18px"}
                       },
                     }}
                     value={rentalObj?.tenant_email}
@@ -521,6 +523,7 @@ export default function RentalAgreementPage() {
                     InputLabelProps={{
                       style: {
                         color: "white",
+                        fontSize : {md : "20px" , xs : "18px"}
                       },
                     }}
                     value={rentalObj?.tenant_address}
@@ -584,6 +587,13 @@ export default function RentalAgreementPage() {
                           </IconButton>
                         ),
                       }}
+                      InputLabelProps={{
+                        style : {
+                          fontSize : {md : "20px" , xs : "18px"}
+                        }
+                      }
+
+                      } 
                     />
                   )}
                 </Grid>
@@ -624,6 +634,7 @@ export default function RentalAgreementPage() {
                     InputLabelProps={{
                       style: {
                         color: "white",
+                        fontSize : {md : "20px" , xs : "18px"}
                       },
                     }}
                     type="number"
@@ -715,6 +726,11 @@ export default function RentalAgreementPage() {
                                 />
                               ),
                             },
+                            InputLabelProps : {
+                              style : {
+                                fontSize : {md : "20px" , xs : "18px"}
+                              }
+                            }
                           },
                         }}
                         sx={{
@@ -759,6 +775,11 @@ export default function RentalAgreementPage() {
                                 />
                               ),
                             },
+                            InputLabelProps : {
+                              style : {
+                                fontSize : {md : "20px" , xs : "18px"}
+                              }
+                            }
                           },
                         }}
                         sx={{

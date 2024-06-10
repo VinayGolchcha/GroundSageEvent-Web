@@ -57,9 +57,25 @@ export default function CreateEventPage() {
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     // Handle the uploaded file
-    console.log(files);
+    files?.forEach(file => {
+      if (file) {
+        // Check if file size is greater than 100KB (100 * 1024 bytes)
+        if (file.size > 100 * 1024) {
+          toast.error('File size should not exceed 100KB' , {
+            style: {
+              // Change font color
+              fontSize: "16px", // Change font size
+              fontFamily: "Inter", // Change font family
+              fontWeight: "600", // Change font weight
+              color: "rgb(66, 92, 90)",
+            },
+          });
+          return;
+        }
+      }
+    });
     setFIle(files);
-    console.log(file);
+    
   };
   const addEvent = async (body) => {
     try {
@@ -84,7 +100,16 @@ export default function CreateEventPage() {
         }
       );
       console.log(res);
-      toast.success("Data Added Successfully"); 
+      toast.success("Event Added Successfully" , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      }); 
     }catch(err){
       const errArray = err?.response?.data?.errors;
       errArray?.forEach((err) => {
@@ -248,6 +273,9 @@ export default function CreateEventPage() {
                           />
                         ),
                       },
+                      InputLabelProps : {
+                        fontSize: {xs:"18px",md:"20px"},
+                      }
                     },
                   }}
                   sx={{
@@ -319,6 +347,9 @@ export default function CreateEventPage() {
                           />
                         ),
                       },
+                      InputLabelProps : {
+                        fontSize: {xs:"18px",md:"20px"},
+                      }
                     },
                   }}
                   sx={{
@@ -517,7 +548,7 @@ export default function CreateEventPage() {
             InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : "20px"
+                fontSize: {xs:"18px",md:"20px"},
               },
             }}
             type="number"
@@ -529,6 +560,7 @@ export default function CreateEventPage() {
           <Box sx={{display : "flex" , width : "100%"}}>
           <Typography sx={{color : "rgb(255, 255, 255)" , width : "50%" , margin: "10px 0px ",alignContent : "end"}}>Role: Coordinator </Typography>
             <TextField
+              type="number"
               sx={{
                 width : "50%",
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -557,7 +589,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize : "20px"
+                  fontSize: {xs:"18px",md:"20px"},
                 },
               }}
               inputRef={coordinatorCountElement}
@@ -569,6 +601,7 @@ export default function CreateEventPage() {
           <Box sx={{display : "flex" , width : "100%"}}>
             <Typography sx={{color : "rgb(255, 255, 255)" , width : "50%" , margin: "10px 0px ",alignContent : "end"}}>Role: STAFF MEMBER</Typography>
             <TextField
+            type="number"
               sx={{
                 width : "50%",
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -597,7 +630,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize : "20px"
+                  fontSize: {xs:"18px",md:"20px"},
                 },
               }}
               id="standard-basic"
@@ -609,6 +642,7 @@ export default function CreateEventPage() {
           <Box sx={{display : "flex" , width : "100%"}}>
             <Typography sx={{color : "rgb(255, 255, 255)", width : "50%" , margin: "10px 0px ", alignContent : "end"}}>Role: HELPER</Typography>
             <TextField
+            type="number"
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
@@ -636,7 +670,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize : "20px"
+                  fontSize: {xs:"18px",md:"20px"},
                 },
               }}
               inputRef={helperCountElement}

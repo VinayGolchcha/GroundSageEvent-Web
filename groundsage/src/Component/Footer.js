@@ -7,6 +7,7 @@ const Footer = () => {
   const navigate = useNavigate();
   if (
     location.pathname === "/" ||
+    location.pathname === "/referral-code" ||
     location.pathname === "/entermail" ||
     location.pathname === "/signin" ||
     location.pathname === "/signup" ||

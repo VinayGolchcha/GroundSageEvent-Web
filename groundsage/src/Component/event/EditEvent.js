@@ -64,7 +64,23 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
     const handleFileUpload = (event) => {
       const files = Array.from(event.target.files);
       // Handle the uploaded file
-      console.log(file)
+      files?.forEach(file => {
+        if (file) {
+          // Check if file size is greater than 100KB (100 * 1024 bytes)
+          if (file.size > 100 * 1024) {
+            toast.error('File size should not exceed 100KB' , {
+              style: {
+                // Change font color
+                fontSize: "16px", // Change font size
+                fontFamily: "Inter", // Change font family
+                fontWeight: "600", // Change font weight
+                color: "rgb(66, 92, 90)",
+              },
+            });
+            return;
+          }
+        }
+      });
       // files coming from the create event page...
       setFile(files);
     };

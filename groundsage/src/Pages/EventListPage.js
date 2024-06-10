@@ -84,15 +84,15 @@ export default function EventListPage() {
         role_id : user?.role_id
     } });
       let eventList = res?.data?.data;
-      eventList = eventList.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      eventList = eventList?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       setEvents(eventList);
       const newEventList = eventList?.map((item) => ({...item , isSelected : false}));
       setEventList(newEventList);
-      setEventIds(newEventList.map((item) => ( {id : item?.id , event_name : item?.event_name } )));
+      setEventIds(newEventList?.map((item) => ( {id : item?.id , event_name : item?.event_name } )));
       console.log(eventIds);
       setIsLoading(false);
       console.log(res)
-      toast.success("events fetched successfully" , {
+      toast.success(res?.data?.message , {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -102,7 +102,7 @@ export default function EventListPage() {
         }});
     }catch(err){
       console.log(err);
-      toast.error(err?.response?.data.message);
+      toast.error(err?.response?.data?.message);
       setIsLoading(false);
     }
   }
@@ -112,7 +112,7 @@ export default function EventListPage() {
   },[])
 
   const handleAllChange = () => {
-    const newEventList = eventList.map((item) => ({
+    const newEventList = eventList?.map((item) => ({
       ...item,
       isSelected: !allselect,
     }));
@@ -153,7 +153,7 @@ export default function EventListPage() {
   }
   const handleCheckboxChange = (index) => {
     console.log(index)
-    const newEventList = eventList.map((item, i) => {
+    const newEventList = eventList?.map((item, i) => {
       if (item?.id === index) {
         return { ...item, isSelected: !item.isSelected };
       }
@@ -301,7 +301,7 @@ export default function EventListPage() {
           </Box>
         </Box>
       )}
-      {eventList?.slice(0, endpoint).map((item, index) => {
+      {eventList?.slice(0, endpoint)?.map((item, index) => {
         return (
           <Box
             key={index}

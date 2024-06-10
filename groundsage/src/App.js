@@ -33,6 +33,7 @@ import { Theme, useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Box, FormControl, MenuItem, Modal, Select } from "@mui/material";
 import { AuthContext } from "./ContextApi/AuthContext";
+import ReferralCodeScreen from "./Pages/ReferralCodeScreen";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -167,6 +168,7 @@ const App = () => {
         <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/entermail" element={<EnterMail />} />
         <Route path="/update-shop" element={<UpdateShopPage />} />
+        <Route path="/referral-code" element={<ReferralCodeScreen />} />
       </Routes>
       <Footer />
     </div>
