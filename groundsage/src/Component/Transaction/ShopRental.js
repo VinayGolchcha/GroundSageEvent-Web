@@ -26,7 +26,7 @@ export default function ShopRental(){
   const handleSave = () => {
     const body = {
 
-      item : addItemEle.current.value.toString(),             //shop no in string
+      item : addItemEle.current.value?.toString(),             //shop no in string
       decided_amount : amtDueEle.current.value,  // amount due
       entered_amount : recievedAmtEle.current.value,   // recieved amount
       outstanding_amount : outstandingAmtEle.current.value,   // outstanding amount
@@ -86,6 +86,7 @@ export default function ShopRental(){
                 </Select>
             </FormControl>
             <TextField
+              type="number"
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
@@ -120,6 +121,7 @@ export default function ShopRental(){
               variant="standard"
             />
             <TextField
+              type="number"
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
@@ -154,6 +156,7 @@ export default function ShopRental(){
               variant="standard"
             />
             <TextField
+              type="number"
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",

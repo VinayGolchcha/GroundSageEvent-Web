@@ -57,7 +57,11 @@ const App = () => {
   const theme = useTheme();
   const {eventIds , setActiveEvent , setActiveEventName,activeEvent , event , user ,activeEventName, activeEventId , setActiveEventId} = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    console.log("handle Open called");
+    setOpen(true);
+    console.log(open);
+  }
   const handleClose = () => setOpen(false);
   const [personName, setPersonName] = React.useState([]);
   const [eventName , setEventName] = useState();

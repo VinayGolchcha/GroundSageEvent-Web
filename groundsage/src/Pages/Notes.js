@@ -109,6 +109,17 @@ const Notes = () => {
         fetchNotes();
     }catch(err){
       console.log(err);
+      const errors = err?.response?.data?.errors;
+      errors.forEach(element => {
+        toast.error(element?.msg ,  {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          }}); 
+      });
     }
   }
   const handleSaveNote = async (body) => {
@@ -149,6 +160,17 @@ const Notes = () => {
         fetchNotes();
     }catch(err){
       console.log(err.message);
+      const errors = err?.response?.data?.errors;
+      errors.forEach(element => {
+        toast.error(element?.msg ,  {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          }}); 
+      });
     }
     
      // Use toast to show success message

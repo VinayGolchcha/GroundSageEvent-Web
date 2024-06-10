@@ -74,6 +74,7 @@ export default function Others() {
         variant="standard"
       />
       <TextField
+        type="number"
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
@@ -110,6 +111,7 @@ export default function Others() {
         variant="standard"
       />
       <TextField
+        type="number"
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
@@ -146,6 +148,7 @@ export default function Others() {
         variant="standard"
       />
       <TextField
+        type="number"
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
