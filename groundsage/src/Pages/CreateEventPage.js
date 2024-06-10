@@ -526,8 +526,9 @@ export default function CreateEventPage() {
               variant="standard"
               inputRef={teamSizeElement}
             />
-
-            <Box
+          <Box sx={{display : "flex" , width : "100%"}}>
+          <Typography sx={{color : "rgb(255, 255, 255)" , width : "50%" , margin: "10px 0px ",alignContent : "end"}}>Role: Coordinator </Typography>
+            <TextField
               sx={{
                 width : "50%",
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -564,6 +565,7 @@ export default function CreateEventPage() {
               label="Count"
               variant="standard"
             />
+          </Box>
           <Box sx={{display : "flex" , width : "100%"}}>
             <Typography sx={{color : "rgb(255, 255, 255)" , width : "50%" , margin: "10px 0px ",alignContent : "end"}}>Role: STAFF MEMBER</Typography>
             <TextField
