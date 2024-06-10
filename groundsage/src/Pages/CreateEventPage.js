@@ -29,8 +29,6 @@ export default function CreateEventPage() {
   const [openCalendar2, setOpenCalendar2] = useState(false);
   const [fromDate, setFromDate] = useState(dayjs(new Date()));
   const [toDate, setToDate] = useState();
-  const [fromDateSelected, setFormDateSelected] = useState(false);
-  const [toDateSelected, setToDateSelected] = useState(false);
   const [file, setFIle] = useState([]);
   const eventNameElement = useRef(null);
   const fromDateElement = useRef(null);
@@ -46,13 +44,11 @@ export default function CreateEventPage() {
 
   const handleOpenCalender1 = () => {
     setOpenCalendar1(true);
-    setFormDateSelected(true);
   };
   const navigate = useNavigate();
   
   const handleOpenCalender2 = () => {
     setOpenCalendar2(true);
-    setToDateSelected(true);
   };
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
@@ -231,26 +227,19 @@ export default function CreateEventPage() {
               variant="standard"
               inputRef={eventNameElement}
             />
+            <div><Typography sx ={{
+                        fontSize: "11px",
+                        position: "absolute",
+                        paddingTop: "6px",
+                        color : "white"
+                  }
+                  }>From Date</Typography></div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <FormControl
                 variant="standard"
                 sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
               >
-                {fromDateSelected === false && (
-                  <InputLabel
-                    id="from-date-label"
-                    sx={{
-                      color: "white",
-                      ...(fromDateElement && {
-                        color: "white",
-                        opacity: "0.2",
-                        paddingLeft: "100px",
-                      }),
-                    }}
-                  >
-                    From Date
-                  </InputLabel>
-                )}
+                
                 <DatePicker
                   labelId="from-date-label"
                   value={dayjs(fromDate)}
@@ -305,26 +294,18 @@ export default function CreateEventPage() {
                 />
               </FormControl>
             </LocalizationProvider>
+            <div><Typography sx ={{
+                        fontSize: "11px",
+                        position: "absolute",
+                        paddingTop: "6px",
+                        color : "white"
+                  }
+                  }>To Date</Typography></div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <FormControl
                 variant="standard"
                 sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
               >
-                {toDateSelected === false && (
-                  <InputLabel
-                    id="from-date-label"
-                    sx={{
-                      color: "white",
-                      ...(fromDateElement && {
-                        color: "white",
-                        opacity: "0.2",
-                        paddingLeft: "100px",
-                      }),
-                    }}
-                  >
-                    To date
-                  </InputLabel>
-                )}
                 <DatePicker
                   labelId="to-date-label"
                   value={dayjs(toDate)}

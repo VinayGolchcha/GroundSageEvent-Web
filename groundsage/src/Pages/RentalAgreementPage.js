@@ -700,6 +700,13 @@ export default function RentalAgreementPage() {
                       <MenuItem value={"month"}>month</MenuItem>
                     </Select>
                   </FormControl>
+                  <div><Typography sx ={{
+                        fontSize: "11px",
+                        position: "absolute",
+                        paddingTop: "6px",
+                        color : "white"
+                  }
+                  }>From Date</Typography></div>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <FormControl
                       variant="standard"
@@ -737,19 +744,36 @@ export default function RentalAgreementPage() {
                           "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
                             border: "none",
                             borderRadius: "none",
+                          },
+                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            color: "white",
+                          },
+                          //   "& :hover": {
+                          //     borderBottom: " 1px solid rgb(188, 189, 163)",
+                          //   },
+                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            color: "white",
+                          },
+      
+                          "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+                            borderRadius: "0px",
                             borderBottom: " 1px solid rgb(188, 189, 163)",
                           },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
-                            {
-                              color: "white",
-                            },
-                          "& :hover": {
-                            borderBottom: " 1px solid rgb(188, 189, 163)",
+                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            paddingLeft: "1px",
+                            color: "white",
                           },
                         }}
                       />
                     </FormControl>
                   </LocalizationProvider>
+                  <div><Typography sx ={{
+                        fontSize: "11px",
+                        position: "absolute",
+                        paddingTop: "6px",
+                        color : "white"
+                  }
+                  }>To Date</Typography></div>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <FormControl
                       variant="standard"
@@ -786,14 +810,24 @@ export default function RentalAgreementPage() {
                           "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
                             border: "none",
                             borderRadius: "none",
+                          },
+                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            color: "white",
+                          },
+                          //   "& :hover": {
+                          //     borderBottom: " 1px solid rgb(188, 189, 163)",
+                          //   },
+                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            color: "white",
+                          },
+      
+                          "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+                            borderRadius: "0px",
                             borderBottom: " 1px solid rgb(188, 189, 163)",
                           },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input":
-                            {
-                              color: "white",
-                            },
-                          "& :hover": {
-                            borderBottom: " 1px solid rgb(188, 189, 163)",
+                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            paddingLeft: "1px",
+                            color: "white",
                           },
                         }}
                       />

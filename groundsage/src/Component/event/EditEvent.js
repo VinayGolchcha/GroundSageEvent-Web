@@ -40,18 +40,14 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
     const fromDateElement = useRef(null);
     const toDateElement = useRef(null);
     const descriptionElement = useRef(null);
-    const [fromDateSelected , setFormDateSelected] = useState(false);
-    const [toDateSelected , setToDateSelected] = useState(false);
     const [publicIds, setPublicIds] = useState([]);
 
     const handleOpenCalender1 = () => {
       setOpenCalendar1(true);
-      setFormDateSelected(true);
     }
 
     const handleOpenCalender2 = () => {
       setOpenCalendar2(true);
-      setToDateSelected(true);
     }
 
     const handleDeleteClick = (item) => {
@@ -174,21 +170,18 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                 inputRef={eventNameElement}
                 defaultValue={selectedItem?.event_name}
               />
+              <div><Typography sx ={{
+                        fontSize: "11px",
+                        position: "absolute",
+                        paddingTop: "6px",
+                        color : "white"
+                  }
+                  }>From Date</Typography></div>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
                 >
-                  {fromDateSelected === false && <InputLabel id="from-date-label" sx={{color : "white"
-                    ,
-                    ...(fromDateElement && {
-                      
-                        color : "white",
-                        opacity : "0.2",
-                        paddingLeft : "100px"
-                      ,
-                    } ) ,
-                  }}>From Date</InputLabel>}
                   <DatePicker
                     labelId="from-date-label"
                     value={dayjs(fromDate)}
@@ -240,19 +233,18 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   />
                 </FormControl>
               </LocalizationProvider>
+              <div><Typography sx ={{
+                        fontSize: "11px",
+                        position: "absolute",
+                        paddingTop: "6px",
+                        color : "white"
+                  }
+                  }>To Date</Typography></div>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <FormControl
                   variant="standard"
                   sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
                 >
-                  {toDateSelected === false && <InputLabel id="from-date-label" sx={{color : "white",
-                    ...(fromDateElement && {
-                      
-                        color : "white",
-                        opacity : "0.2",
-                        paddingLeft : "100px"
-                      ,
-                    } ) ,}}>To date</InputLabel>}
                   <DatePicker
                     labelId="to-date-label"
                     value={dayjs(toDate)}

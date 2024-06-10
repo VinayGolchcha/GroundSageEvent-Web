@@ -27,6 +27,7 @@ import {
 } from "recharts";
 import axios from "axios";
 import { AuthContext } from "../ContextApi/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const icons = [
   "Group 33700.png",
@@ -78,8 +79,17 @@ const Reports = () => {
       
     }catch(err){
       console.log(err);
-    }
+      toast.error(err?.response?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
   }
+}
 
   const fecthYearlyData = async() => {
     try{
@@ -97,13 +107,21 @@ const Reports = () => {
       })
       setPieChartData(res?.data?.data);
     }catch(err){
-      console.log(err);
+      toast.error(err?.response?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
     }
   }
   useEffect(()=> {
     fetchYearlyReportData();
     fecthYearlyData();
-  },[])
+  },[]);
 
   // Data representing yearly income
   const yearlyData = [
@@ -195,6 +213,7 @@ const Reports = () => {
         padding: "20px",
       }}
     >
+      <ToastContainer/>
       <img
         src="../../Images/arrow-left.png"
         alt="Share"
@@ -410,5 +429,4 @@ const Reports = () => {
     </div>
   );
 };
-
 export default Reports;
