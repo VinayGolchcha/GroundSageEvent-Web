@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import shadows from "@mui/material/styles/shadows";
+import { ToastContainer, toast } from "react-toastify";
 
 const TableCell = (props) => {
   return (
@@ -53,6 +54,15 @@ const OccupancyReport = () => {
       setOccupancyData(res?.data?.data);
     }catch(err){
       console.log(err);
+      toast.error(err?.response?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
     }
   }
 
@@ -146,6 +156,7 @@ const OccupancyReport = () => {
         padding: "20px",
       }}
     >
+      <ToastContainer/>
       <img
         src="../../Images/arrow-left.png"
         alt="Share"

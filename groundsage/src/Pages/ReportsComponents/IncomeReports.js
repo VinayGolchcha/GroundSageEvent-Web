@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../ContextApi/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const TableCell = (props) => {
   return (
@@ -52,7 +53,15 @@ const IncomeReports = () => {
       });
       setIncomeReport(res?.data?.data);
     }catch(err){
-      console.log(err);
+      toast.error(err?.response?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
     }
   
   }
@@ -141,6 +150,7 @@ const IncomeReports = () => {
         padding: "20px",
       }}
     >
+      <ToastContainer/>
       <img
         src="../../Images/arrow-left.png"
         alt="Share"

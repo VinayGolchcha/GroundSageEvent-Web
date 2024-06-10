@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const TableCell = (props) => {
   return (
@@ -52,7 +53,15 @@ const NetPaybleReport = () => {
       });
       setNetPaybleReportData(res?.data?.data);
     }catch(err){
-      console.log(err);
+      toast.error(err?.response?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
     }
   
   }
@@ -142,6 +151,7 @@ const NetPaybleReport = () => {
         padding: "20px",
       }}
     >
+      <ToastContainer/>
       <img
         src="../../Images/arrow-left.png"
         alt="Share"
@@ -298,7 +308,7 @@ const NetPaybleReport = () => {
                       <TableRow key={index}>
                         <TableCell>{data.year}</TableCell>
                         <TableCell>{data.total}</TableCell>
-                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.staff_salary_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
@@ -307,7 +317,7 @@ const NetPaybleReport = () => {
                       <TableRow key={index}>
                         <TableCell>{data?.month}</TableCell>
                         <TableCell>{data?.totalAmount}</TableCell>
-                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.staff_salary_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
