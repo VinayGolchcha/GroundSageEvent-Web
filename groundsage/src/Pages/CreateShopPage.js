@@ -32,7 +32,7 @@ const VisuallyHiddenInput = styled("input")({
 
 export default function CreateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-  const { setShopIds, lastShopNumber, setLastShopNumber, user, activeEventId } =
+  const { setShopIds, lastShopNumber, setLastShopNumber, user, activeEventId} =
     useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);

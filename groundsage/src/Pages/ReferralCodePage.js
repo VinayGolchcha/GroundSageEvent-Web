@@ -1,41 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Typography, TextField, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const ReferralCodePage = () => {
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState("");
+  const { RCode } = useContext(AuthContext);
 
-  const labels = [
-    "COORDINATOR",
-    "STAFF MEMBER",
-    "HELPER",
-    "HELPER",
-    "STAFF MEMBER",
-  ];
-
-  // const handleCopyClick = () => {
-  //   // Check if there's something to copy
-  //   if (inputValue.trim() !== "") {
-  //     navigator.clipboard
-  //       .writeText(inputValue)
-  //       .then(() => {
-  //         alert(inputValue);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Unable to copy text: ", error);
-  //       });
-  //   }
-  // };
-
-  const handleCopyClick = () => {
-    const textField = document.getElementById("myTextField");
-    // Check if the text field exists and has a value
-    if (textField && textField.value.trim() !== "") {
+  console.log(RCode);
+  const handleCopyClick = (referralCode) => {
+    if (referralCode) {
       navigator.clipboard
-        .writeText(textField.value)
+        .writeText(referralCode)
         .then(() => {
-          alert("Copied: " + textField.value);
+          alert("Copied: " + referralCode);
         })
         .catch((error) => {
           console.error("Unable to copy text: ", error);
@@ -47,7 +25,6 @@ const ReferralCodePage = () => {
     <div
       style={{
         background: "rgb(66, 92, 90)",
-        // height: "100vh",
         overflow: "auto",
         padding: "20px 20px 50px 20px",
       }}
@@ -71,8 +48,8 @@ const ReferralCodePage = () => {
           fontSize: { xs: "30px", sm: "40px", md: "56px" },
           fontWeight: "700",
           marginBottom: "20px",
-          marginTop: {xs:"0px",md:"-45px"},
-          textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
+          marginTop: { xs: "0px", md: "-45px" },
+          textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)",
         }}
       >
         Events
@@ -98,7 +75,7 @@ const ReferralCodePage = () => {
           margin: { xs: "20px", md: "0px" },
         }}
       >
-        {labels.map((label, index) => (
+        {RCode.map((role, index) => (
           <Box
             key={index}
             container
@@ -110,6 +87,7 @@ const ReferralCodePage = () => {
               background: "rgb(78, 101, 100)",
               maxWidth: "fit-content",
               padding: "15px 40px 15px 40px",
+              marginBottom: "10px", // Added margin for spacing between rows
             }}
           >
             <Typography
@@ -117,19 +95,19 @@ const ReferralCodePage = () => {
               sx={{
                 color: "white",
                 fontWeight: "600",
-                fontSize: {xs:"20px",md:"25px"},
+                fontSize: { xs: "20px", md: "25px" },
                 fontFamily: "Poppins",
                 textAlign: "left",
                 width: "200px",
               }}
             >
-              {label}
+              {role.role_name.toUpperCase()}
             </Typography>
             <TextField
-              id="myTextField"
+              id={`referralCode-${index}`}
               variant="filled"
               disabled={true}
-              value="FLAJDKAFD"
+              value={role.referral_code}
               sx={{
                 color: "white",
                 margin: "0px 10px 0px 30px",
@@ -141,16 +119,15 @@ const ReferralCodePage = () => {
                   color: "rgb(250, 236, 191)",
                   background: "rgba(151, 151, 151, 0.73)",
                   borderRadius: "10px",
-                  fontSize: {xs:"15px",md:"22px"},
+                  fontSize: { xs: "15px", md: "22px" },
                 },
               }}
-              onChange={(e) => setInputValue(e.target.value)}
             />
             <img
               src="../../Images/copy-content 1.png"
-              alt="Share"
+              alt="Copy"
               style={{ cursor: "pointer" }}
-              onClick={() => handleCopyClick(label)}
+              onClick={() => handleCopyClick(role.referral_code)}
             />
           </Box>
         ))}
