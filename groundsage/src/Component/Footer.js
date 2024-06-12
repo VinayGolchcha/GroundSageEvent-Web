@@ -50,7 +50,7 @@ const Footer = () => {
               <br /> Seamless Event Management!
             </Typography>
           </Box>
-          <Box sx={{ marginLeft: { xs: "0", md: "20%" } }}>
+          <Box sx={{ marginLeft: { xs: "0", md: "20%" },display:{xs:"none",sm:"block"}}}>
             <Typography
               sx={{
                 color: "rgb(255, 255, 255)",

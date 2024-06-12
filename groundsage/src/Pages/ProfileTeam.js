@@ -193,7 +193,7 @@ const ProfileTeam = () => {
               alignItems: "center",
               cursor: "pointer",
               textAlign: "center",
-              ml: { xs: 0, sm: "auto" },
+              ml: { xs: 0,sm:"50px", md: "auto" },
             }}
             onClick={handlePopupOpen}
           >

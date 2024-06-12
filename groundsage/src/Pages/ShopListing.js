@@ -103,7 +103,7 @@ const ShopListing = () => {
           (activeDom === "all" || shop.dome === activeDom) &&
           (filter === "vacant"
             ? shop.status === "vacant"
-            : shop.status === "Occupied")
+            : shop.status === "occupied")
         );
       }),
     [shopCards, filter, activeDom]
@@ -229,13 +229,14 @@ const ShopListing = () => {
         <ToastContainer />
 
         {/* <div style={{display:"flex"}}> */}
-        <img
+        <Box
+          component='img'
           src="../../Images/arrow-left.png"
           alt="Share"
-          style={{
+          sx={{
             cursor: "pointer",
-            width: "45px",
-            margin: "10px 0px 0px 20px",
+            width: {xs:"35px",md:"45px"},
+            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
           }}
           onClick={() => {
             navigate(-1); // Navigate back by one step in the history stack
@@ -248,7 +249,7 @@ const ShopListing = () => {
             fontSize: { xs: "30px", sm: "40px", md: "56px" },
             fontFamily: "Inter",
             fontWeight: "700",
-            marginTop: { xs: "10px", md: "-40px" },
+            marginTop: { xs: "-10px", md: "-40px" },
             textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           }}
         >
@@ -271,6 +272,7 @@ const ShopListing = () => {
                 sx={{
                   borderColor: "rgb(247, 230, 173)",
                   width: { xs: "150px", sm: "175px" },
+                 
                   height: "42px", // Set the height for all buttons
                   color: activeDom === "all" ? "rgb(91, 94, 97)" : "white",
                   background:
@@ -295,6 +297,8 @@ const ShopListing = () => {
                   sx={{
                     borderColor: "rgb(247, 230, 173)",
                     width: { xs: "150px", sm: "175px" },
+                    minWidth:"fit-content",
+                    // padding:"15px",
                     height: "42px", // Set the height for all buttons
                     color: activeDom === dom ? "rgb(91, 94, 97)" : "white",
                     background:

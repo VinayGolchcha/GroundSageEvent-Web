@@ -88,7 +88,7 @@ const ProfileAboutpage = () => {
           justifyContent: { md: "space-between" },
         }}
       >
-        {/* <Box
+        <Box
           component="img"
           src="../../../Images/oval_img@2x.png"
           alt="profile"
@@ -97,7 +97,7 @@ const ProfileAboutpage = () => {
             display: { xs: "block", md: "none" },
             margin: { xs: "0 auto", md: "0" },
           }}
-        /> */}
+        />
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -293,6 +293,16 @@ const ProfileAboutpage = () => {
           />
         </Box>
         {/** Ensure the image is hidden on small devices */}
+        <Box
+          component="img"
+          src="../../../Images/oval_img@2x.png"
+          alt="profile"
+          sx={{
+            width: { xs: "50%", md: "25%" },
+            display: { xs: "none", md: "block" },
+            margin: { xs: "0 auto", md: "0" },
+          }}
+        />
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",

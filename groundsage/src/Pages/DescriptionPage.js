@@ -85,14 +85,19 @@ const DescriptionPage = () => {
         overflowY: "auto",
       }}
     >
-      <img
-        src="../../Images/arrow-left.png"
-        alt="Back"
-        style={{ cursor: "pointer", width: "45px", marginLeft: "20px" }}
-        onClick={() => {
-          navigate(-1); // Navigate back by one step in the history stack
-        }}
-      />
+        <Box
+          component='img'
+          src="../../Images/arrow-left.png"
+          alt="Share"
+          sx={{
+            cursor: "pointer",
+            width: {xs:"35px",md:"45px"},
+            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+          }}
+          onClick={() => {
+            navigate(-1); // Navigate back by one step in the history stack
+          }}
+        />
 
       <Typography
         sx={{
@@ -186,7 +191,7 @@ const DescriptionPage = () => {
             }}
           >
             <div>
-              {selectedShop.status === "vacant" ? (
+              {selectedShop?.status === "vacant" ? (
                 <>
                   <Box
                     component="img"
@@ -227,7 +232,7 @@ const DescriptionPage = () => {
                 textTransform: "uppercase",
               }}
             >
-              {selectedShop.status}
+              {selectedShop?.status}
             </Typography>
           </Box>
         </Box>
@@ -239,7 +244,7 @@ const DescriptionPage = () => {
           alignItems: "center",
         }}
       >
-        {selectedShop.status === "vacant" && (
+        {selectedShop?.status === "vacant" && (
           <Button
             size="large"
             variant="contained" // Make the button contained if active dom
@@ -261,7 +266,7 @@ const DescriptionPage = () => {
             Go to Rental
           </Button>
         )}
-        {selectedShop.status === "occupied" && (
+        {selectedShop?.status === "occupied" && (
           <Button
             size="large"
             variant="contained" // Make the button contained if active dom

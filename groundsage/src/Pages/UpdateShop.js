@@ -186,7 +186,7 @@ export default function UpdateShopPage() {
     // const file = e.target.files[0];
     const files = Array.from(e.target.files);
     const validFiles = files.filter((file) => {
-      if (file.size > 100 * 1024) {
+      if (file.size > 500 * 1024) {
         toast.error(
           `Image ${file.name} is less than 100kb. Please upload a larger image.`
         );
@@ -219,13 +219,14 @@ export default function UpdateShopPage() {
           backgroundColor: "rgb(66, 92, 90)",
         }}
       >
-        <img
+         <Box
+          component='img'
           src="../../Images/arrow-left.png"
           alt="Share"
-          style={{
+          sx={{
             cursor: "pointer",
-            width: "45px",
-            margin: "10px 0px 0px 20px",
+            width: {xs:"35px",md:"45px"},
+            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
           }}
           onClick={() => {
             navigate(-1); // Navigate back by one step in the history stack

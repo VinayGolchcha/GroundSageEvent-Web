@@ -290,14 +290,14 @@ export default function RentalAgreementPage() {
   return (
     <>
       <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
-        <img
+      <Box
+          component='img'
           src="../../Images/arrow-left.png"
-          alt="Back"
-          style={{
+          alt="Share"
+          sx={{
             cursor: "pointer",
-            width: "45px",
-            marginLeft: "20px",
-            marginTop: "10px",
+            width: {xs:"35px",md:"45px"},
+            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
           }}
           onClick={() => {
             navigate(-1); // Navigate back by one step in the history stack

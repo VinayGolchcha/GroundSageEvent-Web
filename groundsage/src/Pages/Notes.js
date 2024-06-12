@@ -268,18 +268,19 @@ const Notes = () => {
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
       <ToastContainer position="bottom-right" style={{ color: "red" }} />
-      <img
-        src="../../Images/arrow-left.png"
-        alt="Share"
-        style={{
-          cursor: "pointer",
-          width: "45px",
-          margin: "10px 0px 0px 20px",
-        }}
-        onClick={() => {
-          navigate(-1); // Navigate back by one step in the history stack
-        }}
-      />
+      <Box
+          component='img'
+          src="../../Images/arrow-left.png"
+          alt="Share"
+          sx={{
+            cursor: "pointer",
+            width: {xs:"35px",md:"45px"},
+            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+          }}
+          onClick={() => {
+            navigate(-1); // Navigate back by one step in the history stack
+          }}
+        />
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
