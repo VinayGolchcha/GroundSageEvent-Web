@@ -59,7 +59,7 @@ export default function ShopRental(){
     return(
       <>
       <ToastContainer/>
-        <Grid item xs={6}>
+        <Grid item lg={6} md={6} sm={6} xs={12}>
             <FormControl variant="standard" sx={{ minWidth: 120 , width : "100%" , margin : "10px 0px "}}>
                 <InputLabel id="demo-simple-select-standard-label" style={{ color: 'white' }}>select shop</InputLabel>
                 <Select
@@ -114,6 +114,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
+                fontSize : {md : "20px" , xs : "18px"}
               },}}
               inputRef={amtDueEle}
               id="standard-basic"
@@ -150,6 +151,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
+                fontSize : {md : "20px" , xs : "18px"}
               },}}
               id="standard-basic"
               label="recieved amount"
@@ -185,6 +187,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
+                fontSize : {md : "20px" , xs : "18px"}
               },}}
               id="standard-basic"
               label="outstanding amount (if any)"
@@ -219,6 +222,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
+                fontSize : {md : "20px" , xs : "18px"}
               },}}
               id="standard-basic"
               label="remarks"

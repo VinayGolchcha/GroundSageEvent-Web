@@ -289,7 +289,7 @@ export default function RentalAgreementPage() {
 
   return (
     <>
-      <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
+      <Box sx={{ backgroundColor: "rgb(66, 92, 90)" , minHeight : "100vh"}}>
         <img
           src="../../Images/arrow-left.png"
           alt="Back"

@@ -442,6 +442,7 @@ const Notes = () => {
                         fontWeight: "600",
                         fontSize: "24px",
                         fontFamily: "Poppins",
+                        fontSize: {lg : "1.2rem", md : "1.2rem" , sm : "1.2rem" , xs : "14px"},
                       }}
                     >
                       {item?.notes_heading}
@@ -449,10 +450,9 @@ const Notes = () => {
                     <Typography
                       sx={{
                         color: "rgb(254, 240, 180)",
-                        fontSize: "1.2rem",
+                        fontSize: {lg : "1.2rem", md : "1.2rem" , sm : "1.2rem" , xs : "14px"},
                         fontFamily: "Poppins",
                         textAlign: "right",
-                        marginTop: "-10px",
                       }}
                     >
                       {forrmattedDate(item?.date)}
