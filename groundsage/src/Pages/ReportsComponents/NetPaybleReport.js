@@ -43,7 +43,7 @@ const NetPaybleReport = () => {
       const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-all-years-data` ,{
         flag : selectedOption.toLowerCase(),
         event_id : 1112,
-        type : "income"
+        type : "expense"
       } , {
         headers : {
           'authorization': `${user?.token}`, // Ensure the token format is correct
@@ -306,8 +306,8 @@ const NetPaybleReport = () => {
                 {selectedOption === "Year"
                   ? netPaybleReportData?.map((data, index) => (
                       <TableRow key={index}>
-                        <TableCell>{data.year}</TableCell>
-                        <TableCell>{data.total}</TableCell>
+                        <TableCell>{data?.year}</TableCell>
+                        <TableCell>{data?.total}</TableCell>
                         <TableCell>{data?.staff_salary_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
@@ -316,7 +316,7 @@ const NetPaybleReport = () => {
                   ? netPaybleReportData?.map((data, index) => (
                       <TableRow key={index}>
                         <TableCell>{data?.month}</TableCell>
-                        <TableCell>{data?.totalAmount}</TableCell>
+                        <TableCell>{data?.total}</TableCell>
                         <TableCell>{data?.staff_salary_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>

@@ -111,8 +111,8 @@ const OutStandingReport = () => {
 
   const heading =
     selectedOption === "Year"
-      ? ["YEAR", "TOTAL AMOUNT", "STAFF SALARY", "OTHERS"]
-      : ["MONTH", "TOTAL AMOUNT", "STAFF SALARY", "OTHERS"];
+      ? ["YEAR", "TOTAL AMOUNT", "SHOP RENTAL", "OTHERS"]
+      : ["MONTH", "TOTAL AMOUNT", "SHOP RENTAL", "OTHERS"];
 
   const getLast12MonthsData = () => {
     const monthsData = [];
@@ -308,16 +308,16 @@ const OutStandingReport = () => {
                       <TableRow key={index}>
                         <TableCell>{data?.year}</TableCell>
                         <TableCell>{data?.total}</TableCell>
-                        <TableCell>{data?.staff_salary_total}</TableCell>
+                        <TableCell>{data?.shop_rental_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
                   : selectedOption === "Month"
                   ? outstandingReport?.map((data, index) => (
                       <TableRow key={index}>
-                        <TableCell>{data?.year}</TableCell>
+                        <TableCell>{data?.month}</TableCell>
                         <TableCell>{data?.total}</TableCell>
-                        <TableCell>{data?.staff_salary_total}</TableCell>
+                        <TableCell>{data?.shop_rental_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
