@@ -35,6 +35,13 @@ const ShopListing = () => {
   const [loading, setLoading] = useState(true);
   const apiUrl = process.env.REACT_APP_API_URI;
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}/${month}/${day}`;
+  }
   const fetchShops = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -610,7 +617,7 @@ const ShopListing = () => {
                         padding: "8px",
                       }}
                     >
-                      <Typography>---</Typography>
+                     {shop.status === "vacant" ? <Typography>---</Typography>:<div>{formatDate(shop.updated_at)}</div>}
                       <div>
                         {shop.status === "vacant" ? (
                           <>

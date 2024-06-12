@@ -32,7 +32,7 @@ const VisuallyHiddenInput = styled("input")({
 
 export default function CreateShopPage() {
   const [shopStatus, setShopStatus] = useState("Vacant");
-  const { setShopIds, lastShopNumber, setLastShopNumber, user, activeEventId} =
+  const { setShopIds, lastShopNumber, setLastShopNumber, user, activeEventId } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
@@ -222,7 +222,9 @@ export default function CreateShopPage() {
     const files = Array.from(e.target.files);
     const validFiles = files.filter((file) => {
       if (file.size > 500 * 1024) {
-        toast.error(`Image ${file.name} is less than 100kb. Please upload a larger image.`);
+        toast.error(
+          `Image ${file.name} is less than 100kb. Please upload a larger image.`
+        );
         return false;
       }
       return true;
@@ -254,13 +256,13 @@ export default function CreateShopPage() {
         }}
       >
         <Box
-          component='img'
+          component="img"
           src="../../Images/arrow-left.png"
           alt="Share"
           sx={{
             cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+            width: { xs: "35px", md: "45px" },
+            margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
           }}
           onClick={() => {
             navigate(-1); // Navigate back by one step in the history stack
@@ -655,11 +657,18 @@ export default function CreateShopPage() {
             justifyContent: "center",
           }}
         >
-          <label
+          <Box
+            component="label"
             htmlFor="fileInput"
-            style={{
-              width: "300px",
-              height: "300px",
+            sx={{
+              width: {
+                xs: "100%", // 100% width for extra-small devices
+                sm: "100%", // 300px width for small and up devices
+              },
+              height: {
+                xs: "150px", // 150px height for extra-small devices
+                sm: "300px", // 200px height for small and up devices
+              },
               border: "2px solid #aaa",
               borderRadius: "10px",
               display: "flex",
@@ -667,7 +676,6 @@ export default function CreateShopPage() {
               alignItems: "center",
               overflow: "hidden",
               cursor: "pointer",
-              width: "100%",
               backgroundColor: "rgba(174, 174, 174, 0.83)",
             }}
           >
@@ -698,7 +706,7 @@ export default function CreateShopPage() {
                 </p>
               </Box>
             )}
-          </label>
+          </Box>
           <input
             type="file"
             id="fileInput"

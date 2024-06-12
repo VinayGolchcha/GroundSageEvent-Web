@@ -83,7 +83,7 @@ export default function UpdateShopPage() {
     try {
       // Prepare the updated data
       const updatedData = {
-        // dome: eventData.dome,
+        dome: eventData.dome,
         shop_number: eventData.shop_number,
         rent: eventData.rent,
         description: eventData.description,
@@ -219,14 +219,14 @@ export default function UpdateShopPage() {
           backgroundColor: "rgb(66, 92, 90)",
         }}
       >
-         <Box
-          component='img'
+        <Box
+          component="img"
           src="../../Images/arrow-left.png"
           alt="Share"
           sx={{
             cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+            width: { xs: "35px", md: "45px" },
+            margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
           }}
           onClick={() => {
             navigate(-1); // Navigate back by one step in the history stack
@@ -624,11 +624,18 @@ export default function UpdateShopPage() {
             alignItems: "center",
           }}
         >
-          <label
+          <Box
+            component="label"
             htmlFor="fileInput"
-            style={{
-              width: "300px",
-              height: "300px",
+            sx={{
+              width: {
+                xs: "100%", // 100% width for extra-small devices
+                sm: "100%", // 300px width for small and up devices
+              },
+              height: {
+                xs: "150px", // 150px height for extra-small devices
+                sm: "300px", // 200px height for small and up devices
+              },
               border: "2px solid #aaa",
               borderRadius: "10px",
               display: "flex",
@@ -636,7 +643,6 @@ export default function UpdateShopPage() {
               alignItems: "center",
               overflow: "hidden",
               cursor: "pointer",
-              width: "100%",
               backgroundColor: "rgba(174, 174, 174, 0.83)",
             }}
           >
@@ -661,15 +667,16 @@ export default function UpdateShopPage() {
                 <Typography
                   sx={{
                     color: "rgba(255, 255, 255, 0.32)",
-                    fontSize: { xs: "1.3rem", md: "1.5rem" },
+                    fontSize: { xs: "1.1rem", md: "1.5rem" },
                     textAlign: "center",
+                    padding:"0px 20px"
                   }}
                 >
                   Drag upload/ browse your shop image
                 </Typography>
               </Box>
             )}
-          </label>
+          </Box>
           <input
             type="file"
             id="fileInput"
@@ -685,9 +692,11 @@ export default function UpdateShopPage() {
               key={index}
               sx={{
                 display: "flex",
+                flexWrap: "wrap",
                 alignItems: "center",
                 justifyContent: "center",
                 marginBottom: "10px",
+                padding: "0px 20px 0px 20px",
               }}
             >
               <Typography sx={{ color: "white", marginRight: "10px" }}>

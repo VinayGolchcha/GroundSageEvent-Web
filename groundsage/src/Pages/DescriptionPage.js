@@ -85,19 +85,19 @@ const DescriptionPage = () => {
         overflowY: "auto",
       }}
     >
-        <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
-          sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-          }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
-        />
+      <Box
+        component="img"
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        sx={{
+          cursor: "pointer",
+          width: { xs: "35px", md: "45px" },
+          margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
+        }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
 
       <Typography
         sx={{
@@ -123,7 +123,7 @@ const DescriptionPage = () => {
             border: "3px solid rgb(112, 141, 161)",
             borderRadius: "7px",
             display: "flex",
-            maxWidth: "fit-content",
+            minWidth: "fit-content",
             width: { xs: "90%", md: "90%" },
             padding: { xs: "15px", md: "12px 30px 5px 30px" },
             marginTop: "10px",
@@ -145,6 +145,7 @@ const DescriptionPage = () => {
                   display: "flex",
                   justifyContent: "left",
                   textTransform: "uppercase",
+                  flexWrap: "wrap",
                 }}
               >
                 <Typography

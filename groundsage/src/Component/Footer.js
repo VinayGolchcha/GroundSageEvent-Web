@@ -22,7 +22,7 @@ const Footer = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: { xs: "row", md: "row" },
           justifyContent: { xs: "center", md: "space-between" },
           alignItems: "center", // Center vertically
           textAlign: "center", //
@@ -30,27 +30,38 @@ const Footer = () => {
           paddingTop: "20px",
         }}
       >
-        <Box sx={{ display: { xs: "flex" }, justifyContent: "space-between",alignItems:"center" }}>
+        <Box
+          sx={{
+            display: { xs: "flex" },
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Box>
-            <img
-              src="../../../Images/logo_1 1.png"
-              alt="Right Arrow"
-              style={{ marginRight: "5px", width: "45%" }} // Adjust margin between image and text
-            />
-            <Typography
-              sx={{
-                color: "rgb(255, 255, 255)",
-                fontFamily: "Inter",
-                lineHeight: "1",
-                marginTop: "10px",
-                fontWeight: "600",
-              }}
-            >
-              Your One-Stop Solution for
-              <br /> Seamless Event Management!
-            </Typography>
+          <img
+            src="../../../Images/logo_1 1.png"
+            alt="Right Arrow"
+            style={{ marginRight: "5px", width: "45%" }} // Adjust margin between image and text
+          />
+          <Typography
+            sx={{
+              color: "rgb(255, 255, 255)",
+              fontFamily: "Inter",
+              lineHeight: "1",
+              marginTop: "10px",
+              fontWeight: "600",
+            }}
+          >
+            Your One-Stop Solution for
+            <br /> Seamless Event Management!
+          </Typography>
           </Box>
-          <Box sx={{ marginLeft: { xs: "0", md: "20%" },display:{xs:"none",sm:"block"}}}>
+          <Box
+            sx={{
+              marginLeft: { xs: "0", md: "20%" },
+              display: { xs: "none", sm: "block" },
+            }}
+          >
             <Typography
               sx={{
                 color: "rgb(255, 255, 255)",
@@ -129,20 +140,20 @@ const Footer = () => {
           <img
             src="../../../Images/footer_img.svg"
             alt="Right Arrow"
-            style={{ marginRight: "5px", width: "100%" }} // Adjust margin between image and text
+            style={{ marginRight: "5px", width: "90%" }} // Adjust margin between image and text
           />
         </Box>
       </Box>
       <Typography
         sx={{
           color: "rgb(196, 196, 196)",
-          textAlign: "center",
+          textAlign: {xs:"right",sm:"center"},
           padding: "5px 0px 5px 15px",
           fontWeight: "500",
           fontSize: "16px",
           fontFamily: "Outfit",
           letterSpacing: "0pxf",
-          marginRight: { xs: "0", lg: "10%" },
+          marginRight: { xs: "20px", lg: "10%" },
         }}
       >
         © 2024 All Rights Reserved
