@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const TableCell = (props) => {
   return (
@@ -51,7 +52,15 @@ const ExpenseReport = () => {
       })
       setExpenseReportData(res?.data?.data);
     }catch(err){
-      console.log(err);
+      toast.error(err?.response?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
     }
   }
 
@@ -153,6 +162,8 @@ const ExpenseReport = () => {
             navigate(-1); // Navigate back by one step in the history stack
           }}
         />
+      <ToastContainer/>
+
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
@@ -297,7 +308,7 @@ const ExpenseReport = () => {
                       <TableRow key={index}>
                         <TableCell>{data?.year}</TableCell>
                         <TableCell>{data?.total}</TableCell>
-                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.staff_salary_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))
@@ -306,7 +317,7 @@ const ExpenseReport = () => {
                       <TableRow key={index}>
                         <TableCell>{data?.month}</TableCell>
                         <TableCell>{data?.total}</TableCell>
-                        <TableCell>{data?.shop_rental_total}</TableCell>
+                        <TableCell>{data?.staff_salary_total}</TableCell>
                         <TableCell>{data?.other_total}</TableCell>
                       </TableRow>
                     ))

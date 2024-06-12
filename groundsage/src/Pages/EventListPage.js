@@ -354,6 +354,7 @@ export default function EventListPage() {
                 display: "grid",
                 alignItems: "center",
                 padding: "15px",
+                width : "75%"
               }}
             >
               <Typography

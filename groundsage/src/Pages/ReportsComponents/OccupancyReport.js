@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import shadows from "@mui/material/styles/shadows";
+import { ToastContainer, toast } from "react-toastify";
 
 const TableCell = (props) => {
   return (
@@ -35,31 +36,43 @@ const OccupancyReport = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("Shop"); // Set initial value to "Shop"
   const options = ["Shop", "Month"];
-  const [occupancyData , setOccupancyData] = useState([]);
+  const [occupancyData, setOccupancyData] = useState([]);
   const apiUrl = process.env.REACT_APP_API_URI;
-  const {activeEventId , user} = useContext(AuthContext);
+  const { activeEventId, user } = useContext(AuthContext);
   const fetchReport = async () => {
-    try{
-      const res = await axios.post(`${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data` , {
-        flag : selectedOption.toLowerCase(),
-        event_id : 1112
-      } , {
-        headers : {
-          'authorization': `${user?.token}`, // Ensure the token format is correct
-          'Accept': 'application/json',
-          role_id : user?.role_id
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data`,
+        {
+          flag: selectedOption.toLowerCase(),
+          event_id: 1112,
+        },
+        {
+          headers: {
+            authorization: `${user?.token}`, // Ensure the token format is correct
+            Accept: "application/json",
+            role_id: user?.role_id,
+          },
         }
-      });
+      );
       setOccupancyData(res?.data?.data);
-    }catch(err){
+    } catch (err) {
       console.log(err);
+      toast.error(err?.response?.data?.message, {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchReport();
-
-  },[selectedOption])
+  }, [selectedOption]);
 
   // Sample data for the table
   // const ShopData = [
@@ -146,19 +159,22 @@ const OccupancyReport = () => {
         padding: "20px",
       }}
     >
-       <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
-          sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-          }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
-        />
+      <Box
+        component="img"
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        sx={{
+          cursor: "pointer",
+          width: { xs: "35px", md: "45px" },
+          margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
+        }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
+
+      <ToastContainer />
+
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
@@ -235,31 +251,30 @@ const OccupancyReport = () => {
           }}
         >
           {selectedOption === "Shop" ? (
-  <Typography
-    sx={{
-      color: "rgb(84, 80, 65)",
-      fontSize: "30px",
-      fontFamily: "Inter",
-      fontWeight: "800",
-      margin: "0px 0px 20px 10px",
-    }}
-  >
-    Shop Update
-  </Typography>
-) : (
-  <Typography
-    sx={{
-      color: "rgb(84, 80, 65)",
-      fontSize: "30px",
-      fontFamily: "Inter",
-      fontWeight: "800",
-      margin: "0px 0px 20px 10px",
-    }}
-  >
-    Monthly Update for Current Year
-  </Typography>
-)}
-
+            <Typography
+              sx={{
+                color: "rgb(84, 80, 65)",
+                fontSize: "30px",
+                fontFamily: "Inter",
+                fontWeight: "800",
+                margin: "0px 0px 20px 10px",
+              }}
+            >
+              Shop Update
+            </Typography>
+          ) : (
+            <Typography
+              sx={{
+                color: "rgb(84, 80, 65)",
+                fontSize: "30px",
+                fontFamily: "Inter",
+                fontWeight: "800",
+                margin: "0px 0px 20px 10px",
+              }}
+            >
+              Monthly Update for Current Year
+            </Typography>
+          )}
 
           {/* Header Row */}
           <TableContainer>
@@ -306,8 +321,8 @@ const OccupancyReport = () => {
                       <TableRow key={index}>
                         <TableCell>{data.shop_id}</TableCell>
                         <TableCell>{data.shop_number}</TableCell>
-                        <TableCell>{data.rented }</TableCell>
-                        <TableCell>{data.vacant }</TableCell>
+                        <TableCell>{data.rented}</TableCell>
+                        <TableCell>{data.vacant}</TableCell>
                       </TableRow>
                     ))
                   : selectedOption === "Month"

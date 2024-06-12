@@ -36,7 +36,7 @@ export default function SaffSalary() {
   return (
     <>
     <ToastContainer/>
-    <Grid item xs={6}>
+    <Grid item lg={6} md={6} sm={6} xs={12}>
       <TextField
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
@@ -66,7 +66,7 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: "20px",
+            fontSize : {md : "20px" , xs : "18px"}
           },
         }}
         id="standard-basic"
@@ -104,7 +104,7 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: "20px",
+            fontSize : {md : "20px" , xs : "18px"}
           },
         }}
         id="standard-basic"
@@ -141,7 +141,7 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: "20px",
+            fontSize : {md : "20px" , xs : "18px"}
           },
         }}
         id="standard-basic"
@@ -178,7 +178,7 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: "20px",
+            fontSize : {md : "20px" , xs : "18px"}
           },
         }}
         id="standard-basic"
