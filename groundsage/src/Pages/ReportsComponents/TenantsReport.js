@@ -113,7 +113,6 @@ const TenantsReport = () => {
             navigate(-1); // Navigate back by one step in the history stack
           }}
         />
-      />
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
