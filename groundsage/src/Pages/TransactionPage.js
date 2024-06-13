@@ -54,7 +54,7 @@ export default function TransactionPage() {
       backgroundColor: "rgb(66, 92, 90)",
       // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
       // minHeight: "100vh",
-      minHeight: "100vh",
+      minHeight: {lg : "140vh" , md : "140vh" , sm : "130vh" , xs : "120vh"},
     }}
   >
      <Box
@@ -103,8 +103,8 @@ export default function TransactionPage() {
               : { ...outlinedStyle, }),
             margin: "0px 20px",
             height : "60px",
-            width : "200px",
-            fontSize : "20px"
+            width : { lg : "200px" , md : "200px" , sm : "170px" , xs : "150x"},
+            fontSize : {lg : "20px" , md : "20px" , sm : "20px" , xs : "16px"}
           }}
         >
           EXPENSE
@@ -124,8 +124,8 @@ export default function TransactionPage() {
               : { ...outlinedStyle }),
             margin: "0px 20px",
             height : "60px",
-            width : "200px",
-            fontSize : "20px"
+            width : { lg : "200px" , md : "200px" , sm : "170px" , xs : "150x"},
+            fontSize : {lg : "20px" , md : "20px" , sm : "20px" , xs : "16px"}
           }}
         >
           INCOME

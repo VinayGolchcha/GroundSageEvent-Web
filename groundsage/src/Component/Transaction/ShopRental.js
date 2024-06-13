@@ -246,7 +246,12 @@ export default function ShopRental(){
                     color: "rgb(91, 94, 97)",
                     minWidth: "200px",
                     fontSize : "20px",
-                    fontWeight : "600"
+                    fontWeight : "600",
+                    width : { lg : "200px" , md : "200px" , sm : "170px" , xs : "150x"},
+                    fontSize : {lg : "20px" , md : "20px" , sm : "20px" , xs : "16px"},
+                    "&:hover": {
+                                  backgroundColor: "rgb(247, 230, 173) "
+                                }
                   }}
                   onClick={handleSave}
                 >

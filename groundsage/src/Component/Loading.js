@@ -13,7 +13,7 @@ export default function Loading(){
         justifyContent : "center",
       }}
     >
-        <CircularProgress color="inherit" />
+        <CircularProgress color="inherit" sx={{color: "rgb(247, 230, 173)"}} />
     </Box>
     );
 }

@@ -284,7 +284,7 @@ const DescriptionPage = () => {
               },
             }}
             onClick={() => {
-              // navigate("/rental-agreement");
+              navigate(`/rental-agreement/${shopDetails?.id}`);
             }}
           >
             Edit Rental agreement

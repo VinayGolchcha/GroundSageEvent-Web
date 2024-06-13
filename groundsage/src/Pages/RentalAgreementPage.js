@@ -23,6 +23,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext, AuthProvider } from "../ContextApi/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "../Component/Loading";
 
 export default function RentalAgreementPage() {
   let { shopId } = useParams();
@@ -100,7 +101,7 @@ export default function RentalAgreementPage() {
       console.log(res);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      toast.error(err?.response?.data?.message);
       setLoading(false);
     }
   };
@@ -124,6 +125,7 @@ export default function RentalAgreementPage() {
     console.log(file);
   };
   const addRental = async (body) => {
+    setLoading(true);
     const formData = new FormData();
     Object.keys(body).forEach((key) => {
       formData.append(key, body[key]);
@@ -140,6 +142,7 @@ export default function RentalAgreementPage() {
           },
         }
       );
+      setLoading(false);
       console.log(res);
       toast.success(res?.data?.message, {
         style: {
@@ -152,6 +155,7 @@ export default function RentalAgreementPage() {
       });
     } catch (err) {
       console.log(err);
+      setLoading(false);
       const errArray = err?.response?.data?.errors;
       errArray?.forEach((err) => {
         toast.error(err?.msg);
@@ -175,6 +179,7 @@ export default function RentalAgreementPage() {
       };
       console.log(body);
       try {
+        setLoading(true);
         const res = await axios.delete(
           `${process.env.REACT_APP_API_URI}/rentalagreement/delete-rental-agreement`,
           {
@@ -187,6 +192,7 @@ export default function RentalAgreementPage() {
             data: body,
           }
         );
+        setLoading(false);
         toast.success(res?.data?.message, {
           style: {
             // Change font color
@@ -199,6 +205,16 @@ export default function RentalAgreementPage() {
         fetchRentalAgree();
         navigate(`/description/${shopId}`);
       } catch (err) {
+        setLoading(false);
+        toast.success(err?.response?.data?.message, {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
         console.log(err);
       }
     }
@@ -216,6 +232,7 @@ export default function RentalAgreementPage() {
     const shopid = parseInt(shopId);
     const eventid = activeEventId;
     try {
+      setLoading(true);
       const res = await axios.put(
         `${process.env.REACT_APP_API_URI}/rentalagreement/edit-rental-agreement/${shopid}/${eventid}`,
         body,
@@ -227,6 +244,7 @@ export default function RentalAgreementPage() {
           },
         }
       );
+      setLoading(false);
       toast.success(res?.data?.message, {
         style: {
           // Change font color
@@ -237,6 +255,7 @@ export default function RentalAgreementPage() {
         },
       });
     } catch (err) {
+      setLoading(false);
       console.log(err);
       const errArray = err?.response?.data?.errors;
       errArray?.forEach((err) => {
@@ -286,260 +305,137 @@ export default function RentalAgreementPage() {
     setName("");
     setPhoneNo("");
   };
+  if(loading){
+    return(
+      <Loading/>
+    )
+  } 
+  else{
 
-  return (
-    <>
-      <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
-      <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
-          sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-          }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
-        />
-        <Typography
-          variant="h3"
-          sx={{
-            color: "rgb(247, 230, 173)",
-            textAlign: "center",
-            padding: "20px 0px",
-            fontWeight: "600",
-            textShadow: "0 6px rgba(81,67,21,0.8)",
-          }}
-        >
-          Rental Agreement
-        </Typography>
-        {loading ? (
-          <div> </div>
-        ) : (
-          <>
-            <ToastContainer position="bottom-right" style={{ color: "red" }} />
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "10px 0px",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={shop}
-                alt="Shop Image"
-                style={{
-                  border: "20px solid rgb(78, 101, 100)",
-                  borderRadius: "10px",
-                  position: "relative",
-                  width: "70%",
-                }}
-              />
-              <Typography
-                variant="h4"
+    return (
+      <>
+        <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
+        <Box
+            component='img'
+            src="../../Images/arrow-left.png"
+            alt="Share"
+            sx={{
+              cursor: "pointer",
+              width: {xs:"35px",md:"45px"},
+              margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+            }}
+            onClick={() => {
+              navigate(-1); // Navigate back by one step in the history stack
+            }}
+          />
+          <Typography
+            variant="h3"
+            sx={{
+              color: "rgb(247, 230, 173)",
+              textAlign: "center",
+              padding: "20px 0px",
+              fontWeight: "600",
+              textShadow: "0 6px rgba(81,67,21,0.8)",
+              fontSize : {
+                lg : "3rem",
+                md : "2.8rem",
+                sm : "2rem" ,
+                xs : "1.9rem"
+              }
+            }}
+          >
+            Rental Agreement
+          </Typography>
+          {loading ? (
+            <div> </div>
+          ) : (
+            <>
+              <ToastContainer position="bottom-right" style={{ color: "red" }} />
+              <Box
                 sx={{
-                  position: "absolute",
-                  color: "rgb(255, 255, 255)",
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "10px 0px",
+                  alignItems: "center",
                 }}
               >
-                Shop {shopId[shopId?.length - 1]}
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Grid container spacing={4} sx={{ margin: "0% 10%" }}>
-                <Grid item lg={6} md={6} sm={6} xs={12}>
-                  <Typography
-                    variant="h4"
-                    sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" }}
-                  >
-                    Tenant Information
-                  </Typography>
-                  <TextField
-                    sx={{
-                      "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                        color: "rgb(255, 255, 255)",
-                      },
-                      "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                        {
-                          WebkitTextFillColor: "white",
-                        },
-                      "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
-                        {
-                          borderBottom: "1px solid rgb(188, 189, 163)",
-                        },
-                      "& label.Mui-focused": {
-                        color: "rgb(255, 255, 255)", // Color of the label when focused
-                      },
-                      "& .MuiInput-underline:after": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                      },
-                      "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                      },
-                      width: "100%",
-                      margin: "10px 0px ",
-                      color: "white",
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "rgb(255, 255, 255)",
-                      },
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: "white",
-                        fontSize : {md : "20px" , xs : "18px"}
-                      },
-                    }}
-                    disabled={isEdit}
-                    autoFocus={isEdit}
-                    value={rentalObj?.tenant_name}
-                    id="standard-basic"
-                    label="name"
-                    variant="standard"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  <TextField
-                    sx={{
-                      "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                        color: "rgb(255, 255, 255)",
-                      },
-                      "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
-                        {
-                          borderBottom: "1px solid rgb(188, 189, 163)",
-                        },
-                      "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                        {
-                          WebkitTextFillColor: "white",
-                        },
-                      "& label.Mui-focused": {
-                        color: "rgb(255, 255, 255)", // Color of the label when focused
-                      },
-                      "& .MuiInput-underline:after": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                      },
-                      "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                      },
-                      width: "100%",
-                      margin: "10px 0px ",
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "rgb(255, 255, 255)",
-                      },
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: "white",
-                        fontSize : {md : "20px" , xs : "18px"}
-                      },
-                    }}
-                    value={rentalObj?.tenant_phone_number}
-                    disabled={isEdit}
-                    type="number"
-                    id="standard-basic"
-                    label="phone number"
-                    variant="standard"
-                    onChange={(e) => setPhoneNo(e.target.value)}
-                  />
-                  <TextField
-                    sx={{
-                      "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                        color: "rgb(255, 255, 255)",
-                      },
-                      "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                        {
-                          WebkitTextFillColor: "white",
-                        },
-                      "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
-                        {
-                          borderBottom: "1px solid rgb(188, 189, 163)",
-                        },
-                      "& label.Mui-focused": {
-                        color: "rgb(255, 255, 255)", // Color of the label when focused
-                      },
-                      "& .MuiInput-underline:after": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                      },
-                      "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                      },
-                      width: "100%",
-                      margin: "10px 0px ",
-                    }}
-                    id="standard-basic"
-                    InputProps={{
-                      style: {
-                        color: "rgb(255, 255, 255)",
-                      },
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: "white",
-                        fontSize : {md : "20px" , xs : "18px"}
-                      },
-                    }}
-                    value={rentalObj?.tenant_email}
-                    disabled={isEdit}
-                    type="email"
-                    label="email"
-                    variant="standard"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <TextField
-                    sx={{
-                      "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                        color: "rgb(255, 255, 255)",
-                      },
-                      "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
-                        {
-                          borderBottom: "1px solid rgb(188, 189, 163)",
-                        },
-                      "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                        {
-                          WebkitTextFillColor: "white",
-                        },
-                      "& label.Mui-focused": {
-                        color: "rgb(255, 255, 255)", // Color of the label when focused
-                      },
-                      "& .MuiInput-underline:after": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                      },
-                      "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                      },
-                      width: "100%",
-                      margin: "10px 0px ",
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "rgb(255, 255, 255)",
-                      },
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: "white",
-                        fontSize : {md : "20px" , xs : "18px"}
-                      },
-                    }}
-                    value={rentalObj?.tenant_address}
-                    disabled={isEdit}
-                    id="standard-basic"
-                    label="address"
-                    variant="standard"
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-
-                  {!isEdit && (
+                <img
+                  src={shop}
+                  alt="Shop Image"
+                  style={{
+                    border: "20px solid rgb(78, 101, 100)",
+                    borderRadius: "10px",
+                    position: "relative",
+                    width: "70%",
+                    maxHeight : "380px",
+                    objectFit : "fill"
+                  }}
+                />
+                <Typography
+                  variant="h4"
+                  sx={{
+                    position: "absolute",
+                    color: "rgb(255, 255, 255)",
+                  }}
+                >
+                  Shop {shopId[shopId?.length - 1]}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Grid container spacing={4} sx={{ margin: "0% 10%" }}>
+                  <Grid item lg={6} md={6} sm={6} xs={12}>
+                    <Typography
+                      variant="h4"
+                      sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" , fontSize : { lg : "2.2 rem" , md :"2.1rem" , sm : "1.9rem" , xs : "1.8rem"}}}
+                    >
+                      Tenant Information
+                    </Typography>
                     <TextField
-                      id="upload-text"
-                      label="Upload an image"
+                      sx={{
+                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                          color: "rgb(255, 255, 255)",
+                        },
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
+                          {
+                            WebkitTextFillColor: "white",
+                          },
+                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                          {
+                            borderBottom: "1px solid rgb(188, 189, 163)",
+                          },
+                        "& label.Mui-focused": {
+                          color: "rgb(255, 255, 255)", // Color of the label when focused
+                        },
+                        "& .MuiInput-underline:after": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                        },
+                        width: "100%",
+                        margin: "10px 0px ",
+                        color: "white",
+                      }}
+                      InputProps={{
+                        style: {
+                          color: "rgb(255, 255, 255)",
+                        },
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          color: "white",
+                          fontSize : {md : "20px" , xs : "18px"}
+                        },
+                      }}
+                      disabled={isEdit}
+                      autoFocus={isEdit}
+                      value={rentalObj?.tenant_name}
+                      id="standard-basic"
+                      label="name"
                       variant="standard"
-                      value={file && file.name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <TextField
                       sx={{
                         "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
@@ -558,10 +454,9 @@ export default function RentalAgreementPage() {
                         "& .MuiInput-underline:after": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
                         },
-                        "& .MuiInput-underline:hover:not(.Mui-disabled):before":
-                          {
-                            borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                          },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                        },
                         width: "100%",
                         margin: "10px 0px ",
                       }}
@@ -569,334 +464,478 @@ export default function RentalAgreementPage() {
                         style: {
                           color: "rgb(255, 255, 255)",
                         },
-                        endAdornment: (
-                          <IconButton
-                            edge="end"
-                            component="label"
-                            htmlFor="upload-file"
-                            sx={{ color: "rgb(188, 189, 163)" }}
-                          >
-                            <AttachFileIcon />
-                            <input
-                              type="file"
-                              id="upload-file"
-                              style={{ display: "none" }}
-                              accept="image/*"
-                              onChange={handleFileUpload}
-                            />
-                          </IconButton>
-                        ),
                       }}
                       InputLabelProps={{
-                        style : {
+                        style: {
+                          color: "white",
                           fontSize : {md : "20px" , xs : "18px"}
-                        }
-                      }
-
-                      } 
-                    />
-                  )}
-                </Grid>
-                <Grid item lg={6} md={6} sm={6} xs={12}>
-                  <Typography
-                    variant="h4"
-                    sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" }}
-                  >
-                    Rent Information
-                  </Typography>
-                  <TextField
-                    sx={{
-                      "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                        color: "rgb(255, 255, 255)",
-                      },
-                      "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
-                        {
-                          borderBottom: "1px solid rgb(188, 189, 163)",
                         },
-                      "& label.Mui-focused": {
-                        color: "rgb(255, 255, 255)", // Color of the label when focused
-                      },
-                      "& .MuiInput-underline:after": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                      },
-                      "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                        borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                      },
-                      width: "100%",
-                      margin: "10px 0px ",
-                    }}
-                    InputProps={{
-                      style: {
-                        color: "rgb(255, 255, 255)",
-                      },
-                    }}
-                    value={amount}
-                    InputLabelProps={{
-                      style: {
-                        color: "white",
-                        fontSize : {md : "20px" , xs : "18px"}
-                      },
-                    }}
-                    type="number"
-                    id="standard-basic"
-                    label="amount"
-                    variant="standard"
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                  {/* <TextField sx = {{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                    color : "rgb(255, 255, 255)"
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before" : {
-                    borderBottom : "1px solid rgb(188, 189, 163)"
-                } ,
-                '& label.Mui-focused': {
-                    color: 'rgb(255, 255, 255)', // Color of the label when focused
-                },
-                '& .MuiInput-underline:after': {
-                    borderBottomColor: 'rgb(188, 189, 163)', // Color of the bottom border when focused
-                },
-                '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-                    borderBottomColor: 'rgb(188, 189, 163)', // Color of the bottom border on hover
-                },
-                width : "100%",
-                margin : "10px 0px "
-            }}id="standard-basic" label="Standard" variant="standard" /> */}
-                  <FormControl
-                    variant="standard"
-                    sx={{ minWidth: 120, width: "100%", margin: "10px 0px " }}
-                  >
-                    <InputLabel
-                      id="demo-simple-select-standard-label"
-                      style={{ color: "white" }}
-                    >
-                      rent mode
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-standard-label"
-                      id="demo-simple-select-standard"
-                      label="rent mode"
-                      disableUnderline
-                      onChange={(e) => setRentMode(e.target.value)}
-                      value={rentMode}
+                      }}
+                      value={rentalObj?.tenant_phone_number}
+                      disabled={isEdit}
+                      type="number"
+                      id="standard-basic"
+                      label="phone number"
+                      variant="standard"
+                      onChange={(e) => setPhoneNo(e.target.value)}
+                    />
+                    <TextField
                       sx={{
+                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                          color: "rgb(255, 255, 255)",
+                        },
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
+                          {
+                            WebkitTextFillColor: "white",
+                          },
+                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                          {
+                            borderBottom: "1px solid rgb(188, 189, 163)",
+                          },
+                        "& label.Mui-focused": {
+                          color: "rgb(255, 255, 255)", // Color of the label when focused
+                        },
+                        "& .MuiInput-underline:after": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                        },
                         width: "100%",
-                        borderBottom: "1px solid rgb(188, 189, 163)",
-                        "& .MuiSelect-icon": {
-                          color: "rgb(188, 189, 163)",
-                          "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root":
+                        margin: "10px 0px ",
+                      }}
+                      id="standard-basic"
+                      InputProps={{
+                        style: {
+                          color: "rgb(255, 255, 255)",
+                        },
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          color: "white",
+                          fontSize : {md : "20px" , xs : "18px"}
+                        },
+                      }}
+                      value={rentalObj?.tenant_email}
+                      disabled={isEdit}
+                      type="email"
+                      label="email"
+                      variant="standard"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                      sx={{
+                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                          color: "rgb(255, 255, 255)",
+                        },
+                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                          {
+                            borderBottom: "1px solid rgb(188, 189, 163)",
+                          },
+                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
+                          {
+                            WebkitTextFillColor: "white",
+                          },
+                        "& label.Mui-focused": {
+                          color: "rgb(255, 255, 255)", // Color of the label when focused
+                        },
+                        "& .MuiInput-underline:after": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                        },
+                        width: "100%",
+                        margin: "10px 0px ",
+                      }}
+                      InputProps={{
+                        style: {
+                          color: "rgb(255, 255, 255)",
+                        },
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          color: "white",
+                          fontSize : {md : "20px" , xs : "18px"}
+                        },
+                      }}
+                      value={rentalObj?.tenant_address}
+                      disabled={isEdit}
+                      id="standard-basic"
+                      label="address"
+                      variant="standard"
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+  
+                    {!isEdit && (
+                      <TextField
+                        id="upload-text"
+                        label="Upload an image"
+                        variant="standard"
+                        value={file && file.name}
+                        sx={{
+                          "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                            color: "rgb(255, 255, 255)",
+                          },
+                          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
                             {
+                              borderBottom: "1px solid rgb(188, 189, 163)",
+                            },
+                          "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
+                            {
+                              WebkitTextFillColor: "white",
+                            },
+                          "& label.Mui-focused": {
+                            color: "rgb(255, 255, 255)", // Color of the label when focused
+                          },
+                          "& .MuiInput-underline:after": {
+                            borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                          },
+                          "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                            {
+                              borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                            },
+                          width: "100%",
+                          margin: "10px 0px ",
+                        }}
+                        InputProps={{
+                          style: {
+                            color: "rgb(255, 255, 255)",
+                          },
+                          endAdornment: (
+                            <IconButton
+                              edge="end"
+                              component="label"
+                              htmlFor="upload-file"
+                              sx={{ color: "rgb(188, 189, 163)" }}
+                            >
+                              <AttachFileIcon />
+                              <input
+                                type="file"
+                                id="upload-file"
+                                style={{ display: "none" }}
+                                accept="image/*"
+                                onChange={handleFileUpload}
+                              />
+                            </IconButton>
+                          ),
+                        }}
+                        InputLabelProps={{
+                          style : {
+                            fontSize : {md : "20px" , xs : "18px"}
+                          }
+                        }
+  
+                        } 
+                      />
+                    )}
+                  </Grid>
+                  <Grid item lg={6} md={6} sm={6} xs={12}>
+                    <Typography
+                      variant="h4"
+                      sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" ,  fontSize : { lg : "2.2 rem" , md :"2.1rem" , sm : "1.9rem" , xs : "1.8rem"}}}
+                    >
+                      Rent Information
+                    </Typography>
+                    <TextField
+                      sx={{
+                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                          color: "rgb(255, 255, 255)",
+                        },
+                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                          {
+                            borderBottom: "1px solid rgb(188, 189, 163)",
+                          },
+                        "& label.Mui-focused": {
+                          color: "rgb(255, 255, 255)", // Color of the label when focused
+                        },
+                        "& .MuiInput-underline:after": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                        },
+                        width: "100%",
+                        margin: "10px 0px ",
+                      }}
+                      InputProps={{
+                        style: {
+                          color: "rgb(255, 255, 255)",
+                        },
+                      }}
+                      value={amount}
+                      InputLabelProps={{
+                        style: {
+                          color: "white",
+                          fontSize : {md : "20px" , xs : "18px"}
+                        },
+                      }}
+                      type="number"
+                      id="standard-basic"
+                      label="amount"
+                      variant="standard"
+                      onChange={(e) => setAmount(e.target.value)}
+                    />
+                    {/* <TextField sx = {{
+                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                      color : "rgb(255, 255, 255)"
+                  },
+                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before" : {
+                      borderBottom : "1px solid rgb(188, 189, 163)"
+                  } ,
+                  '& label.Mui-focused': {
+                      color: 'rgb(255, 255, 255)', // Color of the label when focused
+                  },
+                  '& .MuiInput-underline:after': {
+                      borderBottomColor: 'rgb(188, 189, 163)', // Color of the bottom border when focused
+                  },
+                  '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                      borderBottomColor: 'rgb(188, 189, 163)', // Color of the bottom border on hover
+                  },
+                  width : "100%",
+                  margin : "10px 0px "
+              }}id="standard-basic" label="Standard" variant="standard" /> */}
+                    <FormControl
+                      variant="standard"
+                      sx={{ minWidth: 120, width: "100%", margin: "10px 0px " }}
+                    >
+                      <InputLabel
+                        id="demo-simple-select-standard-label"
+                        style={{ color: "white" }}
+                      >
+                        rent mode
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        label="rent mode"
+                        disableUnderline
+                        onChange={(e) => setRentMode(e.target.value)}
+                        value={rentMode}
+                        sx={{
+                          width: "100%",
+                          borderBottom: "1px solid rgb(188, 189, 163)",
+                          "& .MuiSelect-icon": {
+                            color: "rgb(188, 189, 163)",
+                            "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root":
+                              {
+                                color: "white",
+                              },
+                          },
+                          color: "white",
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={"day"}>day</MenuItem>
+                        <MenuItem value={"week"}>week</MenuItem>
+                        <MenuItem value={"month"}>month</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <div><Typography sx ={{
+                          fontSize: "11px",
+                          position: "absolute",
+                          paddingTop: "6px",
+                          color : "white"
+                    }
+                    }>From Date</Typography></div>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <FormControl
+                        variant="standard"
+                        sx={{ minWidth: 110, width: "100%", margin: "4px 0px " }}
+                      >
+                        {/* <InputLabel id="from-date-label">From date</InputLabel> */}
+                        <DatePicker
+                          labelId="from-date-label"
+                          value={dayjs(startDate)}
+                          onChange={(newValue) => setStartDate(newValue?.$d)} // Handle onChange event if needed
+                          open={openCalendar1}
+                          onOpen={() => setOpenCalendar1(true)}
+                          onClose={() => setOpenCalendar1(false)}
+                          minDate={dayjs(startDate)}
+                          helperText={!startDate && "select the start date"}
+                          slotProps={{
+                            textField: {
+                              InputProps: {
+                                endAdornment: (
+                                  <img
+                                    src="image-4.png"
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => setOpenCalendar1(true)}
+                                  />
+                                ),
+                              },
+                              InputLabelProps : {
+                                style : {
+                                  fontSize : {md : "20px" , xs : "18px"}
+                                }
+                              }
+                            },
+                          }}
+                          sx={{
+                            "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                              borderRadius: "none",
+                            },
+                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
                               color: "white",
                             },
-                        },
-                        color: "white",
-                      }}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={"day"}>day</MenuItem>
-                      <MenuItem value={"week"}>week</MenuItem>
-                      <MenuItem value={"month"}>month</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <div><Typography sx ={{
-                        fontSize: "11px",
-                        position: "absolute",
-                        paddingTop: "6px",
-                        color : "white"
-                  }
-                  }>From Date</Typography></div>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <FormControl
-                      variant="standard"
-                      sx={{ minWidth: 110, width: "100%", margin: "4px 0px " }}
-                    >
-                      {/* <InputLabel id="from-date-label">From date</InputLabel> */}
-                      <DatePicker
-                        labelId="from-date-label"
-                        value={dayjs(startDate)}
-                        onChange={(newValue) => setStartDate(newValue?.$d)} // Handle onChange event if needed
-                        open={openCalendar1}
-                        onOpen={() => setOpenCalendar1(true)}
-                        onClose={() => setOpenCalendar1(false)}
-                        minDate={dayjs(startDate)}
-                        helperText={!startDate && "select the start date"}
-                        slotProps={{
-                          textField: {
-                            InputProps: {
-                              endAdornment: (
-                                <img
-                                  src="image-4.png"
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => setOpenCalendar1(true)}
-                                />
-                              ),
+                            //   "& :hover": {
+                            //     borderBottom: " 1px solid rgb(188, 189, 163)",
+                            //   },
+                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                              color: "white",
                             },
-                            InputLabelProps : {
-                              style : {
-                                fontSize : {md : "20px" , xs : "18px"}
-                              }
-                            }
-                          },
-                        }}
-                        sx={{
-                          "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-                            border: "none",
-                            borderRadius: "none",
-                          },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                            color: "white",
-                          },
-                          //   "& :hover": {
-                          //     borderBottom: " 1px solid rgb(188, 189, 163)",
-                          //   },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                            color: "white",
-                          },
-      
-                          "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
-                            borderRadius: "0px",
-                            borderBottom: " 1px solid rgb(188, 189, 163)",
-                          },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                            paddingLeft: "1px",
-                            color: "white",
-                          },
-                        }}
-                      />
-                    </FormControl>
-                  </LocalizationProvider>
-                  <div><Typography sx ={{
-                        fontSize: "11px",
-                        position: "absolute",
-                        paddingTop: "6px",
-                        color : "white"
-                  }
-                  }>To Date</Typography></div>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <FormControl
-                      variant="standard"
-                      sx={{ minWidth: 110, width: "100%", margin: "4px 0px " }}
-                    >
-                      {/* <InputLabel id="from-date-label">From date</InputLabel> */}
-                      <DatePicker
-                        labelId="from-date-label"
-                        value={dayjs(endDate)}
-                        onChange={(newValue) => setEndDate(newValue?.$d)} // Handle onChange event if needed
-                        open={openCalendar2}
-                        onOpen={() => setOpenCalendar2(true)}
-                        onClose={() => setOpenCalendar2(false)}
-                        minDate={dayjs(startDate)}
-                        slotProps={{
-                          textField: {
-                            InputProps: {
-                              endAdornment: (
-                                <img
-                                  src="image-4.png"
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => setOpenCalendar2(true)}
-                                />
-                              ),
+        
+                            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+                              borderRadius: "0px",
+                              borderBottom: " 1px solid rgb(188, 189, 163)",
                             },
-                            InputLabelProps : {
-                              style : {
-                                fontSize : {md : "20px" , xs : "18px"}
+                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                              paddingLeft: "1px",
+                              color: "white",
+                            },
+                          }}
+                        />
+                      </FormControl>
+                    </LocalizationProvider>
+                    <div><Typography sx ={{
+                          fontSize: "11px",
+                          position: "absolute",
+                          paddingTop: "6px",
+                          color : "white"
+                    }
+                    }>To Date</Typography></div>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <FormControl
+                        variant="standard"
+                        sx={{ minWidth: 110, width: "100%", margin: "4px 0px " }}
+                      >
+                        {/* <InputLabel id="from-date-label">From date</InputLabel> */}
+                        <DatePicker
+                          labelId="from-date-label"
+                          value={dayjs(endDate)}
+                          onChange={(newValue) => setEndDate(newValue?.$d)} // Handle onChange event if needed
+                          open={openCalendar2}
+                          onOpen={() => setOpenCalendar2(true)}
+                          onClose={() => setOpenCalendar2(false)}
+                          minDate={dayjs(startDate)}
+                          slotProps={{
+                            textField: {
+                              InputProps: {
+                                endAdornment: (
+                                  <img
+                                    src="image-4.png"
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => setOpenCalendar2(true)}
+                                  />
+                                ),
+                              },
+                              InputLabelProps : {
+                                style : {
+                                  fontSize : {md : "20px" , xs : "18px"}
+                                }
                               }
-                            }
-                          },
-                        }}
+                            },
+                          }}
+                          sx={{
+                            "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                              border: "none",
+                              borderRadius: "none",
+                            },
+                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                              color: "white",
+                            },
+                            //   "& :hover": {
+                            //     borderBottom: " 1px solid rgb(188, 189, 163)",
+                            //   },
+                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                              color: "white",
+                            },
+        
+                            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+                              borderRadius: "0px",
+                              borderBottom: " 1px solid rgb(188, 189, 163)",
+                            },
+                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                              paddingLeft: "1px",
+                              color: "white",
+                            },
+                          }}
+                        />
+                      </FormControl>
+                    </LocalizationProvider>
+                  </Grid>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      width: "100%",
+                      margin: "20px 0px",
+                    }}
+                  >
+                    {isEdit === false && (
+                      <Button
+                        variant="contained"
                         sx={{
-                          "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-                            border: "none",
-                            borderRadius: "none",
-                          },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                            color: "white",
-                          },
-                          //   "& :hover": {
-                          //     borderBottom: " 1px solid rgb(188, 189, 163)",
-                          //   },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                            color: "white",
-                          },
-      
-                          "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
-                            borderRadius: "0px",
-                            borderBottom: " 1px solid rgb(188, 189, 163)",
-                          },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                            paddingLeft: "1px",
-                            color: "white",
-                          },
+                          backgroundColor: "rgb(247, 230, 173) ",
+                          color: "rgb(91, 94, 97)",
+                          minWidth: "200px",
+                          fontWeight: "600",
                         }}
-                      />
-                    </FormControl>
-                  </LocalizationProvider>
+                        onClick={handleSave}
+                      >
+                        Save
+                      </Button>
+                    )}
+                    {isEdit && (
+                      <>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            color: "rgb(91, 94, 97)",
+                            background: "rgb(247, 230, 173)",
+                            marginTop: "20px",
+                            marginLeft: "10px",
+                            marginBottom: "5px",
+                            "&:hover": {
+                              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+                              color: "rgb(50, 50, 50)", // Change text color on hover
+                              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+                            },
+                          }}
+                          onClick={handleEdit}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            color: "rgb(91, 94, 97)",
+                            background: "rgb(247, 230, 173)",
+                            marginTop: "20px",
+                            marginLeft: "10px",
+                            marginBottom: "5px",
+                            "&:hover": {
+                              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
+                              color: "rgb(50, 50, 50)", // Change text color on hover
+                              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+                            },
+                          }}
+                          onClick={handleDelete}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
+                  </Box>
                 </Grid>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    width: "100%",
-                    margin: "20px 0px",
-                  }}
-                >
-                  {isEdit === false && (
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "rgb(247, 230, 173) ",
-                        color: "rgb(91, 94, 97)",
-                        minWidth: "200px",
-                        fontWeight: "600",
-                      }}
-                      onClick={handleSave}
-                    >
-                      Save
-                    </Button>
-                  )}
-                  {isEdit && (
-                    <>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          ":hover": {
-                            backgroundColor: "rgb(247, 230, 173)",
-                          },
-                          backgroundColor: "rgb(247, 230, 173) ",
-                          color: "rgb(91, 94, 97)",
-                          minWidth: "200px",
-                          fontWeight: "600",
-                          marginRight: "2%",
-                        }}
-                        onClick={handleEdit}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="contained"
-                        sx={{
-                          ":hover": {
-                            backgroundColor: "rgb(247, 230, 173)",
-                          },
-                          backgroundColor: "rgb(247, 230, 173) ",
-                          color: "rgb(91, 94, 97)",
-                          minWidth: "200px",
-                          fontWeight: "600",
-                        }}
-                        onClick={handleDelete}
-                      >
-                        Delete
-                      </Button>
-                    </>
-                  )}
-                </Box>
-              </Grid>
-            </Box>
-          </>
-        )}
-      </Box>
-    </>
-  );
+              </Box>
+            </>
+          )}
+        </Box>
+      </>
+    );
+  }
 }

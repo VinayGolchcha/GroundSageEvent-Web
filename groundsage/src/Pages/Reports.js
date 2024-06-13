@@ -27,6 +27,7 @@ import {
 import axios from "axios";
 import { AuthContext } from "../ContextApi/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../Component/Loading";
 
 const icons = [
   "Group 33700.png",
@@ -54,6 +55,7 @@ const Reports = () => {
   const [yearlyReport, setYearlyReport] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
+  const [isLoading , setIsLoading] = useState(true);
 
   const fetchYearlyReportData = async () => {
     try {
@@ -146,10 +148,12 @@ const Reports = () => {
 
   useEffect(() => {
     fetchYearlyReportData();
+    setIsLoading(false);
   }, [chartType]);
 
   useEffect(() => {
     fetchYearlyData();
+    setIsLoading(false);
   }, [selectedPieOption]);
 
   const handlePieOptionChange = (event) => {
@@ -180,112 +184,62 @@ const Reports = () => {
   useEffect(() => {
     console.log("Expense Data:", expenseData);
   }, [expenseData]);
+  if(isLoading){
+    return(
+      <Loading/>
+    )
+  }else{
 
-  return (
-    <div
-      style={{
-        background: "rgb(66, 92, 90)",
-        padding: "20px",
-      }}
-    >
-      <ToastContainer />
-      <img
-        src="../../Images/arrow-left.png"
-        alt="Share"
+    return (
+      <div
         style={{
-          cursor: "pointer",
-          width: "45px",
-          marginBottom: "20px",
-        }}
-        onClick={() => {
-          navigate(-1);
-        }}
-      />
-      <Typography
-        sx={{
-          color: "rgb(247, 230, 173)",
-          textAlign: "center",
-          fontSize: { xs: "30px", sm: "40px", md: "56px" },
-          fontFamily: "Inter",
-          fontWeight: "700",
-          marginTop: { xs: "0px", md: "-40px" },
-          textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)",
-          marginBottom: "20px",
+          background: "rgb(66, 92, 90)",
+          padding: "20px",
         }}
       >
-        Reports
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          justifyContent: "space-between",
-          margin: "0px 5% 5px 5%",
-        }}
-      >
-        <Box
+        <ToastContainer />
+        <img
+          src="../../Images/arrow-left.png"
+          alt="Share"
+          style={{
+            cursor: "pointer",
+            width: "45px",
+            marginBottom: "20px",
+          }}
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
+        <Typography
           sx={{
-            background: "#fff",
-            padding: "20px",
-            width: { xs: "90%", md: "45%" },
-            marginBottom: { xs: "20px", md: "0" },
+            color: "rgb(247, 230, 173)",
+            textAlign: "center",
+            fontSize: { xs: "30px", sm: "40px", md: "56px" },
+            fontFamily: "Inter",
+            fontWeight: "700",
+            marginTop: { xs: "0px", md: "-40px" },
+            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)",
+            marginBottom: "20px",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{
-                fontFamily: "Inter",
-                color: "rgb(34, 34, 34)",
-                fontWeight: "600",
-                fontSize: { xs: "18px", md: "22px" },
-                margin: "0px 10px 20px 0px",
-              }}
-            >
-              Total Income
-            </Typography>
-            <Box
-              sx={{
-                marginLeft: "20px",
-                width: "25%",
-                background: "rgba(217, 217, 217, 0.3)",
-                marginBottom: "25px",
-              }}
-            >
-              <Select
-                value={chartType}
-                onChange={handleChartTypeChange}
-                fullWidth
-                size="small"
-                sx={{
-                  color: "rgb(0, 0, 0)",
-                  fontFamily: "Inter",
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  background: "rgba(217, 217, 217, 0.3)",
-                }}
-                IconComponent={() => CustomIcon}
-              >
-                <MenuItem value="year">Year</MenuItem>
-                <MenuItem value="month">Month</MenuItem>
-              </Select>
-            </Box>
-          </Box>
-          <Box sx={{ width: "100%", height: "40vh" }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data}>
-                <XAxis dataKey={xAxisDataKey} />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="income" fill="rgb(63, 128, 101)" barSize={30} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Box>
-        </Box>
-        <Card sx={{ width: { xs: "100%", md: "49%" } }}>
-          <CardContent>
+          Reports
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-between",
+            margin: "0px 5% 5px 5%",
+          }}
+        >
+          <Box
+            sx={{
+              background: "#fff",
+              padding: "20px",
+              width: { xs: "90%", md: "45%" },
+              marginBottom: { xs: "20px", md: "0" },
+            }}
+          >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 variant="h6"
@@ -295,15 +249,22 @@ const Reports = () => {
                   color: "rgb(34, 34, 34)",
                   fontWeight: "600",
                   fontSize: { xs: "18px", md: "22px" },
-                  marginLeft: "5%",
+                  margin: "0px 10px 20px 0px",
                 }}
               >
-                Income chart basis on Type
+                Total Income
               </Typography>
-              <Box sx={{ marginLeft: "20px", width: "20%" }}>
+              <Box
+                sx={{
+                  marginLeft: "20px",
+                  width: "25%",
+                  background: "rgba(217, 217, 217, 0.3)",
+                  marginBottom: "25px",
+                }}
+              >
                 <Select
-                  value={selectedPieOption}
-                  onChange={handlePieOptionChange}
+                  value={chartType}
+                  onChange={handleChartTypeChange}
                   fullWidth
                   size="small"
                   sx={{
@@ -315,86 +276,136 @@ const Reports = () => {
                   }}
                   IconComponent={() => CustomIcon}
                 >
-                  {pieOptions?.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
+                  <MenuItem value="year">Year</MenuItem>
+                  <MenuItem value="month">Month</MenuItem>
                 </Select>
               </Box>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-              }}
-            >
-              <PieChart width={300} height={300}>
-                <RechartsTooltip position="top" />
-                <RechartsLegend verticalAlign="top" height={46} />
-                <Pie
-                  dataKey="value"
-                  data={expenseData}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  fill="#8884d8"
-                  label
-                >
-                  {expenseData?.map((entry, index) => (
-                    <Cell key={`slice-${index}`} data={entry} fill={entry.fill} />
-                  ))}
-                </Pie>
-              </PieChart>
+            <Box sx={{ width: "100%", height: "40vh" }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data}>
+                  <XAxis dataKey={xAxisDataKey} />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="income" fill="rgb(63, 128, 101)" barSize={30} />
+                </BarChart>
+              </ResponsiveContainer>
             </Box>
-          </CardContent>
-        </Card>
-      </Box>
-      <Box>
-        <Typography
-          sx={{
-            color: "rgb(155, 181, 199)",
-            textAlign: "center",
-            fontSize: { xs: "24px", md: "36px" },
-            fontFamily: "Aoboshi One",
-            fontWeight: "400",
-            marginTop: "20px",
-          }}
-        >
-          See All Reports
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            flexWrap: "wrap",
-            margin: "25px 9% 5px 8%",
-          }}
-        >
-          {icons?.map((icon, idx) => {
-            return (
+          </Box>
+          <Card sx={{ width: { xs: "100%", md: "49%" } }}>
+            <CardContent>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  sx={{
+                    fontFamily: "Inter",
+                    color: "rgb(34, 34, 34)",
+                    fontWeight: "600",
+                    fontSize: { xs: "18px", md: "22px" },
+                    marginLeft: "5%",
+                  }}
+                >
+                  Income chart basis on Type
+                </Typography>
+                <Box sx={{ marginLeft: "20px", width: "20%" }}>
+                  <Select
+                    value={selectedPieOption}
+                    onChange={handlePieOptionChange}
+                    fullWidth
+                    size="small"
+                    sx={{
+                      color: "rgb(0, 0, 0)",
+                      fontFamily: "Inter",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      background: "rgba(217, 217, 217, 0.3)",
+                    }}
+                    IconComponent={() => CustomIcon}
+                  >
+                    {pieOptions?.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+              </Box>
               <Box
-                component="img"
-                key={idx}
-                src={`../../../Images/${icon}`}
-                alt="Icon"
                 sx={{
-                  height: { xs: "23vw", md: "9vw" },
-                  cursor: "pointer",
-                  margin: "5px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
                 }}
-                onClick={() => {
-                  navigate(`${iconsPath[idx]}`);
-                }}
-              />
-            );
-          })}
+              >
+                <PieChart width={300} height={300}>
+                  <RechartsTooltip position="top" />
+                  <RechartsLegend verticalAlign="top" height={46} />
+                  <Pie
+                    dataKey="value"
+                    data={expenseData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={100}
+                    fill="#8884d8"
+                    label
+                  >
+                    {expenseData?.map((entry, index) => (
+                      <Cell key={`slice-${index}`} data={entry} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </Box>
+            </CardContent>
+          </Card>
         </Box>
-      </Box>
-    </div>
-  );
+        <Box>
+          <Typography
+            sx={{
+              color: "rgb(155, 181, 199)",
+              textAlign: "center",
+              fontSize: { xs: "24px", md: "36px" },
+              fontFamily: "Aoboshi One",
+              fontWeight: "400",
+              marginTop: "20px",
+            }}
+          >
+            See All Reports
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              flexWrap: "wrap",
+              margin: "25px 9% 5px 8%",
+            }}
+          >
+            {icons?.map((icon, idx) => {
+              return (
+                <Box
+                  component="img"
+                  key={idx}
+                  src={`../../../Images/${icon}`}
+                  alt="Icon"
+                  sx={{
+                    height: { xs: "23vw", md: "9vw" },
+                    cursor: "pointer",
+                    margin: "5px",
+                  }}
+                  onClick={() => {
+                    navigate(`${iconsPath[idx]}`);
+                  }}
+                />
+              );
+            })}
+          </Box>
+        </Box>
+      </div>
+    );
+  }
+
 };
 
 export default Reports;
