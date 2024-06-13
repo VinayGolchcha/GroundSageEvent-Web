@@ -174,7 +174,9 @@ console.log(activeEvent);
         <Typography
           variant="h4"
           color="rgb(255, 255, 255)"
-          sx={{ marginTop: '10px', width: 'fit-content' }}
+          sx={{ marginTop: '10px', width: 'fit-content', fontSize : {
+            xs : "1.9rem"
+          } }}
         >
           WELCOME BACK!
         </Typography>
@@ -192,22 +194,30 @@ console.log(activeEvent);
       
     </Box>
       
-      <Box sx={{ margin: "0% 18%" , display : "flex" , justifyContent : "space-between" , fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.2rem"} , padding : "5px 0px" , color : "rgb(165, 170, 170)"}}>
-        <Box sx={{margin : "0px 8px"}}>Live Events</Box>
-        <Box sx={{fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.2rem"} ,marginRight : "13%"}}>See All <img src="/Images/Vector-1.png"/> </Box>
+      <Box sx={{ display : "flex" , width : "100vw", justifyContent : "center" , fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.2rem"} , padding : "5px 0px" , color : "rgb(165, 170, 170)"}}>
+       <Box sx={{
+        display : "flex" ,
+        justifyContent : "space-between" ,
+        alignItems : "center", 
+        width : {lg : "60%" , md : "60%" , sm : "43%", xs : "56%"}
+       }}>
+          <Box sx={{margin : "0px 8px"}}>Live Events</Box>
+          <Box sx={{fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.2rem"} ,marginRight : "4%"}}>See All <img src="/Images/Vector-1.png"/> </Box>
+        </Box>
       </Box>
-      <Box sx={{ margin: "1% 18%" , paddingBottom : "16px"}}>
-        <Grid container spacing={2}>
+      <Box sx={{ display : "flex" , justifyContent : "center" , alignItems : "center" , paddingBottom : "16px"}}>
+        <Grid container sx={{height : "100%" , width : "75%" ,display : "flex", alignItems : "center" , justifyContent : "center"}}>
           {activeEvent?.map((item, index) => {
             if(index === activeEvent.length -1 ){
               return;
             }
             return (
-              <Grid item lg={6} md={6} sm={6} xs={12} key={index}>
+              <Grid item lg={6} md={6} sm={10} xs={12} key={index} sx={{marginBottom : "5px" , display : "flex", justifyContent : "center"}} >
                 <Box
                   sx={{
                     minHeight: "95%",
-                    maxWidth: "70%",
+                    maxWidth: { lg : "80%" , md : "70%" , sm : "350px" , xs : "250px"},
+                    width : "100%",
                     backgroundColor: "rgba(255, 255, 255, 0.1)",
                     padding: "9px",
                     borderRadius: "8px",
@@ -255,27 +265,33 @@ console.log(activeEvent);
                       style={{ borderRadius: "8px",maxHeight : "200px"  , width: "100%"   ,height : "100%" , objectFit : "cover" }}
                     />
                   </Box>
-                  <Box sx={{ padding: "4px" }}>
-                    <Typography
-                      variant="h6"
-                      color="rgb(254, 240, 180)"
-                      sx={{ fontFamily: "Aoboshi One", margin: "5px 0px" }}
-                    >
-                      {item?.event_name}
-                    </Typography>
-                    <Typography color="rgb(43, 40, 73)" sx={{ fontFamily: "Poppins" }}>
-                      {item?.event_description}
-                    </Typography>
-                  </Box>
+                <Box sx={{ padding: "4px", maxHeight: { lg: "200px", md: "180px", sm: "160px", xs: "140px" }, overflowY: "auto" }}>
+                  <Typography
+                    variant="h6"
+                    color="rgb(254, 240, 180)"
+                    sx={{ fontFamily: "Aoboshi One", margin: "5px 0px" }}
+                  >
+                    {item?.event_name}
+                  </Typography>
+                  <Typography color="rgb(43, 40, 73)" sx={{ fontFamily: "Poppins", overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: { lg: 4, md: 3, sm: 2, xs: 2 }, WebkitBoxOrient: "vertical" }}>
+                    {item?.event_description}
+                  </Typography>
+                </Box>
                 </Box>
               </Grid>
             );
           })}
         </Grid>
       </Box>
+      <Box sx={{
+        display : "flex" ,
+        alignItems : "center" ,
+        justifyContent : "center"
+      }}>
       <Box
       sx={{
-        margin: { xs: '0% 5%', md: '0% 13%' }, // Responsive margin
+        
+        width : "70%", // Responsive margin
         height: { xs: 'auto', md: '20%' }, // Responsive height
         backgroundColor: 'rgba(250, 240, 205, 0.8)',
         display: 'flex',
@@ -283,11 +299,10 @@ console.log(activeEvent);
         justifyContent: 'space-between',
         alignItems: 'center',
         borderRadius: '10px',
-        fontSize: { xs: '1rem', md: '1.2rem' }, // Responsive font size
-        padding: { xs: '16px', md: '32px' } // Responsive padding
+        fontSize: { xs: '1rem', md: '1.2rem' }, // Responsive font size// Responsive padding
       }}
     >
-      <Box sx={{ textAlign: { xs: 'center', md: 'left' } }}>
+      <Box sx={{ textAlign: { xs: 'center', md: 'left' , padding : "16px  20px" } }}>
         <Typography
           variant="h4"
           color="rgb(66, 92, 90)"
@@ -313,16 +328,19 @@ console.log(activeEvent);
         >
           Join now
         </Button>
+        
       </Box>
       <Box
         component="img"
         src="/home/77mLIhf8TW1.png"
         sx={{
           width: { xs: '100%', md: '40%' }, // Full width on small screens, 40% on larger screens
-          marginTop: { xs: '16px', md: '0' }, // Margin on top for small screens
+           // Margin on top for small screens
           borderRadius: '10px' // Adding border-radius for better appearance
         }}
       />
+      </Box>
+      
     </Box>
     </Box>
   );

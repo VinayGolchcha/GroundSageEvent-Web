@@ -150,7 +150,7 @@ const Reports = () => {
 
   useEffect(() => {
     fetchYearlyData();
-  }, [selectedPieOption, yearlyReport]);
+  }, [selectedPieOption]);
 
   const handlePieOptionChange = (event) => {
     setSelectedPieOption(event.target.value);

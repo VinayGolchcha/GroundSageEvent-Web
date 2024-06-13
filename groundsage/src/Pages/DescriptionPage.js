@@ -239,7 +239,7 @@ const DescriptionPage = () => {
           alignItems: "center",
         }}
       >
-        {selectedShop.status === "vacant" && (
+        {selectedShop?.status === "vacant" && (
           <Button
             size="large"
             variant="contained" // Make the button contained if active dom
