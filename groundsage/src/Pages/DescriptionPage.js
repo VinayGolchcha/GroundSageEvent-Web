@@ -85,10 +85,15 @@ const DescriptionPage = () => {
         overflowY: "auto",
       }}
     >
-      <img
+      <Box
+        component="img"
         src="../../Images/arrow-left.png"
-        alt="Back"
-        style={{ cursor: "pointer", width: "45px", marginLeft: "20px" }}
+        alt="Share"
+        sx={{
+          cursor: "pointer",
+          width: { xs: "35px", md: "45px" },
+          margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
+        }}
         onClick={() => {
           navigate(-1); // Navigate back by one step in the history stack
         }}
@@ -118,7 +123,7 @@ const DescriptionPage = () => {
             border: "3px solid rgb(112, 141, 161)",
             borderRadius: "7px",
             display: "flex",
-            maxWidth: "fit-content",
+            minWidth: "fit-content",
             width: { xs: "90%", md: "90%" },
             padding: { xs: "15px", md: "12px 30px 5px 30px" },
             marginTop: "10px",
@@ -140,6 +145,7 @@ const DescriptionPage = () => {
                   display: "flex",
                   justifyContent: "left",
                   textTransform: "uppercase",
+                  flexWrap: "wrap",
                 }}
               >
                 <Typography
@@ -186,7 +192,7 @@ const DescriptionPage = () => {
             }}
           >
             <div>
-              {selectedShop.status === "vacant" ? (
+              {selectedShop?.status === "vacant" ? (
                 <>
                   <Box
                     component="img"
@@ -227,7 +233,7 @@ const DescriptionPage = () => {
                 textTransform: "uppercase",
               }}
             >
-              {selectedShop.status}
+              {selectedShop?.status}
             </Typography>
           </Box>
         </Box>
@@ -261,7 +267,7 @@ const DescriptionPage = () => {
             Go to Rental
           </Button>
         )}
-        {selectedShop.status === "occupied" && (
+        {selectedShop?.status === "occupied" && (
           <Button
             size="large"
             variant="contained" // Make the button contained if active dom

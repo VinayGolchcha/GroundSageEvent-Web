@@ -39,7 +39,7 @@ export default function CreateEventPage() {
   const coordinatorCountElement = useRef(null);
   const staffMemberCountElement = useRef(null);
   const helperCountElement = useRef(null);
-  const { user } = useContext(AuthContext);
+  const { user,setRCode } = useContext(AuthContext);
   const today = new Date();
 
   const handleOpenCalender1 = () => {
@@ -74,6 +74,7 @@ export default function CreateEventPage() {
     
   };
   const addEvent = async (body) => {
+   
     try {
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
@@ -95,17 +96,18 @@ export default function CreateEventPage() {
           },
         }
       );
-      console.log(res);
-      toast.success("Event Added Successfully" , {
-        style: {
-          // Change font color
-          fontSize: "16px", // Change font size
-          fontFamily: "Inter", // Change font family
-          fontWeight: "600", // Change font weight
-          color: "rgb(66, 92, 90)",
-        },
-        // Other options like position, autoClose, etc.
-      }); 
+      console.log('API response:', res.data.data[0].roles);
+
+    // Update the RCode state
+    setRCode(res.data.data[0].roles);
+
+    // Log the updated RCode state
+    console.log('Updated RCode state:', res.data.data[0].roles);
+
+    // If navigate is intended after setting RCode
+    navigate('/refferalcode');  // Adjust the path as needed
+
+      toast.success("Data Added Successfully"); 
     }catch(err){
       const errArray = err?.response?.data?.errors;
       errArray?.forEach((err) => {

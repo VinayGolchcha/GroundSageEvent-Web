@@ -57,14 +57,19 @@ export default function TransactionPage() {
       minHeight: "100vh",
     }}
   >
-    <img
-      src="../../Images/arrow-left.png"
-      alt="Share"
-      style={{ cursor: "pointer", width: "45px", marginLeft: "20px" }}
-      onClick={() => {
-        navigate(-1); // Navigate back by one step in the history stack
-      }}
-    />
+     <Box
+          component='img'
+          src="../../Images/arrow-left.png"
+          alt="Share"
+          sx={{
+            cursor: "pointer",
+            width: {xs:"35px",md:"45px"},
+            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+          }}
+          onClick={() => {
+            navigate(-1); // Navigate back by one step in the history stack
+          }}
+        />
     <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
       <Typography
         variant="h3"

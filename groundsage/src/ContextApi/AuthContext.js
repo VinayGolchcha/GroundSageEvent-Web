@@ -13,18 +13,44 @@ const safeJSONParse = (value, defaultValue) => {
   }
 };
 const AuthProvider = ({ children }) => {
-  const [eventIds, setEventIds] = useState(() => safeJSONParse(localStorage.getItem("eventIds"), []));
+  const [eventIds, setEventIds] = useState(() =>
+    safeJSONParse(localStorage.getItem("eventIds"), [])
+  );
   const [events, setEvents] = useState([]);
-  const [activeEvent, setActiveEvent] = useState(() => safeJSONParse(localStorage.getItem("activeEvent"), []));
-  const [activeEventId, setActiveEventId] = useState(() => safeJSONParse(localStorage.getItem("activeEventId"), null));
-  const [activeEventName, setActiveEventName] = useState(() => safeJSONParse(localStorage.getItem("activeEventName"), null));
-  const [transectionTag, setTransectionTag] = useState(() => safeJSONParse(localStorage.getItem("transectionTag"), null));
-  const [transectionType, setTransectionType] = useState(() => safeJSONParse(localStorage.getItem("transectionType"), null));
-  const [isEmailVerified, setIsEmailVerified] = useState(() => safeJSONParse(localStorage.getItem("isEmailVerified"), false));
-  const [lastShopNumber, setLastShopNumber] = useState(() => safeJSONParse(localStorage.getItem("lastShopNumber"), null));
-  const [user, setUser] = useState(() => safeJSONParse(localStorage.getItem("user"), null));
-  const [shopIds, setShopIds] = useState(() => safeJSONParse(localStorage.getItem("shopIds"), []));
+  const [activeEvent, setActiveEvent] = useState(() =>
+    safeJSONParse(localStorage.getItem("activeEvent"), [])
+  );
+  const [activeEventId, setActiveEventId] = useState(() =>
+    safeJSONParse(localStorage.getItem("activeEventId"), null)
+  );
+  const [activeEventName, setActiveEventName] = useState(() =>
+    safeJSONParse(localStorage.getItem("activeEventName"), null)
+  );
+  const [transectionTag, setTransectionTag] = useState(() =>
+    safeJSONParse(localStorage.getItem("transectionTag"), null)
+  );
+  const [transectionType, setTransectionType] = useState(() =>
+    safeJSONParse(localStorage.getItem("transectionType"), null)
+  );
+  const [isEmailVerified, setIsEmailVerified] = useState(() =>
+    safeJSONParse(localStorage.getItem("isEmailVerified"), false)
+  );
+  const [lastShopNumber, setLastShopNumber] = useState(() =>
+    safeJSONParse(localStorage.getItem("lastShopNumber"), null)
+  );
+  const [user, setUser] = useState(() =>
+    safeJSONParse(localStorage.getItem("user"), null)
+  );
+  const [shopIds, setShopIds] = useState(() =>
+    safeJSONParse(localStorage.getItem("shopIds"), [])
+  );
+  const [RCode, setRCode] = useState(() =>
+    safeJSONParse(localStorage.getItem("RCode"), null)
+  );
   const navigate = useNavigate();
+  useEffect(() => {
+    localStorage.setItem("RCode", JSON.stringify(RCode));
+  }, [RCode]);
 
   useEffect(() => {
     localStorage.setItem("isEmailVerified", JSON.stringify(isEmailVerified));
@@ -96,8 +122,8 @@ const AuthProvider = ({ children }) => {
       });
     } catch (err) {
       const errors = err?.response?.data?.errors;
-      errors.forEach(element => {
-        toast.error(element?.msg , {
+      errors.forEach((element) => {
+        toast.error(element?.msg, {
           style: {
             // Change font color
             fontSize: "16px", // Change font size
@@ -136,6 +162,7 @@ const AuthProvider = ({ children }) => {
         setActiveEventName(null);
         setTransectionTag(null);
         setTransectionType(null);
+        setRCode(null);
         localStorage.clear();
         navigate("/signin");
         console.log("Logout successful");
@@ -173,6 +200,8 @@ const AuthProvider = ({ children }) => {
         setTransectionTag,
         transectionType,
         setTransectionType,
+        RCode,
+        setRCode,
       }}
     >
       {children}

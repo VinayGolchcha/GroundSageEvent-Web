@@ -36,26 +36,30 @@ const OutStandingReport = () => {
   const [selectedOption, setSelectedOption] = useState("Year"); // Set initial value to "Year"
 
   const options = ["Year", "Month"];
-  const [outstandingReport , setOutstandingReport] = useState([]);
-  const {activeEventId , user} = useContext(AuthContext);
+  const [outstandingReport, setOutstandingReport] = useState([]);
+  const { activeEventId, user } = useContext(AuthContext);
 
-  const fecthOutstandingReport = async() => {
-    try{
-      const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-outstanding-balance` , {
-        flag : selectedOption.toLowerCase(),
-        event_id : 1112,
-        type : "income"
-      } , {
-        headers : {
-          'authorization': `${user?.token}`, // Ensure the token format is correct
-          'Accept': 'application/json',
-          role_id : user?.role_id
+  const fecthOutstandingReport = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/transaction/fetch-outstanding-balance`,
+        {
+          flag: selectedOption.toLowerCase(),
+          event_id: 1112,
+          type: "income",
+        },
+        {
+          headers: {
+            authorization: `${user?.token}`, // Ensure the token format is correct
+            Accept: "application/json",
+            role_id: user?.role_id,
+          },
         }
-      });
+      );
       setOutstandingReport(res?.data?.data);
       console.log(outstandingReport);
-    }catch(err){
-      toast.error(err?.response?.data?.message , {
+    } catch (err) {
+      toast.error(err?.response?.data?.message, {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -65,11 +69,10 @@ const OutStandingReport = () => {
         },
       });
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     fecthOutstandingReport();
-
-  },[selectedOption])
+  }, [selectedOption]);
 
   // Sample data for the table
   const yearlyData = [
@@ -151,24 +154,27 @@ const OutStandingReport = () => {
         padding: "20px",
       }}
     >
-      <ToastContainer/>
-      <img
+      <Box
+        component="img"
         src="../../Images/arrow-left.png"
         alt="Share"
-        style={{
+        sx={{
           cursor: "pointer",
-          width: "45px",
-          marginBottom: "20px",
+          width: { xs: "35px", md: "45px" },
+          margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
         }}
         onClick={() => {
           navigate(-1); // Navigate back by one step in the history stack
         }}
       />
+
+      <ToastContainer />
+
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
           textAlign: "center",
-          fontSize: {xs:"40px",md:"56px"},
+          fontSize: { xs: "40px", md: "56px" },
           fontFamily: "Inter",
           fontWeight: "700",
           marginTop: "-75px",

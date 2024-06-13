@@ -61,7 +61,7 @@ export default function CreateShopPage() {
         toast.error("Please enter a valid number.");
         return;
       }
-    } else if (field === "description" || field === "dome" || field === "location") {
+    } else if (field === "dome" || field === "location") {
       // Only allow strings
       if (!/^[a-zA-Z\s]*$/.test(newValue)) {
         toast.error("Please enter valid text.");
@@ -221,8 +221,10 @@ export default function CreateShopPage() {
     // const file = e.target.files[0];
     const files = Array.from(e.target.files);
     const validFiles = files.filter((file) => {
-      if (file.size > 100 * 1024) {
-        toast.error(`Image ${file.name} is less than 100kb. Please upload a larger image.`);
+      if (file.size > 500 * 1024) {
+        toast.error(
+          `Image ${file.name} is less than 100kb. Please upload a larger image.`
+        );
         return false;
       }
       return true;
@@ -253,13 +255,14 @@ export default function CreateShopPage() {
           backgroundColor: "rgb(66, 92, 90)",
         }}
       >
-        <img
+        <Box
+          component="img"
           src="../../Images/arrow-left.png"
           alt="Share"
-          style={{
+          sx={{
             cursor: "pointer",
-            width: "45px",
-            margin: "10px 0px 0px 20px",
+            width: { xs: "35px", md: "45px" },
+            margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
           }}
           onClick={() => {
             navigate(-1); // Navigate back by one step in the history stack
@@ -654,11 +657,18 @@ export default function CreateShopPage() {
             justifyContent: "center",
           }}
         >
-          <label
+          <Box
+            component="label"
             htmlFor="fileInput"
-            style={{
-              width: "300px",
-              height: "300px",
+            sx={{
+              width: {
+                xs: "100%", // 100% width for extra-small devices
+                sm: "100%", // 300px width for small and up devices
+              },
+              height: {
+                xs: "150px", // 150px height for extra-small devices
+                sm: "300px", // 200px height for small and up devices
+              },
               border: "2px solid #aaa",
               borderRadius: "10px",
               display: "flex",
@@ -666,7 +676,6 @@ export default function CreateShopPage() {
               alignItems: "center",
               overflow: "hidden",
               cursor: "pointer",
-              width: "100%",
               backgroundColor: "rgba(174, 174, 174, 0.83)",
             }}
           >
@@ -697,7 +706,7 @@ export default function CreateShopPage() {
                 </p>
               </Box>
             )}
-          </label>
+          </Box>
           <input
             type="file"
             id="fileInput"
