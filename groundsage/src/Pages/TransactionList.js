@@ -37,6 +37,7 @@ const TransactionList = () => {
           fontWeight: "600", // Change font weight
           color: "rgb(66, 92, 90)",
         }});
+        fecthTransections()
         setIsLoading(false);
     }catch(err){
       setIsLoading(false);
@@ -48,8 +49,8 @@ const TransactionList = () => {
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
-  useEffect(() => {
-    // Fetch transaction data from the API
+
+  const fecthTransections = () => {
     setIsLoading(true);
     fetch(
       `${process.env.REACT_APP_API_URI}/transaction/fetch-all-transaction`,
@@ -77,6 +78,10 @@ const TransactionList = () => {
         setIsLoading(false);
         console.error("Error fetching transaction data:", error);
       });
+  }
+  useEffect(() => {
+    // Fetch transaction data from the API
+    fecthTransections()
   }, []);
   if(isLoading){
     return(
@@ -85,7 +90,7 @@ const TransactionList = () => {
   }else{
 
     return (
-      <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
+      <div style={{ background: "rgb(66, 92, 90)", minHeight: "130vh" }}>
         <ToastContainer />
         <Box
             component='img'

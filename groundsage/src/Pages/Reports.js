@@ -56,6 +56,7 @@ const Reports = () => {
   const [pieChartData, setPieChartData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
   const [isLoading , setIsLoading] = useState(true);
+  const [defaultData , setDefaultData] = useState([]);
 
   const fetchYearlyReportData = async () => {
     try {
@@ -113,7 +114,7 @@ const Reports = () => {
 
       const data = res?.data?.data;
       setPieChartData(data);
-
+      console.log(data);
       const newExpenseData = [
         {
           name: data.shop_rental_total ? "Shop Rental" : "Staff Salary",
@@ -122,15 +123,16 @@ const Reports = () => {
         },
         { name: "Others", value: data.others_total, fill: "rgb(63, 128, 101)" },
       ];
-
-      const selectedData = yearlyReport.find(
+      const selectedData = yearlyReport?.find(
         (item) =>
           item[chartType === "year" ? "year" : "month"] === selectedPieOption
       );
-
       if (selectedData) {
         newExpenseData[0].value = (selectedData.income * parseInt(newExpenseData[0].value)) / parseInt(data.total);
         newExpenseData[1].value = (selectedData.income * parseInt(newExpenseData[1].value)) / parseInt(data.total);
+      }else{
+        newExpenseData[0].value = (data.total * parseInt(newExpenseData[0].value)) / parseInt(data.total);
+        newExpenseData[1].value = (data.total * parseInt(newExpenseData[1].value)) / parseInt(data.total);
       }
 
       setExpenseData(newExpenseData);
@@ -145,7 +147,6 @@ const Reports = () => {
       });
     }
   };
-
   useEffect(() => {
     fetchYearlyReportData();
     setIsLoading(false);

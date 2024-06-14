@@ -24,8 +24,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { AuthContext, AuthProvider } from "../ContextApi/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Component/Loading";
+import ConfirmDelete from "../Component/ConfirmDelete";
 
 export default function RentalAgreementPage() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   let { shopId } = useParams();
   const [openCalendar1, setOpenCalendar1] = useState(false);
   const [openCalendar2, setOpenCalendar2] = useState(false);
@@ -114,16 +118,21 @@ export default function RentalAgreementPage() {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     // Handle the uploaded file
+    if (!file) {
+      toast.error("No file selected");
+      return;
+    }
     const fsize = file.size;
-    const fileSizeIn = Math.round(fsize / 1024);
-    if (fileSizeIn >= 100) {
-      toast.warning("File too big, please select a file smaller than or equal to 100kb");
+    const fileSizeInMB = fsize / 1024 / 1024; 
+    if (fileSizeInMB >= 1) {
+      toast.warning("File too big, please select a file smaller than or equal to 1MB");
       return;
     } else {
       setFIle(file);
     }
     console.log(file);
   };
+  
   const addRental = async (body) => {
     setLoading(true);
     const formData = new FormData();
@@ -315,6 +324,7 @@ export default function RentalAgreementPage() {
     return (
       <>
         <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
+        <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleDelete}/>
         <Box
             component='img'
             src="../../Images/arrow-left.png"
@@ -923,7 +933,7 @@ export default function RentalAgreementPage() {
                               boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
                             },
                           }}
-                          onClick={handleDelete}
+                          onClick={handleOpen}
                         >
                           Delete
                         </Button>
