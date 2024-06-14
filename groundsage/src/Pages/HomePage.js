@@ -10,6 +10,7 @@ import { AuthContext } from "../ContextApi/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Loading from "../Component/Loading";
+import { useNavigate } from "react-router-dom";
 
 
 const ITEM_HEIGHT = 48;
@@ -44,6 +45,7 @@ function getStyles(name, personName, theme) {
 
 export default function HomePage() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [personName, setPersonName] = useState([]);
   const [activeEventsList , setActiveEventsList] = useState([]);
   const {eventIds , setActiveEventName, setActiveEvent ,activeEvent , setEvents,events , user , setActiveEventId , activeEventId ,} = useContext(AuthContext);
@@ -335,6 +337,9 @@ console.log(activeEvent);
               '&:hover': {
                 backgroundColor: 'rgb(14, 47, 47)'
               }
+            }}
+            onClick={() => {
+              navigate("/Profile");
             }}
           >
             Join now
