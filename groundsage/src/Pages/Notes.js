@@ -69,7 +69,6 @@ const Notes = () => {
       console.log(newEventList);
     }catch(err){
       setIsLoading(false);
-      toast.error(err.message);
     }
   }
 
