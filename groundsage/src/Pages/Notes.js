@@ -340,6 +340,7 @@ const Notes = () => {
                 margin: "25px 0px",
                 color: "rgba(255, 255, 255, 0.54)",
                 fontFamily: "Outfit",
+                fontSize : { xs: "27px",sm:"32px", md: "38px" , lg : "38px"}
               }}
             >
               No Notes Added
@@ -351,7 +352,8 @@ const Notes = () => {
                   margin: "25px 0px",
                   color: "rgb(216, 217, 217)",
                   fontFamily: "Poppins",
-                  cursor : "pointer"
+                  cursor : "pointer",
+                  fontSize : {xs : "25px" , sm : "30px" , md : "35px" , lg : "40px"}
                 }}
                 onClick={() => setIsPopupOpen(true)}
               >
