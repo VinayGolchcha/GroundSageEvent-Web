@@ -30,6 +30,7 @@ export default function EventListPage() {
 
   const handleEditEventApi = async (body) => {
     try{
+      setIsLoading(true);
       console.log(body);
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
@@ -56,6 +57,7 @@ export default function EventListPage() {
         }
       );
       console.log(res);
+      setIsLoading(false);
       toast.success(res?.data?.message , {
         style: {
           // Change font color
@@ -67,6 +69,7 @@ export default function EventListPage() {
         setIsEdit(!isEdit);
     }catch(err){
       console.log(err)
+      setIsLoading(false);
       const errArray = err?.response?.data?.errors;
       console.log(errArray);
       errArray?.forEach((err) => {
@@ -102,8 +105,9 @@ export default function EventListPage() {
         }});
     }catch(err){
       console.log(err);
-      toast.error(err?.response?.data?.message);
       setIsLoading(false);
+      toast.error(err?.response?.data?.message);
+      
     }
   }
 

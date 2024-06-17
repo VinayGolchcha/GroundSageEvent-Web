@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import {
   Box,
   Typography,
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextApi/AuthContext";
+import debounce from "lodash.debounce";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,37 +23,43 @@ const SignInPage = () => {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const navigate = useNavigate();
 
-  const checkEmailVerificationStatus = async () => {
-    try {
-      const response = await fetch(
-        "https://groundsageevent-be.onrender.com/api/v1/profile/check-email-verification",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-          }),
+  const debouncedCheckEmailVerificationStatus = useCallback(
+    debounce(async (email) => {
+      try {
+        const response = await fetch(
+          "https://groundsageevent-be.onrender.com/api/v1/profile/check-email-verification",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          const isEmailVerified = data.data?.is_email_verified === 1;
+          setIsEmailVerified(isEmailVerified);
+        } else {
+          toast.error(data.message || "Email verification failed.");
         }
-      );
-
-      const data = await response.json();
-      console.log(data);
-
-      if (response.ok) {
-        const isEmailVerified = data.data?.is_email_verified === 1;
-        setIsEmailVerified(isEmailVerified);
-      } else {
-        toast.error(data.message || "Email verification failed.");
+      } catch (error) {
+        toast.error("An error occurred while checking email verification.");
       }
-    } catch (error) {
-      toast.error("An error occurred while checking email verification.");
+    }, 3000), // 1000ms debounce delay
+    []
+  );
+
+  useEffect(() => {
+    if (email) {
+      debouncedCheckEmailVerificationStatus(email);
     }
-  };
+  }, [email, debouncedCheckEmailVerificationStatus]);
 
   const handleSubmit = async () => {
-    checkEmailVerificationStatus();
+    debouncedCheckEmailVerificationStatus();
     try {
       const response = await fetch(
         "https://groundsageevent-be.onrender.com/api/v1/profile/login",
@@ -156,7 +163,7 @@ const SignInPage = () => {
             fullWidth
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            onBlur={checkEmailVerificationStatus}
+            onBlur={() => debouncedCheckEmailVerificationStatus(email)}
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
@@ -284,7 +291,7 @@ const SignInPage = () => {
                   color: "rgb(50, 50, 50)",
                   boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)",
                 },
-                marginBottom:"25px"
+                marginBottom: "25px",
               }}
               onClick={handleSubmit}
             >
@@ -319,8 +326,8 @@ const SignInPage = () => {
               src="../../../Images/Group 33505.png"
               alt="Google Login"
               style={{ cursor: "pointer" }} */}
-            {/* /> */}
-          {/* </Box> */} 
+          {/* /> */}
+          {/* </Box> */}
           <Box
             sx={{
               display: "flex",

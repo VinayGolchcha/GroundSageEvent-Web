@@ -4,8 +4,12 @@ import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { useNavigate } from "react-router-dom";
+import ConfirmDelete from "./ConfirmDelete";
 
 const ExpensesList = ({data , deleteTransection}) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const [expenses, setExpenses] = useState([]);
   useEffect(() => {
@@ -62,6 +66,7 @@ const ExpensesList = ({data , deleteTransection}) => {
 
   return (
     <Box>
+      <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleExpenseDelete}/>
       {" "}
       {expenses?.length !== 0 && (
         <Box
@@ -131,7 +136,7 @@ const ExpensesList = ({data , deleteTransection}) => {
                   height: "30px",
                   cursor: "pointer",
                 }}
-                onClick={handleExpenseDelete}
+                onClick={handleOpen}
               />
             ) : (
               <img

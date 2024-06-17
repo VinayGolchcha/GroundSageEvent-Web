@@ -11,8 +11,12 @@ import Loading from "../Component/Loading";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import EditEventPopUp from "../Component/note/EditEventPopUp";
 import { AuthContext } from "../ContextApi/AuthContext";
+import ConfirmDelete from "../Component/ConfirmDelete";
 
 const Notes = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [eventList, setEventList] = useState([
   ]);
   // const [endpoint, setEndpoint] = useState(3)
@@ -255,7 +259,9 @@ const Notes = () => {
     const ele = eventList?.filter(item => item.isSelected === true);
 
       const ids = ele?.map(item => item?._id);
-      deleteNoteByMultipleId(ids);}
+      deleteNoteByMultipleId(ids);
+      handleClose()
+    }
   const handleSelectChange = () => {
     setSelect(!select);
   };
@@ -267,6 +273,7 @@ const Notes = () => {
   }else{
   return (
     <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
+      <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleDelete}/>
       <ToastContainer position="bottom-right" style={{ color: "red" }} />
       <Box
           component='img'
@@ -364,7 +371,7 @@ const Notes = () => {
                     src="deleteIcon.png"
                     alt="delete Icon"
                     style={{ padding: "2px", height: "30px", cursor: "pointer" }}
-                    onClick={handleDelete}
+                    onClick={handleOpen}
                   />
                 </>
               ) : (

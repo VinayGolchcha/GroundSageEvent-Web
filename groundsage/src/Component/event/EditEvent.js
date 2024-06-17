@@ -26,10 +26,12 @@ import ClearIcon from "@mui/icons-material/Clear";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { useNavigate } from "react-router-dom";
   
 
 export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
   console.log(selectedItem);
+    const navigate = useNavigate();
     const [openCalendar1, setOpenCalendar1] = useState(false);
     const [openCalendar2, setOpenCalendar2] = useState(false);
     const [fromDate , setFromDate] = useState(dayjs(selectedItem?.start_date));
@@ -63,8 +65,8 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
       files?.forEach(file => {
         if (file) {
           // Check if file size is greater than 100KB (100 * 1024 bytes)
-          if (file.size > 100 * 1024) {
-            toast.error('File size should not exceed 100KB' , {
+          if (file.size > 1 * 1024 * 1024) {
+            toast.error('File size should not exceed 1MB' , {
               style: {
                 // Change font color
                 fontSize: "16px", // Change font size
@@ -120,6 +122,19 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
     }
     return (
       <Box sx={{ backgroundColor: "rgb(66, 92, 90)"  , height : "100vh",}}>
+        <Box
+          component='img'
+          src="../../Images/arrow-left.png"
+          alt="Share"
+          sx={{
+            cursor: "pointer",
+            width: {xs:"35px",md:"45px"},
+            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+          }}
+          onClick={() => {
+            navigate(-1); // Navigate back by one step in the history stack
+          }}
+        />
         <Typography
           variant="h3"
           sx={{
@@ -128,6 +143,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
             padding: "20px 0px",
             fontWeight: "600",
             textShadow: "0 6px rgba(81,67,21,0.8)",
+            fontSize: { xs: "30px",sm:"40px", md: "56px" },
           }}
         >
           Edit Events

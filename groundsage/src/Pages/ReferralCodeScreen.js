@@ -33,6 +33,7 @@ const ReferralCodeScreen = () => {
         // onSave && onSave(response.data.data);
         // console.log(response):
         console.log(response.data.message);
+        navigate("/home");
       } else {
         console.log(response.data.message);
       }
@@ -40,16 +41,15 @@ const ReferralCodeScreen = () => {
       //   toast.error("An error occurred while trying to join the team.");
       console.error("Error joining team with referral code:", error);
     }
-    navigate("/home");
   };
 
   return (
     <div
       style={{
         background: "rgb(66, 92, 90)",
-        opacity: 0.9,
-        padding: "20px",
-        minHeight:"100vh"
+        // opacity: 0.9,
+        // padding: "20px",
+        minHeight: "100vh",
       }}
     >
       <div
@@ -59,27 +59,27 @@ const ReferralCodeScreen = () => {
         }}
       >
         <img
-          src="../../../Images/Splash Screen.png"
+          src="../../../Images/logo_1 1.png"
           alt="Right Arrow"
-          style={{ marginTop: "20px"}}
+          style={{ marginTop: "40px", width: "20%" }}
         />
       </div>
       <Typography
         sx={{
-          color: "rgb(24, 49, 47)",
+          color: "rgba(255, 255, 255, 0.54)",
           textAlign: "center",
-          fontSize: { lg: "45px", sm: "35px", xs: "25px" },
+          fontSize: { lg: "40px", sm: "35px", xs: "25px" },
           fontFamily: "Amita",
-          marginTop: "20px",
+          marginTop: "70px",
           letterSpacing: "4px", // Add space between words
           textTransform: "uppercase",
-          paddingBottom: "5px",
+          paddingBottom: "15px",
         }}
       >
         Do You Have a Referral Code?
       </Typography>
       <div style={{ textAlign: "center", height: "20%" }}>
-      <TextField
+        <TextField
           variant="outlined"
           placeholder="ABCED979834"
           value={referralCode}
@@ -109,7 +109,6 @@ const ReferralCodeScreen = () => {
             },
           }}
         />
-
       </div>
       <div
         style={{
@@ -146,6 +145,19 @@ const ReferralCodeScreen = () => {
           />
         </Button>
       </div>
+      <Typography
+        onClick={() => navigate("/home")}
+        sx={{
+          color: "#FFFFFF",
+          fontFamily: "Poppins",
+          fontWeight: "700",
+          textAlign: "center",
+          cursor: "pointer",
+          marginTop: "40px",
+        }}
+      >
+        CONTINUE WITHOUT CODE.....
+      </Typography>
     </div>
   );
 };

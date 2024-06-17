@@ -4,8 +4,12 @@ import Checkbox from "@mui/joy/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { Navigate, useNavigate } from "react-router-dom";
+import ConfirmDelete from "./ConfirmDelete";
 
 const IncomeList = ({data , deleteTransection }) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const [Income, setIncome] = useState([]);
   // const [endpoint, setEndpoint] = useState(3)
@@ -60,6 +64,7 @@ const IncomeList = ({data , deleteTransection }) => {
   };
   return (
     <Box>
+      <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleIncomeDelete}/>
       {" "}
       {Income?.length !== 0 && (
         <Box
@@ -83,7 +88,7 @@ const IncomeList = ({data , deleteTransection }) => {
                 />
               }
               sx={{
-                color: "rgb(91, 94, 97)",
+                color: "rgb(216, 217, 217)",
                 marginLeft: "0px",
                 fontFamily: "Poppins",
                 "& .css-ahj2mt-MuiTypography-root": {
@@ -129,7 +134,7 @@ const IncomeList = ({data , deleteTransection }) => {
                   height: "30px",
                   cursor: "pointer",
                 }}
-                onClick={handleIncomeDelete}
+                onClick={handleOpen}
               />
             ) : (
               <img

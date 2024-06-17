@@ -10,6 +10,7 @@ import IncomeList from "../Component/IncomeList";
 import { AuthContext } from "../ContextApi/AuthContext";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import Loading from "../Component/Loading";
 
 const TransactionList = () => {
   const navigate = useNavigate();
@@ -17,9 +18,11 @@ const TransactionList = () => {
   const [activeButton, setActiveButton] = useState("income");
   const [transactionData, setTransactionData] = useState([]);
   const {user , activeEventId} = useContext(AuthContext);
+  const [isLoading , setIsLoading] = useState(true);
 
   const deleteTransection = async (id) => {
     try{
+      setIsLoading(true);
       const res = await axios.delete(`${process.env.REACT_APP_API_URI}/transaction/delete-transaction/${id}/${activeEventId}` ,{ headers: {
         'authorization': user?.token,
         'Accept' : 'application/json',
@@ -34,7 +37,10 @@ const TransactionList = () => {
           fontWeight: "600", // Change font weight
           color: "rgb(66, 92, 90)",
         }});
+        fecthTransections()
+        setIsLoading(false);
     }catch(err){
+      setIsLoading(false);
       throw(err);
     }
   }
@@ -43,8 +49,9 @@ const TransactionList = () => {
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
-  useEffect(() => {
-    // Fetch transaction data from the API
+
+  const fecthTransections = () => {
+    setIsLoading(true);
     fetch(
       `${process.env.REACT_APP_API_URI}/transaction/fetch-all-transaction`,
       {
@@ -65,114 +72,127 @@ const TransactionList = () => {
         // Update state with fetched data
         setTransactionData(data.data);
         console.log(data.data);
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.error("Error fetching transaction data:", error);
       });
+  }
+  useEffect(() => {
+    // Fetch transaction data from the API
+    fecthTransections()
   }, []);
+  if(isLoading){
+    return(
+      <Loading/>
+    )
+  }else{
 
-  return (
-    <div style={{ background: "rgb(66, 92, 90)", minHeight: "100vh" }}>
-      <ToastContainer />
-      <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
+    return (
+      <div style={{ background: "rgb(66, 92, 90)", minHeight: "130vh" }}>
+        <ToastContainer />
+        <Box
+            component='img'
+            src="../../Images/arrow-left.png"
+            alt="Share"
+            sx={{
+              cursor: "pointer",
+              width: {xs:"35px",md:"45px"},
+              margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+            }}
+            onClick={() => {
+              navigate(-1); // Navigate back by one step in the history stack
+            }}
+          />
+        <Typography
           sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+            color: "rgb(247, 230, 173)",
+            textAlign: "center",
+            fontSize: { xs: "30px", sm: "40px", md: "56px" },
+            fontFamily: "Inter",
+            fontWeight: "700",
+            marginTop: "-30px",
+            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
-        />
-      <Typography
-        sx={{
-          color: "rgb(247, 230, 173)",
-          textAlign: "center",
-          fontSize: { xs: "30px", sm: "40px", md: "56px" },
-          fontFamily: "Inter",
-          fontWeight: "700",
-          marginTop: "-30px",
-          textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
-        }}
-      >
-        Transactions
-      </Typography>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "10px",
-        }}
-      >
-        <Button
-          variant={activeButton === "income" ? "contained" : "outlined"}
-          // color={activeButton === "income" ? "primary" : "default"}
-          onClick={() => handleButtonClick("income")}
-          sx={{
-            borderColor: "rgb(247, 230, 173)",
-            borderRadius: "4px",
-            fontWeight: "400",
-            fontFamily: "Aoboshi One",
-            background:
-              activeButton === "income" ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
-            marginRight: "20px",
-            color:
-              activeButton === "income"
-                ? "rgb(91, 94, 97)"
-                : "rgb(255, 255, 255)",
-            padding: "10px 30px 10px 30px",
-            "&:hover": {
-              color: activeButton === "income" ? "white" : "rgb(91, 94, 97)",
-              background:
-                activeButton === "income"
-                  ? "transparent"
-                  : "rgb(247, 230, 173)",
-            },
-          }}
-          size="large"
         >
-          INCOME
-        </Button>
-        <Button
-          variant={activeButton === "expenses" ? "contained" : "outlined"}
-          // color={activeButton === "expenses" ? "primary" : "default"}
-          onClick={() => handleButtonClick("expenses")}
-          size="large"
-          sx={{
-            borderColor: "rgb(247, 230, 173)",
-            borderRadius: "4px",
-            fontWeight: "400",
-            fontFamily: "Aoboshi One",
-            background:
-              activeButton === "expenses"
-                ? "rgb(247, 230, 173)"
-                : "transparent",
-
-            color:
-              activeButton === "expenses"
-                ? "rgb(91, 94, 97)"
-                : "rgb(255, 255, 255)",
-            padding: "10px 30px 10px 30px",
-            "&:hover": {
-              color: activeButton === "expenses" ? "white" : "rgb(91, 94, 97)",
+          Transactions
+        </Typography>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "10px",
+          }}
+        >
+          <Button
+            variant={activeButton === "income" ? "contained" : "outlined"}
+            // color={activeButton === "income" ? "primary" : "default"}
+            onClick={() => handleButtonClick("income")}
+            sx={{
+              borderColor: "rgb(247, 230, 173)",
+              borderRadius: "4px",
+              fontWeight: "400",
+              fontFamily: "Aoboshi One",
+              background:
+                activeButton === "income" ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
+              marginRight: "20px",
+              color:
+                activeButton === "income"
+                  ? "rgb(91, 94, 97)"
+                  : "rgb(255, 255, 255)",
+              padding: "10px 30px 10px 30px",
+              "&:hover": {
+                color: activeButton === "income" ? "white" : "rgb(91, 94, 97)",
+                background:
+                  activeButton === "income"
+                    ? "transparent"
+                    : "rgb(247, 230, 173)",
+              },
+            }}
+            size="large"
+          >
+            INCOME
+          </Button>
+          <Button
+            variant={activeButton === "expenses" ? "contained" : "outlined"}
+            // color={activeButton === "expenses" ? "primary" : "default"}
+            onClick={() => handleButtonClick("expenses")}
+            size="large"
+            sx={{
+              borderColor: "rgb(247, 230, 173)",
+              borderRadius: "4px",
+              fontWeight: "400",
+              fontFamily: "Aoboshi One",
               background:
                 activeButton === "expenses"
-                  ? "transparent"
-                  : "rgb(247, 230, 173)",
-            },
-          }}
-        >
-          EXPENSE
-        </Button>
+                  ? "rgb(247, 230, 173)"
+                  : "transparent",
+  
+              color:
+                activeButton === "expenses"
+                  ? "rgb(91, 94, 97)"
+                  : "rgb(255, 255, 255)",
+              padding: "10px 30px 10px 30px",
+              "&:hover": {
+                color: activeButton === "expenses" ? "white" : "rgb(91, 94, 97)",
+                background:
+                  activeButton === "expenses"
+                    ? "transparent"
+                    : "rgb(247, 230, 173)",
+              },
+            }}
+          >
+            EXPENSE
+          </Button>
+        </div>
+        {activeButton === "income" && <IncomeList data={transactionData?.filter((item)=> item?.tag === "income")} deleteTransection = {deleteTransection}/>}
+        {activeButton === "expenses" && <ExpensesList data={transactionData?.filter((item)=> item?.tag === "expense")} deleteTransection = {deleteTransection}/>}
       </div>
-      {activeButton === "income" && <IncomeList data={transactionData?.filter((item)=> item?.tag === "income")} deleteTransection = {deleteTransection}/>}
-      {activeButton === "expenses" && <ExpensesList data={transactionData?.filter((item)=> item?.tag === "expense")} deleteTransection = {deleteTransection}/>}
-    </div>
-  );
+    );
+  }
+
 };
 
 export default TransactionList;

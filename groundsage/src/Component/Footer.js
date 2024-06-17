@@ -3,6 +3,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../ContextApi/AuthContext";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -48,10 +49,14 @@ const Footer = () => {
         }
       );
       console.log("Feedback sent successfully:", response.data);
+      toast.success("Feedback sent successfully");
+      setFeedback("");
+      setEmail("");
     } catch (error) {
       if (error.response) {
         // Server responded with a status other than 200 range
         console.error("Error response from server:", error.response.data);
+        toast.error("Something went wrong");
       } else if (error.request) {
         // No response was received from the server
         console.error("No response received from server:", error.request);

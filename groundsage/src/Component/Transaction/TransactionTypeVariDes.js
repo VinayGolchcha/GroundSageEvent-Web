@@ -30,7 +30,7 @@ export default function TransactionTypeVariDes({list}){
               style={{ margin: "0px 5px", height: "20px", width: "20px" }}
               alt="Ellipse"
             /> 
-            <Typography onClick = {() => handleClick(list[0])} variant="h5" sx={{ color: "rgb(255, 238, 179)" , cursor : "pointer" }}>
+            <Typography onClick = {() => handleClick(list[0])} variant="h5" sx={{ color: "rgb(255, 238, 179)" , cursor : "pointer" , fontSize :  {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"} }}>
             {list[0]}
           </Typography></>)
             : ( <><img
@@ -38,7 +38,7 @@ export default function TransactionTypeVariDes({list}){
             style={{ margin: "0px 5px", height: "20px", width: "20px" }}
             alt="Ellipse"
           />
-          <Typography onClick = {() => handleClick(list[0])} variant="h5" sx={{ color: "rgb(198, 208, 217)" , cursor : "pointer"}}>
+          <Typography onClick = {() => handleClick(list[0])} variant="h5" sx={{ color: "rgb(198, 208, 217)" , cursor : "pointer" , fontSize :  {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"}}}>
             {list[0]}
           </Typography>
           </>)}
@@ -59,7 +59,7 @@ export default function TransactionTypeVariDes({list}){
               style={{ margin: "0px 5px", height: "20px", width: "20px" }}
               alt="Ellipse"
             /> 
-            <Typography onClick = {() => handleClick(list[1])} variant="h5" sx={{ color: "rgb(255, 238, 179)" , cursor : "pointer" }}>
+            <Typography onClick = {() => handleClick(list[1])} variant="h5" sx={{ color: "rgb(255, 238, 179)" , cursor : "pointer" , fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"}}}>
             {list[1]}
           </Typography></>)
             : ( <><img
@@ -67,7 +67,7 @@ export default function TransactionTypeVariDes({list}){
             style={{ margin: "0px 5px", height: "20px", width: "20px" }}
             alt="Ellipse"
           />
-          <Typography onClick = {() => handleClick(list[1])} variant="h5" sx={{ color: "rgb(198, 208, 217)" , cursor : "pointer" }}>
+          <Typography onClick = {() => handleClick(list[1])} variant="h5" sx={{ color: "rgb(198, 208, 217)" , cursor : "pointer" , fontSize :  {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"}}}>
             {list[1]}
           </Typography>
           </>)}

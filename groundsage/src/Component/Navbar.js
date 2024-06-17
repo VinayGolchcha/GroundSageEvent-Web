@@ -86,6 +86,8 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
     }
   };
 
+  const userInitials = user?.user_name ? user.user_name.slice(0, 2).toUpperCase() : "";
+
   return (
     <div>
       <AppBar
@@ -196,7 +198,9 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0, marginRight: "20px" }}
               >
-                <Avatar alt={user?.user_name} src="../../Component/profile..png" />
+                   <Avatar>
+                  {userInitials}
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu

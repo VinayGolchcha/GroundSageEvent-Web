@@ -124,7 +124,7 @@ const DescriptionPage = () => {
             borderRadius: "7px",
             display: "flex",
             minWidth: "fit-content",
-            width: { xs: "90%", md: "90%" },
+            width: { xs: "90%", md: "30%" },
             padding: { xs: "15px", md: "12px 30px 5px 30px" },
             marginTop: "10px",
             borderColor: "rgb(112, 141, 161)", // Added border color
@@ -284,7 +284,7 @@ const DescriptionPage = () => {
               },
             }}
             onClick={() => {
-              // navigate("/rental-agreement");
+              navigate(`/rental-agreement/${shopDetails?.id}`);
             }}
           >
             Edit Rental agreement

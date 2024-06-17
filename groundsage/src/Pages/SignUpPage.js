@@ -21,6 +21,7 @@ const SignUpPage = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    activationCode: "", // Added activation code field
   });
 
   const handleChange = (e) => {
@@ -50,6 +51,7 @@ const SignUpPage = () => {
             username: formData.username,
             email: formData.email,
             password: formData.password,
+            activation_code: formData.activationCode, // Added activation code to API request body
           }),
         }
       );
@@ -141,7 +143,7 @@ const SignUpPage = () => {
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)",
-              marginBottom:{xs:"10px",md:"15px"}
+              marginBottom: { xs: "10px", md: "15px" },
             }}
           />
           <TextField
@@ -174,7 +176,7 @@ const SignUpPage = () => {
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)",
-              marginBottom:{xs:"10px",md:"15px"}
+              marginBottom: { xs: "10px", md: "15px" },
             }}
           />
           <TextField
@@ -234,7 +236,7 @@ const SignUpPage = () => {
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)",
-              marginBottom:{xs:"10px",md:"15px"}
+              marginBottom: { xs: "10px", md: "15px" },
             }}
           />
           <TextField
@@ -296,6 +298,42 @@ const SignUpPage = () => {
               borderRadius: "4px",
               background: "rgb(115, 135, 135)",
               border: "1px solid rgb(188, 189, 163)",
+              marginBottom: { xs: "10px", md: "15px" },
+            }}
+          />
+          <TextField
+            id="activationCode"
+            name="activationCode"
+            label={
+              <Box
+                sx={{ display: "flex", alignItems: "center", height: "100%" }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginRight: "15px",
+                  }}
+                ></Box>
+                <Typography sx={{ color: "white" }}>Activation Code</Typography>
+              </Box>
+            }
+            variant="filled"
+            fullWidth
+            value={formData.activationCode}
+            onChange={handleChange}
+            InputProps={{
+              disableUnderline: true,
+              style: { color: "white", margin: "1px" },
+            }}
+            InputLabelProps={{ style: { color: "white" } }}
+            sx={{
+              margin: "5px",
+              width: { xs: "80%", md: "100%" },
+              borderRadius: "4px",
+              background: "rgb(115, 135, 135)",
+              border: "1px solid rgb(188, 189, 163)",
+              marginBottom: { xs: "10px", md: "15px" },
             }}
           />
           <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -326,31 +364,14 @@ const SignUpPage = () => {
                 style={{ marginLeft: "50px" }}
               />
             </Button>
-           </Box>
-          {/*<Typography
-            sx={{
-              color: "rgb(165, 170, 174)",
-              fontSize: { lg: "20px", sm: "20px", xs: "16px" },
-              marginTop: "15px",
-              textAlign: "center",
-            }}
-          >
-            OR
-          </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <img
-              src="../../../Images/Group 33505.png"
-              alt="Google Login"
-              // style={{ marginLeft: "0", cursor: "pointer", width: "30%" }}
-            />
-          </Box> */}
+          </Box>
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               marginTop: "20px",
-              marginBottom:"15px"
+              marginBottom: "15px",
             }}
           >
             <Typography
