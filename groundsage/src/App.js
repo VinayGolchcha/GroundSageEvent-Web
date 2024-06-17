@@ -107,7 +107,7 @@ const App = () => {
             onChange={handleChange}
             input={<OutlinedInput />}
             renderValue={(selected) => {
-              if (selected.length === 0) {
+              if (selected?.length === 0) {
                 return <span style={{fontFamily: 'Aoboshi One',}}>Pick an event</span>;
               }
 
@@ -123,9 +123,9 @@ const App = () => {
             }}
           >
             <MenuItem disabled value="">
-              <em>{activeEvent.length === 0 ? <>Pick an event</> : activeEvent[0].event_name}</em>
+              <em>{activeEvent?.length === 0 ? <>Pick an event</> : activeEvent[0].event_name}</em>
             </MenuItem>
-            {activeEvent?.slice(0,activeEvent.length - 1).map((name) => (
+            {activeEvent?.slice(0,activeEvent?.length - 1).map((name) => (
               <MenuItem
                 key={name.id}
                 value={name?.event_name}

@@ -258,7 +258,7 @@ const Reports = () => {
               <Box
                 sx={{
                   marginLeft: "20px",
-                  width: "25%",
+                  minWidth : "fit-content",
                   background: "rgba(217, 217, 217, 0.3)",
                   marginBottom: "25px",
                 }}
@@ -310,7 +310,7 @@ const Reports = () => {
                 >
                   Income chart basis on Type
                 </Typography>
-                <Box sx={{ marginLeft: "20px", width: "20%" }}>
+                <Box sx={{ marginLeft: "20px", minWidth : "fit-content", }}>
                   <Select
                     value={selectedPieOption}
                     onChange={handlePieOptionChange}
