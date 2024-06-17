@@ -6,7 +6,7 @@ import AddNotes from "../Component/NotesPopUp";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loading from "../Component/Loading";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import EditEventPopUp from "../Component/note/EditEventPopUp";
@@ -54,6 +54,7 @@ const Notes = () => {
   }
   const fetchNotes = async () => {
     try{
+      setIsLoading(true);
       const res = await axios.get(`${process.env.REACT_APP_API_URI}/note/fetch-notes/${user?.user_id}/${activeEventId}`, {
         headers: {
           'authorization': `${user?.token}`, // Ensure the token format is correct
@@ -64,7 +65,8 @@ const Notes = () => {
       const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}))
       setEventList(newEventList);
       console.log(eventList);
-      setIsLoading(false)
+      setIsLoading(false);
+      console.log(newEventList);
     }catch(err){
       setIsLoading(false);
       toast.error(err.message);
@@ -73,7 +75,7 @@ const Notes = () => {
 
   useEffect(()=>{
     fetchNotes();
-  },[activeEventId])
+  },[activeEventId ])
   const maxItems = 3;
 
   const handleOpenPopup = () => {
@@ -256,8 +258,8 @@ const Notes = () => {
   };
 
   const handleDelete = () => {
-    const ele = eventList?.filter(item => item.isSelected === true);
-
+      const ele = eventList?.filter(item => item.isSelected === true);
+      setEventList(eventList?.filter(item => item.isSelected !== true));
       const ids = ele?.map(item => item?._id);
       deleteNoteByMultipleId(ids);
       handleClose()
@@ -305,7 +307,61 @@ const Notes = () => {
 
       <Box>
         {" "}
-        {eventList?.length !== 0 && (
+        {eventList?.length === 0 && (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "60vw",
+                width : "100%"
+              }}
+            >
+              <Box
+                sx={{
+                  backgroundColor: "rgba(217, 217, 217, 0.3)",
+                  borderRadius: "166px",
+                  padding: "55px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  
+                }}
+              >
+                <img src="Images/sticky-note-1.png" />
+              </Box>
+            </Box>
+            <Typography
+              variant="h4"
+              sx={{
+                width: "100%",
+                textAlign: "center",
+                margin: "25px 0px",
+                color: "rgba(255, 255, 255, 0.54)",
+                fontFamily: "Outfit",
+                fontSize : { xs: "27px",sm:"32px", md: "38px" , lg : "38px"}
+              }}
+            >
+              No Notes Added
+            </Typography>
+              <Typography
+                textAlign="center"
+                sx={{
+                  fontSize: "1.3rem",
+                  margin: "25px 0px",
+                  color: "rgb(216, 217, 217)",
+                  fontFamily: "Poppins",
+                  cursor : "pointer",
+                  fontSize : {xs : "25px" , sm : "30px" , md : "35px" , lg : "40px"}
+                }}
+                onClick={() => setIsPopupOpen(true)}
+              >
+                Click here to create....
+              </Typography>
+          </Box>
+        )}
+        {eventList?.length > 0 && (
           <Box
             sx={{
               margin: "2% 18%",
