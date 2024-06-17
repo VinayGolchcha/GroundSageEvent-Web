@@ -18,8 +18,12 @@ import axios from "axios"; // Import Axios for making HTTP requests
 import NoShop from "../Component/NoShop";
 import { AuthContext } from "../ContextApi/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import ConfirmDelete from "../Component/ConfirmDelete";
 
 const ShopListing = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [filter, setFilter] = useState("all");
   const [showMore, setShowMore] = useState(false);
   const [displayCount, setDisplayCount] = useState(9);
@@ -183,10 +187,12 @@ const ShopListing = () => {
         setSelectedShops([]);
         toast.success("Shop Deleted Successfully");
         setSelectMode(false);
+        setOpen(false);
       })
       .catch((error) => {
         console.error("Error deleting shops:", error);
         toast.error("Failed to delete shops!");
+        setOpen(false);
       });
   }, [selectedShops, shopCards, user]);
 
@@ -233,6 +239,7 @@ const ShopListing = () => {
           boxShadow: "0px 4px 6px rgba(255, 251, 251, 0.11)", // Adding outside shadow
         }}
       >
+        <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleDelete}/>
         <ToastContainer />
 
         {/* <div style={{display:"flex"}}> */}
@@ -471,7 +478,7 @@ const ShopListing = () => {
                       height: "30px",
                       cursor: "pointer",
                     }}
-                    onClick={handleDelete}
+                    onClick={handleOpen}
                   />
                 )}
               </Box>
