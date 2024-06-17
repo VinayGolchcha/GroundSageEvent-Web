@@ -74,7 +74,7 @@ const SignInPage = () => {
         const userData = data?.data?.[0];
         setUser(userData);
         console.log(userData);
-        navigate("/home");
+        navigate("/referral-code");
       } else {
         toast.error(data.message || "Login failed. Please try again.");
       }

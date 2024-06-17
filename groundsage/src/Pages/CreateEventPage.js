@@ -39,25 +39,25 @@ export default function CreateEventPage() {
   const coordinatorCountElement = useRef(null);
   const staffMemberCountElement = useRef(null);
   const helperCountElement = useRef(null);
-  const { user,setRCode } = useContext(AuthContext);
+  const { user, setRCode } = useContext(AuthContext);
   const today = new Date();
 
   const handleOpenCalender1 = () => {
     setOpenCalendar1(true);
   };
   const navigate = useNavigate();
-  
+
   const handleOpenCalender2 = () => {
     setOpenCalendar2(true);
   };
   const handleFileUpload = (event) => {
     const files = Array.from(event.target.files);
     // Handle the uploaded file
-    files?.forEach(file => {
+    files?.forEach((file) => {
       if (file) {
         // Check if file size is greater than 100KB (100 * 1024 bytes)
-        if (file.size > 100 * 1024) {
-          toast.error('File size should not exceed 100KB' , {
+        if (file.size > 500 * 1024) {
+          toast.error("File size should not exceed 500KB", {
             style: {
               // Change font color
               fontSize: "16px", // Change font size
@@ -71,10 +71,8 @@ export default function CreateEventPage() {
       }
     });
     setFIle(files);
-    
   };
   const addEvent = async (body) => {
-   
     try {
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
@@ -96,23 +94,23 @@ export default function CreateEventPage() {
           },
         }
       );
-      console.log('API response:', res.data.data[0].roles);
+      console.log("API response:", res.data.data[0].roles);
 
-    // Update the RCode state
-    setRCode(res.data.data[0].roles);
+      // Update the RCode state
+      setRCode(res.data.data[0].roles);
 
-    // Log the updated RCode state
-    console.log('Updated RCode state:', res.data.data[0].roles);
+      // Log the updated RCode state
+      console.log("Updated RCode state:", res.data.data[0].roles);
 
-    // If navigate is intended after setting RCode
-    navigate('/refferalcode');  // Adjust the path as needed
+      // If navigate is intended after setting RCode
+      navigate("/refferalcode"); // Adjust the path as needed
 
-      toast.success("Data Added Successfully"); 
-    }catch(err){
+      toast.success("Data Added Successfully");
+    } catch (err) {
       const errArray = err?.response?.data?.errors;
       errArray?.forEach((err) => {
-        toast.error(err?.msg)
-      }) 
+        toast.error(err?.msg);
+      });
       toast.error(err);
     }
   };
@@ -221,7 +219,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
               id="standard-basic"
@@ -229,19 +227,23 @@ export default function CreateEventPage() {
               variant="standard"
               inputRef={eventNameElement}
             />
-            <div><Typography sx ={{
-                        fontSize: "11px",
-                        position: "absolute",
-                        paddingTop: "6px",
-                        color : "white"
-                  }
-                  }>From Date</Typography></div>
+            <div>
+              <Typography
+                sx={{
+                  fontSize: "11px",
+                  position: "absolute",
+                  paddingTop: "6px",
+                  color: "white",
+                }}
+              >
+                From Date
+              </Typography>
+            </div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <FormControl
                 variant="standard"
                 sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
               >
-                
                 <DatePicker
                   labelId="from-date-label"
                   value={dayjs(fromDate)}
@@ -264,9 +266,9 @@ export default function CreateEventPage() {
                           />
                         ),
                       },
-                      InputLabelProps : {
-                        fontSize: {xs:"18px",md:"20px"},
-                      }
+                      InputLabelProps: {
+                        fontSize: { xs: "18px", md: "20px" },
+                      },
                     },
                   }}
                   sx={{
@@ -296,13 +298,18 @@ export default function CreateEventPage() {
                 />
               </FormControl>
             </LocalizationProvider>
-            <div><Typography sx ={{
-                        fontSize: "11px",
-                        position: "absolute",
-                        paddingTop: "6px",
-                        color : "white"
-                  }
-                  }>To Date</Typography></div>
+            <div>
+              <Typography
+                sx={{
+                  fontSize: "11px",
+                  position: "absolute",
+                  paddingTop: "6px",
+                  color: "white",
+                }}
+              >
+                To Date
+              </Typography>
+            </div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <FormControl
                 variant="standard"
@@ -330,9 +337,9 @@ export default function CreateEventPage() {
                           />
                         ),
                       },
-                      InputLabelProps : {
-                        fontSize: {xs:"18px",md:"20px"},
-                      }
+                      InputLabelProps: {
+                        fontSize: { xs: "18px", md: "20px" },
+                      },
                     },
                   }}
                   sx={{
@@ -391,7 +398,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
               inputRef={descriptionElement}
@@ -449,7 +456,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
             />
@@ -493,7 +500,7 @@ export default function CreateEventPage() {
               InputLabelProps={{
                 style: {
                   color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
               inputRef={teamNameElement}
@@ -520,150 +527,173 @@ export default function CreateEventPage() {
                 },
                 width: "100%",
                 margin: "10px 0px ",
-              } 
-                 
-            }
-            InputProps={{
-              style: {
-                color: "rgb(255, 255, 255)",
-              },
-            }}
-            InputLabelProps={{
-              style: {
-                color: "white",
-                fontSize: {xs:"18px",md:"20px"},
-              },
-            }}
-            type="number"
+              }}
+              InputProps={{
+                style: {
+                  color: "rgb(255, 255, 255)",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "white",
+                  fontSize: { xs: "18px", md: "20px" },
+                },
+              }}
+              type="number"
               id="standard-basic"
               label="Team Size"
               variant="standard"
               inputRef={teamSizeElement}
             />
-          <Box sx={{display : "flex" , width : "100%"}}>
-          <Typography sx={{color : "rgb(255, 255, 255)" , width : "50%" , margin: "10px 0px ",alignContent : "end"}}>Role: Coordinator </Typography>
-            <TextField
-              type="number"
-              sx={{
-                width : "50%",
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+            <Box sx={{ display: "flex", width: "100%" }}>
+              <Typography
+                sx={{
                   color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width: "50%",
-                margin: "10px 0px ",
-              }}
-              InputProps={{
-                style: {
+                  width: "50%",
+                  margin: "10px 0px ",
+                  alignContent: "end",
+                }}
+              >
+                Role: Coordinator{" "}
+              </Typography>
+              <TextField
+                type="number"
+                sx={{
+                  width: "50%",
+                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                    color: "rgb(255, 255, 255)",
+                  },
+                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                    borderBottom: "1px solid rgb(188, 189, 163)",
+                  },
+                  "& label.Mui-focused": {
+                    color: "rgb(255, 255, 255)", // Color of the label when focused
+                  },
+                  "& .MuiInput-underline:after": {
+                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                  },
+                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                  },
+                  width: "50%",
+                  margin: "10px 0px ",
+                }}
+                InputProps={{
+                  style: {
+                    color: "rgb(255, 255, 255)",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: "white",
+                    fontSize: { xs: "18px", md: "20px" },
+                  },
+                }}
+                inputRef={coordinatorCountElement}
+                id="standard-basic"
+                label="Count"
+                variant="standard"
+              />
+            </Box>
+            <Box sx={{ display: "flex", width: "100%" }}>
+              <Typography
+                sx={{
                   color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
-                },
-              }}
-              inputRef={coordinatorCountElement}
-              id="standard-basic"
-              label="Count"
-              variant="standard"
-            />
-          </Box>
-          <Box sx={{display : "flex" , width : "100%"}}>
-            <Typography sx={{color : "rgb(255, 255, 255)" , width : "50%" , margin: "10px 0px ",alignContent : "end"}}>Role: STAFF MEMBER</Typography>
-            <TextField
-            type="number"
-              sx={{
-                width : "50%",
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  width: "50%",
+                  margin: "10px 0px ",
+                  alignContent: "end",
+                }}
+              >
+                Role: STAFF MEMBER
+              </Typography>
+              <TextField
+                type="number"
+                sx={{
+                  width: "50%",
+                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                    color: "rgb(255, 255, 255)",
+                  },
+                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                    borderBottom: "1px solid rgb(188, 189, 163)",
+                  },
+                  "& label.Mui-focused": {
+                    color: "rgb(255, 255, 255)", // Color of the label when focused
+                  },
+                  "& .MuiInput-underline:after": {
+                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                  },
+                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                  },
+                  width: "50%",
+                  margin: "10px 0px ",
+                }}
+                InputProps={{
+                  style: {
+                    color: "rgb(255, 255, 255)",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: "white",
+                    fontSize: { xs: "18px", md: "20px" },
+                  },
+                }}
+                id="standard-basic"
+                label="Count"
+                variant="standard"
+                inputRef={staffMemberCountElement}
+              />
+            </Box>
+            <Box sx={{ display: "flex", width: "100%" }}>
+              <Typography
+                sx={{
                   color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width: "50%",
-                margin: "10px 0px ",
-              }}
-              InputProps={{
-                style: {
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
-                },
-              }}
-              id="standard-basic"
-              label="Count"
-              variant="standard"
-              inputRef={staffMemberCountElement}
-            />
-          </Box>
-          <Box sx={{display : "flex" , width : "100%"}}>
-            <Typography sx={{color : "rgb(255, 255, 255)", width : "50%" , margin: "10px 0px ", alignContent : "end"}}>Role: HELPER</Typography>
-            <TextField
-            type="number"
-              sx={{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                  color: "rgb(255, 255, 255)",
-                },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                  borderBottom: "1px solid rgb(188, 189, 163)",
-                },
-                "& label.Mui-focused": {
-                  color: "rgb(255, 255, 255)", // Color of the label when focused
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                },
-                width: "50%",
-                margin: "10px 0px ",
-              }}
-              InputProps={{
-                style: {
-                  color: "rgb(255, 255, 255)",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  color: "white",
-                  fontSize: {xs:"18px",md:"20px"},
-                },
-              }}
-              inputRef={helperCountElement}
-              id="standard-basic"
-              label="Count"
-              variant="standard"
-            />
-          </Box>
-
-
+                  width: "50%",
+                  margin: "10px 0px ",
+                  alignContent: "end",
+                }}
+              >
+                Role: HELPER
+              </Typography>
+              <TextField
+                type="number"
+                sx={{
+                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                    color: "rgb(255, 255, 255)",
+                  },
+                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                    borderBottom: "1px solid rgb(188, 189, 163)",
+                  },
+                  "& label.Mui-focused": {
+                    color: "rgb(255, 255, 255)", // Color of the label when focused
+                  },
+                  "& .MuiInput-underline:after": {
+                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
+                  },
+                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                  },
+                  width: "50%",
+                  margin: "10px 0px ",
+                }}
+                InputProps={{
+                  style: {
+                    color: "rgb(255, 255, 255)",
+                  },
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: "white",
+                    fontSize: { xs: "18px", md: "20px" },
+                  },
+                }}
+                inputRef={helperCountElement}
+                id="standard-basic"
+                label="Count"
+                variant="standard"
+              />
+            </Box>
           </Grid>
           <Box
             sx={{
@@ -676,8 +706,8 @@ export default function CreateEventPage() {
             <Button
               variant="contained"
               sx={{
-                ":hover" : {
-                  backgroundColor : "rgb(247, 230, 173)"
+                ":hover": {
+                  backgroundColor: "rgb(247, 230, 173)",
                 },
                 backgroundColor: "rgb(247, 230, 173) ",
                 color: "rgb(91, 94, 97)",

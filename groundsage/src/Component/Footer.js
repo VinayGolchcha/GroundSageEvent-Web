@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../ContextApi/AuthContext";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const apiUrl = process.env.REACT_APP_API_URI;
+  const { user } = useContext(AuthContext);
+
   const location = useLocation();
   const navigate = useNavigate();
   if (
@@ -16,6 +23,44 @@ const Footer = () => {
   ) {
     return null;
   }
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleFeedbackChange = (event) => {
+    setFeedback(event.target.value);
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        `${apiUrl}/home/send-feedback`,
+        {
+          email,
+          feedback,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": user?.token,
+            role_id: user?.role_id,
+          },
+        }
+      );
+      console.log("Feedback sent successfully:", response.data);
+    } catch (error) {
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        console.error("Error response from server:", error.response.data);
+      } else if (error.request) {
+        // No response was received from the server
+        console.error("No response received from server:", error.request);
+      } else {
+        // Something happened in setting up the request
+        console.error("Error setting up request:", error.message);
+      }
+    }
+  };
 
   return (
     <div style={{ background: "rgb(78, 101, 100)" }}>
@@ -38,23 +83,23 @@ const Footer = () => {
           }}
         >
           <Box>
-          <img
-            src="../../../Images/logo_1 1.png"
-            alt="Right Arrow"
-            style={{ marginRight: "5px", width: "45%" }} // Adjust margin between image and text
-          />
-          <Typography
-            sx={{
-              color: "rgb(255, 255, 255)",
-              fontFamily: "Inter",
-              lineHeight: "1",
-              marginTop: "10px",
-              fontWeight: "600",
-            }}
-          >
-            Your One-Stop Solution for
-            <br /> Seamless Event Management!
-          </Typography>
+            <img
+              src="../../../Images/logo_1 1.png"
+              alt="Right Arrow"
+              style={{ marginRight: "5px", width: "45%" }} // Adjust margin between image and text
+            />
+            <Typography
+              sx={{
+                color: "rgb(255, 255, 255)",
+                fontFamily: "Inter",
+                lineHeight: "1",
+                marginTop: "10px",
+                fontWeight: "600",
+              }}
+            >
+              Your One-Stop Solution for
+              <br /> Seamless Event Management!
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -79,6 +124,8 @@ const Footer = () => {
               id="filled-basic"
               label="Email"
               variant="filled"
+              value={email}
+              onChange={handleEmailChange}
               size="small"
               InputProps={{
                 disableUnderline: true,
@@ -99,6 +146,8 @@ const Footer = () => {
               label="review"
               variant="filled"
               size="small"
+              value={feedback}
+              onChange={handleFeedbackChange}
               InputProps={{
                 disableUnderline: true,
                 style: { color: "white", margin: "1px" },
@@ -113,6 +162,7 @@ const Footer = () => {
               }}
             />
             <Button
+              onClick={handleSubmit}
               variant="contained"
               sx={{
                 background: "rgb(247, 230, 173)",
@@ -147,7 +197,7 @@ const Footer = () => {
       <Typography
         sx={{
           color: "rgb(196, 196, 196)",
-          textAlign: {xs:"right",sm:"center"},
+          textAlign: { xs: "right", sm: "center" },
           padding: "5px 0px 5px 15px",
           fontWeight: "500",
           fontSize: "16px",
