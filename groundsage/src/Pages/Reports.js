@@ -55,8 +55,8 @@ const Reports = () => {
   const [yearlyReport, setYearlyReport] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
-  const [isLoading , setIsLoading] = useState(true);
-  const [defaultData , setDefaultData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [defaultData, setDefaultData] = useState([]);
 
   const fetchYearlyReportData = async () => {
     try {
@@ -77,20 +77,21 @@ const Reports = () => {
       );
 
       const data = res?.data?.data?.map((item) => ({
-        [chartType === "year" ? "year" : "month"]: chartType === "year" ? item.year : item?.month?.split(" ")[0],
+        [chartType === "year" ? "year" : "month"]:
+          chartType === "year" ? item.year : item?.month?.split(" ")[0],
         income: item.total,
       }));
       setYearlyReport(data);
     } catch (err) {
       console.log(err);
-      toast.error(err?.response?.data?.message, {
-        style: {
-          fontSize: "16px",
-          fontFamily: "Inter",
-          fontWeight: "600",
-          color: "rgb(66, 92, 90)",
-        },
-      });
+      // toast.error(err?.response?.data?.message, {
+      //   style: {
+      //     fontSize: "16px",
+      //     fontFamily: "Inter",
+      //     fontWeight: "600",
+      //     color: "rgb(66, 92, 90)",
+      //   },
+      // });
     }
   };
 
@@ -128,11 +129,19 @@ const Reports = () => {
           item[chartType === "year" ? "year" : "month"] === selectedPieOption
       );
       if (selectedData) {
-        newExpenseData[0].value = (selectedData.income * parseInt(newExpenseData[0].value)) / parseInt(data.total);
-        newExpenseData[1].value = (selectedData.income * parseInt(newExpenseData[1].value)) / parseInt(data.total);
-      }else{
-        newExpenseData[0].value = (data.total * parseInt(newExpenseData[0].value)) / parseInt(data.total);
-        newExpenseData[1].value = (data.total * parseInt(newExpenseData[1].value)) / parseInt(data.total);
+        newExpenseData[0].value =
+          (selectedData.income * parseInt(newExpenseData[0].value)) /
+          parseInt(data.total);
+        newExpenseData[1].value =
+          (selectedData.income * parseInt(newExpenseData[1].value)) /
+          parseInt(data.total);
+      } else {
+        newExpenseData[0].value =
+          (data.total * parseInt(newExpenseData[0].value)) /
+          parseInt(data.total);
+        newExpenseData[1].value =
+          (data.total * parseInt(newExpenseData[1].value)) /
+          parseInt(data.total);
       }
 
       setExpenseData(newExpenseData);
@@ -185,12 +194,9 @@ const Reports = () => {
   useEffect(() => {
     console.log("Expense Data:", expenseData);
   }, [expenseData]);
-  if(isLoading){
-    return(
-      <Loading/>
-    )
-  }else{
-
+  if (isLoading) {
+    return <Loading />;
+  } else {
     return (
       <div
         style={{
@@ -237,8 +243,9 @@ const Reports = () => {
             sx={{
               background: "#fff",
               padding: "20px",
-              width: { xs: "90%", md: "45%" },
-              marginBottom: { xs: "20px", md: "0" },
+              width: { lg: "45%" },
+              marginBottom: { xs: "20px", md: "0px" },
+              marginRight: { xs: "0px", md: "20px" },
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -258,7 +265,7 @@ const Reports = () => {
               <Box
                 sx={{
                   marginLeft: "20px",
-                  minWidth : "fit-content",
+                  minWidth: "fit-content",
                   background: "rgba(217, 217, 217, 0.3)",
                   marginBottom: "25px",
                 }}
@@ -310,7 +317,7 @@ const Reports = () => {
                 >
                   Income chart basis on Type
                 </Typography>
-                <Box sx={{ marginLeft: "20px", minWidth : "fit-content", }}>
+                <Box sx={{ marginLeft: "20px", minWidth: "fit-content" }}>
                   <Select
                     value={selectedPieOption}
                     onChange={handlePieOptionChange}
@@ -354,7 +361,11 @@ const Reports = () => {
                     label
                   >
                     {expenseData?.map((entry, index) => (
-                      <Cell key={`slice-${index}`} data={entry} fill={entry.fill} />
+                      <Cell
+                        key={`slice-${index}`}
+                        data={entry}
+                        fill={entry.fill}
+                      />
                     ))}
                   </Pie>
                 </PieChart>
@@ -406,7 +417,6 @@ const Reports = () => {
       </div>
     );
   }
-
 };
 
 export default Reports;

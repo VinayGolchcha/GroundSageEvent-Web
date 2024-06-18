@@ -89,30 +89,40 @@ const ProfileAboutpage = () => {
         }}
       >
         <Box
-          component="img"
-          src="../../../Images/oval_img@2x.png"
-          alt="profile"
           sx={{
-            width: { xs: "50%", md: "25%" },
+            position: "relative",
+            width: { xs: "100%", sm: "75%", md: "50%" },
+            margin: "0 auto",
             display: { xs: "block", md: "none" },
-            margin: { xs: "0 auto", md: "0" },
-          }}
-        />
-        <Typography
-          sx={{
-            color: "rgb(247, 230, 173)",
-            textAlign: "center",
-            fontSize: { xs: "30px",sm:"40px", md: "56px" },
-            fontFamily: "Inter",
-            fontWeight: "700",
-            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
-            width: { xs: "50%", md: "25%" },
-            display: { xs: "block", md: "none" },
-            margin: { xs: "0 auto", md: "0" },
           }}
         >
-          {userData.username_initials}
-        </Typography>
+          <Box
+            component="img"
+            src="../../../Images/oval_img@2x.png"
+            alt="profile"
+            sx={{
+              width: "160px",
+              height: "auto",
+              display: "block",
+            }}
+          />
+          <Typography
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "rgb(247, 230, 173)",
+              textAlign: "center",
+              fontSize: { xs: "30px", sm: "40px", md: "56px" },
+              fontFamily: "Inter",
+              fontWeight: "700",
+              textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)",
+            }}
+          >
+            {userData?.username_initials}
+          </Typography>
+        </Box>
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -294,29 +304,40 @@ const ProfileAboutpage = () => {
         </Box>
         {/** Ensure the image is hidden on small devices */}
         <Box
-          component="img"
-          src="../../../Images/oval_img@2x.png"
-          alt="profile"
           sx={{
-            width: { xs: "50%", md: "25%" },
+            position: "relative",
+            width: { xs: "100%", sm: "75%", md: "50%" },
+            margin: "0 auto",
             display: { xs: "none", md: "block" },
-            margin: { xs: "0 auto", md: "0" },
-          }}
-        />
-        <Typography
-          sx={{
-            color: "rgb(247, 230, 173)",
-            textAlign: "center",
-            fontSize: { xs: "30px",sm:"40px", md: "56px" },
-            fontFamily: "Inter",
-            fontWeight: "700",
-            textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
-            display: { xs: "none", md: "block" },
-            margin:"10%"
           }}
         >
-          {userData?.username_initials}
-        </Typography>
+          <Box
+            component="img"
+            src="../../../Images/oval_img@2x.png"
+            alt="profile"
+            sx={{
+              width: "200px",
+              height: "auto",
+              display: "block",
+            }}
+          />
+          <Typography
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              color: "rgb(247, 230, 173)",
+              textAlign: "center",
+              fontSize: { xs: "30px", sm: "40px", md: "56px" },
+              fontFamily: "Inter",
+              fontWeight: "700",
+              textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)",
+            }}
+          >
+            {userData?.username_initials}
+          </Typography>
+        </Box>
       </Box>
       <Box
         sx={{
