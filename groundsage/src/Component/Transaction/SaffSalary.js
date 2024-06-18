@@ -66,7 +66,7 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         id="standard-basic"
@@ -104,11 +104,11 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         id="standard-basic"
-        label="entered amount"
+        label="amount Due"
         variant="standard"
       />
       <TextField
@@ -141,7 +141,7 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         id="standard-basic"
@@ -178,7 +178,7 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         id="standard-basic"

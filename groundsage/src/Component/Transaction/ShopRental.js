@@ -68,12 +68,15 @@ export default function ShopRental(){
                 label="select shop"
                 disableUnderline
                 inputRef={addItemEle}
-                sx={{width : "100%" , borderBottom : "1px solid rgb(188, 189, 163)" , "& .MuiSelect-icon" : {
+                sx={{width : "100%" , color : "white",borderBottom : "1px solid rgb(188, 189, 163)" , "& .MuiSelect-icon" : {
                     color : "rgb(188, 189, 163)" , "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root" : {
                         color : "white"
                     },
                     "& :focus" : {
                       backgroundColor : "none"
+                    },
+                    inputProps : {
+                      color : "white"
                     }
                 }
                 }}
@@ -88,6 +91,7 @@ export default function ShopRental(){
             <TextField
               type="number"
               sx={{
+                fontSize: { xs: "27px", md: "35px" },
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                 },
@@ -114,7 +118,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "27px", md: "35px" },
               },}}
               inputRef={amtDueEle}
               id="standard-basic"
@@ -124,6 +128,7 @@ export default function ShopRental(){
             <TextField
               type="number"
               sx={{
+                fontSize: { xs: "27px", md: "35px" },
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                 },
@@ -151,7 +156,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "27px", md: "35px" },
               },}}
               id="standard-basic"
               label="recieved amount"
@@ -160,6 +165,7 @@ export default function ShopRental(){
             <TextField
               type="number"
               sx={{
+                fontSize: { xs: "27px", md: "35px" },
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                 },
@@ -187,7 +193,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "27px", md: "35px" },
               },}}
               id="standard-basic"
               label="outstanding amount (if any)"
@@ -195,6 +201,7 @@ export default function ShopRental(){
             />
             <TextField
               sx={{
+                fontSize: { xs: "27px", md: "35px" },
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                 },
@@ -222,7 +229,7 @@ export default function ShopRental(){
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "27px", md: "35px" },
               },}}
               id="standard-basic"
               label="remarks"

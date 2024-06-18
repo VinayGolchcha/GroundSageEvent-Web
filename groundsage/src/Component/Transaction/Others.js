@@ -66,7 +66,7 @@ export default function Others() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         id="standard-basic"
@@ -103,7 +103,7 @@ export default function Others() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         id="standard-basic"
@@ -139,7 +139,7 @@ export default function Others() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         inputRef={recievedAmtEle}
@@ -177,7 +177,7 @@ export default function Others() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         id="standard-basic"
@@ -212,7 +212,7 @@ export default function Others() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize : {md : "20px" , xs : "18px"}
+            fontSize: { xs: "27px", md: "35px" },
           },
         }}
         inputRef={remarkEle}
