@@ -267,6 +267,7 @@ const OccupancyReport = () => {
                     fontFamily: "Inter",
                     fontWeight: "800",
                     margin: "0px 0px 20px 10px",
+                    fontSize : {xs : "20px" , sm : "20px"}
                   }}
                 >
                   Shop Update
@@ -279,6 +280,7 @@ const OccupancyReport = () => {
                     fontFamily: "Inter",
                     fontWeight: "800",
                     margin: "0px 0px 20px 10px",
+                    fontSize : {xs : "22px" , sm : "22px"}
                   }}
                 >
                   Monthly Update for Current Year
@@ -304,6 +306,7 @@ const OccupancyReport = () => {
                               fontFamily: "Poppins",
                               fontWeight: "500",
                               borderBottom: "none",
+                              fontSize : {xs : "20px" , sm : "20px"}
                             }}
                           >
                             {h}
