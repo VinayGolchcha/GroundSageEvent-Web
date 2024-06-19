@@ -210,6 +210,7 @@ export default function CreateEventPage() {
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -223,12 +224,16 @@ export default function CreateEventPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                 width: "100%",
                 margin: "10px 0px ",
               }}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
               InputLabelProps={{
@@ -388,6 +393,7 @@ export default function CreateEventPage() {
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -401,6 +407,9 @@ export default function CreateEventPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                 width: "100%",
                 margin: "10px 0px ",
               }}
@@ -408,6 +417,7 @@ export default function CreateEventPage() {
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
               InputLabelProps={{
@@ -429,6 +439,7 @@ export default function CreateEventPage() {
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -442,12 +453,16 @@ export default function CreateEventPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                 width: "100%",
                 margin: "10px 0px ",
               }}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
                 endAdornment: (
                   <IconButton
@@ -492,6 +507,7 @@ export default function CreateEventPage() {
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -505,12 +521,16 @@ export default function CreateEventPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                 width: "100%",
                 margin: "10px 0px ",
               }}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
               InputLabelProps={{
@@ -528,6 +548,7 @@ export default function CreateEventPage() {
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -541,12 +562,16 @@ export default function CreateEventPage() {
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                 width: "100%",
                 margin: "10px 0px ",
               }}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "18px", md: "20px" },
                 },
               }}
               InputLabelProps={{
@@ -568,6 +593,7 @@ export default function CreateEventPage() {
                   width: "50%",
                   margin: "10px 0px ",
                   alignContent: "end",
+                  fontSize: { xs: "18px", md: "20px" },
                 }}
               >
                 Role: Coordinator{" "}
@@ -578,6 +604,7 @@ export default function CreateEventPage() {
                   width: "50%",
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px", md: "20px" },
                   },
                   "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
@@ -591,12 +618,16 @@ export default function CreateEventPage() {
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
+                  "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
                 InputProps={{
                   style: {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px", md: "20px" },
                   },
                 }}
                 InputLabelProps={{
@@ -618,6 +649,7 @@ export default function CreateEventPage() {
                   width: "50%",
                   margin: "10px 0px ",
                   alignContent: "end",
+                  fontSize: { xs: "18px", md: "20px" },
                 }}
               >
                 Role: STAFF MEMBER
@@ -628,6 +660,7 @@ export default function CreateEventPage() {
                   width: "50%",
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px", md: "20px" },
                   },
                   "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
@@ -641,12 +674,16 @@ export default function CreateEventPage() {
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
+                  "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
                 InputProps={{
                   style: {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px", md: "20px" },
                   },
                 }}
                 InputLabelProps={{
@@ -668,6 +705,7 @@ export default function CreateEventPage() {
                   width: "50%",
                   margin: "10px 0px ",
                   alignContent: "end",
+                  fontSize: { xs: "18px", md: "20px" },
                 }}
               >
                 Role: HELPER
@@ -677,6 +715,7 @@ export default function CreateEventPage() {
                 sx={{
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px", md: "20px" },
                   },
                   "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
@@ -690,12 +729,16 @@ export default function CreateEventPage() {
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
+                  "& .MuiInputBase-input": {
+                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
                 InputProps={{
                   style: {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px", md: "20px" },
                   },
                 }}
                 InputLabelProps={{
