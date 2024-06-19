@@ -300,6 +300,19 @@ const Reports = () => {
                 </BarChart>
               </ResponsiveContainer>
             </Box>
+            <Typography
+              sx={{
+                transform: "rotate(-90deg)",
+                position: "absolute",
+                left: "30px",
+                top: "50%",
+                fontSize: "16px",
+                color: "rgb(189, 189, 189)",
+                fontWeight: "600",
+              }}
+            >
+              Amount (in thousands)
+            </Typography>
           </Box>
           <Card sx={{ width: { xs: "100%", md: "49%" } }}>
             <CardContent>

@@ -169,7 +169,7 @@ const App = () => {
         </Box>
       </Modal>
       <Routes>
-        <Route path="/" element={<SplashScreenPage />} />
+        <Route path="/sigin" element={<SplashScreenPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
