@@ -62,7 +62,7 @@ const SplashScreenPage = () => {
               boxShadow: "0px 10px 35px 0px rgb(247, 230, 173)", // Change box shadow on hover
             },
           }}
-          onClick={() => navigate("/shops")}
+          onClick={() => navigate("/signin")}
         >
           LET'S START
           <img

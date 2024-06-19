@@ -53,8 +53,7 @@ export default function TransactionPage() {
     sx={{
       backgroundColor: "rgb(66, 92, 90)",
       // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
-      // minHeight: "100vh",
-      minHeight: {lg : "140vh" , md : "140vh" , sm : "130vh" , xs : "120vh"},
+      minHeight: "100vh"
     }}
   >
      <Box

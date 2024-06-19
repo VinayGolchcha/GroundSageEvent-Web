@@ -4,7 +4,7 @@ import TransactionTypeVariDes from "./TransactionTypeVariDes";
 
 export default function TransactionTypeVari({ transactions }) {
   return (
-    <Box sx={{ margin: "15px 12%" }}>
+    <Box sx={{ margin: "0px 12%" }}>
       {transactions[1].type === "expense" && transactions[0].vari === "outlined" ? (
        <TransactionTypeVariDes list = {transactions[0].list}/>
       ) : (

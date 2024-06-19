@@ -60,36 +60,78 @@ export default function ShopRental(){
       <>
       <ToastContainer/>
         <Grid item lg={6} md={6} sm={6} xs={12}>
-            <FormControl variant="standard" sx={{ minWidth: 120 , width : "100%" , margin : "10px 0px "}}>
-                <InputLabel id="demo-simple-select-standard-label" style={{ color: 'white' }}>select shop</InputLabel>
-                <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                label="select shop"
-                disableUnderline
-                inputRef={addItemEle}
-                sx={{width : "100%" , borderBottom : "1px solid rgb(188, 189, 163)" , "& .MuiSelect-icon" : {
-                    color : "rgb(188, 189, 163)" , "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root" : {
-                        color : "white"
-                    },
-                    "& :focus" : {
-                      backgroundColor : "none"
-                    }
-                }
-                }}
-                >
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                {shopNo?.map((i , idx) => <MenuItem key={idx} value={i}>{i}</MenuItem>)}
-
-                </Select>
-            </FormControl>
+          <FormControl
+            variant="standard"
+            sx={{ 
+              minWidth: 120, 
+              width: "100%", 
+              margin: "10px 0px",
+              "& .MuiInputLabel-root": {
+                color: "white",
+                fontSize: { xs: "17px", md: "20px" }, // Set label font size here
+              },
+              "& .MuiSelect-root": {
+                fontSize: { xs: "17px", md: "20px" }, // Set select input font size here
+              },
+              "& .MuiSelect-icon": {
+                color: "rgb(188, 189, 163)",
+              },
+              "& .MuiInput-underline:before": {
+                borderBottom: "1px solid rgb(188, 189, 163)",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "rgb(188, 189, 163)",
+              },
+              "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                borderBottomColor: "rgb(188, 189, 163)",
+              },
+            }}
+          >
+            <InputLabel 
+              id="demo-simple-select-standard-label" 
+              style={{ color: 'white' }}
+            >
+              select shop
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="select shop"
+              inputRef={addItemEle}
+              sx={{ 
+                width: "100%", 
+                color: "white",
+                "& .MuiSelect-root": {
+                  fontSize: { xs: "17px", md: "20px" }, // Set select input font size here
+                },
+                "& .MuiSelect-icon": {
+                  color: "rgb(188, 189, 163)",
+                },
+                "& .MuiInput-underline:before": {
+                  borderBottom: "1px solid rgb(188, 189, 163)",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "rgb(188, 189, 163)",
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "rgb(188, 189, 163)",
+                },
+              }}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {shopNo?.map((i, idx) => (
+                <MenuItem key={idx} value={i}>{i}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
             <TextField
               type="number"
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -103,18 +145,22 @@ export default function ShopRental(){
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+                },
                 width: "70%",
                 margin: "10px 0px ",
               }}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
               }}
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "17px", md: "20px" },
               },}}
               inputRef={amtDueEle}
               id="standard-basic"
@@ -126,6 +172,7 @@ export default function ShopRental(){
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -139,6 +186,9 @@ export default function ShopRental(){
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+                },
                 width: "70%",
                 margin: "10px 0px ",
               }}
@@ -146,12 +196,13 @@ export default function ShopRental(){
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
               }}
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
               label="recieved amount"
@@ -162,6 +213,7 @@ export default function ShopRental(){
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -175,6 +227,9 @@ export default function ShopRental(){
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+                },
                 width: "70%",
                 margin: "10px 0px ",
               }}
@@ -182,12 +237,13 @@ export default function ShopRental(){
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
               }}
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
               label="outstanding amount (if any)"
@@ -197,6 +253,7 @@ export default function ShopRental(){
               sx={{
                 "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
                 "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
@@ -210,6 +267,9 @@ export default function ShopRental(){
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                   borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                 },
+                "& .MuiInputBase-input": {
+                  fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+                },
                 width: "100%",
                 margin: "10px 0px ",
               }}
@@ -217,12 +277,13 @@ export default function ShopRental(){
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
+                  fontSize: { xs: "17px", md: "20px" },
                 },
               }}
               InputLabelProps={{
               style: {
                 color: "white",
-                fontSize : {md : "20px" , xs : "18px"}
+                fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
               label="remarks"
