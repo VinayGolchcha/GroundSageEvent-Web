@@ -189,7 +189,17 @@ const Reports = () => {
   const pieOptions = yearlyReport?.map((option) =>
     chartType === "year" ? option.year : option?.month?.split(" ")[0]
   );
+  const renderLegend = (value, entry) => {
+    // Customize the style of the legend text here
+    const textStyle = {
+      color: "rgb(34, 34, 34)", // Change 'blue' to the color you desire
+      fontSize: "14px", // Adjust font size if needed
+      fontFamily: "Inter",
+      fontWeight: "500",
+    };
 
+    return <span style={textStyle}>{value}</span>;
+  };
   // Debugging: Log expenseData to ensure it's being updated correctly
   useEffect(() => {
     console.log("Expense Data:", expenseData);
@@ -256,8 +266,8 @@ const Reports = () => {
                   fontFamily: "Inter",
                   color: "rgb(34, 34, 34)",
                   fontWeight: "600",
-                  fontSize: { xs: "18px", md: "22px" },
-                  margin: "0px 10px 20px 0px",
+                  fontSize: { xs: "20px", md: "25px" },
+                  margin: "-10px 10px 20px 0px",
                 }}
               >
                 Total Income
@@ -276,11 +286,20 @@ const Reports = () => {
                   fullWidth
                   size="small"
                   sx={{
+                    "& .MuiSelect-root": {
+                      border: "none !important", // Remove border with important flag
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: "none !important", // Remove border for outlined style
+                    },
                     color: "rgb(0, 0, 0)",
                     fontFamily: "Inter",
                     fontWeight: "400",
                     fontSize: "16px",
                     background: "rgba(217, 217, 217, 0.3)",
+                    "&:focus": {
+                      backgroundColor: "rgba(217, 217, 217, 0.3)", // Adjust focus background if needed
+                    },
                   }}
                   IconComponent={() => CustomIcon}
                 >
@@ -293,26 +312,33 @@ const Reports = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
                   <XAxis dataKey={xAxisDataKey} />
-                  <YAxis />
+                  <YAxis
+                    label={{
+                      value: "Amount (in thousands)",
+                      angle: -90,
+                      position: "insideLeft",
+                      dy: -10,
+                      style: {
+                        textAnchor: "middle",
+                        fontFamily: "Inter",
+                        fontWeight: "600",
+                        fill: "rgb(189, 189, 189)",
+                        fontSize: "14px",
+                      },
+                    }}
+                  />
                   <Tooltip />
-                  <Legend />
+                  <Legend
+                    layout="horizontal"
+                    verticalAlign="top"
+                    align="left"
+                    wrapperStyle={{ top: -30 }}
+                  />
+
                   <Bar dataKey="income" fill="rgb(63, 128, 101)" barSize={30} />
                 </BarChart>
               </ResponsiveContainer>
             </Box>
-            <Typography
-              sx={{
-                transform: "rotate(-90deg)",
-                position: "absolute",
-                left: "30px",
-                top: "50%",
-                fontSize: "16px",
-                color: "rgb(189, 189, 189)",
-                fontWeight: "600",
-              }}
-            >
-              Amount (in thousands)
-            </Typography>
           </Box>
           <Card sx={{ width: { xs: "100%", md: "49%" } }}>
             <CardContent>
@@ -337,11 +363,20 @@ const Reports = () => {
                     fullWidth
                     size="small"
                     sx={{
+                      "& .MuiSelect-root": {
+                        border: "none !important", // Remove border with important flag
+                      },
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        border: "none !important", // Remove border for outlined style
+                      },
                       color: "rgb(0, 0, 0)",
                       fontFamily: "Inter",
-                      fontWeight: "400",
+                      fontWeight: "500",
                       fontSize: "16px",
                       background: "rgba(217, 217, 217, 0.3)",
+                      "&:focus": {
+                        backgroundColor: "rgba(217, 217, 217, 0.3)", // Adjust focus background if needed
+                      },
                     }}
                     IconComponent={() => CustomIcon}
                   >
@@ -361,9 +396,15 @@ const Reports = () => {
                   width: "100%",
                 }}
               >
-                <PieChart width={300} height={300}>
+                <PieChart width={500} height={300}>
                   <RechartsTooltip position="top" />
-                  <RechartsLegend verticalAlign="top" height={46} />
+                  <RechartsLegend
+                    verticalAlign="top"
+                    height={46}
+                    align="left"
+                    formatter={renderLegend} // Assign the custom formatter function
+                    // wrapperStyle={{ left: -100 }}
+                  />
                   <Pie
                     dataKey="value"
                     data={expenseData}
