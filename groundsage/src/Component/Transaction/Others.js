@@ -41,6 +41,7 @@ export default function Others() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: {  xs: "17px", md: "20px" }, 
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -54,6 +55,9 @@ export default function Others() {
           "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
             borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
           },
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
           width: "100%",
           margin: "10px 0px ",
         }}
@@ -61,12 +65,13 @@ export default function Others() {
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         id="standard-basic"
@@ -78,6 +83,7 @@ export default function Others() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -91,6 +97,9 @@ export default function Others() {
           "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
             borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
           },
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
           width: "70%",
           margin: "10px 0px ",
         }}
@@ -98,12 +107,13 @@ export default function Others() {
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         id="standard-basic"
@@ -115,6 +125,7 @@ export default function Others() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -128,18 +139,22 @@ export default function Others() {
           "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
             borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
           },
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
           width: "70%",
           margin: "10px 0px ",
         }}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" }, 
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" }, 
           },
         }}
         inputRef={recievedAmtEle}
@@ -152,6 +167,7 @@ export default function Others() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -165,6 +181,9 @@ export default function Others() {
           "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
             borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
           },
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
           width: "70%",
           margin: "10px 0px ",
         }}
@@ -172,12 +191,13 @@ export default function Others() {
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         id="standard-basic"
@@ -188,6 +208,7 @@ export default function Others() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -201,18 +222,22 @@ export default function Others() {
           "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
             borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
           },
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
           width: "100%",
           margin: "10px 0px ",
         }}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         inputRef={remarkEle}

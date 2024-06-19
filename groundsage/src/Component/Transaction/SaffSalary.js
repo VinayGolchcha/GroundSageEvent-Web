@@ -41,6 +41,7 @@ export default function SaffSalary() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: {  xs: "17px", md: "20px" }, 
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -57,16 +58,20 @@ export default function SaffSalary() {
 
           width: "100%",
           margin: "10px 0px ",
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
         }}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         id="standard-basic"
@@ -79,6 +84,7 @@ export default function SaffSalary() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: {  xs: "17px", md: "20px" }, // Set label font size here
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -94,6 +100,9 @@ export default function SaffSalary() {
           },
           width: "70%",
           margin: "10px 0px ",
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
         }}
         inputRef={enterdAmtEle}
         InputProps={{
@@ -104,11 +113,11 @@ export default function SaffSalary() {
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         id="standard-basic"
-        label="amount Due"
+        label="total balance"
         variant="standard"
       />
       <TextField
@@ -116,6 +125,7 @@ export default function SaffSalary() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: {  xs: "17px", md: "20px" }, 
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -131,17 +141,21 @@ export default function SaffSalary() {
           },
           width: "70%",
           margin: "10px 0px ",
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
         }}
         inputRef={balancePayAmtEle}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         id="standard-basic"
@@ -152,6 +166,7 @@ export default function SaffSalary() {
         sx={{
           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
             color: "rgb(255, 255, 255)",
+            fontSize: {  xs: "17px", md: "20px" }, 
           },
           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
@@ -165,7 +180,9 @@ export default function SaffSalary() {
           "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
             borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
           },
-
+          "& .MuiInputBase-input": {
+            fontSize: { xs: "17px", md: "20px" }, // Set input font size here
+          },
           width: "100%",
           margin: "10px 0px ",
         }}
@@ -173,12 +190,13 @@ export default function SaffSalary() {
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         InputLabelProps={{
           style: {
             color: "white",
-            fontSize: { xs: "27px", md: "35px" },
+            fontSize: { xs: "17px", md: "20px" },
           },
         }}
         id="standard-basic"
