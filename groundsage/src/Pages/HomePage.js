@@ -104,9 +104,9 @@ console.log(activeEvent);
       });
       console.log(res)
       setActiveEvent(res?.data?.data);
-      setActiveEventId(res?.data?.data[0].id);
-      setActiveEventName(res?.data?.data[0].event_name);
-      len =  activeEvent.length-1;
+      setActiveEventId(res?.data?.data[0]?.id);
+      setActiveEventName(res?.data?.data[0]?.event_name);
+      len =  activeEvent?.length-1;
       console.log(len)
       setIsLoading(false);
     }catch(err){
@@ -201,7 +201,7 @@ console.log(activeEvent);
               textAlign : 'center'
             }, }}
           >
-            {activeEvent[activeEvent.length - 1]?.username.toUpperCase()}
+            {activeEvent[activeEvent?.length - 1]?.username.toUpperCase()}
           </Typography>
         </Box>
         
@@ -221,7 +221,7 @@ console.log(activeEvent);
         <Box sx={{ display : "flex" , justifyContent : "center" , alignItems : "center" , paddingBottom : "16px"}}>
           <Grid container sx={{height : "100%" , width : "75%" ,display : "flex", alignItems : "center" , justifyContent : "center"}}>
             {activeEvent?.map((item, index) => {
-              if(index === activeEvent.length -1 ){
+              if(index === activeEvent?.length -1 ){
                 return;
               }
               return (

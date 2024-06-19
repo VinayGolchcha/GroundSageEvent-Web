@@ -254,6 +254,7 @@ const ExpenseReport = () => {
                 fontWeight: "600",
                 //   textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
                 margin: "0px 0px 0px 10px",
+                fontSize : {xs : "20px" , sm : "20px"}
               }}
             >
               Yearly Update
@@ -266,6 +267,7 @@ const ExpenseReport = () => {
                 fontWeight: "400",
                 //   textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
                 margin: "0px 0px 10px 10px",
+                fontSize : {xs : "22px" , sm : "22px"}
               }}
             >
               Different Types of EXPENSE
@@ -289,6 +291,7 @@ const ExpenseReport = () => {
                             fontFamily: "Poppins",
                             fontWeight: "500",
                             borderBottom: "none",
+                            fontSize : {xs : "20px" , sm : "20px"}
                           }}
                         >
                           {h}

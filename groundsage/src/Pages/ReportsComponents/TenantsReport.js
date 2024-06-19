@@ -162,6 +162,7 @@ const TenantsReport = () => {
               fontFamily: "Inter",
               fontWeight: "600",
               margin: "0px 0px 0px 10px",
+              fontSize : {xs : "20px" , sm : "20px"}
             }}
           >
             Tenants Details
@@ -221,6 +222,7 @@ const TenantsReport = () => {
                           fontFamily: "Poppins",
                           fontWeight: "500",
                           borderBottom: "none",
+                          fontSize : {xs : "20px" , sm : "20px"}
                         }}
                       >
                         {h}
