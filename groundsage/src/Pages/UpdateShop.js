@@ -186,10 +186,10 @@ export default function UpdateShopPage() {
     // const file = e.target.files[0];
     const files = Array.from(e.target.files);
     const validFiles = files.filter((file) => {
-      if (file.size > 500 * 1024) {
+      if (file.size > 1 * 1024 * 1024) {
         toast.error(
-          `Image ${file.name} is less than 100kb. Please upload a larger image.`
-        );
+          `'File size should not exceed 1 MB'`
+        ); 
         return false;
       }
       return true;

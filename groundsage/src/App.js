@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import SplashScreenPage from "./Pages/SplashScreenPage";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
 import ForgetPassword from "./Component/Reset/ForgetPassword";
 import Verification from "./Component/Verification";
 import ShopListing from "./Pages/ShopListing";
-import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "./Pages/Profile";
 import DescriptionPage from "./Pages/DescriptionPage";
 import ReferralCodePage from "./Pages/ReferralCodePage";
@@ -34,6 +34,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { Box, FormControl, MenuItem, Modal, Select } from "@mui/material";
 import { AuthContext } from "./ContextApi/AuthContext";
 import ReferralCodeScreen from "./Pages/ReferralCodeScreen";
+import PrivateRoute from "./Component/PrivateRoute";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -94,6 +95,7 @@ const App = () => {
       typeof value === "string" ? value.split(",") : value
     );
   };
+
   return (
     <div>
       <Navbar
@@ -170,35 +172,40 @@ const App = () => {
       </Modal>
       <Routes>
         <Route path="/" element={<SplashScreenPage />} />
-        <Route path="/home" element={<HomePage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verification" element={<Verification />} />
-        <Route path="/shops" element={<ShopListing />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/description/:shopIndex" element={<DescriptionPage />} />
-        <Route path="/refferalcode" element={<ReferralCodePage />} />
-        <Route path="/create-transaction" element={<TransactionPage />} />
-        <Route
-          path="/rental-agreement/:shopId"
-          element={<RentalAgreementPage />}
-        />
-        <Route path="/Events" element={<EventListPage />} />
-        <Route path="/createshop" element={<CreateShopPage />} />
-        <Route path="/notes" element={<Notes />} />
-        <Route path="/transaction" element={<TransactionList />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/incomereport" element={<IncomeReports />} />
-        <Route path="/occupancyreport" element={<OccupancyReport />} />
-        <Route path="/expensereport" element={<ExpenseReport />} />
-        <Route path="/outstandingreport" element={<OutStandingReport />} />
-        <Route path="/netpayablereport" element={<NetPaybleReport />} />
-        <Route path="/tenantsreport" element={<TenantsReport />} />
-        <Route path="/create-event" element={<CreateEventPage />} />
         <Route path="/entermail" element={<EnterMail />} />
-        <Route path="/update-shop" element={<UpdateShopPage />} />
-        <Route path="/referral-code" element={<ReferralCodeScreen />} />
+
+        {/* Protected Routes */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/shops" element={<ShopListing />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/description/:shopIndex" element={<DescriptionPage />} />
+          <Route path="/refferalcode" element={<ReferralCodePage />} />
+          <Route path="/create-transaction" element={<TransactionPage />} />
+          <Route
+            path="/rental-agreement/:shopId"
+            element={<RentalAgreementPage />}
+          />
+          <Route path="/Events" element={<EventListPage />} />
+          <Route path="/createshop" element={<CreateShopPage />} />
+          <Route path="/notes" element={<Notes />} />
+          <Route path="/transaction" element={<TransactionList />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/incomereport" element={<IncomeReports />} />
+          <Route path="/occupancyreport" element={<OccupancyReport />} />
+          <Route path="/expensereport" element={<ExpenseReport />} />
+          <Route path="/outstandingreport" element={<OutStandingReport />} />
+          <Route path="/netpayablereport" element={<NetPaybleReport />} />
+          <Route path="/tenantsreport" element={<TenantsReport />} />
+          <Route path="/create-event" element={<CreateEventPage />} />
+          <Route path="/update-shop" element={<UpdateShopPage />} />
+          <Route path="/referral-code" element={<ReferralCodeScreen />} />
+        </Route>
+
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
       <Footer />

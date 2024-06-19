@@ -456,7 +456,8 @@ const Reports = () => {
                   src={`../../../Images/${icon}`}
                   alt="Icon"
                   sx={{
-                    height: { xs: "23vw", md: "9vw" },
+                    height: { xs: "12vh", md: "9vw" },
+                    // width: { xs: "100px" },
                     cursor: "pointer",
                     margin: "5px",
                   }}
