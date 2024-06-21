@@ -21,7 +21,7 @@ export default function TransactionPage() {
     border: "1px solid rgb(254, 240, 180)",
   };
   useEffect(()=> {
-    setTransectionTag("expense")
+    setTransectionTag("income")
   },[])
   const [transactions, setTransactions] = useState([{
     type: "income",
@@ -33,7 +33,7 @@ export default function TransactionPage() {
     vari: "outlined",
     list : ["Staff Salary" , "Others"]
   }]);
-  
+
   const handleButtonChange = (index) => {
     // changing the button style based on the selection 
     const newList = [...transactions];
@@ -88,7 +88,7 @@ export default function TransactionPage() {
       >
         <Button
           variant={
-            transactions[0].type === "income" ? "outlined" : "contained"
+            transactions[1].type === "expense" ? "outlined" : "contained"
           }
           onClick={() => handleButtonChange(0)}
           sx={{
@@ -96,6 +96,7 @@ export default function TransactionPage() {
               ? {
                   "&:hover": {
                     border: "1px solid rgb(254, 240, 180)",
+                    backgroundColor : "rgb(247, 230, 173)"
                   },
                   ...containedStyle
                 }
@@ -106,16 +107,17 @@ export default function TransactionPage() {
             fontSize : {lg : "20px" , md : "20px" , sm : "20px" , xs : "16px"}
           }}
         >
-          EXPENSE
+          INCOME
         </Button>
         <Button
-          variant={transactions[1].type === "expense" ? "outlined" : "contained"}
+          variant={transactions[0].type === "income" ? "outlined" : "contained"}
           onClick={() => handleButtonChange(1)}
           sx={{
             ...(transactions[1].vari === "contained"
               ? {
                   "&:hover": {
                     border: "1px solid rgb(254, 240, 180)",
+                    backgroundColor : "rgb(247, 230, 173)"
                   },
                   ...containedStyle
 
@@ -127,7 +129,7 @@ export default function TransactionPage() {
             fontSize : {lg : "20px" , md : "20px" , sm : "20px" , xs : "16px"}
           }}
         >
-          INCOME
+           EXPENSE
         </Button>
       </Box>
       {/* component for showing the form based on the selected button */}

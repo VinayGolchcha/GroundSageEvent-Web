@@ -224,7 +224,7 @@ const IncomeList = ({data , deleteTransection }) => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Item: Shop Number{item.item}
+                      Item: {(item?.type === "shop rental") && "Shop Number"} {item.item}
                     </Typography>
                   </div>
                   <div

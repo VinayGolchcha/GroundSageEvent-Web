@@ -278,7 +278,6 @@ const OutStandingReport = () => {
                 fontSize : {xs : "22px" , sm : "22px"}
               }}
             >
-              Different Types of INCOME
             </Typography>
             {/* Header Row */}
             <TableContainer>

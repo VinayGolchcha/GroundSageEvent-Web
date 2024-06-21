@@ -69,12 +69,13 @@ const Notes = () => {
       console.log(newEventList);
     }catch(err){
       setIsLoading(false);
+      setEventList([])
     }
   }
 
   useEffect(()=>{
     fetchNotes();
-  },[activeEventId ])
+  },[activeEventId])
   const maxItems = 3;
 
   const handleOpenPopup = () => {
@@ -227,6 +228,17 @@ const Notes = () => {
   // };
   const handleEditOpenPopup = () => {
     const ele = eventList?.filter(item => item.isSelected === true);
+    if(ele.length === 0) {
+      toast.warning("please select the note to edit ", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        }});
+        return;
+    }
     if(ele.length > 1){
       toast.warning("Cannot edit the multiple notes ", {
         style: {
@@ -260,6 +272,16 @@ const Notes = () => {
       const ele = eventList?.filter(item => item.isSelected === true);
       setEventList(eventList?.filter(item => item.isSelected !== true));
       const ids = ele?.map(item => item?._id);
+      if(ids.length === 0){
+        toast.warning("please select the note to delete ", {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          }});
+      }
       deleteNoteByMultipleId(ids);
       handleClose()
     }

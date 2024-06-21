@@ -41,7 +41,7 @@ export default function RentalAgreementPage() {
   const [address, setAddress] = useState(null);
   const [amount, setAmount] = useState(null);
   const [toDate, setToDate] = useState(dayjs());
-  const [file, setFIle] = useState();
+  const [file, setFIle] = useState("");
   const [rentMode, setRentMode] = useState(null);
   const { user, activeEventId } = useContext(AuthContext);
   const [isEdit, setIsEdit] = useState(false);
@@ -404,6 +404,7 @@ export default function RentalAgreementPage() {
                       sx={{
                         "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                         "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
                           {
@@ -421,6 +422,9 @@ export default function RentalAgreementPage() {
                         },
                         "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                        },
+                        "& .MuiInputBase-input": {
+                          fontSize: { xs: "18px", md: "20px" }, // Set input font size here
                         },
                         width: "100%",
                         margin: "10px 0px ",
@@ -429,19 +433,20 @@ export default function RentalAgreementPage() {
                       InputProps={{
                         style: {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       InputLabelProps={{
                         style: {
                           color: "white",
-                          fontSize : {md : "20px" , xs : "18px"}
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       disabled={isEdit}
                       autoFocus={isEdit}
                       value={rentalObj?.tenant_name}
                       id="standard-basic"
-                      label="name"
+                      label="Name"
                       variant="standard"
                       onChange={(e) => setName(e.target.value)}
                     />
@@ -449,6 +454,7 @@ export default function RentalAgreementPage() {
                       sx={{
                         "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                         "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
                           {
@@ -467,25 +473,29 @@ export default function RentalAgreementPage() {
                         "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                         },
+                        "& .MuiInputBase-input": {
+                          fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                        },
                         width: "100%",
                         margin: "10px 0px ",
                       }}
                       InputProps={{
                         style: {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       InputLabelProps={{
                         style: {
                           color: "white",
-                          fontSize : {md : "20px" , xs : "18px"}
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       value={rentalObj?.tenant_phone_number}
                       disabled={isEdit}
                       type="number"
                       id="standard-basic"
-                      label="phone number"
+                      label="Phone number"
                       variant="standard"
                       onChange={(e) => setPhoneNo(e.target.value)}
                     />
@@ -493,6 +503,7 @@ export default function RentalAgreementPage() {
                       sx={{
                         "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                         "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
                           {
@@ -511,6 +522,9 @@ export default function RentalAgreementPage() {
                         "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                         },
+                        "& .MuiInputBase-input": {
+                          fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                        },
                         width: "100%",
                         margin: "10px 0px ",
                       }}
@@ -518,18 +532,19 @@ export default function RentalAgreementPage() {
                       InputProps={{
                         style: {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       InputLabelProps={{
                         style: {
                           color: "white",
-                          fontSize : {md : "20px" , xs : "18px"}
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       value={rentalObj?.tenant_email}
                       disabled={isEdit}
                       type="email"
-                      label="email"
+                      label="Email"
                       variant="standard"
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -537,6 +552,7 @@ export default function RentalAgreementPage() {
                       sx={{
                         "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                         "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
                           {
@@ -555,24 +571,28 @@ export default function RentalAgreementPage() {
                         "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                         },
+                        "& .MuiInputBase-input": {
+                          fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                        },
                         width: "100%",
                         margin: "10px 0px ",
                       }}
                       InputProps={{
                         style: {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       InputLabelProps={{
                         style: {
                           color: "white",
-                          fontSize : {md : "20px" , xs : "18px"}
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       value={rentalObj?.tenant_address}
                       disabled={isEdit}
                       id="standard-basic"
-                      label="address"
+                      label="Address"
                       variant="standard"
                       onChange={(e) => setAddress(e.target.value)}
                     />
@@ -586,6 +606,7 @@ export default function RentalAgreementPage() {
                         sx={{
                           "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                             color: "rgb(255, 255, 255)",
+                            fontSize: { xs: "18px", md: "20px" },
                           },
                           "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
                             {
@@ -605,12 +626,16 @@ export default function RentalAgreementPage() {
                             {
                               borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                             },
+                            "& .MuiInputBase-input": {
+                          fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                        },
                           width: "100%",
                           margin: "10px 0px ",
                         }}
                         InputProps={{
                           style: {
                             color: "rgb(255, 255, 255)",
+                            fontSize: { xs: "18px", md: "20px" },
                           },
                           endAdornment: (
                             <IconButton
@@ -632,7 +657,8 @@ export default function RentalAgreementPage() {
                         }}
                         InputLabelProps={{
                           style : {
-                            fontSize : {md : "20px" , xs : "18px"}
+                            color : "white",
+                            fontSize: { xs: "18px", md: "20px" },
                           }
                         }
   
@@ -651,6 +677,7 @@ export default function RentalAgreementPage() {
                       sx={{
                         "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                         "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
                           {
@@ -665,24 +692,28 @@ export default function RentalAgreementPage() {
                         "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                         },
+                        "& .MuiInputBase-input": {
+                          fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                        },
                         width: "100%",
                         margin: "10px 0px ",
                       }}
                       InputProps={{
                         style: {
                           color: "rgb(255, 255, 255)",
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       value={amount}
                       InputLabelProps={{
                         style: {
                           color: "white",
-                          fontSize : {md : "20px" , xs : "18px"}
+                          fontSize: { xs: "18px", md: "20px" },
                         },
                       }}
                       type="number"
                       id="standard-basic"
-                      label="amount"
+                      label="Amount"
                       variant="standard"
                       onChange={(e) => setAmount(e.target.value)}
                     />
@@ -711,9 +742,10 @@ export default function RentalAgreementPage() {
                     >
                       <InputLabel
                         id="demo-simple-select-standard-label"
-                        style={{ color: "white" }}
+                        style={{ color: "white" ,  fontSize: { xs: "17px", md: "20px" } }}
+                        
                       >
-                        rent mode
+                        Rent mode
                       </InputLabel>
                       <Select
                         labelId="demo-simple-select-standard-label"
@@ -725,6 +757,9 @@ export default function RentalAgreementPage() {
                         sx={{
                           width: "100%",
                           borderBottom: "1px solid rgb(188, 189, 163)",
+                          
+                            fontSize: { xs: "17px", md: "20px" }, // Set select input font size here
+                          
                           "& .MuiSelect-icon": {
                             color: "rgb(188, 189, 163)",
                             "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root":
@@ -732,6 +767,7 @@ export default function RentalAgreementPage() {
                                 color: "white",
                               },
                           },
+                          
                           color: "white",
                         }}
                       >
@@ -893,6 +929,9 @@ export default function RentalAgreementPage() {
                           color: "rgb(91, 94, 97)",
                           minWidth: "200px",
                           fontWeight: "600",
+                          "&:hover" : {
+                            backgroundColor: "rgb(247, 230, 173) ",
+                          }
                         }}
                         onClick={handleSave}
                       >

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,15 +24,29 @@ export default function ShopRental(){
   const {addTransection , activeEventId , user , isSucessTransection} = useContext(AuthContext);
   const [shopNo , setShopNo] = useState([]);
   const handleSave = () => {
-    const body = {
-
-      item : addItemEle.current.value?.toString(),             //shop no in string
-      decided_amount : amtDueEle.current.value,  // amount due
-      entered_amount : recievedAmtEle.current.value,   // recieved amount
-      outstanding_amount : outstandingAmtEle.current.value,   // outstanding amount
-      remarks : remarkEle.current.value
+    if(outstandingAmtEle.current.value > recievedAmtEle.current.value){
+      console.log(true);
+      toast.warning("outstanding amount, should be less than the received amount", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+      return;
+    }else{
+      const body = {
+        item : addItemEle.current.value?.toString(),             //shop no in string
+        decided_amount : amtDueEle.current.value,  // amount due
+        entered_amount : recievedAmtEle.current.value,   // recieved amount
+        outstanding_amount : outstandingAmtEle.current.value,   // outstanding amount
+        remarks : remarkEle.current.value
+      }
+      addTransection(body);
     }
-    addTransection(body);
+    
     if(isSucessTransection){
       navigate("/transaction");
     }
@@ -91,7 +105,7 @@ export default function ShopRental(){
               id="demo-simple-select-standard-label" 
               style={{ color: 'white' }}
             >
-              select shop
+              Select shop
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
@@ -164,7 +178,7 @@ export default function ShopRental(){
               },}}
               inputRef={amtDueEle}
               id="standard-basic"
-              label="amount due"
+              label="Amount due"
               variant="standard"
             />
             <TextField
@@ -205,7 +219,7 @@ export default function ShopRental(){
                 fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
-              label="recieved amount"
+              label="Recieved amount"
               variant="standard"
             />
             <TextField
@@ -246,7 +260,7 @@ export default function ShopRental(){
                 fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
-              label="outstanding amount (if any)"
+              label="Outstanding amount (if any)"
               variant="standard"
             />
             <TextField
@@ -286,7 +300,7 @@ export default function ShopRental(){
                 fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
-              label="remarks"
+              label="Remarks"
               variant="standard"
             />
 

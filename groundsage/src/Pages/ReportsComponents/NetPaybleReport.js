@@ -272,7 +272,6 @@ const NetPaybleReport = () => {
                 fontSize : {xs : "22px" , sm : "22px"}
               }}
             >
-              Different Types of EXPENSE
             </Typography>
             {/* Header Row */}
             <TableContainer>

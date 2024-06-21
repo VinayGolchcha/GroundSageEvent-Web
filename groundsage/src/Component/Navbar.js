@@ -35,7 +35,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
   const navigate = useNavigate();
   console.log(isActive);
   console.log(activeEventId);
-  React.useState(() => {
+  React.useEffect(() => {
     const newArray = [activeEventName, "Visit Profile", "Logout"];
     setSettings(newArray);
     setEventName(activeEventName);
