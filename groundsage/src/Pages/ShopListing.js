@@ -46,7 +46,7 @@ const ShopListing = () => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}/${month}/${day}`;
   }
-  const fetchShops = useCallback(async () => {
+  const fetchShops = async () => {
     try {
       const response = await axios.get(
         `${apiUrl}/shop/fetch-all-shop/${activeEventId}`,
@@ -75,8 +75,9 @@ const ShopListing = () => {
       setLoading(false);
       console.error("Error fetching data:", error);
       toast.error("Failed to fetch shops!");
+      setShopCards([]);
     }
-  }, [user]);
+  };
 
   const fetchLastShopNumber = useCallback(async () => {
     try {
@@ -102,7 +103,7 @@ const ShopListing = () => {
   useEffect(() => {
     fetchShops();
     fetchLastShopNumber();
-  }, [fetchShops, fetchLastShopNumber]);
+  }, [fetchLastShopNumber,activeEventId]);
 
   const filteredShops = useMemo(
     () =>

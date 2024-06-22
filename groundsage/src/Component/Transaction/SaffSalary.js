@@ -75,7 +75,7 @@ export default function SaffSalary() {
           },
         }}
         id="standard-basic"
-        label="add item"
+        label="Add item"
         variant="standard"
         inputRef={addItemEle}
       />
@@ -117,7 +117,7 @@ export default function SaffSalary() {
           },
         }}
         id="standard-basic"
-        label="total balance"
+        label="Total expense"
         variant="standard"
       />
       <TextField
@@ -159,7 +159,7 @@ export default function SaffSalary() {
           },
         }}
         id="standard-basic"
-        label="balance payable amount"
+        label="Balance payable amount"
         variant="standard"
       />
       <TextField
@@ -200,7 +200,7 @@ export default function SaffSalary() {
           },
         }}
         id="standard-basic"
-        label="remarks"
+        label="Remarks"
         variant="standard"
       />
       

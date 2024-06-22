@@ -95,7 +95,9 @@ const App = () => {
       typeof value === "string" ? value.split(",") : value
     );
   };
+  useEffect(() => {
 
+  } , [activeEventId]);
   return (
     <div>
       <Navbar

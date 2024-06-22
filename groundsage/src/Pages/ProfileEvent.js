@@ -99,6 +99,7 @@ const ProfileEvent = () => {
         flexDirection: { xs: "column" },
         justifyContent: "center",
         alignItems: "center",
+        minHeight:"100vh"
       }}
     >
       {eventList?.slice(0, endpoint).map((item, index) => (

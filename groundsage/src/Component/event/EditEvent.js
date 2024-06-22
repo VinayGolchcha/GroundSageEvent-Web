@@ -121,7 +121,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
      
     }
     return (
-      <Box sx={{ backgroundColor: "rgb(66, 92, 90)"  , height : "100vh",}}>
+      <Box sx={{ backgroundColor: "rgb(66, 92, 90)" , paddingBottom :"20px" }}>
         <Box
           component='img'
           src="../../Images/arrow-left.png"
@@ -344,7 +344,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   },
                 }}
                 inputRef={descriptionElement}
-                label="description"
+                label="Description"
                 variant="standard"
                 defaultValue={selectedItem?.event_description}
               />
@@ -442,7 +442,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                 display: "flex",
                 justifyContent: "center",
                 width: "100%",
-                margin: "20px 0px",
+                marginTop:"20px"
               }}
             >
               <Button

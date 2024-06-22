@@ -82,7 +82,7 @@ const TransactionList = () => {
   useEffect(() => {
     // Fetch transaction data from the API
     fecthTransections()
-  }, []);
+  }, [activeEventId]);
   if(isLoading){
     return(
       <Loading/>

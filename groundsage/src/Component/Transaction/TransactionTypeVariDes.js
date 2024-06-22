@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import FormsData from "./FormsData";
 import { AuthContext } from "../../ContextApi/AuthContext";
 export default function TransactionTypeVariDes({list}){
+
     const [transactionTypeVariant , setTransactionTypeVariant] = useState(list[0]);
     const {setTransectionType} = useContext(AuthContext);
     useEffect(() => {
@@ -73,7 +74,7 @@ export default function TransactionTypeVariDes({list}){
           </>)}
           </Box>
         </Box>
-        <FormsData transactionTypeVariant = {transactionTypeVariant}/>
+        <FormsData transactionTypeVariant = {transactionTypeVariant}  list = {list}/>
       </>
     );
 }

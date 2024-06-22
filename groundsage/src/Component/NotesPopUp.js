@@ -76,7 +76,7 @@ const AddNotes = ({ open, onClose, onSave , user , activeEventId }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            placeholder="Notes Heading"
+            placeholder="Notes heading"
             InputProps={{
               disableUnderline: true,
               style: {
@@ -92,7 +92,7 @@ const AddNotes = ({ open, onClose, onSave , user , activeEventId }) => {
             margin="dense"
             variant="standard"
             fullWidth
-            placeholder="notes description"
+            placeholder="Notes description"
             InputProps={{
               disableUnderline: true,
               style: {

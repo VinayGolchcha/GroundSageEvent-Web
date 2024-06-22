@@ -79,6 +79,7 @@ const ProfileAboutpage = () => {
         justifyContent: "center",
         alignItems: "center",
         textAlign: { xs: "center", md: "left" },
+        minHeight: "100vh",
       }}
     >
       <Box
@@ -110,7 +111,7 @@ const ProfileAboutpage = () => {
             sx={{
               position: "absolute",
               top: "50%",
-              left: {xs:"50%",sm:"65%",md:"50%"},
+              left: { xs: "50%", sm: "65%", md: "50%" },
               transform: "translate(-50%, -50%)",
               color: "rgb(247, 230, 173)",
               textAlign: "center",

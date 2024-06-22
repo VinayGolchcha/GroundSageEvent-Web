@@ -84,6 +84,7 @@ const Reports = () => {
       setYearlyReport(data);
     } catch (err) {
       console.log(err);
+      setYearlyReport([]);
       // toast.error(err?.response?.data?.message, {
       //   style: {
       //     fontSize: "16px",
@@ -162,17 +163,18 @@ const Reports = () => {
           color: "rgb(66, 92, 90)",
         },
       });
+      setExpenseData([]);
     }
   };
   useEffect(() => {
     fetchYearlyReportData();
     setIsLoading(false);
-  }, [chartType]);
+  }, [chartType, activeEventId]);
 
   useEffect(() => {
     fetchYearlyData();
     setIsLoading(false);
-  }, [selectedPieOption]);
+  }, [selectedPieOption, activeEventId]);
 
   const handlePieOptionChange = (event) => {
     setSelectedPieOption(event.target.value);
@@ -182,7 +184,7 @@ const Reports = () => {
     setChartType(event.target.value);
   };
   const renderCustomLabel = ({ name, value, percentage }) => {
-    return `${name}: ${value} (${percentage}%)`;
+    return `${value}%`;
   };
 
   const CustomIcon = (
@@ -425,7 +427,7 @@ const Reports = () => {
                     cy="50%"
                     outerRadius={100}
                     fill="#8884d8"
-                    label
+                    // label
                   >
                     {expenseData?.map((entry, index) => (
                       <Cell

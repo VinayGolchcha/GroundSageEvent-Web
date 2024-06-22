@@ -5,6 +5,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import ShopEditForm from "../Component/ShopEdit";
 import UpdateShopPage from "./UpdateShop";
 import { AuthContext } from "../ContextApi/AuthContext";
+import axios from "axios";
 
 const DescriptionPage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ const DescriptionPage = () => {
   const [selectedShop, setSelectedShop] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
-  const { user } = useContext(AuthContext);
+  const { user  , activeEventId} = useContext(AuthContext);
+  const [isRental ,setIsRenatal] = useState(false);
 
   const toggleFormVisibility = () => {
     setIsFormOpen(!isFormOpen);
@@ -29,8 +31,36 @@ const DescriptionPage = () => {
       },
     });
   };
+  console.log(selectedShop?.status);
   const apiUrl = process.env.REACT_APP_API_URI;
-
+  const fetchRentalAgree = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/rentalagreement/fetch-rental-agreement`,
+        {
+          event_id: activeEventId,
+          shop_id: shopDetails?.id,
+        },
+        {
+          headers: {
+            Authorization: `${user?.token}`, // Ensure the token format is correct
+            Accept: "application/json",
+            role_id: user?.role_id,
+          },
+        }
+      );
+      if (res?.data?.data?.length > 0) {
+        const obj = res?.data?.data[0];
+        setIsRenatal(true);
+      }
+      console.log(res);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
   const fetchShopData = async () => {
     try {
       const response = await fetch(`${apiUrl}/shop/fetch-shop`, {
@@ -57,7 +87,8 @@ const DescriptionPage = () => {
   };
 
   useEffect(() => {
-    fetchShopData(); // Fetch shop data when component mounts
+    fetchShopData();
+    fetchRentalAgree(); // Fetch shop data when component mounts
   }, []);
 
   if (loading) {
@@ -246,7 +277,7 @@ const DescriptionPage = () => {
           alignItems: "center",
         }}
       >
-        {selectedShop?.status === "vacant" && (
+        {!isRental && (
           <Button
             size="large"
             variant="contained" // Make the button contained if active dom
@@ -268,7 +299,7 @@ const DescriptionPage = () => {
             Go to Rental
           </Button>
         )}
-        {selectedShop?.status === "occupied" && (
+        {isRental && (
           <Button
             size="large"
             variant="contained" // Make the button contained if active dom

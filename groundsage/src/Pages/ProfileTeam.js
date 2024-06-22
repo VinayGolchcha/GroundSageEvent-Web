@@ -123,7 +123,8 @@ const ProfileTeam = () => {
       sx={{
         backgroundColor: "rgb(66, 92, 90)",
         pb: 4,
-        width: { xs: "100%", sm: "90%" },
+        width: { xs: "100%", sm: "100%",md:"90%" },
+        minHeight: "100vh",
       }}
     >
       <Box sx={{ px: { xs: 2, md: 4 }, py: 2 }}>
@@ -193,7 +194,7 @@ const ProfileTeam = () => {
               alignItems: "center",
               cursor: "pointer",
               textAlign: "center",
-              ml: { xs: 0,sm:"50px", md: "auto" },
+              ml: { xs: 0, sm: "50px", md: "auto" },
             }}
             onClick={handlePopupOpen}
           >

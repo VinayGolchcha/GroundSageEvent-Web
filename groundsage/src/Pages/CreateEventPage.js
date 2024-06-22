@@ -134,7 +134,7 @@ export default function CreateEventPage() {
         parseInt(helperCountElement.current.value)
     ) {
       toast.warning(
-        "sum of the coordinator count , staffmember count , helper count should be equals to team size",
+        "sum of the coordinator count , staff member count , helper count should be equals to team size",
         {
           style: {
             // Change font color
@@ -339,6 +339,7 @@ export default function CreateEventPage() {
                   labelId="to-date-label"
                   value={dayjs(toDate)}
                   onChange={(newValue) =>
+
                     setToDate(newValue.$d.toISOString().split("T")[0])
                   } // Handle onChange event if needed
                   open={openCalendar2}
@@ -427,7 +428,7 @@ export default function CreateEventPage() {
                 },
               }}
               inputRef={descriptionElement}
-              label="description"
+              label="Description"
               variant="standard"
             />
 
