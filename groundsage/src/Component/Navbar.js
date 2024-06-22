@@ -18,7 +18,7 @@ const pages = [
   "Home",
   "Events",
   "Shops",
-  "Transaction",
+  "Transactions",
   "Notes",
   "Reports",
 ];

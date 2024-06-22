@@ -68,7 +68,7 @@ const DescriptionPage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          minHeight: "100vh",
           backgroundColor: "rgb(66, 92, 90)",
         }}
       >
@@ -82,7 +82,8 @@ const DescriptionPage = () => {
       style={{
         background: "rgb(66, 92, 90)",
         padding: "20px",
-        overflowY: "auto",
+        // overflowY: "auto",
+        minHeight: "100vh",
       }}
     >
       <Box
@@ -135,7 +136,7 @@ const DescriptionPage = () => {
               { label: "Shop Number: ", value: selectedShop.shop_number },
               { label: "Shop Dome: ", value: selectedShop.dome },
               { label: "Shop Description: ", value: selectedShop.description },
-              { label: "Shop Area: ", value: `${selectedShop.area} sq.` },
+              { label: "Shop Area: ", value: `${selectedShop.area} sq ft.` },
               { label: "Rent: ", value: selectedShop.rent },
               { label: "Shop Location: ", value: selectedShop.location },
             ].map((row, index) => (

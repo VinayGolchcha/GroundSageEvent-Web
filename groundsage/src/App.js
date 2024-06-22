@@ -193,7 +193,7 @@ const App = () => {
           <Route path="/Events" element={<EventListPage />} />
           <Route path="/createshop" element={<CreateShopPage />} />
           <Route path="/notes" element={<Notes />} />
-          <Route path="/transaction" element={<TransactionList />} />
+          <Route path="/transactions" element={<TransactionList />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/incomereport" element={<IncomeReports />} />
           <Route path="/occupancyreport" element={<OccupancyReport />} />
@@ -208,7 +208,8 @@ const App = () => {
 
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
-      <Footer />
+
+
     </div>
   );
 };

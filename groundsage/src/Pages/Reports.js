@@ -79,7 +79,7 @@ const Reports = () => {
       const data = res?.data?.data?.map((item) => ({
         [chartType === "year" ? "year" : "month"]:
           chartType === "year" ? item.year : item?.month?.split(" ")[0],
-        income: item.total,
+        income: item.total / 1000,
       }));
       setYearlyReport(data);
     } catch (err) {
@@ -116,13 +116,21 @@ const Reports = () => {
       const data = res?.data?.data;
       setPieChartData(data);
       console.log(data);
+      const mainValue = data.shop_rental_total || data.staff_salary_total;
+      const othersValue = data.others_total;
+      const total = parseInt(data.total);
+
+      // Calculate percentages
+      const mainPercentage = Math.ceil(((mainValue / total) * 100).toFixed(2));
+      const othersPercentage = Math.ceil((100 - mainPercentage).toFixed(2));
+
       const newExpenseData = [
         {
           name: data.shop_rental_total ? "Shop Rental" : "Staff Salary",
-          value: data.shop_rental_total || data.staff_salary_total,
+          value: mainPercentage,
           fill: "rgb(236, 219, 163)",
         },
-        { name: "Others", value: data.others_total, fill: "rgb(63, 128, 101)" },
+        { name: "Others", value: othersPercentage, fill: "rgb(63, 128, 101)" },
       ];
       const selectedData = yearlyReport?.find(
         (item) =>
@@ -172,6 +180,9 @@ const Reports = () => {
 
   const handleChartTypeChange = (event) => {
     setChartType(event.target.value);
+  };
+  const renderCustomLabel = ({ name, value, percentage }) => {
+    return `${name}: ${value} (${percentage}%)`;
   };
 
   const CustomIcon = (
@@ -313,8 +324,9 @@ const Reports = () => {
                 <BarChart data={data}>
                   <XAxis dataKey={xAxisDataKey} />
                   <YAxis
+                    tickFormatter={(value) => `${value}k`} // Custom tick formatter
                     label={{
-                      value: "Amount (in thousands)",
+                      value: "Amount (Rupees in thousands)",
                       angle: -90,
                       position: "insideLeft",
                       dy: -10,
@@ -407,6 +419,7 @@ const Reports = () => {
                   />
                   <Pie
                     dataKey="value"
+                    label={renderCustomLabel}
                     data={expenseData}
                     cx="50%"
                     cy="50%"

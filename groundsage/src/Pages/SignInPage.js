@@ -25,6 +25,8 @@ const SignInPage = () => {
 
   const debouncedCheckEmailVerificationStatus = useCallback(
     debounce(async (email) => {
+      if (!email) return;
+
       try {
         const response = await fetch(
           "https://groundsageevent-be.onrender.com/api/v1/profile/check-email-verification",
@@ -48,15 +50,15 @@ const SignInPage = () => {
       } catch (error) {
         toast.error("An error occurred while checking email verification.");
       }
-    }, 3000), // 1000ms debounce delay
+    }, 2000), // 1000ms debounce delay
     []
   );
 
-  useEffect(() => {
-    if (email) {
+    useEffect(() => {
+    if (email && !isEmailVerified) {
       debouncedCheckEmailVerificationStatus(email);
     }
-  }, [email, debouncedCheckEmailVerificationStatus]);
+  }, [email, isEmailVerified, debouncedCheckEmailVerificationStatus]);
 
   const handleSubmit = async () => {
     debouncedCheckEmailVerificationStatus();
@@ -253,14 +255,14 @@ const SignInPage = () => {
               width: { xs: "100%", md: "60%" },
             }}
           />
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end",width:"60%" }}>
             <Typography
               variant="body2"
               sx={{
                 color: "white",
                 marginTop: 1,
                 cursor: "pointer",
-                width: { xs: "100%", md: "60%" },
+                // width: { xs: "100%", md: "60%" },
               }}
               onClick={() => navigate("/entermail")}
             >

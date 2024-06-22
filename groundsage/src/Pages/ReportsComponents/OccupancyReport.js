@@ -47,7 +47,7 @@ const OccupancyReport = () => {
         `${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data`,
         {
           flag: selectedOption.toLowerCase(),
-          event_id: user?.event_id,
+          event_id: activeEventId,
         },
         {
           headers: {

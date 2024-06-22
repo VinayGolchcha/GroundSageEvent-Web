@@ -203,8 +203,15 @@ export default function CreateShopPage() {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
+    const files = Array.from(e.dataTransfer.files);
+    const validFiles = files.filter((file) => {
+      if (file.size > 1 * 1024 * 1024) {
+        toast.error(`'File size should not exceed 1 MB'`);
+        return false;
+      }
+      return true;
+    });
+    setFile((prevFiles) => [...prevFiles, ...validFiles]);
   };
 
   const handleDragOver = (e) => {
@@ -222,15 +229,12 @@ export default function CreateShopPage() {
     const files = Array.from(e.target.files);
     const validFiles = files.filter((file) => {
       if (file.size > 1 * 1024 * 1024) {
-        toast.error(
-          `'File size should not exceed 1 MB'`
-        ); 
+        toast.error(`'File size should not exceed 1 MB'`);
         return false;
       }
       return true;
     });
-    setFile(validFiles);
-    console.log(validFiles);
+    setFile((prevFiles) => [...prevFiles, ...validFiles]);
   };
 
   const handleFile = (file) => {
@@ -601,7 +605,7 @@ export default function CreateShopPage() {
                   },
                 }}
                 id="standard-basic"
-                label="Shop Area ( in sq. )"
+                label="Shop Area ( in sq ft.)"
                 value={eventData.area}
                 onChange={(e) => handleInputChange(e, "area")}
                 variant="standard"
@@ -658,6 +662,8 @@ export default function CreateShopPage() {
           }}
         >
           <Box
+           onDrop={handleDrop}
+           onDragOver={handleDragOver}
             component="label"
             htmlFor="fileInput"
             sx={{

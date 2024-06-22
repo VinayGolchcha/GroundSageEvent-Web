@@ -1,7 +1,6 @@
-import { Typography, Button, TextField } from "@mui/material";
+import { Typography, Button, TextField, Box } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import "../Component/Refferal.css";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
 import axios from "axios";
 
@@ -29,68 +28,65 @@ const ReferralCodeScreen = () => {
       );
 
       if (response.data.success) {
-        // toast.success(response.data.message);
-        // onSave && onSave(response.data.data);
-        // console.log(response):
         console.log(response.data.message);
         navigate("/home");
       } else {
         console.log(response.data.message);
       }
     } catch (error) {
-      //   toast.error("An error occurred while trying to join the team.");
       console.error("Error joining team with referral code:", error);
     }
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         background: "rgb(66, 92, 90)",
-        // opacity: 0.9,
-        // padding: "20px",
         minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: { xs: "20px", md: "40px" },
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <img
           src="../../../Images/logo_1 1.png"
-          alt="Right Arrow"
-          style={{ marginTop: "40px", width: "20%" }}
+          alt="Logo"
+          style={{ width: "20%" }}
         />
-      </div>
+      </Box>
       <Typography
         sx={{
           color: "rgba(255, 255, 255, 0.54)",
           textAlign: "center",
           fontSize: { lg: "40px", sm: "35px", xs: "25px" },
           fontFamily: "Amita",
-          marginTop: "70px",
-          letterSpacing: "4px", // Add space between words
+          marginTop: "40px",
+          letterSpacing: "4px",
           textTransform: "uppercase",
-          paddingBottom: "15px",
         }}
       >
         Do You Have a Referral Code?
       </Typography>
-      <div style={{ textAlign: "center", height: "20%" }}>
+      <Box
+        sx={{
+          textAlign: "center",
+          marginTop: "20px",
+          width: { xs: "80%", sm: "60%", md: "45%" },
+        }}
+      >
         <TextField
           variant="outlined"
           placeholder="ABCED979834"
           value={referralCode}
           onChange={(e) => setReferralCode(e.target.value)}
+          fullWidth
           sx={{
-            width: { xs: "80%", sm: "60%", md: "45%" },
             backgroundColor: "rgb(66, 92, 90)",
             border: "2px dashed rgb(247, 230, 173)",
             borderRadius: "5px",
-            fontSize: "30px",
-            textAlign: "center",
             color: "rgb(247, 230, 173)",
             "& .MuiInputBase-input": {
               textAlign: "center",
@@ -109,30 +105,24 @@ const ReferralCodeScreen = () => {
             },
           }}
         />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
         <Button
           variant="contained"
           sx={{
             background: "rgb(247, 230, 173)",
             color: "rgb(91, 94, 97)",
-            padding: "13px 10px 13px 50px",
-            marginTop: "40px",
+            padding: { xs: "10px 20px", sm: "10px 50px" },
             display: "flex",
             alignItems: "center",
-            borderRadius: "4px", // Add border radius
-            boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)", // Add box shadow
+            borderRadius: "4px",
+            boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.25)",
             fontSize: "16px",
             fontFamily: "Aoboshi One",
             "&:hover": {
-              backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
-              color: "rgb(50, 50, 50)", // Change text color on hover
-              boxShadow: "0px 10px 35px 0px rgb(247, 230, 173)", // Change box shadow on hover
+              backgroundColor: "rgb(247, 230, 173)",
+              color: "rgb(50, 50, 50)",
+              boxShadow: "0px 10px 35px 0px rgb(247, 230, 173)",
             },
           }}
           onClick={handleSave}
@@ -141,10 +131,10 @@ const ReferralCodeScreen = () => {
           <img
             src="../../../Images/Group 4.svg"
             alt="Right Arrow"
-            style={{ marginLeft: "40px" }}
+            style={{ marginLeft: "20px" }}
           />
         </Button>
-      </div>
+      </Box>
       <Typography
         onClick={() => navigate("/home")}
         sx={{
@@ -158,7 +148,7 @@ const ReferralCodeScreen = () => {
       >
         CONTINUE WITHOUT CODE.....
       </Typography>
-    </div>
+    </Box>
   );
 };
 

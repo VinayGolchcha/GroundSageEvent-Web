@@ -44,7 +44,7 @@ const NetPaybleReport = () => {
     try{
       const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-all-years-data` ,{
         flag : selectedOption.toLowerCase(),
-        event_id : 1112,
+        event_id : activeEventId,
         type : "expense"
       } , {
         headers : {
@@ -261,7 +261,7 @@ const NetPaybleReport = () => {
             >
               Yearly Update for Net Payable 
             </Typography>
-            <Typography
+            {/* <Typography
               sx={{
                 color: "rgb(84, 80, 65)",
                 fontSize: "20px",
@@ -273,7 +273,7 @@ const NetPaybleReport = () => {
               }}
             >
               Different Types of EXPENSE
-            </Typography>
+            </Typography> */}
             {/* Header Row */}
             <TableContainer>
               <Table size="medium" sx={{ border: "none" }}>

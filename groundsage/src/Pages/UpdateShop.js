@@ -49,6 +49,7 @@ export default function UpdateShopPage() {
         dome: selectedShop.dome,
         rent: selectedShop.rent,
         description: selectedShop.description,
+        shopStatus: selectedShop.status,
         area: selectedShop.area,
         location: selectedShop.location,
         shop_number: selectedShop.shop_number,
@@ -174,8 +175,15 @@ export default function UpdateShopPage() {
   };
   const handleDrop = (e) => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
+    const files = Array.from(e.dataTransfer.files);
+    const validFiles = files.filter((file) => {
+      if (file.size > 1 * 1024 * 1024) {
+        toast.error(`'File size should not exceed 1 MB'`);
+        return false;
+      }
+      return true;
+    });
+    setFile((prevFiles) => [...prevFiles, ...validFiles]);
   };
 
   const handleDragOver = (e) => {
@@ -187,15 +195,12 @@ export default function UpdateShopPage() {
     const files = Array.from(e.target.files);
     const validFiles = files.filter((file) => {
       if (file.size > 1 * 1024 * 1024) {
-        toast.error(
-          `'File size should not exceed 1 MB'`
-        ); 
+        toast.error(`'File size should not exceed 1 MB'`);
         return false;
       }
       return true;
     });
-    setFile(validFiles);
-    console.log(validFiles);
+    setFile((prevFiles) => [...prevFiles, ...validFiles]); //     console.log(validFiles);
   };
   const handleFile = (file) => {
     const reader = new FileReader();
@@ -361,6 +366,8 @@ export default function UpdateShopPage() {
                 variant="standard"
               />
               <TextField
+                // multiline
+                // rows={3}
                 sx={{
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
@@ -566,7 +573,7 @@ export default function UpdateShopPage() {
                   },
                 }}
                 id="standard-basic"
-                label="Shop Area ( in sq. )"
+                label="Shop Area ( in sq ft.)"
                 value={eventData.area}
                 onChange={(e) => handleInputChange(e, "area")}
                 variant="standard"
@@ -616,12 +623,15 @@ export default function UpdateShopPage() {
           Shop images
         </Typography>
         <Box
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
           sx={{
             margin: { xs: "0% 18%", md: "0% 13%" },
             // width:"50%",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            
           }}
         >
           <Box
@@ -669,8 +679,9 @@ export default function UpdateShopPage() {
                     color: "rgba(255, 255, 255, 0.32)",
                     fontSize: { xs: "1.1rem", md: "1.5rem" },
                     textAlign: "center",
-                    padding:"0px 20px"
+                    padding: "0px 20px",
                   }}
+                  
                 >
                   Drag upload/ browse your shop image
                 </Typography>

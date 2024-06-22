@@ -39,7 +39,7 @@ const OutStandingReport = () => {
   const options = ["Year", "Month"];
   const [outstandingReport, setOutstandingReport] = useState([]);
   const { activeEventId, user } = useContext(AuthContext);
-  const[isLoading , setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fecthOutstandingReport = async () => {
     try {
@@ -47,7 +47,7 @@ const OutStandingReport = () => {
         `${process.env.REACT_APP_API_URI}/transaction/fetch-outstanding-balance`,
         {
           flag: selectedOption.toLowerCase(),
-          event_id: 1112,
+          event_id: activeEventId,
           type: "income",
         },
         {
@@ -149,12 +149,9 @@ const OutStandingReport = () => {
       }}
     />
   );
-  if(isLoading){
-    return(
-      <Loading/>
-    )
-  }else{
-
+  if (isLoading) {
+    return <Loading />;
+  } else {
     return (
       <div
         style={{
@@ -176,9 +173,9 @@ const OutStandingReport = () => {
             navigate(-1); // Navigate back by one step in the history stack
           }}
         />
-  
+
         <ToastContainer />
-  
+
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -262,12 +259,12 @@ const OutStandingReport = () => {
                 fontWeight: "600",
                 //   textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
                 margin: "0px 0px 0px 10px",
-                fontSize : {xs : "20px" , sm : "20px"}
+                fontSize: { xs: "20px", sm: "20px" },
               }}
             >
               Yearly Update for Outstanding Amt
             </Typography>
-            <Typography
+            {/* <Typography
               sx={{
                 color: "rgb(84, 80, 65)",
                 fontSize: "20px",
@@ -275,11 +272,11 @@ const OutStandingReport = () => {
                 fontWeight: "400",
                 //   textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
                 margin: "0px 0px 10px 10px",
-                fontSize : {xs : "22px" , sm : "22px"}
+                fontSize: { xs: "22px", sm: "22px" },
               }}
             >
               Different Types of INCOME
-            </Typography>
+            </Typography> */}
             {/* Header Row */}
             <TableContainer>
               <Table size="medium" sx={{ border: "none" }}>
@@ -299,7 +296,7 @@ const OutStandingReport = () => {
                             fontFamily: "Poppins",
                             fontWeight: "500",
                             borderBottom: "none",
-                            fontSize : {xs : "20px" , sm : "20px"}
+                            fontSize: { xs: "20px", sm: "20px" },
                           }}
                         >
                           {h}
@@ -348,7 +345,6 @@ const OutStandingReport = () => {
       </div>
     );
   }
-
 };
 
 export default OutStandingReport;

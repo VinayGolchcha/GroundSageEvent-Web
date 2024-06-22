@@ -35,7 +35,7 @@ const TenantsReport = () => {
   const [oldestDate, setOldestDate] = useState("");
   const [newestDate, setNewestDate] = useState("");
   const [tenantsData, setTenantsData] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user, activeEventId } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchTenantsData = async () => {
@@ -45,7 +45,7 @@ const TenantsReport = () => {
         const response = await axios.post(
           "https://groundsageevent-be.onrender.com/api/v1/transaction/fetch-tenants-report-data",
           {
-            event_id: 1112,
+            event_id: activeEventId,
             from_date: oldestDate,
             to_date: newestDate,
           },
@@ -100,19 +100,19 @@ const TenantsReport = () => {
         padding: "20px",
       }}
     >
-       <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
-          sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-          }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
-        />
+      <Box
+        component="img"
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        sx={{
+          cursor: "pointer",
+          width: { xs: "35px", md: "45px" },
+          margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
+        }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
       <Typography
         sx={{
           color: "rgb(247, 230, 173)",
@@ -162,7 +162,7 @@ const TenantsReport = () => {
               fontFamily: "Inter",
               fontWeight: "600",
               margin: "0px 0px 0px 10px",
-              fontSize : {xs : "20px" , sm : "20px"}
+              fontSize: { xs: "20px", sm: "20px" },
             }}
           >
             Tenants Details
@@ -222,7 +222,7 @@ const TenantsReport = () => {
                           fontFamily: "Poppins",
                           fontWeight: "500",
                           borderBottom: "none",
-                          fontSize : {xs : "20px" , sm : "20px"}
+                          fontSize: { xs: "20px", sm: "20px" },
                         }}
                       >
                         {h}

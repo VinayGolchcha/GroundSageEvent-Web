@@ -42,8 +42,8 @@ const ShopListing = () => {
   function formatDate(dateString) {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}/${month}/${day}`;
   }
   const fetchShops = useCallback(async () => {
@@ -221,7 +221,7 @@ const ShopListing = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "100vh",
+          minHeight: "100vh",
           backgroundColor: "rgb(66, 92, 90)",
         }}
       >
@@ -237,20 +237,25 @@ const ShopListing = () => {
           background: "rgb(66, 92, 90)",
           paddingBottom: "30px",
           boxShadow: "0px 4px 6px rgba(255, 251, 251, 0.11)", // Adding outside shadow
+          minHeight:"100vh"
         }}
       >
-        <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleDelete}/>
+        <ConfirmDelete
+          open={open}
+          handleClose={handleClose}
+          handleIncomeDelete={handleDelete}
+        />
         <ToastContainer />
 
         {/* <div style={{display:"flex"}}> */}
         <Box
-          component='img'
+          component="img"
           src="../../Images/arrow-left.png"
           alt="Share"
           sx={{
             cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+            width: { xs: "35px", md: "45px" },
+            margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
           }}
           onClick={() => {
             navigate(-1); // Navigate back by one step in the history stack
@@ -286,7 +291,7 @@ const ShopListing = () => {
                 sx={{
                   borderColor: "rgb(247, 230, 173)",
                   width: { xs: "150px", sm: "175px" },
-                 
+
                   height: "42px", // Set the height for all buttons
                   color: activeDom === "all" ? "rgb(91, 94, 97)" : "white",
                   background:
@@ -311,7 +316,7 @@ const ShopListing = () => {
                   sx={{
                     borderColor: "rgb(247, 230, 173)",
                     width: { xs: "150px", sm: "175px" },
-                    minWidth:"fit-content",
+                    minWidth: "fit-content",
                     // padding:"15px",
                     height: "42px", // Set the height for all buttons
                     color: activeDom === dom ? "rgb(91, 94, 97)" : "white",
@@ -587,7 +592,7 @@ const ShopListing = () => {
                       variant="body1"
                       sx={{ fontWeight: "700", fontFamily: "Fira Sans" }}
                     >
-                      Area: {shop.area} sq.
+                      Area: {shop.area} sq ft.
                     </Typography>
                     <Typography
                       variant="body1"
@@ -624,7 +629,11 @@ const ShopListing = () => {
                         padding: "8px",
                       }}
                     >
-                     {shop.status === "vacant" ? <Typography>---</Typography>:<div>{formatDate(shop.updated_at)}</div>}
+                      {shop.status === "vacant" ? (
+                        <Typography>---</Typography>
+                      ) : (
+                        <div>{formatDate(shop.updated_at)}</div>
+                      )}
                       <div>
                         {shop.status === "vacant" ? (
                           <>

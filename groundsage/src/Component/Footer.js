@@ -13,17 +13,7 @@ const Footer = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  if (
-    location.pathname === "/" ||
-    location.pathname === "/referral-code" ||
-    location.pathname === "/entermail" ||
-    location.pathname === "/signin" ||
-    location.pathname === "/signup" ||
-    location.pathname === "/verification" ||
-    location.pathname === "/forgetpassword"
-  ) {
-    return null;
-  }
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -37,7 +27,7 @@ const Footer = () => {
       const response = await axios.post(
         `${apiUrl}/home/send-feedback`,
         {
-          email,
+          email: user?.email,
           feedback,
         },
         {
@@ -129,8 +119,9 @@ const Footer = () => {
               id="filled-basic"
               label="Email"
               variant="filled"
-              value={email}
+              value={user?.email}
               onChange={handleEmailChange}
+              disabled="true"
               size="small"
               InputProps={{
                 disableUnderline: true,
@@ -148,7 +139,7 @@ const Footer = () => {
             <br />
             <TextField
               id="filled-basic"
-              label="review"
+              label="Review"
               variant="filled"
               size="small"
               value={feedback}
