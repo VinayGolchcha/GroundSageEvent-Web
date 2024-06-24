@@ -22,7 +22,8 @@ const Footer2 = () => {
     location.pathname === "/signup" ||
     location.pathname === "/verification" ||
     location.pathname === "/forgetpassword" ||
-    location.pathname === "/home/"
+    location.pathname === "/home/" ||
+     location.pathname === "/home"
   ) {
     return null;
   }
@@ -78,8 +79,9 @@ const Footer2 = () => {
           justifyContent: { xs: "center", md: "space-between" },
           alignItems: "center", // Center vertically
           textAlign: "center", //
-          // margin: { xs: "0px 10px", md: "0px 50px 0px 50px" },
+          margin: { xs: "0px 10px", md: "0px 50px 0px 50px" },
           paddingTop: "20px",
+          paddingBottom: "20px",
         }}
       >
         <Box
@@ -113,7 +115,7 @@ const Footer2 = () => {
           <img
             src="../../../Images/footer_img.svg"
             alt="Right Arrow"
-            // style={{  width: "90%" }} // Adjust margin between image and text
+            style={{ width: "90%", marginRight: "15%" }} // Adjust margin between image and text
           />
         </Box>
       </Box>

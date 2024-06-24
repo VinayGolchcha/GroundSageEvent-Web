@@ -471,7 +471,7 @@ const Reports = () => {
                   src={`../../../Images/${icon}`}
                   alt="Icon"
                   sx={{
-                    height: { xs: "12vh", md: "9vw" },
+                    height: { xs: "100px", md: "9vw" },
                     // width: { xs: "100px" },
                     cursor: "pointer",
                     margin: "5px",
@@ -483,6 +483,20 @@ const Reports = () => {
               );
             })}
           </Box>
+          {/* <Box
+                  component="img"
+                  src={`../../../Images/report6.png`}
+                  alt="Icon"
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: { xs: "center", sm: "space-between" },
+                    margin: "10px 5%",
+                  }}
+                  onClick={() => {
+                    // navigate(`${iconsPath[idx]}`);
+                  }}
+                /> */}
         </Box>
       </div>
     );
