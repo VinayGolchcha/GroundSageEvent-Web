@@ -416,6 +416,9 @@ export default function CreateShopPage() {
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
+                  ".css-uhyr2s-MuiInputBase-root-MuiInput-root::before" : {
+                    borderBottomColor: "rgb(188, 189, 163)",
+                  },
                   width: "100%",
                   margin: "10px 0px ",
                 }}
@@ -435,76 +438,8 @@ export default function CreateShopPage() {
                 value={eventData.description}
                 onChange={(e) => handleInputChange(e, "description")}
                 variant="standard"
-              />
-              <TextField
-                sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                    color: "rgb(255, 255, 255)",
-                  },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                    borderBottom: "1px solid rgb(188, 189, 163)",
-                  },
-                  "& label.Mui-focused": {
-                    color: "rgb(255, 255, 255)", // Color of the label when focused
-                  },
-                  "& .MuiInput-underline:after": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                  },
-                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                  },
-                  width: "100%",
-                  margin: "10px 0px ",
-                }}
-                InputProps={{
-                  style: {
-                    color: "rgb(255, 255, 255)",
-                  },
-                }}
-                InputLabelProps={{
-                  style: {
-                    color: "white",
-                    fontSize: "20px",
-                  },
-                }}
-                id="standard-basic"
-                label=""
-                variant="standard"
-              />
-              <TextField
-                sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
-                    color: "rgb(255, 255, 255)",
-                  },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
-                    borderBottom: "1px solid rgb(188, 189, 163)",
-                  },
-                  "& label.Mui-focused": {
-                    color: "rgb(255, 255, 255)", // Color of the label when focused
-                  },
-                  "& .MuiInput-underline:after": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
-                  },
-                  "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                    borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                  },
-                  width: "100%",
-                  margin: "10px 0px ",
-                }}
-                InputProps={{
-                  style: {
-                    color: "rgb(255, 255, 255)",
-                  },
-                }}
-                InputLabelProps={{
-                  style: {
-                    color: "white",
-                    fontSize: "20px",
-                  },
-                }}
-                id="standard-basic"
-                label=""
-                variant="standard"
+                multiline
+                rows={4}
               />
             </Grid>
             <Grid item lg={6} md={6} sm={6} xs={12}>

@@ -83,7 +83,14 @@ const Notes = () => {
   };
 
   const refreshPage = () => {
-    window.location.reload(false);
+    setSelect(false);
+    const newEventList = eventList.map((item) => ({
+      ...item,
+      isSelected: false,
+    }));
+    setEventList(newEventList);
+    setAllselect(false);
+    // window.location.reload(false);
   }
   
   const forrmattedDate = (data) => {
@@ -260,7 +267,7 @@ const Notes = () => {
   const handleCheckboxChange = (index) => {
     const newEventList = eventList.map((item, i) => {
       if (item._id === index) {
-        return { ...item, isSelected: true };
+        return { ...item, isSelected: !item.isSelected };
       }
       return item;
     });
