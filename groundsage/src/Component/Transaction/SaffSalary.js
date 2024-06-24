@@ -43,7 +43,7 @@ export default function SaffSalary() {
             color: "rgb(255, 255, 255)",
             fontSize: {  xs: "17px", md: "20px" }, 
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
@@ -86,7 +86,7 @@ export default function SaffSalary() {
             color: "rgb(255, 255, 255)",
             fontSize: {  xs: "17px", md: "20px" }, // Set label font size here
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
@@ -127,7 +127,7 @@ export default function SaffSalary() {
             color: "rgb(255, 255, 255)",
             fontSize: {  xs: "17px", md: "20px" }, 
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
@@ -168,7 +168,7 @@ export default function SaffSalary() {
             color: "rgb(255, 255, 255)",
             fontSize: {  xs: "17px", md: "20px" }, 
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {

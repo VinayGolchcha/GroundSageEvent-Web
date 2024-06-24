@@ -10,8 +10,6 @@ import Loading from "../Component/Loading";
 import { AuthContext } from "../ContextApi/AuthContext";
 import EditEvent from "../Component/event/EditEvent";
 
-
-
 export default function EventListPage() {
   const navigate = useNavigate();
   const [eventList, setEventList] = useState([]);
@@ -20,100 +18,125 @@ export default function EventListPage() {
   const [allselect, setAllselect] = useState(false);
   const [select, setSelect] = useState(false);
   const [eventListLength, setEventListLength] = useState("Show More...");
-  const [isLoading , setIsLoading] = useState(true);
-  const [selectedId , setSelectedId] = useState(null);
-  const [selectedItem , setSelectedItem] = useState(null);
-  const [isEdit , setIsEdit] = useState(false);
-  const {user , setEventIds , eventIds , setEvents , setActiveEvent , setActiveEventId, activeEventId} = useContext(AuthContext);
-  
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const {
+    user,
+    setEventIds,
+    eventIds,
+    setEvents,
+    setActiveEvent,
+    setActiveEventId,
+    activeEventId,
+  } = useContext(AuthContext);
+
   const today = new Date();
 
   const handleEditEventApi = async (body) => {
-    try{
+    try {
       setIsLoading(true);
       console.log(body);
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
-        formData.append(key , body[key]);
-      })
+        formData.append(key, body[key]);
+      });
 
       file.forEach((f) => {
-        formData.append("files" , f);
-      })
+        formData.append("files", f);
+      });
       const publicIds = body?.public_ids;
       console.log(publicIds);
       // publicIds.forEach((id) => {
-        // formData.append('public_ids', publicIds); 
+      // formData.append('public_ids', publicIds);
       // });
 
       const res = await axios.post(
         `${process.env.REACT_APP_API_URI}/event/update-event/${selectedId}`,
-        formData , {
+        formData,
+        {
           headers: {
-            'authorization': `${user?.token}`, // Ensure the token format is correct
-            'Accept': 'application/json',
-            role_id : user?.role_id
-          }
+            authorization: `${user?.token}`, // Ensure the token format is correct
+            Accept: "application/json",
+            role_id: user?.role_id,
+          },
         }
       );
       console.log(res);
       setIsLoading(false);
-      toast.success(res?.data?.message , {
+      toast.success(res?.data?.message, {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
           fontFamily: "Inter", // Change font family
           fontWeight: "600", // Change font weight
           color: "rgb(66, 92, 90)",
-        }});
-        setIsEdit(!isEdit);
-    }catch(err){
-      console.log(err)
+        },
+      });
+      setIsEdit(!isEdit);
+    } catch (err) {
+      console.log(err);
       setIsLoading(false);
       const errArray = err?.response?.data?.errors;
       console.log(errArray);
       errArray?.forEach((err) => {
-        toast.error(err?.msg)
-      }) 
+        toast.error(err?.msg);
+      });
       toast.error(err);
     }
-  }
+  };
   const fetchEvents = async () => {
-    try{
-      const res = await axios.get(`https://groundsageevent-be.onrender.com/api/v1/event/get-all-user-event/${user?.user_id}` , { headers: {
-        'authorization': user?.token,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json',
-        role_id : user?.role_id
-    } });
+    try {
+      const res = await axios.get(
+        `https://groundsageevent-be.onrender.com/api/v1/event/get-all-user-event/${user?.user_id}`,
+        {
+          headers: {
+            authorization: user?.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            role_id: user?.role_id,
+          },
+        }
+      );
       let eventList = res?.data?.data;
-      eventList = eventList?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      eventList = eventList?.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
       setEvents(eventList);
-      const newEventList = eventList?.map((item) => ({...item , isSelected : false}));
+      const newEventList = eventList?.map((item) => ({
+        ...item,
+        isSelected: false,
+      }));
       setEventList(newEventList);
-      setEventIds(newEventList?.map((item) => ( {id : item?.id , event_name : item?.event_name } )));
+      setEventIds(
+        newEventList?.map((item) => ({
+          id: item?.id,
+          event_name: item?.event_name,
+        }))
+      );
       console.log(eventIds);
       setIsLoading(false);
-      console.log(res)
-      toast.success(res?.data?.message , {
+      console.log(res);
+      toast.success(res?.data?.message, {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
           fontFamily: "Inter", // Change font family
           fontWeight: "600", // Change font weight
           color: "rgb(66, 92, 90)",
-        }});
-    }catch(err){
+        },
+      });
+    } catch (err) {
       console.log(err);
       setIsLoading(false);
       toast.error(err?.response?.data?.message);
-      
     }
-  }
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     fetchEvents();
-  },[])
+  }, []);
 
   const handleAllChange = () => {
     const newEventList = eventList?.map((item) => ({
@@ -135,10 +158,10 @@ export default function EventListPage() {
   };
 
   const handleEditEvent = () => {
-    const ele = eventList?.filter(item => item.isSelected === true);
+    const ele = eventList?.filter((item) => item.isSelected === true);
     console.log(ele);
-    if(ele.length > 1) {
-      toast.warning("Cannot Edit the multiple Events" , {
+    if (ele.length > 1) {
+      toast.warning("Cannot edit the multiple events", {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -148,15 +171,14 @@ export default function EventListPage() {
         },
         // Other options like position, autoClose, etc.
       });
-      return
+      return;
     }
     setSelectedId(ele[0]?.id);
     setSelectedItem(ele[0]);
     setIsEdit(true);
-    
-  }
+  };
   const handleCheckboxChange = (index) => {
-    console.log(index)
+    console.log(index);
     const newEventList = eventList?.map((item, i) => {
       if (item?.id === index) {
         return { ...item, isSelected: !item.isSelected };
@@ -175,287 +197,303 @@ export default function EventListPage() {
   };
   const refreshPage = () => {
     window.location.reload(false);
-  }
+  };
   const forrmattedDate = (data) => {
     let date = new Date(data);
     const array = date.toString().split(" ");
-    date = array.slice(1,4).join(" ");
-    return date
-  }
-  if(isLoading){
-    return (<Loading/>);
-  }else{
+    date = array.slice(1, 4).join(" ");
+    return date;
   };
+  if (isLoading) {
+    return <Loading />;
+  } else {
+  }
 
   return (
     <>
-    { isEdit === true ? (<EditEvent selectedItem = {selectedItem} handleSaveEvent = {handleEditEventApi} setFile = {setFIle}/>) : (
-    <Box
-      sx={{
-        backgroundColor: "rgb(66, 92, 90)",
-        // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
-        // minHeight: "100vh",
-        // minHeight: "100vh",
-        padding: "20px 20px 50px 20px",
-      }}
-    >     
-      <ToastContainer position="bottom-right" style={{ color: "red" }} />
-      <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
-          sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-          }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
+      {isEdit === true ? (
+        <EditEvent
+          selectedItem={selectedItem}
+          handleSaveEvent={handleEditEventApi}
+          setFile={setFIle}
         />
-      <Box
-        sx={{ backgroundColor: "rgb(66, 92, 90)", display: "flex" }}
-        onClick={refreshPage}
-      >
-        <Typography
-          variant="h3"
-          sx={{
-            textAlign: "center",
-            color: "rgb(247, 230, 173)",
-            fontWeight: "600",
-            width: "100%",
-            // padding: "30px",
-            marginTop: "-20px",
-            fontFamily: "Outfit",
-            textShadow: "0 6px rgba(81,67,21,0.8)",
-            fontSize: { xs: "30px",sm:"40px", md: "56px" },
-
-          }}
-        >
-          All Events
-        </Typography>
-      </Box>
-      {eventList?.length !== 0 && (
+      ) : (
         <Box
           sx={{
-            margin: { xs: "20px", md: "2% 18%" },
-            padding: "0px 15px",
-            display: "flex",
-            justifyContent: "space-between",
+            backgroundColor: "rgb(66, 92, 90)",
+            // height: { ...[eventList.length === 0 ? "100vh" : "auto"] },
+            // minHeight: "100vh",
+            // minHeight: "100vh",
+            padding: "20px 20px 50px 20px",
           }}
         >
-          {select === true ? (
-            <FormControlLabel
-              label="Select All"
-              control={
-                <Checkbox
-                  sx={{ marginRight: "8px" }}
-                  variant="outlined"
-                  color="neutral"
-                  checked={allselect}
-                  onChange={handleAllChange}
-                />
-              }
-              sx={{
-                color: "rgb(216, 217, 217)",
-                marginLeft: "0px",
-                fontFamily: "Poppins",
-                "& .css-ahj2mt-MuiTypography-root": {
-                  fontSize: "1.2rem",
-                },
-              }}
-            />
-          ) : (
-            <FormControlLabel
-              label="Select"
-              control={
-                <Checkbox
-                  sx={{ marginRight: "8px" }}
-                  variant="outlined"
-                  color="neutral"
-                  checked={select}
-                  onChange={handleSelectChange}
-                />
-              }
-              sx={{
-                color: "rgb(216, 217, 217)",
-                marginLeft: "0px",
-                fontFamily: "Poppins",
-                "& .css-ahj2mt-MuiTypography-root": {
-                  fontSize: "1.2rem",
-                },
-              }}
-            />
-          )}
+          <ToastContainer position="bottom-right" style={{ color: "red" }} />
           <Box
+            component="img"
+            src="../../Images/arrow-left.png"
+            alt="Share"
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              cursor: "pointer",
+              width: { xs: "35px", md: "45px" },
+              margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
             }}
+            onClick={() => {
+              navigate(-1); // Navigate back by one step in the history stack
+            }}
+          />
+          <Box
+            sx={{ backgroundColor: "rgb(66, 92, 90)", display: "flex" }}
+            onClick={refreshPage}
           >
-            {select === true ? (
-              <>
-              <img src="edit-image.png" alt="edit Icon" style={{ padding: "2px", height: "23px" }} onClick={handleEditEvent}/>
-              {/* <img
+            <Typography
+              variant="h3"
+              sx={{
+                textAlign: "center",
+                color: "rgb(247, 230, 173)",
+                fontWeight: "600",
+                width: "100%",
+                // padding: "30px",
+                marginTop: { xs: "0px", md: "-30px" },
+                fontFamily: "Outfit",
+                textShadow: "0 6px rgba(81,67,21,0.8)",
+                fontSize: { xs: "30px", sm: "40px", md: "56px" },
+              }}
+            >
+              All Events
+            </Typography>
+          </Box>
+          {eventList?.length !== 0 && (
+            <Box
+              sx={{
+                margin: { xs: "20px", md: "2% 18%" },
+                padding: "0px 15px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              {select === true ? (
+                <FormControlLabel
+                  label="Select All"
+                  control={
+                    <Checkbox
+                      sx={{ marginRight: "8px" }}
+                      variant="outlined"
+                      color="neutral"
+                      checked={allselect}
+                      onChange={handleAllChange}
+                    />
+                  }
+                  sx={{
+                    color: "rgb(216, 217, 217)",
+                    marginLeft: "0px",
+                    fontFamily: "Poppins",
+                    "& .css-ahj2mt-MuiTypography-root": {
+                      fontSize: "1.2rem",
+                    },
+                  }}
+                />
+              ) : (
+                <FormControlLabel
+                  label="Select"
+                  control={
+                    <Checkbox
+                      sx={{ marginRight: "8px" }}
+                      variant="outlined"
+                      color="neutral"
+                      checked={select}
+                      onChange={handleSelectChange}
+                    />
+                  }
+                  sx={{
+                    color: "rgb(216, 217, 217)",
+                    marginLeft: "0px",
+                    fontFamily: "Poppins",
+                    "& .css-ahj2mt-MuiTypography-root": {
+                      fontSize: "1.2rem",
+                    },
+                  }}
+                />
+              )}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {select === true ? (
+                  <>
+                    <img
+                      src="edit-image.png"
+                      alt="edit Icon"
+                      style={{ padding: "2px", height: "23px" }}
+                      onClick={handleEditEvent}
+                    />
+                    {/* <img
                 src="deleteIcon.png"
                 alt="delete Icon"
                 style={{ padding: "2px", height: "30px" }}
                 onClick={handleDelete}
               /> */}
-              </>
-            ) : (
-              <Link to="/create-event"><img src="add-icon.png" alt="add-icon" /></Link>
-            )}
-          </Box>
-        </Box>
-      )}
-      {eventList?.slice(0, endpoint)?.map((item, index) => {
-        return (
-          <Box
-            key={index}
-            sx={{
-              backgroundColor: "rgb(66, 92, 90)",
-              margin: { xs: "20px", md: "2% 18%" },
-              border: "2px solid rgba(0, 0, 0, 0.16)",
-              borderRadius: "10px",
-              padding: "15px",
-              display: "flex",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Box
-                sx={{ display: "flex", alignItems: "start", height: "100%" }}
-              >
-                {select === true && (
-                  <Checkbox
-                    variant="outlined"
-                    color="neutral"
-                    checked={item.isSelected}
-                    onChange={() => handleCheckboxChange(item?.id)}
-                    inputProps={{ "aria-label": "controlled" }}
-                  />
+                  </>
+                ) : (
+                  <Link to="/create-event">
+                    <img src="add-icon.png" alt="add-icon" />
+                  </Link>
                 )}
               </Box>
-              <img
-                src="confetti-05.png"
-                alt="Confetti"
-                style={{ width: "90%" }}
-              />
             </Box>
-            <Box
-              sx={{
-                marginLeft: { xs: "0px", md: "7%" },
-                background:
-                  "linear-gradient(rgb(65, 93, 91), rgba(115, 135, 135, 0))",
-                display: "grid",
-                alignItems: "center",
-                padding: "15px",
-                width : "75%"
-              }}
-            >
-              <Typography
+          )}
+          {eventList?.slice(0, endpoint)?.map((item, index) => {
+            return (
+              <Box
+                key={index}
                 sx={{
-                  color: "rgb(254, 240, 180)",
-                  fontSize: "1.2rem",
-                  fontFamily: "Poppins",
+                  backgroundColor: "rgb(66, 92, 90)",
+                  margin: { xs: "20px", md: "2% 18%" },
+                  border: "2px solid rgba(0, 0, 0, 0.16)",
+                  borderRadius: "10px",
+                  padding: "15px",
+                  display: "flex",
+                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
                 }}
               >
-                {forrmattedDate(item?.created_at)}
-              </Typography>
-              <Typography
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "start",
+                      height: "100%",
+                    }}
+                  >
+                    {select === true && (
+                      <Checkbox
+                        variant="outlined"
+                        color="neutral"
+                        checked={item.isSelected}
+                        onChange={() => handleCheckboxChange(item?.id)}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    )}
+                  </Box>
+                  <img
+                    src="confetti-05.png"
+                    alt="Confetti"
+                    style={{ width: "90%" }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    marginLeft: { xs: "0px", md: "7%" },
+                    background:
+                      "linear-gradient(rgb(65, 93, 91), rgba(115, 135, 135, 0))",
+                    display: "grid",
+                    alignItems: "center",
+                    padding: "15px",
+                    width: "75%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "rgb(254, 240, 180)",
+                      fontSize: "1.2rem",
+                      fontFamily: "Poppins",
+                    }}
+                  >
+                    {forrmattedDate(item?.created_at)}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "rgb(216, 217, 217)",
+                      fontWeight: "600",
+                      fontSize: "1.2rem",
+                      fontFamily: "Poppins",
+                    }}
+                  >
+                    {item?.event_name}
+                  </Typography>
+                  <Typography
+                    sx={{ color: "rgb(216, 217, 217)", fontFamily: "Poppins" }}
+                  >
+                    {item?.event_description}
+                  </Typography>
+                </Box>
+              </Box>
+            );
+          })}
+          {eventList?.length === 0 && (
+            <Box>
+              <Box
                 sx={{
-                  color: "rgb(216, 217, 217)",
-                  fontWeight: "600",
-                  fontSize: "1.2rem",
-                  fontFamily: "Poppins",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "60vw",
+                  width: "100%",
                 }}
               >
-                {item?.event_name}
-              </Typography>
+                <Box
+                  sx={{
+                    backgroundColor: "rgba(217, 217, 217, 0.3)",
+                    borderRadius: "166px",
+                    padding: "55px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img src="event-management-1.png" />
+                </Box>
+              </Box>
               <Typography
-                sx={{ color: "rgb(216, 217, 217)", fontFamily: "Poppins" }}
+                variant="h4"
+                sx={{
+                  width: "100%",
+                  textAlign: "center",
+                  margin: "25px 0px",
+                  color: "rgba(255, 255, 255, 0.54)",
+                  fontFamily: "Outfit",
+                }}
               >
-                {item?.event_description}
+                No Events Added
               </Typography>
+              <Link to="/create-event">
+                <Typography
+                  textAlign="center"
+                  sx={{
+                    fontSize: "1.3rem",
+                    margin: "25px 0px",
+                    color: "rgb(216, 217, 217)",
+                    fontFamily: "Poppins",
+                    cursor: "pointer",
+                  }}
+                >
+                  Click here to create....
+                </Typography>
+              </Link>
             </Box>
-          </Box>
-        );
-      })}
-      {eventList?.length === 0 && (
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "60vw",
-              width : "100%"
-            }}
-          >
-            <Box
-              sx={{
-                backgroundColor: "rgba(217, 217, 217, 0.3)",
-                borderRadius: "166px",
-                padding: "55px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                
-              }}
-            >
-              <img src="event-management-1.png" />
-            </Box>
-          </Box>
-          <Typography
-            variant="h4"
-            sx={{
-              width: "100%",
-              textAlign: "center",
-              margin: "25px 0px",
-              color: "rgba(255, 255, 255, 0.54)",
-              fontFamily: "Outfit",
-            }}
-          >
-            No Events Added
-          </Typography>
-          <Link to="/create-event">
+          )}
+          {eventList?.length !== 0 && (
             <Typography
               textAlign="center"
               sx={{
-                fontSize: "1.3rem",
-                margin: "25px 0px",
-                color: "rgb(216, 217, 217)",
-                fontFamily: "Poppins",
-                cursor : "pointer"
+                color: "rgb(255, 255, 255) ",
+                cursor: "pointer",
+                fontFamily: "Roboto",
               }}
+              onClick={handleClick}
             >
-              Click here to create....
+              {eventListLength}
             </Typography>
-          </Link>
+          )}
         </Box>
       )}
-      {eventList?.length !== 0 && (
-        <Typography
-          textAlign="center"
-          sx={{
-            color: "rgb(255, 255, 255) ",
-            cursor: "pointer",
-            fontFamily: "Roboto",
-          }}
-          onClick={handleClick}
-        >
-          {eventListLength}
-        </Typography>
-      )}
-    </Box>)}
     </>
-  );}
-
+  );
+}

@@ -244,7 +244,7 @@ export default function UpdateShopPage() {
             textAlign: "center",
             padding: "20px 0px",
             fontWeight: "600",
-            marginTop: "-30px",
+            marginTop: { xs: "0px", md: "-30px" },
             textShadow: "0 6px rgba(81,67,21,0.8)",
             fontSize: { xs: "30px", sm: "40px", md: "56px" },
           }}
@@ -296,7 +296,7 @@ export default function UpdateShopPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -333,7 +333,7 @@ export default function UpdateShopPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -372,7 +372,7 @@ export default function UpdateShopPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -409,7 +409,7 @@ export default function UpdateShopPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -444,7 +444,7 @@ export default function UpdateShopPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -546,7 +546,7 @@ export default function UpdateShopPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -584,7 +584,7 @@ export default function UpdateShopPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -623,15 +623,14 @@ export default function UpdateShopPage() {
           Shop images
         </Typography>
         <Box
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
           sx={{
             margin: { xs: "0% 18%", md: "0% 13%" },
             // width:"50%",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            
           }}
         >
           <Box
@@ -681,7 +680,6 @@ export default function UpdateShopPage() {
                     textAlign: "center",
                     padding: "0px 20px",
                   }}
-                  
                 >
                   Drag upload/ browse your shop image
                 </Typography>

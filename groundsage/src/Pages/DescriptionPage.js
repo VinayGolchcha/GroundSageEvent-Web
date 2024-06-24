@@ -16,8 +16,8 @@ const DescriptionPage = () => {
   const [selectedShop, setSelectedShop] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
-  const { user  , activeEventId} = useContext(AuthContext);
-  const [isRental ,setIsRenatal] = useState(false);
+  const { user, activeEventId } = useContext(AuthContext);
+  const [isRental, setIsRenatal] = useState(false);
 
   const toggleFormVisibility = () => {
     setIsFormOpen(!isFormOpen);

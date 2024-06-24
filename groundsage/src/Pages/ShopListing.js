@@ -103,7 +103,7 @@ const ShopListing = () => {
   useEffect(() => {
     fetchShops();
     fetchLastShopNumber();
-  }, [fetchLastShopNumber,activeEventId]);
+  }, [fetchLastShopNumber, activeEventId]);
 
   const filteredShops = useMemo(
     () =>
@@ -238,7 +238,7 @@ const ShopListing = () => {
           background: "rgb(66, 92, 90)",
           paddingBottom: "30px",
           boxShadow: "0px 4px 6px rgba(255, 251, 251, 0.11)", // Adding outside shadow
-          minHeight:"100vh"
+          minHeight: "100vh",
         }}
       >
         <ConfirmDelete
@@ -269,7 +269,7 @@ const ShopListing = () => {
             fontSize: { xs: "30px", sm: "40px", md: "56px" },
             fontFamily: "Inter",
             fontWeight: "700",
-            marginTop: { xs: "-10px", md: "-40px" },
+            marginTop: { xs: "0px", md: "-30px" },
             textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           }}
         >

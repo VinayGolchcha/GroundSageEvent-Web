@@ -57,7 +57,7 @@ export default function CreateEventPage() {
       if (file) {
         // Check if file size is greater than 100KB (100 * 1024 bytes)
         if (file.size > 1 * 1024 * 1024) {
-          toast.error('File size should not exceed 1 MB' , {
+          toast.error("File size should not exceed 1 MB", {
             style: {
               // Change font color
               fontSize: "16px", // Change font size
@@ -105,7 +105,7 @@ export default function CreateEventPage() {
       // If navigate is intended after setting RCode
       navigate("/refferalcode"); // Adjust the path as needed
 
-      toast.success("Data Added Successfully");
+      toast.success("Data added successfully");
     } catch (err) {
       const errArray = err?.response?.data?.errors;
       errArray?.forEach((err) => {
@@ -134,7 +134,7 @@ export default function CreateEventPage() {
         parseInt(helperCountElement.current.value)
     ) {
       toast.warning(
-        "sum of the coordinator count , staff member count , helper count should be equals to team size",
+        "Sum of the coordinator count , staff member count , helper count should be equals to team size",
         {
           style: {
             // Change font color
@@ -167,18 +167,18 @@ export default function CreateEventPage() {
     <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
       <ToastContainer />
       <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
-          sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-          }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
-        />
+        component="img"
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        sx={{
+          cursor: "pointer",
+          width: { xs: "35px", md: "45px" },
+          margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
+        }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
       <Typography
         variant="h3"
         sx={{
@@ -187,7 +187,8 @@ export default function CreateEventPage() {
           padding: "20px 0px",
           fontWeight: "600",
           textShadow: "0 6px rgba(81,67,21,0.8)",
-          fontSize: { xs: "30px",sm:"40px", md: "56px" },
+          fontSize: { xs: "30px", sm: "40px", md: "56px" },
+          marginTop: { xs: "0px", md: "-30px" },
         }}
       >
         Events
@@ -201,7 +202,7 @@ export default function CreateEventPage() {
                 color: "rgb(155, 181, 199)",
                 margin: "20px 0px",
                 fontWeight: "600",
-                fontSize: { xs: "30px",sm:"40px", md: "56px" },
+                fontSize: { xs: "30px", sm: "40px", md: "56px" },
               }}
             >
               Create Event
@@ -212,7 +213,7 @@ export default function CreateEventPage() {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-underline::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -292,21 +293,21 @@ export default function CreateEventPage() {
                     },
                   }}
                   sx={{
-                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                    "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
                       borderRadius: "none",
                     },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                    "& .MuiOutlinedInput-input": {
                       color: "white",
                     },
-                    //   "& :hover": {
-                    //     borderBottom: " 1px solid rgb(188, 189, 163)",
-                    //   },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                    "& :hover": {
+                      borderBottom: " 1px solid rgb(188, 189, 163)",
+                    },
+                    "& .MuiInputBase-input-MuiOutlinedInput-input": {
                       color: "white",
                     },
 
-                    "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+                    "& .MuiInputBase-root-MuiOutlinedInput-root": {
                       borderRadius: "0px",
                       borderBottom: " 1px solid rgb(188, 189, 163)",
                     },
@@ -339,7 +340,6 @@ export default function CreateEventPage() {
                   labelId="to-date-label"
                   value={dayjs(toDate)}
                   onChange={(newValue) =>
-
                     setToDate(newValue.$d.toISOString().split("T")[0])
                   } // Handle onChange event if needed
                   open={openCalendar2}
@@ -364,11 +364,11 @@ export default function CreateEventPage() {
                     },
                   }}
                   sx={{
-                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                    "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
                       borderRadius: "none",
                     },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                    "& .MuiInputBase-input-MuiOutlinedInput-input": {
                       color: "white",
                     },
                     //   "& :hover": {
@@ -396,7 +396,7 @@ export default function CreateEventPage() {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-underline::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -442,7 +442,7 @@ export default function CreateEventPage() {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-underline::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -499,7 +499,7 @@ export default function CreateEventPage() {
                 color: "rgb(155, 181, 199)",
                 margin: "20px 0px",
                 fontWeight: "600",
-                fontSize: { xs: "30px",sm:"40px", md: "56px" },
+                fontSize: { xs: "30px", sm: "40px", md: "56px" },
               }}
             >
               Create Team
@@ -510,7 +510,7 @@ export default function CreateEventPage() {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-underline::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -551,7 +551,7 @@ export default function CreateEventPage() {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-underline::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -607,7 +607,7 @@ export default function CreateEventPage() {
                     color: "rgb(255, 255, 255)",
                     fontSize: { xs: "18px", md: "20px" },
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -620,8 +620,8 @@ export default function CreateEventPage() {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
                   "& .MuiInputBase-input": {
-                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
-                },
+                    fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                  },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
@@ -663,7 +663,7 @@ export default function CreateEventPage() {
                     color: "rgb(255, 255, 255)",
                     fontSize: { xs: "18px", md: "20px" },
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -676,8 +676,8 @@ export default function CreateEventPage() {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
                   "& .MuiInputBase-input": {
-                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
-                },
+                    fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                  },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
@@ -718,7 +718,7 @@ export default function CreateEventPage() {
                     color: "rgb(255, 255, 255)",
                     fontSize: { xs: "18px", md: "20px" },
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -731,8 +731,8 @@ export default function CreateEventPage() {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
                   "& .MuiInputBase-input": {
-                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
-                },
+                    fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                  },
                   width: "50%",
                   margin: "10px 0px ",
                 }}

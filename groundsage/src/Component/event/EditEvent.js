@@ -155,7 +155,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -317,7 +317,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -358,7 +358,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {

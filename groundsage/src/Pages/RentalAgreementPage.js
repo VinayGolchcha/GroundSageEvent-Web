@@ -410,7 +410,7 @@ export default function RentalAgreementPage() {
                           {
                             WebkitTextFillColor: "white",
                           },
-                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                        "& .MuiInput-underline::before":
                           {
                             borderBottom: "1px solid rgb(188, 189, 163)",
                           },
@@ -456,7 +456,7 @@ export default function RentalAgreementPage() {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                        "& .MuiInput-underline::before":
                           {
                             borderBottom: "1px solid rgb(188, 189, 163)",
                           },
@@ -509,7 +509,7 @@ export default function RentalAgreementPage() {
                           {
                             WebkitTextFillColor: "white",
                           },
-                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                        "& .MuiInput-underline::before":
                           {
                             borderBottom: "1px solid rgb(188, 189, 163)",
                           },
@@ -554,7 +554,7 @@ export default function RentalAgreementPage() {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                        "& .MuiInput-underline::before":
                           {
                             borderBottom: "1px solid rgb(188, 189, 163)",
                           },
@@ -608,7 +608,7 @@ export default function RentalAgreementPage() {
                             color: "rgb(255, 255, 255)",
                             fontSize: { xs: "18px", md: "20px" },
                           },
-                          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                          "& .MuiInput-underline::before":
                             {
                               borderBottom: "1px solid rgb(188, 189, 163)",
                             },
@@ -679,7 +679,7 @@ export default function RentalAgreementPage() {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before":
+                        "& .MuiInput-underline::before":
                           {
                             borderBottom: "1px solid rgb(188, 189, 163)",
                           },
@@ -721,7 +721,7 @@ export default function RentalAgreementPage() {
                   "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
                       color : "rgb(255, 255, 255)"
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before" : {
+                  "& .MuiInput-underline::before" : {
                       borderBottom : "1px solid rgb(188, 189, 163)"
                   } ,
                   '& label.Mui-focused': {

@@ -229,7 +229,7 @@ const Notes = () => {
   const handleEditOpenPopup = () => {
     const ele = eventList?.filter(item => item.isSelected === true);
     if(ele.length === 0) {
-      toast.warning("please select the note to edit ", {
+      toast.warning("Please select the note to edit ", {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -273,7 +273,7 @@ const Notes = () => {
       setEventList(eventList?.filter(item => item.isSelected !== true));
       const ids = ele?.map(item => item?._id);
       if(ids.length === 0){
-        toast.warning("please select the note to delete ", {
+        toast.warning("Please select the note to delete ", {
           style: {
             // Change font color
             fontSize: "16px", // Change font size

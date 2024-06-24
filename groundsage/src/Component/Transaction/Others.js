@@ -24,7 +24,7 @@ export default function Others() {
   const handleSave = () => {
     if(outstandingAmtEle.current.value > recievedAmtEle.current.value){
       console.log(true);
-      toast.warning("outstanding amount, should be less than the received amount" , {
+      toast.warning("Outstanding amount, should be less than the received amount" , {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -58,7 +58,7 @@ export default function Others() {
             color: "rgb(255, 255, 255)",
             fontSize: {  xs: "17px", md: "20px" }, 
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
@@ -100,7 +100,7 @@ export default function Others() {
             color: "rgb(255, 255, 255)",
             fontSize: { xs: "17px", md: "20px" },
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
@@ -142,7 +142,7 @@ export default function Others() {
             color: "rgb(255, 255, 255)",
             fontSize: { xs: "17px", md: "20px" },
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
@@ -184,7 +184,7 @@ export default function Others() {
             color: "rgb(255, 255, 255)",
             fontSize: { xs: "17px", md: "20px" },
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
@@ -225,7 +225,7 @@ export default function Others() {
             color: "rgb(255, 255, 255)",
             fontSize: { xs: "17px", md: "20px" },
           },
-          "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+          "& .MuiInput-underline::before": {
             borderBottom: "1px solid rgb(188, 189, 163)",
           },
           "& label.Mui-focused": {
