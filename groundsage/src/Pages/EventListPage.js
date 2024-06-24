@@ -196,8 +196,14 @@ export default function EventListPage() {
     setSelect(!select);
   };
   const refreshPage = () => {
-    window.location.reload(false);
-  };
+    setSelect(false);
+    const newEventList = eventList.map((item) => ({
+      ...item,
+      isSelected: false,
+    }));
+    setEventList(newEventList);
+    setAllselect(false);
+  }
   const forrmattedDate = (data) => {
     let date = new Date(data);
     const array = date.toString().split(" ");
