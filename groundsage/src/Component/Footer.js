@@ -70,6 +70,7 @@ const Footer = () => {
           paddingTop: "20px",
         }}
       >
+        
         <Box
           sx={{
             display: { xs: "flex" },
@@ -77,6 +78,7 @@ const Footer = () => {
             alignItems: "center",
           }}
         >
+          
           <Box>
             <img
               src="../../../Images/logo_1 1.png"

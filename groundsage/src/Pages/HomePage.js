@@ -157,7 +157,6 @@ export default function HomePage() {
           sx={{
             backgroundColor: "rgb(66, 92, 90)",
             paddingBottom: "30px",
-
           }}
         >
           <Typography

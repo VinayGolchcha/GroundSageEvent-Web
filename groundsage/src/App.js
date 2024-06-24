@@ -25,6 +25,7 @@ import OutStandingReport from "./Pages/ReportsComponents/OutStandingReport";
 import NetPaybleReport from "./Pages/ReportsComponents/NetPaybleReport";
 import HomePage from "./Pages/HomePage";
 import CreateEventPage from "./Pages/CreateEventPage";
+import Footer2 from "./Component/Footer2";
 import EnterMail from "./Component/EnterMail";
 import Footer from "./Component/Footer";
 import UpdateShopPage from "./Pages/UpdateShop";
@@ -95,9 +96,7 @@ const App = () => {
       typeof value === "string" ? value.split(",") : value
     );
   };
-  useEffect(() => {
-
-  } , [activeEventId]);
+  useEffect(() => {}, [activeEventId]);
   return (
     <div>
       <Navbar
@@ -210,8 +209,7 @@ const App = () => {
 
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
-
-
+      <Footer2 />
     </div>
   );
 };
