@@ -134,7 +134,7 @@ export default function CreateEventPage() {
         parseInt(helperCountElement.current.value)
     ) {
       toast.warning(
-        "sum of the coordinator count , staff member count , helper count should be equals to team size",
+        "Sum of the coordinator count , staff member count , helper count should be equal to team size",
         {
           style: {
             // Change font color
