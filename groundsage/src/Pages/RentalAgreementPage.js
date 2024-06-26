@@ -744,7 +744,7 @@ export default function RentalAgreementPage() {
                       }}
                       type="number"
                       id="standard-basic"
-                      label="Amount"
+                      label="Amount ₹"
                       variant="standard"
                       onChange={(e) => setAmount(e.target.value)}
                     />

@@ -299,7 +299,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           },
                         }}
                       >
-                        {item.decided_amount}
+                        {item.decided_amount} ₹
                       </Button>
                       <Typography
                         sx={{
@@ -310,7 +310,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           fontSize: { xs: "13px", md: "15px" },
                         }}
                       >
-                        Amount Due
+                        Amount Due ₹
                       </Typography>
                     </div>
                     <div style={{textAlign : "center" , alignContent : "center"}}>
@@ -328,7 +328,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           },
                         }}
                       >
-                        {item.outstanding_amount}
+                        {item.outstanding_amount} ₹
                       </Button>
                       <Typography
                         sx={{
@@ -339,7 +339,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           fontSize: { xs: "13px", md: "15px" },
                         }}
                       >
-                        Outstanding Amount
+                        Outstanding Amount ₹
                       </Typography>
                     </div>
                     <div style={{textAlign : "center", alignContent : "center"}}>
@@ -357,7 +357,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           },
                         }}
                       >
-                        {item.entered_amount}
+                        {item.entered_amount} ₹
                       </Button>
                       <Typography
                         sx={{
@@ -369,7 +369,7 @@ const IncomeList = ({data , deleteTransection }) => {
 
                         }}
                       >
-                        Recieved Amount
+                        Recieved Amount ₹
                       </Typography>
                     </div>
                   </div>

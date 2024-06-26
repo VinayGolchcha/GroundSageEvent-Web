@@ -27,7 +27,7 @@ export default function Others() {
   const handleSave = () => {
     if(recievedAmtEle.current.value >  amtDueEle.current.value){
       console.log(true);
-      toast.warning("received amount, should be less than the Due amount" , {
+      toast.warning("received amount, should be less than the Due amount ₹" , {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -143,7 +143,7 @@ export default function Others() {
           },
         }}
         id="standard-basic"
-        label="Amount due"
+        label="Amount due ₹"
         variant="standard"
       />
       <TextField
@@ -186,7 +186,7 @@ export default function Others() {
         inputRef={recievedAmtEle}
         onChange={handleChange}
         id="standard-basic"
-        label="Received amount"
+        label="Received amount ₹"
         variant="standard"
       />
       <TextField
@@ -230,7 +230,7 @@ export default function Others() {
         aria-readonly
         value={outAmt}
         id="standard-basic"
-        label="Outstanding amount (if any)"
+        label="Outstanding amount (if any) ₹"
         variant="standard"
       />
       <TextField

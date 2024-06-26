@@ -17,33 +17,39 @@ const TransactionList = () => {
 
   const [activeButton, setActiveButton] = useState("income");
   const [transactionData, setTransactionData] = useState([]);
-  const {user ,   activeEventId} = useContext(AuthContext);
-  const [isLoading , setIsLoading] = useState(true);
+  const { user, activeEventId } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   const deleteTransection = async (id) => {
-    try{
+    try {
       setIsLoading(true);
-      const res = await axios.delete(`${process.env.REACT_APP_API_URI}/transaction/delete-transaction/${id}/${activeEventId}` ,{ headers: {
-        'authorization': user?.token,
-        'Accept' : 'application/json',
-        "Content-Type": "application/json",
-        role_id : user?.role_id
-      }})
-      toast.error(res?.data?.message , {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API_URI}/transaction/delete-transaction/${id}/${activeEventId}`,
+        {
+          headers: {
+            authorization: user?.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            role_id: user?.role_id,
+          },
+        }
+      );
+      toast.error(res?.data?.message, {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
           fontFamily: "Inter", // Change font family
           fontWeight: "600", // Change font weight
           color: "rgb(66, 92, 90)",
-        }});
-        fecthTransections()
-        setIsLoading(false);
-    }catch(err){
+        },
+      });
+      fecthTransections();
       setIsLoading(false);
-      throw(err);
+    } catch (err) {
+      setIsLoading(false);
+      throw err;
     }
-  }
+  };
 
   console.log(user);
   const handleButtonClick = (button) => {
@@ -57,10 +63,10 @@ const TransactionList = () => {
       {
         method: "POST",
         headers: {
-          'authorization': user?.token,
-          'Accept' : 'application/json',
+          authorization: user?.token,
+          Accept: "application/json",
           "Content-Type": "application/json",
-          role_id : user?.role_id
+          role_id: user?.role_id,
         },
         body: JSON.stringify({
           event_id: activeEventId,
@@ -78,33 +84,30 @@ const TransactionList = () => {
         setIsLoading(false);
         console.error("Error fetching transaction data:", error);
       });
-  }
+  };
   useEffect(() => {
     // Fetch transaction data from the API
-    fecthTransections()
+    fecthTransections();
   }, [activeEventId]);
-  if(isLoading){
-    return(
-      <Loading/>
-    )
-  }else{
-
+  if (isLoading) {
+    return <Loading />;
+  } else {
     return (
       <div style={{ background: "rgb(66, 92, 90)", minHeight: "130vh" }}>
         <ToastContainer />
         <Box
-            component='img'
-            src="../../Images/arrow-left.png"
-            alt="Share"
-            sx={{
-              cursor: "pointer",
-              width: {xs:"35px",md:"45px"},
-              margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-            }}
-            onClick={() => {
-              navigate(-1); // Navigate back by one step in the history stack
-            }}
-          />
+          component="img"
+          src="../../Images/arrow-left.png"
+          alt="Share"
+          sx={{
+            cursor: "pointer",
+            width: { xs: "35px", md: "45px" },
+            margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
+          }}
+          onClick={() => {
+            navigate(-1); // Navigate back by one step in the history stack
+          }}
+        />
         <Typography
           sx={{
             color: "rgb(247, 230, 173)",
@@ -136,7 +139,9 @@ const TransactionList = () => {
               fontWeight: "400",
               fontFamily: "Aoboshi One",
               background:
-                activeButton === "income" ? "rgb(247, 230, 173)" : "transparent", // Apply yellow background to active DOM button
+                activeButton === "income"
+                  ? "rgb(247, 230, 173)"
+                  : "transparent", // Apply yellow background to active DOM button
               marginRight: "20px",
               color:
                 activeButton === "income"
@@ -169,14 +174,15 @@ const TransactionList = () => {
                 activeButton === "expenses"
                   ? "rgb(247, 230, 173)"
                   : "transparent",
-  
+
               color:
                 activeButton === "expenses"
                   ? "rgb(91, 94, 97)"
                   : "rgb(255, 255, 255)",
               padding: "10px 30px 10px 30px",
               "&:hover": {
-                color: activeButton === "expenses" ? "white" : "rgb(91, 94, 97)",
+                color:
+                  activeButton === "expenses" ? "white" : "rgb(91, 94, 97)",
                 background:
                   activeButton === "expenses"
                     ? "transparent"
@@ -187,12 +193,21 @@ const TransactionList = () => {
             EXPENSE
           </Button>
         </div>
-        {activeButton === "income" && <IncomeList data={transactionData?.filter((item)=> item?.tag === "income")} deleteTransection = {deleteTransection}/>}
-        {activeButton === "expenses" && <ExpensesList data={transactionData?.filter((item)=> item?.tag === "expense")} deleteTransection = {deleteTransection}/>}
+        {activeButton === "income" && transactionData.length > 0 && (
+          <IncomeList
+            data={transactionData?.filter((item) => item?.tag === "income")}
+            deleteTransaction={deleteTransection} // Corrected prop name
+          />
+        )}
+        {activeButton === "expenses" && transactionData.length > 0 && (
+          <ExpensesList
+            data={transactionData?.filter((item) => item?.tag === "expense")}
+            deleteTransaction={deleteTransection} // Corrected prop name
+          />
+        )}
       </div>
     );
   }
-
 };
 
 export default TransactionList;
