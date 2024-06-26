@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Grid, TextField } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Grid,
+  TextField,
+} from "@mui/material";
 
 const ShopEditPopup = ({ shopDetails, open, onClose }) => {
   const [editedShopDetails, setEditedShopDetails] = useState(shopDetails);
@@ -58,7 +66,7 @@ const ShopEditPopup = ({ shopDetails, open, onClose }) => {
               fullWidth
               id="rent"
               name="rent"
-              label="Rent"
+              label="Rent (In rupees)"
               value={editedShopDetails.rent}
               onChange={handleInputChange}
             />

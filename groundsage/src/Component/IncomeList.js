@@ -121,7 +121,7 @@ const IncomeList = ({data , deleteTransection }) => {
                 color: "rgb(216, 217, 217)",
                 marginLeft: "0px",
                 fontFamily: "Poppins",
-                "& .css-ahj2mt-MuiTypography-root": {
+                "& .MuiTypography-root": {
                   fontSize: "1.2rem",
                 },
               }}
@@ -142,7 +142,7 @@ const IncomeList = ({data , deleteTransection }) => {
                 color: "rgb(216, 217, 217)",
                 marginLeft: "0px",
                 fontFamily: "Poppins",
-                "& .css-ahj2mt-MuiTypography-root": {
+                "& .MuiTypography-root": {
                   fontSize: "1.2rem",
                 },
               }}

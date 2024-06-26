@@ -41,18 +41,21 @@ const Footer = () => {
       console.log("Feedback sent successfully:", response.data);
       toast.success("Feedback sent successfully");
       setFeedback("");
-      setEmail("");
     } catch (error) {
       if (error.response) {
         // Server responded with a status other than 200 range
         console.error("Error response from server:", error.response.data);
         toast.error("Something went wrong");
+        setFeedback("");
       } else if (error.request) {
         // No response was received from the server
         console.error("No response received from server:", error.request);
+        toast.error("Something went wrong");
+        setFeedback("");
       } else {
         // Something happened in setting up the request
         console.error("Error setting up request:", error.message);
+        toast.error("Something went wrong");
       }
     }
   };

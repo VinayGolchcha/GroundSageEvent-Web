@@ -209,11 +209,11 @@ export default function CreateEventPage() {
             </Typography>
             <TextField
               sx={{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                "& .MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -293,27 +293,22 @@ export default function CreateEventPage() {
                     },
                   }}
                   sx={{
-                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                    "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
                       borderRadius: "none",
                     },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                      color: "white",
-                    },
+                   
                     //   "& :hover": {
                     //     borderBottom: " 1px solid rgb(188, 189, 163)",
                     //   },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                    "& .MuiOutlinedInput-input": {
                       color: "white",
+                      paddingLeft: "1px",
                     },
 
-                    "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+                    "& .MuiOutlinedInput-root": {
                       borderRadius: "0px",
                       borderBottom: " 1px solid rgb(188, 189, 163)",
-                    },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                      paddingLeft: "1px",
-                      color: "white",
                     },
                   }}
                 />
@@ -365,25 +360,19 @@ export default function CreateEventPage() {
                     },
                   }}
                   sx={{
-                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                    "& .MuiOutlinedInput-notchedOutline": {
                       border: "none",
                       borderRadius: "none",
-                    },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                      color: "white",
                     },
                     //   "& :hover": {
                     //     borderBottom: " 1px solid rgb(188, 189, 163)",
                     //   },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                      color: "white",
-                    },
 
-                    "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
+                    "& .MuiOutlinedInput-root": {
                       borderRadius: "0px",
                       borderBottom: " 1px solid rgb(188, 189, 163)",
                     },
-                    "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                    "& .MuiOutlinedInput-input": {
                       paddingLeft: "1px",
                       color: "white",
                     },
@@ -393,11 +382,11 @@ export default function CreateEventPage() {
             </LocalizationProvider>
             <TextField
               sx={{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                "& .MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -439,11 +428,11 @@ export default function CreateEventPage() {
               variant="standard"
               value={file && file.map((item) => item.name)}
               sx={{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                "& .MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -507,11 +496,11 @@ export default function CreateEventPage() {
             </Typography>
             <TextField
               sx={{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                "& .MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -548,11 +537,11 @@ export default function CreateEventPage() {
             />
             <TextField
               sx={{
-                "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                "& .MuiInputLabel-root": {
                   color: "rgb(255, 255, 255)",
                   fontSize: { xs: "18px", md: "20px" },
                 },
-                "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                "& .MuiInput-root::before": {
                   borderBottom: "1px solid rgb(188, 189, 163)",
                 },
                 "& label.Mui-focused": {
@@ -604,11 +593,11 @@ export default function CreateEventPage() {
                 type="number"
                 sx={{
                   width: "50%",
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                     fontSize: { xs: "18px", md: "20px" },
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-root::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -660,11 +649,11 @@ export default function CreateEventPage() {
                 type="number"
                 sx={{
                   width: "50%",
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                     fontSize: { xs: "18px", md: "20px" },
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-root::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {
@@ -715,11 +704,11 @@ export default function CreateEventPage() {
               <TextField
                 type="number"
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                     fontSize: { xs: "18px", md: "20px" },
                   },
-                  "& .css-1eed5fa-MuiInputBase-root-MuiInput-root::before": {
+                  "& .MuiInput-root::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
                   },
                   "& label.Mui-focused": {

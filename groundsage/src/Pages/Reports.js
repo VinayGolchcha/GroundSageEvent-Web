@@ -326,7 +326,7 @@ const Reports = () => {
                 <BarChart data={data}>
                   <XAxis dataKey={xAxisDataKey} />
                   <YAxis
-                    tickFormatter={(value) => `${value}k`} // Custom tick formatter
+                    tickFormatter={(value) => `${value}`} // Custom tick formatter
                     label={{
                       value: "Amount (Rupees in thousands)",
                       angle: -90,

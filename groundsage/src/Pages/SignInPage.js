@@ -23,43 +23,45 @@ const SignInPage = () => {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const navigate = useNavigate();
 
-  const debouncedCheckEmailVerificationStatus = useCallback(
-    debounce(async (email) => {
-      if (!email) return;
+  const checkEmailVerificationStatus = useCallback(async (email) => {
+    if (!email) return;
 
-      try {
-        const response = await fetch(
-          "https://groundsageevent-be.onrender.com/api/v1/profile/check-email-verification",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email }),
-          }
-        );
-
-        const data = await response.json();
-
-        if (response.ok) {
-          const isEmailVerified = data.data?.is_email_verified === 1;
-          setIsEmailVerified(isEmailVerified);
-        } else {
-          toast.error(data.message || "Email verification failed.");
+    try {
+      const response = await fetch(
+        "https://groundsageevent-be.onrender.com/api/v1/profile/check-email-verification",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
         }
-      } catch (error) {
-        toast.error("An error occurred while checking email verification.");
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const isEmailVerified = data.data?.is_email_verified === 1;
+        setIsEmailVerified(isEmailVerified);
+      } else {
+        toast.error(data.message || "Email verification failed.");
       }
-    }, 2000), // 1000ms debounce delay
-    []
+    } catch (error) {
+      toast.error("An error occurred while checking email verification.");
+    }
+  }, []);
+
+  const debouncedCheckEmailVerificationStatus = useCallback(
+    debounce(checkEmailVerificationStatus, 2000),
+    [checkEmailVerificationStatus]
   );
 
-    useEffect(() => {
-    if (email && !isEmailVerified) {
+  useEffect(() => {
+    setIsEmailVerified(false);
+    if (email) {
       debouncedCheckEmailVerificationStatus(email);
     }
-  }, [email, isEmailVerified, debouncedCheckEmailVerificationStatus]);
-
+  }, [email, debouncedCheckEmailVerificationStatus]);
   const handleSubmit = async () => {
     debouncedCheckEmailVerificationStatus();
     try {
@@ -173,10 +175,17 @@ const SignInPage = () => {
                 <InputAdornment position="end">
                   <Button
                     variant="text"
-                    color={isEmailVerified ? "success" : "primary"}
+                    color={
+                      isEmailVerified && email.length > 0
+                        ? "success"
+                        : "primary"
+                    }
                     onClick={handleVerify}
                     sx={{
-                      color: isEmailVerified ? "green" : "#162D3A",
+                      color:
+                        isEmailVerified && email.length > 0
+                          ? "green"
+                          : "#162D3A",
                       fontWeight: 600,
                     }}
                   >
@@ -255,7 +264,9 @@ const SignInPage = () => {
               width: { xs: "100%", md: "60%" },
             }}
           />
-          <Box sx={{ display: "flex", justifyContent: "flex-end",width:"60%" }}>
+          <Box
+            sx={{ display: "flex", justifyContent: "flex-end", width: "60%" }}
+          >
             <Typography
               variant="body2"
               sx={{

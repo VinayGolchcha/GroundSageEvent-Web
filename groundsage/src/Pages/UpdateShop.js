@@ -32,7 +32,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function UpdateShopPage() {
-  const [shopStatus, setShopStatus] = useState("Vacant");
+
   const { setShopIds } = useContext(AuthContext);
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
@@ -40,6 +40,7 @@ export default function UpdateShopPage() {
   const location = useLocation();
   const [file, setFile] = useState([]);
   const selectedShop = location.state && location.state.selectedShop;
+  const [shopStatus, setShopStatus] = useState(selectedShop?.status);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -150,10 +151,10 @@ export default function UpdateShopPage() {
   };
 
   const handleStatus = () => {
-    if (shopStatus === "Vacant") {
-      setShopStatus("Occupied");
+    if (shopStatus === "vacant") {
+      setShopStatus("occupied");
     } else {
-      setShopStatus("Vacant");
+      setShopStatus("vacant");
     }
   };
   const handleRemoveFile = (index) => {
@@ -293,7 +294,7 @@ export default function UpdateShopPage() {
             <Grid item lg={6} md={6} sm={6} xs={12}>
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
@@ -330,7 +331,7 @@ export default function UpdateShopPage() {
               />
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
@@ -369,7 +370,7 @@ export default function UpdateShopPage() {
                 // multiline
                 // rows={3}
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
@@ -429,7 +430,7 @@ export default function UpdateShopPage() {
                       border: "2px solid white",
                       borderRadius: "84px",
                       margin: "0px 5px",
-                      ...(shopStatus === "Vacant" && {
+                      ...(shopStatus === "vacant" && {
                         backgroundColor: "rgb(255, 238, 179)",
                       }),
                     }}
@@ -438,7 +439,7 @@ export default function UpdateShopPage() {
                     sx={{
                       color: "rgba(174, 174, 174, 0.83)",
                       fontWeight: "400",
-                      ...(shopStatus === "Vacant" && {
+                      ...(shopStatus === "vacant" && {
                         color: "rgb(250, 236, 191)",
                         fontWeight: "600",
                       }),
@@ -457,7 +458,7 @@ export default function UpdateShopPage() {
                       border: "2px solid white",
                       borderRadius: "84px",
                       margin: "0px 5px",
-                      ...(shopStatus === "Occupied" && {
+                      ...(shopStatus === "occupied" && {
                         backgroundColor: "rgb(255, 238, 179)",
                       }),
                     }}
@@ -466,7 +467,7 @@ export default function UpdateShopPage() {
                     sx={{
                       color: "rgba(174, 174, 174, 0.83)",
                       fontWeight: "400",
-                      ...(shopStatus === "Occupied" && {
+                      ...(shopStatus === "occupied" && {
                         color: "rgb(250, 236, 191)",
                         fontWeight: "600",
                       }),
@@ -478,7 +479,7 @@ export default function UpdateShopPage() {
               </Box>
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
@@ -516,7 +517,7 @@ export default function UpdateShopPage() {
 
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {

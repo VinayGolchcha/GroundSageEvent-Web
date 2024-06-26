@@ -123,16 +123,18 @@ export default function RentalAgreementPage() {
       return;
     }
     const fsize = file.size;
-    const fileSizeInMB = fsize / 1024 / 1024; 
+    const fileSizeInMB = fsize / 1024 / 1024;
     if (fileSizeInMB >= 1) {
-      toast.warning("File too big, please select a file smaller than or equal to 1MB");
+      toast.warning(
+        "File too big, please select a file smaller than or equal to 1MB"
+      );
       return;
     } else {
       setFIle(file);
     }
     console.log(file);
   };
-  
+
   const addRental = async (body) => {
     setLoading(true);
     const formData = new FormData();
@@ -316,25 +318,25 @@ export default function RentalAgreementPage() {
     setName("");
     setPhoneNo("");
   };
-  if(loading){
-    return(
-      <Loading/>
-    )
-  } 
-  else{
-
+  if (loading) {
+    return <Loading />;
+  } else {
     return (
       <>
         <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
-        <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleDelete}/>
-        <Box
-            component='img'
+          <ConfirmDelete
+            open={open}
+            handleClose={handleClose}
+            handleIncomeDelete={handleDelete}
+          />
+          <Box
+            component="img"
             src="../../Images/arrow-left.png"
             alt="Share"
             sx={{
               cursor: "pointer",
-              width: {xs:"35px",md:"45px"},
-              margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
+              width: { xs: "35px", md: "45px" },
+              margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
             }}
             onClick={() => {
               navigate(-1); // Navigate back by one step in the history stack
@@ -348,12 +350,12 @@ export default function RentalAgreementPage() {
               padding: "20px 0px",
               fontWeight: "600",
               textShadow: "0 6px rgba(81,67,21,0.8)",
-              fontSize : {
-                lg : "3rem",
-                md : "2.8rem",
-                sm : "2rem" ,
-                xs : "1.9rem"
-              }
+              fontSize: {
+                lg: "3rem",
+                md: "2.8rem",
+                sm: "2rem",
+                xs: "1.9rem",
+              },
             }}
           >
             Rental Agreement
@@ -362,7 +364,10 @@ export default function RentalAgreementPage() {
             <div> </div>
           ) : (
             <>
-              <ToastContainer position="bottom-right" style={{ color: "red" }} />
+              <ToastContainer
+                position="bottom-right"
+                style={{ color: "red" }}
+              />
               <Box
                 sx={{
                   display: "flex",
@@ -379,8 +384,8 @@ export default function RentalAgreementPage() {
                     borderRadius: "10px",
                     position: "relative",
                     width: "70%",
-                    maxHeight : "380px",
-                    objectFit : "fill"
+                    maxHeight: "380px",
+                    objectFit: "fill",
                   }}
                 />
                 <Typography
@@ -398,33 +403,41 @@ export default function RentalAgreementPage() {
                   <Grid item lg={6} md={6} sm={6} xs={12}>
                     <Typography
                       variant="h4"
-                      sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" , fontSize : { lg : "2.2 rem" , md :"2.1rem" , sm : "1.9rem" , xs : "1.8rem"}}}
+                      sx={{
+                        color: "rgb(155, 181, 199)",
+                        margin: "20px 0px",
+                        fontSize: {
+                          lg: "2.2 rem",
+                          md: "2.1rem",
+                          sm: "1.9rem",
+                          xs: "1.8rem",
+                        },
+                      }}
                     >
                       Tenant Information
                     </Typography>
                     <TextField
                       sx={{
-                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                        "& .MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                          {
-                            WebkitTextFillColor: "white",
-                          },
-                        "& .MuiInput-underline::before":
-                          {
-                            borderBottom: "1px solid rgb(188, 189, 163)",
-                          },
+                        "& .MuiInput-input.Mui-disabled": {
+                          WebkitTextFillColor: "white",
+                        },
+                        "& .MuiInput-underline::before": {
+                          borderBottom: "1px solid rgb(188, 189, 163)",
+                        },
                         "& label.Mui-focused": {
                           color: "rgb(255, 255, 255)", // Color of the label when focused
                         },
                         "& .MuiInput-underline:after": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
                         },
-                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                          {
+                            borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                          },
                         "& .MuiInputBase-input": {
                           fontSize: { xs: "18px", md: "20px" }, // Set input font size here
                         },
@@ -454,27 +467,26 @@ export default function RentalAgreementPage() {
                     />
                     <TextField
                       sx={{
-                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                        "& .MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .MuiInput-underline::before":
-                          {
-                            borderBottom: "1px solid rgb(188, 189, 163)",
-                          },
-                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                          {
-                            WebkitTextFillColor: "white",
-                          },
+                        "& .MuiInput-underline::before": {
+                          borderBottom: "1px solid rgb(188, 189, 163)",
+                        },
+                        "& .MuiInput-input.Mui-disabled": {
+                          WebkitTextFillColor: "white",
+                        },
                         "& label.Mui-focused": {
                           color: "rgb(255, 255, 255)", // Color of the label when focused
                         },
                         "& .MuiInput-underline:after": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
                         },
-                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                          {
+                            borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                          },
                         "& .MuiInputBase-input": {
                           fontSize: { xs: "18px", md: "20px" }, // Set input font size here
                         },
@@ -503,27 +515,26 @@ export default function RentalAgreementPage() {
                     />
                     <TextField
                       sx={{
-                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                        "& .MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                          {
-                            WebkitTextFillColor: "white",
-                          },
-                        "& .MuiInput-underline::before":
-                          {
-                            borderBottom: "1px solid rgb(188, 189, 163)",
-                          },
+                        "& .MuiInput-input.Mui-disabled": {
+                          WebkitTextFillColor: "white",
+                        },
+                        "& .MuiInput-underline::before": {
+                          borderBottom: "1px solid rgb(188, 189, 163)",
+                        },
                         "& label.Mui-focused": {
                           color: "rgb(255, 255, 255)", // Color of the label when focused
                         },
                         "& .MuiInput-underline:after": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
                         },
-                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                          {
+                            borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                          },
                         "& .MuiInputBase-input": {
                           fontSize: { xs: "18px", md: "20px" }, // Set input font size here
                         },
@@ -552,27 +563,26 @@ export default function RentalAgreementPage() {
                     />
                     <TextField
                       sx={{
-                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                        "& .MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .MuiInput-underline::before":
-                          {
-                            borderBottom: "1px solid rgb(188, 189, 163)",
-                          },
-                        "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                          {
-                            WebkitTextFillColor: "white",
-                          },
+                        "& .MuiInput-underline::before": {
+                          borderBottom: "1px solid rgb(188, 189, 163)",
+                        },
+                        "& .MuiInput-input.Mui-disabled": {
+                          WebkitTextFillColor: "white",
+                        },
                         "& label.Mui-focused": {
                           color: "rgb(255, 255, 255)", // Color of the label when focused
                         },
                         "& .MuiInput-underline:after": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
                         },
-                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                          {
+                            borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                          },
                         "& .MuiInputBase-input": {
                           fontSize: { xs: "18px", md: "20px" }, // Set input font size here
                         },
@@ -598,7 +608,7 @@ export default function RentalAgreementPage() {
                       variant="standard"
                       onChange={(e) => setAddress(e.target.value)}
                     />
-  
+
                     {!isEdit && (
                       <TextField
                         id="upload-text"
@@ -606,18 +616,16 @@ export default function RentalAgreementPage() {
                         variant="standard"
                         value={file && file.name}
                         sx={{
-                          "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                          "& .MuiInputLabel-root": {
                             color: "rgb(255, 255, 255)",
                             fontSize: { xs: "18px", md: "20px" },
                           },
-                          "& .MuiInput-underline::before":
-                            {
-                              borderBottom: "1px solid rgb(188, 189, 163)",
-                            },
-                          "& .css-1x51dt5-MuiInputBase-input-MuiInput-input.Mui-disabled":
-                            {
-                              WebkitTextFillColor: "white",
-                            },
+                          "& .MuiInput-underline::before": {
+                            borderBottom: "1px solid rgb(188, 189, 163)",
+                          },
+                          "& .MuiInput-input.Mui-disabled": {
+                            WebkitTextFillColor: "white",
+                          },
                           "& label.Mui-focused": {
                             color: "rgb(255, 255, 255)", // Color of the label when focused
                           },
@@ -628,9 +636,9 @@ export default function RentalAgreementPage() {
                             {
                               borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                             },
-                            "& .MuiInputBase-input": {
-                          fontSize: { xs: "18px", md: "20px" }, // Set input font size here
-                        },
+                          "& .MuiInputBase-input": {
+                            fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                          },
                           width: "100%",
                           margin: "10px 0px ",
                         }}
@@ -658,42 +666,49 @@ export default function RentalAgreementPage() {
                           ),
                         }}
                         InputLabelProps={{
-                          style : {
-                            color : "white",
+                          style: {
+                            color: "white",
                             fontSize: { xs: "18px", md: "20px" },
-                          }
-                        }
-  
-                        } 
+                          },
+                        }}
                       />
                     )}
                   </Grid>
                   <Grid item lg={6} md={6} sm={6} xs={12}>
                     <Typography
                       variant="h4"
-                      sx={{ color: "rgb(155, 181, 199)", margin: "20px 0px" ,  fontSize : { lg : "2.2 rem" , md :"2.1rem" , sm : "1.9rem" , xs : "1.8rem"}}}
+                      sx={{
+                        color: "rgb(155, 181, 199)",
+                        margin: "20px 0px",
+                        fontSize: {
+                          lg: "2.2 rem",
+                          md: "2.1rem",
+                          sm: "1.9rem",
+                          xs: "1.8rem",
+                        },
+                      }}
                     >
                       Rent Information
                     </Typography>
                     <TextField
                       sx={{
-                        "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                        "& .MuiInputLabel-root": {
                           color: "rgb(255, 255, 255)",
                           fontSize: { xs: "18px", md: "20px" },
                         },
-                        "& .MuiInput-underline::before":
-                          {
-                            borderBottom: "1px solid rgb(188, 189, 163)",
-                          },
+                        "& .MuiInput-underline::before": {
+                          borderBottom: "1px solid rgb(188, 189, 163)",
+                        },
                         "& label.Mui-focused": {
                           color: "rgb(255, 255, 255)", // Color of the label when focused
                         },
                         "& .MuiInput-underline:after": {
                           borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border when focused
                         },
-                        "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                          borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
-                        },
+                        "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                          {
+                            borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
+                          },
                         "& .MuiInputBase-input": {
                           fontSize: { xs: "18px", md: "20px" }, // Set input font size here
                         },
@@ -720,7 +735,7 @@ export default function RentalAgreementPage() {
                       onChange={(e) => setAmount(e.target.value)}
                     />
                     {/* <TextField sx = {{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                       color : "rgb(255, 255, 255)"
                   },
                   "& .MuiInput-underline::before" : {
@@ -744,8 +759,10 @@ export default function RentalAgreementPage() {
                     >
                       <InputLabel
                         id="demo-simple-select-standard-label"
-                        style={{ color: "white" ,  fontSize: { xs: "17px", md: "20px" } }}
-                        
+                        style={{
+                          color: "white",
+                          fontSize: { xs: "17px", md: "20px" },
+                        }}
                       >
                         Rent mode
                       </InputLabel>
@@ -759,17 +776,16 @@ export default function RentalAgreementPage() {
                         sx={{
                           width: "100%",
                           borderBottom: "1px solid rgb(188, 189, 163)",
-                          
-                            fontSize: { xs: "17px", md: "20px" }, // Set select input font size here
-                          
+
+                          fontSize: { xs: "17px", md: "20px" }, // Set select input font size here
+
                           "& .MuiSelect-icon": {
                             color: "rgb(188, 189, 163)",
-                            "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root":
-                              {
-                                color: "white",
-                              },
+                            "& .MuiInputLabel-root": {
+                              color: "white",
+                            },
                           },
-                          
+
                           color: "white",
                         }}
                       >
@@ -781,17 +797,26 @@ export default function RentalAgreementPage() {
                         <MenuItem value={"month"}>month</MenuItem>
                       </Select>
                     </FormControl>
-                    <div><Typography sx ={{
+                    <div>
+                      <Typography
+                        sx={{
                           fontSize: "11px",
                           position: "absolute",
                           paddingTop: "6px",
-                          color : "white"
-                    }
-                    }>From Date</Typography></div>
+                          color: "white",
+                        }}
+                      >
+                        From Date
+                      </Typography>
+                    </div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <FormControl
                         variant="standard"
-                        sx={{ minWidth: 110, width: "100%", margin: "4px 0px " }}
+                        sx={{
+                          minWidth: 110,
+                          width: "100%",
+                          margin: "4px 0px ",
+                        }}
                       >
                         {/* <InputLabel id="from-date-label">From date</InputLabel> */}
                         <DatePicker
@@ -814,33 +839,34 @@ export default function RentalAgreementPage() {
                                   />
                                 ),
                               },
-                              InputLabelProps : {
-                                style : {
-                                  fontSize : {md : "20px" , xs : "18px"}
-                                }
-                              }
+                              InputLabelProps: {
+                                style: {
+                                  fontSize: { md: "20px", xs: "18px" },
+                                },
+                              },
                             },
                           }}
                           sx={{
-                            "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                            "& .MuiOutlinedInput-notchedOutline": {
                               border: "none",
                               borderRadius: "none",
                             },
-                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            "& .MuiOutlinedInput-input": {
                               color: "white",
                             },
                             //   "& :hover": {
                             //     borderBottom: " 1px solid rgb(188, 189, 163)",
                             //   },
-                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            "& .MuiOutlinedInput-input": {
                               color: "white",
                             },
-        
-                            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
-                              borderRadius: "0px",
-                              borderBottom: " 1px solid rgb(188, 189, 163)",
-                            },
-                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+
+                            "& .MuiOutlinedInput-root":
+                              {
+                                borderRadius: "0px",
+                                borderBottom: " 1px solid rgb(188, 189, 163)",
+                              },
+                            "& .MuiOutlinedInput-input": {
                               paddingLeft: "1px",
                               color: "white",
                             },
@@ -848,17 +874,26 @@ export default function RentalAgreementPage() {
                         />
                       </FormControl>
                     </LocalizationProvider>
-                    <div><Typography sx ={{
+                    <div>
+                      <Typography
+                        sx={{
                           fontSize: "11px",
                           position: "absolute",
                           paddingTop: "6px",
-                          color : "white"
-                    }
-                    }>To Date</Typography></div>
+                          color: "white",
+                        }}
+                      >
+                        To Date
+                      </Typography>
+                    </div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <FormControl
                         variant="standard"
-                        sx={{ minWidth: 110, width: "100%", margin: "4px 0px " }}
+                        sx={{
+                          minWidth: 110,
+                          width: "100%",
+                          margin: "4px 0px ",
+                        }}
                       >
                         {/* <InputLabel id="from-date-label">From date</InputLabel> */}
                         <DatePicker
@@ -880,33 +915,34 @@ export default function RentalAgreementPage() {
                                 />
                                 ),
                               },
-                              InputLabelProps : {
-                                style : {
-                                  fontSize : {md : "20px" , xs : "18px"}
-                                }
-                              }
+                              InputLabelProps: {
+                                style: {
+                                  fontSize: { md: "20px", xs: "18px" },
+                                },
+                              },
                             },
                           }}
                           sx={{
-                            "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                            "& .MuiOutlinedInput-notchedOutline": {
                               border: "none",
                               borderRadius: "none",
                             },
-                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            "& .MuiOutlinedInput-input": {
                               color: "white",
                             },
                             //   "& :hover": {
                             //     borderBottom: " 1px solid rgb(188, 189, 163)",
                             //   },
-                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                            "& .MuiOutlinedInput-input": {
                               color: "white",
                             },
-        
-                            "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root": {
-                              borderRadius: "0px",
-                              borderBottom: " 1px solid rgb(188, 189, 163)",
-                            },
-                            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+
+                            "& .MuiOutlinedInput-root":
+                              {
+                                borderRadius: "0px",
+                                borderBottom: " 1px solid rgb(188, 189, 163)",
+                              },
+                            "& .MuiOutlinedInput-input": {
                               paddingLeft: "1px",
                               color: "white",
                             },
@@ -931,9 +967,9 @@ export default function RentalAgreementPage() {
                           color: "rgb(91, 94, 97)",
                           minWidth: "200px",
                           fontWeight: "600",
-                          "&:hover" : {
+                          "&:hover": {
                             backgroundColor: "rgb(247, 230, 173) ",
-                          }
+                          },
                         }}
                         onClick={handleSave}
                       >
@@ -953,7 +989,8 @@ export default function RentalAgreementPage() {
                             "&:hover": {
                               backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
                               color: "rgb(50, 50, 50)", // Change text color on hover
-                              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+                              boxShadow:
+                                "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
                             },
                           }}
                           onClick={handleEdit}
@@ -971,7 +1008,8 @@ export default function RentalAgreementPage() {
                             "&:hover": {
                               backgroundColor: "rgb(247, 230, 173)", // Change background color on hover
                               color: "rgb(50, 50, 50)", // Change text color on hover
-                              boxShadow: "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
+                              boxShadow:
+                                "0px 10px 35px 0px rgba(111, 126, 201, 0.5)", // Change box shadow on hover
                             },
                           }}
                           onClick={handleOpen}

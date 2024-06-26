@@ -327,7 +327,7 @@ export default function CreateShopPage() {
             <Grid item lg={6} md={6} sm={6} xs={12}>
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline:before": {
@@ -364,7 +364,7 @@ export default function CreateShopPage() {
               />
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
@@ -401,7 +401,7 @@ export default function CreateShopPage() {
               />
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
@@ -416,7 +416,7 @@ export default function CreateShopPage() {
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
-                  ".css-uhyr2s-MuiInputBase-root-MuiInput-root::before" : {
+                  ".MuiInput-root::before" : {
                     borderBottomColor: "rgb(188, 189, 163)",
                   },
                   width: "100%",
@@ -510,7 +510,7 @@ export default function CreateShopPage() {
               </Box>
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
@@ -548,7 +548,7 @@ export default function CreateShopPage() {
 
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
                   },
                   "& .MuiInput-underline::before": {
