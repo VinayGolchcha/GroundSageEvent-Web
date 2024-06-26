@@ -168,7 +168,7 @@ const DescriptionPage = () => {
               { label: "Shop Dome: ", value: selectedShop.dome },
               { label: "Shop Description: ", value: selectedShop.description },
               { label: "Shop Area: ", value: `${selectedShop.area} sq ft.` },
-              { label: "Rent: ", value: `${selectedShop.rent} rupees` },
+              { label: "Rent: ", value: `${selectedShop.rent} ₹` },
               { label: "Shop Location: ", value: selectedShop.location },
             ].map((row, index) => (
               <Box
