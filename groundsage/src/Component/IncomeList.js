@@ -96,7 +96,7 @@ const IncomeList = ({data , deleteTransection }) => {
       <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleIncomeDelete}/>
       {" "}
       <div style={{width : "100%"}}  onClick = {refreshPage}></div>
-      {Income?.length !== 0 && (
+      {Income?.length !== 0 ? (
         <Box
           sx={{
             margin: { xs: "20px", md: "2% 18%" },
@@ -178,6 +178,23 @@ const IncomeList = ({data , deleteTransection }) => {
             )}
           </Box>
         </Box>
+      ) : (
+        <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+          <img
+                  src="add-icon.png"
+                  alt="add-icon"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    navigate("/create-transaction");
+                  }}
+              />
+            </Box>
       )}
       {Income?.slice(0, showAll ? Income?.length : maxItems).map(
         (item, index) => {

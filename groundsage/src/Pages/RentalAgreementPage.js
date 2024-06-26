@@ -48,6 +48,8 @@ export default function RentalAgreementPage() {
   const [rentalObj, setRentalObj] = useState(null);
   const [shop, setShop] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [shopNumber , setShopNumber] = useState(null)
+  const [shopData , setShopData] = useState([]); 
   const navigate = useNavigate();
   console.log(shopId, typeof shopId);
   const fetchShopById = async () => {
@@ -68,6 +70,8 @@ export default function RentalAgreementPage() {
       );
       if (res?.data?.data?.length > 0) {
         setShop(res?.data?.data[1][0].image_url);
+        setShopData(res?.data?.data)
+        setShopNumber(res?.data?.data[0].shop_number);
       }
     } catch (err) {
       throw err;
@@ -164,7 +168,12 @@ export default function RentalAgreementPage() {
           color: "rgb(66, 92, 90)",
         },
       });
-      navigate(`/description/${shopId}`);
+      navigate(`/description/${shopNumber}`, {
+        state: {
+          selectedShop: shopData,
+          imageUrls: shop,
+        },
+      });
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -215,7 +224,7 @@ export default function RentalAgreementPage() {
           },
         });
         fetchRentalAgree();
-        navigate(`/description/${shopId}`);
+        navigate(-1);
       } catch (err) {
         setLoading(false);
         toast.success(err?.response?.data?.message, {
@@ -266,7 +275,12 @@ export default function RentalAgreementPage() {
           color: "rgb(66, 92, 90)",
         },
       });
-      navigate(`/description/${shopId}`);
+      navigate(`/description/${shopNumber}`, {
+        state: {
+          selectedShop: shopData[0],
+          imageUrls: shop,
+        },
+      });
     } catch (err) {
       setLoading(false);
       console.log(err);

@@ -18,7 +18,10 @@ const DescriptionPage = () => {
   const [loading, setLoading] = useState(true); // Add loading state
   const { user, activeEventId } = useContext(AuthContext);
   const [isRental, setIsRenatal] = useState(false);
-
+  const [shopNumber,setShopNumber] = useState(shopIndex);
+  useEffect(() => {
+    console.log(shopDetails);
+  },[])
   const toggleFormVisibility = () => {
     setIsFormOpen(!isFormOpen);
   };
@@ -89,7 +92,7 @@ const DescriptionPage = () => {
   useEffect(() => {
     fetchShopData();
     fetchRentalAgree(); // Fetch shop data when component mounts
-  }, []);
+  }, [shopNumber]);
 
   if (loading) {
     // Show a loading indicator while the data is being fetched
