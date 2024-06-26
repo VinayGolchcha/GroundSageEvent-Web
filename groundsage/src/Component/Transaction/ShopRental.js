@@ -29,7 +29,7 @@ export default function ShopRental(){
   const handleSave = () => {
     if(recievedAmtEle.current.value >  amtDueEle.current.value){
       console.log(true);
-      toast.warning("received amount, should be less than the Due amount", {
+      toast.warning("received amount, should be less than the Due amount ₹", {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -190,7 +190,7 @@ export default function ShopRental(){
               inputRef={amtDueEle}
               onChange={(e) => setAmtDue(e.target.value)}
               id="standard-basic"
-              label="Amount due"
+              label="Amount due ₹"
               variant="standard"
             />
             <TextField
@@ -232,7 +232,7 @@ export default function ShopRental(){
                 fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
-              label="Received amount"
+              label="Received amount ₹"
               variant="standard"
             />
             <TextField
@@ -274,7 +274,7 @@ export default function ShopRental(){
               },}}
               value={outAmt}
               id="standard-basic"
-              label="Outstanding amount (if any)"
+              label="Outstanding amount (if any) ₹"
               variant="standard"
             />
             <TextField

@@ -270,7 +270,7 @@ const ExpensesList = ({data , deleteTransection}) => {
                           },
                         }}
                       >
-                        {item.entered_amount}
+                        {item.entered_amount} ₹
                       </Button>
                       <Typography
                         sx={{
@@ -282,7 +282,7 @@ const ExpensesList = ({data , deleteTransection}) => {
 
                         }}
                       >
-                        Entered Amount
+                        Entered Amount ₹
                       </Typography>
                     </div>
                     <div style={{textAlign : "center"}}>
@@ -299,7 +299,7 @@ const ExpensesList = ({data , deleteTransection}) => {
                           },
                         }}
                       >
-                        {item.outstanding_amount}
+                        {item.outstanding_amount} ₹
                       </Button>
                       <Typography
                         sx={{

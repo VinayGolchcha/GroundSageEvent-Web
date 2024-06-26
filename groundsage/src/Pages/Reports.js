@@ -328,7 +328,7 @@ const Reports = () => {
                   <YAxis
                     tickFormatter={(value) => `${value}`} // Custom tick formatter
                     label={{
-                      value: "Amount (Rupees in thousands)",
+                      value: "Amount (Rupees in thousands) ₹",
                       angle: -90,
                       position: "insideLeft",
                       dy: -10,

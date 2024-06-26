@@ -159,7 +159,7 @@ export default function ExpenseOthers() {
           },
         }}
         id="standard-basic"
-        label="Balance payable amount"
+        label="Balance payable amount ₹"
         variant="standard"
       />
       <TextField
