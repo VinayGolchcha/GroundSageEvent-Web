@@ -5,6 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { useNavigate } from "react-router-dom";
 import ConfirmDelete from "./ConfirmDelete";
+import { toast } from "react-toastify";
 
 const ExpensesList = ({data , deleteTransection}) => {
   const [open, setOpen] = React.useState(false);
@@ -63,6 +64,23 @@ const ExpensesList = ({data , deleteTransection}) => {
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+
+  const handleDeleteOpen = () => {
+    const ele = expenses?.filter((item) => item?.isSelected === true);
+    if(ele?.length === 0){
+      toast.warning("Please select the transaction to delete" , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+      return;
+    }
+    handleOpen();
+  }
 
   return (
     <Box>
@@ -136,7 +154,7 @@ const ExpensesList = ({data , deleteTransection}) => {
                   height: "30px",
                   cursor: "pointer",
                 }}
-                onClick={handleOpen}
+                onClick={handleDeleteOpen}
               />
             ) : (
               <img

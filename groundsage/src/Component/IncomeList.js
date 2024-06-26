@@ -5,6 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import AddNotes from "../Component/NotesPopUp";
 import { Navigate, useNavigate } from "react-router-dom";
 import ConfirmDelete from "./ConfirmDelete";
+import { toast } from "react-toastify";
 
 const IncomeList = ({data , deleteTransection }) => {
   const [open, setOpen] = React.useState(false);
@@ -54,6 +55,22 @@ const IncomeList = ({data , deleteTransection }) => {
     }
     setIncome(newArray);
   };
+  const handleDeleteOpen = () => {
+    const ele = Income?.filter((item) => item?.isSelected === true);
+    if(ele?.length === 0){
+      toast.warning("Please select the transaction to delete" , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+      return;
+    }
+    handleOpen();
+  }
 
   // Functions for handling expense list
   const handleSelectChange = () => {
@@ -62,10 +79,23 @@ const IncomeList = ({data , deleteTransection }) => {
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+
+  const refreshPage = () => {
+    setSelect(false);
+    const newIncomeList = Income.map((item) => ({
+      ...item,
+      isSelected: false,
+    }));
+    setIncome(newIncomeList);
+    setAllselect(false);
+    setAllIncomeSelected(false);
+    setIncomeSelect(false);
+  }
   return (
     <Box>
       <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleIncomeDelete}/>
       {" "}
+      <div style={{width : "100%"}}  onClick = {refreshPage}></div>
       {Income?.length !== 0 && (
         <Box
           sx={{
@@ -134,7 +164,7 @@ const IncomeList = ({data , deleteTransection }) => {
                   height: "30px",
                   cursor: "pointer",
                 }}
-                onClick={handleOpen}
+                onClick={handleDeleteOpen}
               />
             ) : (
               <img
@@ -215,7 +245,7 @@ const IncomeList = ({data , deleteTransection }) => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Type: {item.type}
+                      Type: {item?.type}
                     </Typography>
                     <Typography
                       sx={{
@@ -224,7 +254,9 @@ const IncomeList = ({data , deleteTransection }) => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Item: {(item?.type === "shop rental") && "Shop Number"} {item.item}
+                    Item: {(item?.type === "shop rental" || item?.type === "Shop Rental") ? `Shop Number ${item.item}` : item.item}
+
+
                     </Typography>
                   </div>
                   <div

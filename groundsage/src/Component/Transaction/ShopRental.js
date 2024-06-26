@@ -15,6 +15,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function ShopRental(){
+  const [amtDue , setAmtDue] = useState(0);
+  const [recAmt , setRecAmt] = useState(0);
+  const [outAmt , setOutAmt] = useState(0);
   const addItemEle = useRef(null);
   const amtDueEle = useRef(null);
   const recievedAmtEle = useRef(null);
@@ -24,9 +27,9 @@ export default function ShopRental(){
   const {addTransection , activeEventId , user , isSucessTransection} = useContext(AuthContext);
   const [shopNo , setShopNo] = useState([]);
   const handleSave = () => {
-    if(outstandingAmtEle.current.value > recievedAmtEle.current.value){
+    if(recievedAmtEle.current.value >  amtDueEle.current.value){
       console.log(true);
-      toast.warning("Outstanding amount, should be less than the received amount", {
+      toast.warning("received amount, should be less than the Due amount", {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -41,15 +44,16 @@ export default function ShopRental(){
         item : addItemEle.current.value?.toString(),             //shop no in string
         decided_amount : amtDueEle.current.value,  // amount due
         entered_amount : recievedAmtEle.current.value,   // recieved amount
-        outstanding_amount : outstandingAmtEle.current.value,   // outstanding amount
+        outstanding_amount : outAmt,   // outstanding amount
         remarks : remarkEle.current.value
       }
+      console.log(body);
       addTransection(body);
     }
     
-    if(isSucessTransection){
+    
       navigate("/transaction");
-    }
+    
   }
   const fetchAllShop = async() => {
     try{
@@ -66,6 +70,13 @@ export default function ShopRental(){
     }catch(err){
       console.log(err);
     }
+  }
+
+  const handleChange = (e) => {
+    const val = e.target.value
+    setRecAmt(val);
+    const amt = amtDue - val;
+    setOutAmt(amt);
   }
   useEffect(() => {
     fetchAllShop();
@@ -177,6 +188,7 @@ export default function ShopRental(){
                 fontSize: { xs: "17px", md: "20px" },
               },}}
               inputRef={amtDueEle}
+              onChange={(e) => setAmtDue(e.target.value)}
               id="standard-basic"
               label="Amount due"
               variant="standard"
@@ -207,6 +219,7 @@ export default function ShopRental(){
                 margin: "10px 0px ",
               }}
               inputRef={recievedAmtEle}
+              onChange={handleChange}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
@@ -219,7 +232,7 @@ export default function ShopRental(){
                 fontSize: { xs: "17px", md: "20px" },
               },}}
               id="standard-basic"
-              label="Recieved amount"
+              label="Received amount"
               variant="standard"
             />
             <TextField
@@ -247,7 +260,7 @@ export default function ShopRental(){
                 width: "70%",
                 margin: "10px 0px ",
               }}
-              inputRef={outstandingAmtEle}
+              aria-readonly
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",
@@ -259,6 +272,7 @@ export default function ShopRental(){
                 color: "white",
                 fontSize: { xs: "17px", md: "20px" },
               },}}
+              value={outAmt}
               id="standard-basic"
               label="Outstanding amount (if any)"
               variant="standard"

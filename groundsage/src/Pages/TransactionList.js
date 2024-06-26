@@ -17,7 +17,7 @@ const TransactionList = () => {
 
   const [activeButton, setActiveButton] = useState("income");
   const [transactionData, setTransactionData] = useState([]);
-  const {user , activeEventId} = useContext(AuthContext);
+  const {user ,   activeEventId} = useContext(AuthContext);
   const [isLoading , setIsLoading] = useState(true);
 
   const deleteTransection = async (id) => {

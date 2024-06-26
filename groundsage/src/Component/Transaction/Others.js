@@ -8,12 +8,15 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function Others() {
+  const [amtDue , setAmtDue] = useState(0);
+  const [recAmt , setRecAmt] = useState(0);
+  const [outAmt , setOutAmt] = useState(0);
   const addItemEle = useRef(null);
   const amtDueEle = useRef(null);
   const recievedAmtEle = useRef(null);
@@ -22,9 +25,9 @@ export default function Others() {
   const {addTransection , isSucessTransection} = useContext(AuthContext);
   const navigate = useNavigate();
   const handleSave = () => {
-    if(outstandingAmtEle.current.value > recievedAmtEle.current.value){
+    if(recievedAmtEle.current.value >  amtDueEle.current.value){
       console.log(true);
-      toast.warning("Outstanding amount, should be less than the received amount" , {
+      toast.warning("received amount, should be less than the Due amount" , {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -39,15 +42,21 @@ export default function Others() {
         item : addItemEle.current.value,             //shop no in string
         decided_amount : amtDueEle.current.value,  // amount due
         entered_amount : recievedAmtEle.current.value,   // recieved amount
-        outstanding_amount : outstandingAmtEle.current.value,   // outstanding amount
+        outstanding_amount : outAmt,   // outstanding amount
         remarks : remarkEle.current.value
       }
       addTransection(body);
     }
    
-    if(isSucessTransection){
+    
       navigate("/transaction");
-    }
+    
+  }
+  const handleChange = (e) => {
+    const val = e.target.value
+    setRecAmt(val);
+    const amt = amtDue - val;
+    setOutAmt(amt);
   }
   return (<>
   <ToastContainer/>
@@ -77,6 +86,7 @@ export default function Others() {
           margin: "10px 0px ",
         }}
         inputRef={addItemEle}
+        
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
@@ -119,6 +129,7 @@ export default function Others() {
           margin: "10px 0px ",
         }}
         inputRef={amtDueEle}
+        onChange={(e) => setAmtDue(e.target.value)}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
@@ -173,8 +184,9 @@ export default function Others() {
           },
         }}
         inputRef={recievedAmtEle}
+        onChange={handleChange}
         id="standard-basic"
-        label="Recieved amount"
+        label="Received amount"
         variant="standard"
       />
       <TextField
@@ -215,6 +227,8 @@ export default function Others() {
             fontSize: { xs: "17px", md: "20px" },
           },
         }}
+        aria-readonly
+        value={outAmt}
         id="standard-basic"
         label="Outstanding amount (if any)"
         variant="standard"

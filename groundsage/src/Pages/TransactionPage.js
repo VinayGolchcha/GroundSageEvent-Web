@@ -103,8 +103,8 @@ export default function TransactionPage() {
               : { ...outlinedStyle, }),
             margin: "0px 20px",
             height : "60px",
-            width : { lg : "200px" , md : "200px" , sm : "170px" , xs : "150x"},
-            fontSize : {lg : "20px" , md : "20px" , sm : "20px" , xs : "16px"}
+            width : { lg : "150px" , md : "150px" , sm : "110px" , xs : "100x"},
+            fontSize : "18px"
           }}
         >
           INCOME
@@ -125,8 +125,8 @@ export default function TransactionPage() {
               : { ...outlinedStyle }),
             margin: "0px 20px",
             height : "60px",
-            width : { lg : "200px" , md : "200px" , sm : "170px" , xs : "150x"},
-            fontSize : {lg : "20px" , md : "20px" , sm : "20px" , xs : "16px"}
+            width : { lg : "150px" , md : "150px" , sm : "110px" , xs : "100x"},
+            fontSize : "18px"
           }}
         >
            EXPENSE

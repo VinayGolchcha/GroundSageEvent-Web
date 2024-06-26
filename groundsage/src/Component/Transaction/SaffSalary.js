@@ -29,9 +29,9 @@ export default function SaffSalary() {
       remarks : remarkEle.current.value
     }
     addTransection(body);
-    if(isSucessTransection){
+    
       navigate("/transaction");
-    }
+    
   }
   return (
     <>

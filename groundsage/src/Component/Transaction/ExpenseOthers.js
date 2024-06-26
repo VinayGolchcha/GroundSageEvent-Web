@@ -29,9 +29,9 @@ export default function ExpenseOthers() {
       remarks : remarkEle.current.value
     }
     addTransection(body);
-    if(isSucessTransection){
-      navigate("/transaction");
-    }
+
+    navigate("/transaction");
+    
   }
   return (
     <>

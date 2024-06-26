@@ -162,6 +162,7 @@ export default function RentalAgreementPage() {
           color: "rgb(66, 92, 90)",
         },
       });
+      navigate(`/description/${shopId}`);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -263,6 +264,7 @@ export default function RentalAgreementPage() {
           color: "rgb(66, 92, 90)",
         },
       });
+      navigate(`/description/${shopId}`);
     } catch (err) {
       setLoading(false);
       console.log(err);
@@ -956,7 +958,7 @@ export default function RentalAgreementPage() {
                           }}
                           onClick={handleEdit}
                         >
-                          Edit
+                          Save
                         </Button>
                         <Button
                           variant="contained"
