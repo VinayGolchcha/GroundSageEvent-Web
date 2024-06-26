@@ -394,7 +394,7 @@ export default function CreateShopPage() {
                   },
                 }}
                 id="standard-basic"
-                label="Rent"
+                label="Rent (In Rs.)"
                 value={eventData.rent}
                 onChange={(e) => handleInputChange(e, "rent")}
                 variant="standard"

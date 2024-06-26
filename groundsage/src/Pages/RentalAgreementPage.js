@@ -808,7 +808,7 @@ export default function RentalAgreementPage() {
                               InputProps: {
                                 endAdornment: (
                                   <img
-                                    src="image-4.png"
+                                    src="../../../image-4.png"
                                     style={{ cursor: "pointer" }}
                                     onClick={() => setOpenCalendar1(true)}
                                   />
@@ -874,10 +874,10 @@ export default function RentalAgreementPage() {
                               InputProps: {
                                 endAdornment: (
                                   <img
-                                    src="image-4.png"
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => setOpenCalendar2(true)}
-                                  />
+                                  src="../../../image-4.png"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => setOpenCalendar2(true)}
+                                />
                                 ),
                               },
                               InputLabelProps : {
