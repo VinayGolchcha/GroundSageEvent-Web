@@ -57,7 +57,7 @@ export default function CreateEventPage() {
       if (file) {
         // Check if file size is greater than 100KB (100 * 1024 bytes)
         if (file.size > 1 * 1024 * 1024) {
-          toast.error('File size should not exceed 1 MB' , {
+          toast.error("File size should not exceed 1 MB", {
             style: {
               // Change font color
               fontSize: "16px", // Change font size
@@ -167,18 +167,18 @@ export default function CreateEventPage() {
     <Box sx={{ backgroundColor: "rgb(66, 92, 90)" }}>
       <ToastContainer />
       <Box
-          component='img'
-          src="../../Images/arrow-left.png"
-          alt="Share"
-          sx={{
-            cursor: "pointer",
-            width: {xs:"35px",md:"45px"},
-            margin: {xs:"20px 0px 0px 20px",md:"10px 0px 0px 20px"},
-          }}
-          onClick={() => {
-            navigate(-1); // Navigate back by one step in the history stack
-          }}
-        />
+        component="img"
+        src="../../Images/arrow-left.png"
+        alt="Share"
+        sx={{
+          cursor: "pointer",
+          width: { xs: "35px", md: "45px" },
+          margin: { xs: "20px 0px 0px 20px", md: "10px 0px 0px 20px" },
+        }}
+        onClick={() => {
+          navigate(-1); // Navigate back by one step in the history stack
+        }}
+      />
       <Typography
         variant="h3"
         sx={{
@@ -187,7 +187,7 @@ export default function CreateEventPage() {
           padding: "20px 0px",
           fontWeight: "600",
           textShadow: "0 6px rgba(81,67,21,0.8)",
-          fontSize: { xs: "30px",sm:"40px", md: "56px" },
+          fontSize: { xs: "30px", sm: "40px", md: "56px" },
           marginTop: { xs: "0px", md: "-30px" },
         }}
       >
@@ -202,7 +202,7 @@ export default function CreateEventPage() {
                 color: "rgb(155, 181, 199)",
                 margin: "20px 0px",
                 fontWeight: "600",
-                fontSize: { xs: "30px",sm:"40px", md: "56px" },
+                fontSize: { xs: "30px", sm: "40px", md: "56px" },
               }}
             >
               Create Event
@@ -251,7 +251,7 @@ export default function CreateEventPage() {
             <div>
               <Typography
                 sx={{
-                  fontSize: "11px",
+                  fontSize: "18px",
                   position: "absolute",
                   paddingTop: "6px",
                   color: "white",
@@ -263,7 +263,7 @@ export default function CreateEventPage() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <FormControl
                 variant="standard"
-                sx={{ minWidth: 110, width: "70%", margin: "4px 0px " }}
+                sx={{ minWidth: 110, width: "70%", margin: "7px 0px " }}
               >
                 <DatePicker
                   labelId="from-date-label"
@@ -297,13 +297,14 @@ export default function CreateEventPage() {
                       border: "none",
                       borderRadius: "none",
                     },
-                   
+
                     //   "& :hover": {
                     //     borderBottom: " 1px solid rgb(188, 189, 163)",
                     //   },
                     "& .MuiOutlinedInput-input": {
                       color: "white",
                       paddingLeft: "1px",
+                      fontSize: "18px",
                     },
 
                     "& .MuiOutlinedInput-root": {
@@ -317,10 +318,10 @@ export default function CreateEventPage() {
             <div>
               <Typography
                 sx={{
-                  fontSize: "11px",
                   position: "absolute",
-                  paddingTop: "6px",
+                  paddingTop: "2px",
                   color: "white",
+                  fontSize: "18px",
                 }}
               >
                 To Date
@@ -335,7 +336,6 @@ export default function CreateEventPage() {
                   labelId="to-date-label"
                   value={dayjs(toDate)}
                   onChange={(newValue) =>
-
                     setToDate(newValue.$d.toISOString().split("T")[0])
                   } // Handle onChange event if needed
                   open={openCalendar2}
@@ -371,6 +371,7 @@ export default function CreateEventPage() {
                     "& .MuiOutlinedInput-root": {
                       borderRadius: "0px",
                       borderBottom: " 1px solid rgb(188, 189, 163)",
+                      fontSize: "18px",
                     },
                     "& .MuiOutlinedInput-input": {
                       paddingLeft: "1px",
@@ -489,7 +490,7 @@ export default function CreateEventPage() {
                 color: "rgb(155, 181, 199)",
                 margin: "20px 0px",
                 fontWeight: "600",
-                fontSize: { xs: "30px",sm:"40px", md: "56px" },
+                fontSize: { xs: "30px", sm: "40px", md: "56px" },
               }}
             >
               Create Team
@@ -610,8 +611,8 @@ export default function CreateEventPage() {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
                   "& .MuiInputBase-input": {
-                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
-                },
+                    fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                  },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
@@ -666,8 +667,8 @@ export default function CreateEventPage() {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
                   "& .MuiInputBase-input": {
-                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
-                },
+                    fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                  },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
@@ -721,8 +722,8 @@ export default function CreateEventPage() {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
                   "& .MuiInputBase-input": {
-                  fontSize: { xs: "18px", md: "20px" }, // Set input font size here
-                },
+                    fontSize: { xs: "18px", md: "20px" }, // Set input font size here
+                  },
                   width: "50%",
                   margin: "10px 0px ",
                 }}
