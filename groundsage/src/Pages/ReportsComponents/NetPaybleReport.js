@@ -42,6 +42,7 @@ const NetPaybleReport = () => {
 
   const fetchNetPaybleReport = async () => {
     try{
+      setIsLoading(true);
       const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-all-years-data` ,{
         flag : selectedOption.toLowerCase(),
         event_id : activeEventId,
@@ -57,6 +58,7 @@ const NetPaybleReport = () => {
       setIsLoading(false);
     }catch(err){
       setIsLoading(false);
+      setNetPaybleReportData([]);
       toast.error(err?.response?.data?.message , {
         style: {
           // Change font color
@@ -72,8 +74,7 @@ const NetPaybleReport = () => {
 
   useEffect(()=> {
     fetchNetPaybleReport();
-  },[selectedOption])
-
+  },[selectedOption , activeEventId]);
 
   // Sample data for the table
   const yearlyData = [
@@ -296,7 +297,7 @@ const NetPaybleReport = () => {
                             fontSize : {xs : "20px" , sm : "20px"}
                           }}
                         >
-                          {h}
+                          {h} {idx !== 0 && <span>₹</span>}
                           {idx === 0 && (
                             <img
                               src="../../Images/icon.png" // Add the path to your icon image

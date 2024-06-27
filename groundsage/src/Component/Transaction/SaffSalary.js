@@ -24,13 +24,14 @@ export default function SaffSalary() {
     const body = {
       item : addItemEle.current.value,             //shop no in string
       decided_amount : 0,  // amount due
-      entered_amount : balancePayAmtEle.current.value,   // recieved amount
+      entered_amount : enterdAmtEle.current.value,   // recieved amount
       outstanding_amount : balancePayAmtEle.current.value,   // outstanding amount
-      remarks : remarkEle.current.value
+      remarks : remarkEle.current.value, 
+      tag : "expense"
     }
     addTransection(body);
     
-      navigate("/transaction");
+      navigate("/transactions");
     
   }
   return (
@@ -117,7 +118,7 @@ export default function SaffSalary() {
           },
         }}
         id="standard-basic"
-        label="Total expense"
+        label="Total expense ₹"
         variant="standard"
       />
       <TextField

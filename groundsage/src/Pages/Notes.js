@@ -33,6 +33,7 @@ const Notes = () => {
   console.log(user);
   console.log(activeEventId);
   const deleteNoteByMultipleId = async (ids) => {
+    setIsLoading(true);
     console.log(ids)
     try{
       const res = axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note`  ,{
@@ -47,8 +48,10 @@ const Notes = () => {
       );
       console.log(res);
       fetchNotes();
+      setIsLoading(false);
     }catch(err){
       toast.error(err);
+      setIsLoading(false);
     }
 
   }
@@ -274,7 +277,23 @@ const Notes = () => {
     console.log(newEventList)
     setEventList(newEventList);
   };
-
+  
+  const handleDeleteOpen = () => {
+    const ele = eventList?.filter((item) => item?.isSelected === true);
+    if(ele?.length === 0){
+      toast.warning("Please select the note to delete" , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+      return;
+    }
+    handleOpen();
+  }
   const handleDelete = () => {
       const ele = eventList?.filter(item => item.isSelected === true);
       setEventList(eventList?.filter(item => item.isSelected !== true));
@@ -455,7 +474,7 @@ const Notes = () => {
                     src="deleteIcon.png"
                     alt="delete Icon"
                     style={{ padding: "2px", height: "30px", cursor: "pointer" }}
-                    onClick={handleOpen}
+                    onClick={handleDeleteOpen}
                   />
                 </>
               ) : (

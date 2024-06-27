@@ -8,7 +8,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -20,17 +20,21 @@ export default function ExpenseOthers() {
   const remarkEle = useRef(null);
   const navigate = useNavigate();
   const {addTransection , isSucessTransection} = useContext(AuthContext);
+  useEffect(() => {
+    console.log("successfulltransection" , isSucessTransection);
+  },[])
   const handleSave = () => {
     const body = {
-      item : addItemEle.current.value,             //shop no in string
+      item : addItemEle.current.value,//shop no in string
       decided_amount : 0,  // amount due
-      entered_amount : balancePayAmtEle.current.value,   // recieved amount
+      entered_amount : enterdAmtEle.current.value,   // recieved amount
       outstanding_amount : balancePayAmtEle.current.value,   // outstanding amount
-      remarks : remarkEle.current.value
+      remarks : remarkEle.current.value,
+      tag : "expense"
     }
     addTransection(body);
-
-    navigate("/transaction");
+    console.log("successfulltransection" , isSucessTransection);
+    navigate("/transactions");
     
   }
   return (
@@ -117,7 +121,7 @@ export default function ExpenseOthers() {
           },
         }}
         id="standard-basic"
-        label="Total expense"
+        label="Total expense ₹"
         variant="standard"
       />
       <TextField

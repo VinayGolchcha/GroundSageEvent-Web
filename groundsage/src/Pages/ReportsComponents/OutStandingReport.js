@@ -43,6 +43,7 @@ const OutStandingReport = () => {
 
   const fecthOutstandingReport = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.post(
         `${process.env.REACT_APP_API_URI}/transaction/fetch-outstanding-balance`,
         {
@@ -63,6 +64,7 @@ const OutStandingReport = () => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
+      setOutstandingReport([]);
       toast.error(err?.response?.data?.message, {
         style: {
           // Change font color
@@ -76,7 +78,7 @@ const OutStandingReport = () => {
   };
   useEffect(() => {
     fecthOutstandingReport();
-  }, [selectedOption]);
+  }, [selectedOption, activeEventId]);
 
   // Sample data for the table
   const yearlyData = [
@@ -299,7 +301,7 @@ const OutStandingReport = () => {
                             fontSize: { xs: "20px", sm: "20px" },
                           }}
                         >
-                          {h}
+                          {h} {idx !== 0 && <span>₹</span>}
                           {idx === 0 && (
                             <img
                               src="../../Images/icon.png" // Add the path to your icon image

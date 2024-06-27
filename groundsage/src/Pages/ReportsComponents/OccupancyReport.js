@@ -43,6 +43,7 @@ const OccupancyReport = () => {
   const [isLoading, setIsLoading] = useState(true);
   const fetchReport = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.post(
         `${process.env.REACT_APP_API_URI}/shop/fetch-shop-occupancy-data`,
         {
@@ -62,6 +63,7 @@ const OccupancyReport = () => {
     } catch (err) {
       console.log(err);
       setIsLoading(false);
+      setOccupancyData([]);
       toast.error(err?.response?.data?.message, {
         style: {
           // Change font color
@@ -76,7 +78,7 @@ const OccupancyReport = () => {
 
   useEffect(() => {
     fetchReport();
-  }, [selectedOption]);
+  }, [selectedOption , activeEventId]);
 
   // Sample data for the table
   // const ShopData = [
@@ -303,7 +305,7 @@ const OccupancyReport = () => {
                             borderBottom: "none",
                           }}
                         >
-                          {h}
+                          {h} 
                           {idx === 0 && (
                             <img
                               src="../../Images/icon.png" // Add the path to your icon image

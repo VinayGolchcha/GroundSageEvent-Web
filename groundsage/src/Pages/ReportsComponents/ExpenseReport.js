@@ -41,6 +41,7 @@ const ExpenseReport = () => {
 
   const fetchExpenseReports = async () => {
     try{
+      setIsLoading(true);
       const res = await axios.post(`${process.env.REACT_APP_API_URI}/transaction/fetch-all-years-data` , {
         flag : selectedOption.toLowerCase(),
         event_id : activeEventId,
@@ -56,6 +57,7 @@ const ExpenseReport = () => {
       setIsLoading(false);
     }catch(err){
       setIsLoading(false);
+      setExpenseReportData([]);
       toast.error(err?.response?.data?.message , {
         style: {
           // Change font color
@@ -70,7 +72,7 @@ const ExpenseReport = () => {
 
   useEffect(()=>{
     fetchExpenseReports();
-  },[selectedOption])
+  },[selectedOption , activeEventId])
   const options = ["Year", "Month"];
 
   // Sample data for the table
@@ -293,7 +295,7 @@ const ExpenseReport = () => {
                             fontSize : {xs : "20px" , sm : "20px"}
                           }}
                         >
-                          {h}
+                          {h} {idx !== 0 && <span>₹</span>}
                           {idx === 0 && (
                             <img
                               src="../../Images/icon.png" // Add the path to your icon image

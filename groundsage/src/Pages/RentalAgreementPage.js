@@ -49,7 +49,8 @@ export default function RentalAgreementPage() {
   const [shop, setShop] = useState(null);
   const [loading, setLoading] = useState(true);
   const [shopNumber , setShopNumber] = useState(null)
-  const [shopData , setShopData] = useState([]); 
+  const [shopData , setShopData] = useState([]);
+  const [rentalImage , setRentalImage] = useState(null);
   const navigate = useNavigate();
   console.log(shopId, typeof shopId);
   const fetchShopById = async () => {
@@ -70,7 +71,8 @@ export default function RentalAgreementPage() {
       );
       if (res?.data?.data?.length > 0) {
         setShop(res?.data?.data[1][0].image_url);
-        setShopData(res?.data?.data)
+        const fecthShopData = res?.data?.data[0];
+        setShopData(fecthShopData);
         setShopNumber(res?.data?.data[0].shop_number);
       }
     } catch (err) {
@@ -105,6 +107,15 @@ export default function RentalAgreementPage() {
         setStartDate(dayjs(obj.start_date));
         setEndDate(dayjs(obj.end_date));
         setIsEdit(true);
+        const data = obj?.buffer?.data
+        const byteArray = new Uint8Array(data);
+        const blob = new Blob([byteArray], { type: 'image/png' });
+
+        // Create a URL for the Blob
+        const url = URL.createObjectURL(blob);
+
+        // Set the URL as the image source
+        setRentalImage(url);
       }
       console.log(res);
       setLoading(false);
@@ -170,7 +181,7 @@ export default function RentalAgreementPage() {
       });
       navigate(`/description/${shopNumber}`, {
         state: {
-          selectedShop: shopData,
+          shopDetails: shopData,
           imageUrls: shop,
         },
       });
@@ -224,7 +235,12 @@ export default function RentalAgreementPage() {
           },
         });
         fetchRentalAgree();
-        navigate(-1);
+        navigate(`/description/${shopNumber}`, {
+          state: {
+            shopDetails: shopData,
+            imageUrls: shop,
+          },
+        });
       } catch (err) {
         setLoading(false);
         toast.success(err?.response?.data?.message, {
@@ -277,7 +293,7 @@ export default function RentalAgreementPage() {
       });
       navigate(`/description/${shopNumber}`, {
         state: {
-          selectedShop: shopData[0],
+          shopDetails: shopData,
           imageUrls: shop,
         },
       });
@@ -390,8 +406,9 @@ export default function RentalAgreementPage() {
                   alignItems: "center",
                 }}
               >
-                <img
-                  src={shop}
+                {
+                  isEdit ? <img
+                  src={rentalImage}
                   alt="Shop Image"
                   style={{
                     border: "20px solid rgb(78, 101, 100)",
@@ -401,7 +418,21 @@ export default function RentalAgreementPage() {
                     maxHeight: "380px",
                     objectFit: "fill",
                   }}
-                />
+                /> : 
+                <img
+                src={shop}
+                alt="Shop Image"
+                style={{
+                  border: "20px solid rgb(78, 101, 100)",
+                  borderRadius: "10px",
+                  position: "relative",
+                  width: "70%",
+                  maxHeight: "380px",
+                  objectFit: "fill",
+                }}
+              />
+                }
+
                 <Typography
                   variant="h4"
                   sx={{

@@ -35,6 +35,9 @@ const AuthProvider = ({ children }) => {
   const [isEmailVerified, setIsEmailVerified] = useState(() =>
     safeJSONParse(localStorage.getItem("isEmailVerified"), false)
   );
+  const [isSucessTransection, setIsSucessTransection] = useState(() =>
+    safeJSONParse(localStorage.getItem("isSucessTransection"), false)
+  );
   const [lastShopNumber, setLastShopNumber] = useState(() =>
     safeJSONParse(localStorage.getItem("lastShopNumber"), null)
   );
@@ -55,6 +58,10 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("isEmailVerified", JSON.stringify(isEmailVerified));
   }, [isEmailVerified]);
+
+  useEffect(() => {
+    localStorage.setItem("isSucessTransection", JSON.stringify(isSucessTransection));
+  }, [isSucessTransection]);
 
   useEffect(() => {
     localStorage.setItem("lastShopNumber", JSON.stringify(lastShopNumber));
@@ -96,7 +103,6 @@ const AuthProvider = ({ children }) => {
     const newbody = {
       ...body,
       event_id: activeEventId,
-      tag: transectionTag,
       type: transectionType,
     };
     try {
@@ -120,6 +126,7 @@ const AuthProvider = ({ children }) => {
           color: "rgb(66, 92, 90)",
         },
       });
+      setIsSucessTransection(true);
     } catch (err) {
       const errors = err?.response?.data?.errors;
       errors.forEach((element) => {
@@ -202,6 +209,7 @@ const AuthProvider = ({ children }) => {
         setTransectionType,
         RCode,
         setRCode,
+        isSucessTransection
       }}
     >
       {children}

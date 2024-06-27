@@ -134,7 +134,7 @@ export default function CreateEventPage() {
         parseInt(helperCountElement.current.value)
     ) {
       toast.warning(
-        "Sum of the coordinator count , staff member count , helper count should be equal to team size",
+        "Sum of the Coordinator count , Staff member count , Helper count should be equal to team size",
         {
           style: {
             // Change font color
@@ -643,7 +643,7 @@ export default function CreateEventPage() {
                   fontSize: { xs: "18px", md: "20px" },
                 }}
               >
-                Role: STAFF MEMBER
+                Role: Staff Member
               </Typography>
               <TextField
                 type="number"
@@ -699,7 +699,7 @@ export default function CreateEventPage() {
                   fontSize: { xs: "18px", md: "20px" },
                 }}
               >
-                Role: HELPER
+                Role: Helper
               </Typography>
               <TextField
                 type="number"

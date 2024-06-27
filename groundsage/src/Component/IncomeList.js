@@ -91,11 +91,29 @@ const IncomeList = ({data , deleteTransection }) => {
     setAllIncomeSelected(false);
     setIncomeSelect(false);
   }
+
+  const forrmattedDate = (data) => {
+    let date = new Date(data);
+    const array = date.toString().split(" ");
+    date = array.slice(1,4).join(" ");
+    return date
+  }
+
+  function toTitleCase(str) {
+    return str
+      .split(' ')              // Split the string into an array of words
+      .map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()  // Capitalize the first letter of each word
+      )
+      .join(' ');              // Join the words back into a single string
+  }
+
   return (
     <Box>
       <ConfirmDelete open={open} handleClose={handleClose} handleIncomeDelete ={handleIncomeDelete}/>
       {" "}
       <div style={{width : "100%"}}  onClick = {refreshPage}></div>
+    
       {Income?.length !== 0 ? (
         <Box
           sx={{
@@ -186,14 +204,6 @@ const IncomeList = ({data , deleteTransection }) => {
               alignItems: "center",
             }}
           >
-          <img
-                  src="add-icon.png"
-                  alt="add-icon"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    navigate("/create-transaction");
-                  }}
-              />
             </Box>
       )}
       {Income?.slice(0, showAll ? Income?.length : maxItems).map(
@@ -262,7 +272,7 @@ const IncomeList = ({data , deleteTransection }) => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Type: {item?.type}
+                      Type: {toTitleCase(item?.type)}
                     </Typography>
                     <Typography
                       sx={{
@@ -299,7 +309,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           },
                         }}
                       >
-                        {item.decided_amount} ₹
+                        {item.decided_amount} 
                       </Button>
                       <Typography
                         sx={{
@@ -328,7 +338,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           },
                         }}
                       >
-                        {item.outstanding_amount} ₹
+                        {item.outstanding_amount} 
                       </Button>
                       <Typography
                         sx={{
@@ -357,7 +367,7 @@ const IncomeList = ({data , deleteTransection }) => {
                           },
                         }}
                       >
-                        {item.entered_amount} ₹
+                        {item.entered_amount} 
                       </Button>
                       <Typography
                         sx={{
@@ -372,6 +382,16 @@ const IncomeList = ({data , deleteTransection }) => {
                         Recieved Amount ₹
                       </Typography>
                     </div>
+                    <Typography
+                      sx={{
+                        color: "rgb(254, 240, 180)",
+                        fontSize: {lg : "0.9rem", md : "0.9rem" , sm : "0.9rem" , xs : "14px"},
+                        fontFamily: "Poppins",
+                        textAlign: "right",
+                      }}
+                    >
+                      {forrmattedDate(item?.created_at)}
+                    </Typography>
                   </div>
                 </div>
               </Box>

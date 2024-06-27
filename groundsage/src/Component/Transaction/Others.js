@@ -43,13 +43,14 @@ export default function Others() {
         decided_amount : amtDueEle.current.value,  // amount due
         entered_amount : recievedAmtEle.current.value,   // recieved amount
         outstanding_amount : outAmt,   // outstanding amount
-        remarks : remarkEle.current.value
+        remarks : remarkEle.current.value,
+        tag : "income"
       }
       addTransection(body);
     }
    
     
-      navigate("/transaction");
+      navigate("/transactions");
     
   }
   const handleChange = (e) => {

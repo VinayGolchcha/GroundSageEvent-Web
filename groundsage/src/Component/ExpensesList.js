@@ -36,6 +36,14 @@ const ExpensesList = ({data , deleteTransection}) => {
     setAllExpensesSelected(!allExpensesSelected);
   };
 
+  function toTitleCase(str) {
+    return str
+      .split(' ')              // Split the string into an array of words
+      .map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()  // Capitalize the first letter of each word
+      )
+      .join(' ');              // Join the words back into a single string
+  }
   const handleExpenseCheckboxChange = (index) => {
     const newExpenses = expenses?.map((item, i) => {
       if (i === index) {
@@ -80,6 +88,12 @@ const ExpensesList = ({data , deleteTransection}) => {
       return;
     }
     handleOpen();
+  }
+  const forrmattedDate = (data) => {
+    let date = new Date(data);
+    const array = date.toString().split(" ");
+    date = array.slice(1,4).join(" ");
+    return date
   }
 
   return (
@@ -237,8 +251,9 @@ const ExpensesList = ({data , deleteTransection}) => {
                         fontFamily: "Poppins",
                       }}
                     >
-                      Type: {item.type}
+                      Type: {toTitleCase(item.type)}
                     </Typography>
+                    
                     <Typography
                       sx={{
                         color: "#FFFFFF",
@@ -270,7 +285,7 @@ const ExpensesList = ({data , deleteTransection}) => {
                           },
                         }}
                       >
-                        {item.entered_amount} ₹
+                        {item.entered_amount} 
                       </Button>
                       <Typography
                         sx={{
@@ -299,7 +314,7 @@ const ExpensesList = ({data , deleteTransection}) => {
                           },
                         }}
                       >
-                        {item.outstanding_amount} ₹
+                        {item.outstanding_amount} 
                       </Button>
                       <Typography
                         sx={{
@@ -310,9 +325,20 @@ const ExpensesList = ({data , deleteTransection}) => {
                           fontSize: { xs: "13px", md: "20px" },
                         }}
                       >
-                        Balance Payable
+                        Balance Payable ₹
                       </Typography>
+                      
                     </div>
+                    <Typography
+                      sx={{
+                        color: "rgb(254, 240, 180)",
+                        fontSize: {lg : "0.9rem", md : "0.9rem" , sm : "0.9rem" , xs : "14px"},
+                        fontFamily: "Poppins",
+                        textAlign: "right",
+                      }}
+                    >
+                      {forrmattedDate(item?.created_at)}
+                    </Typography>
                   </div>
                 </div>
               </Box>

@@ -85,6 +85,7 @@ const TransactionList = () => {
         console.error("Error fetching transaction data:", error);
       });
   };
+
   useEffect(() => {
     // Fetch transaction data from the API
     fecthTransections();
@@ -193,18 +194,120 @@ const TransactionList = () => {
             EXPENSE
           </Button>
         </div>
-        {activeButton === "income" && transactionData.length > 0 && (
+        {/* {(activeButton === "income" && transactionData.length > 0) ? (
           <IncomeList
             data={transactionData?.filter((item) => item?.tag === "income")}
             deleteTransaction={deleteTransection} // Corrected prop name
           />
+        ) : (
+          <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+        <img
+                src="add-icon.png"
+                alt="add-icon"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/create-transaction");
+                }}
+            />
+          </Box>
         )}
         {activeButton === "expenses" && transactionData.length > 0 && (
           <ExpensesList
             data={transactionData?.filter((item) => item?.tag === "expense")}
             deleteTransaction={deleteTransection} // Corrected prop name
           />
-        )}
+        )} */}
+      {(activeButton === "income" && transactionData.length > 0) ? (
+        <>
+          <IncomeList
+            data={transactionData?.filter((item) => item?.tag === "income")}
+            deleteTransection={deleteTransection} // Corrected prop name
+          />
+          {transactionData?.filter((item) => item?.tag === "income").length === 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop : "20px"
+              }}
+            >
+              <img
+                src="add-icon.png"
+                alt="add-icon"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/create-transaction");
+                }}
+              />
+            </Box>
+          )}
+        </>
+      ) : ( activeButton === "income" && 
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+                src="add-icon.png"
+                alt="add-icon"
+                style={{ cursor: "pointer" , marginTop : "20px" }}
+                onClick={() => {
+                  navigate("/create-transaction");
+                }}
+              />
+          
+        </Box>
+      )}
+
+      {activeButton === "expenses" && (
+        <>
+          {transactionData.length > 0 ? (
+            <ExpensesList
+              data={transactionData?.filter((item) => item?.tag === "expense")}
+              deleteTransection={deleteTransection} // Corrected prop name
+            />
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              
+            </Box>
+          )}
+          {transactionData?.filter((item) => item?.tag === "expense").length === 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src="add-icon.png"
+                alt="add-icon"
+                style={{ cursor: "pointer" , marginTop : "20px" }}
+                onClick={() => {
+                  navigate("/create-transaction");
+                }}
+              />
+            </Box>
+          )}
+        </>
+      )}
+
       </div>
     );
   }

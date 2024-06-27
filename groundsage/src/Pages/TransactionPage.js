@@ -20,9 +20,9 @@ export default function TransactionPage() {
     color: "rgb(255, 255, 255)",
     border: "1px solid rgb(254, 240, 180)",
   };
-  useEffect(()=> {
-    setTransectionTag("income")
-  },[])
+  // useEffect(()=> {
+  //   setTransectionTag("income")
+  // },[transectionTag])
   const [transactions, setTransactions] = useState([{
     type: "income",
     vari: "contained",
@@ -47,6 +47,7 @@ export default function TransactionPage() {
       setTransectionTag("income");
     }
     setTransactions(newList);
+    console.log(transectionTag);
   };
   return (
     <Box
