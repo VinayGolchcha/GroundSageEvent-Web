@@ -160,7 +160,7 @@ const ProfileAboutpage = () => {
             sx={{
               width: { xs: "100%", md: "450px" },
               marginBottom: "25px",
-              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+              "& .MuiFilledInput-input.Mui-disabled":
                 {
                   WebkitTextFillColor: "#FFFFFF",
                 },
@@ -199,7 +199,7 @@ const ProfileAboutpage = () => {
             sx={{
               width: { xs: "100%", md: "450px" },
               marginBottom: "25px",
-              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+              "& .MuiFilledInput-input.Mui-disabled":
                 {
                   WebkitTextFillColor: "#FFFFFF",
                 },
@@ -242,7 +242,7 @@ const ProfileAboutpage = () => {
             sx={{
               width: { xs: "100%", md: "450px" },
               marginBottom: "25px",
-              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+              "& .MuiFilledInput-input.Mui-disabled":
                 {
                   WebkitTextFillColor: "#FFFFFF",
                 },
@@ -277,7 +277,7 @@ const ProfileAboutpage = () => {
             sx={{
               width: { xs: "100%", md: "450px" },
               marginBottom: "25px",
-              "& .css-c5v1qu-MuiInputBase-input-MuiFilledInput-input.Mui-disabled":
+              "& .MuiFilledInput-input.Mui-disabled":
                 {
                   WebkitTextFillColor: "#FFFFFF",
                 },
