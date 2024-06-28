@@ -129,7 +129,7 @@ const AuthProvider = ({ children }) => {
       setIsSucessTransection(true);
     } catch (err) {
       const errors = err?.response?.data?.errors;
-      errors.forEach((element) => {
+      errors?.forEach((element) => {
         toast.error(element?.msg, {
           style: {
             // Change font color

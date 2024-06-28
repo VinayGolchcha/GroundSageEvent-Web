@@ -96,6 +96,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
       >
         <Toolbar disableGutters>
           {/* <NavLink to="/" style={{ textDecoration: "none" }}> */}
+
           <Box
             component="img"
             src="../../../Images/logo_1 1.png"
@@ -107,6 +108,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
               // alignItems:"left",
               marginLeft: "20px",
             }}
+            onClick={()=>navigate('/home/')}
           />
           {/* </NavLink>   */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>            <IconButton

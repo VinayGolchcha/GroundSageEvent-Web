@@ -379,7 +379,7 @@ const IncomeList = ({data , deleteTransection }) => {
 
                         }}
                       >
-                        Recieved Amount ₹
+                        Received Amount ₹
                       </Typography>
                     </div>
                     <Typography

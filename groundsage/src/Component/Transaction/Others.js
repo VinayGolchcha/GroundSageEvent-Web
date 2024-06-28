@@ -40,8 +40,8 @@ export default function Others() {
     }else{
       const body = {
         item : addItemEle.current.value,             //shop no in string
-        decided_amount : amtDueEle.current.value,  // amount due
-        entered_amount : recievedAmtEle.current.value,   // recieved amount
+        decided_amount : parseInt(amtDueEle.current.value),  // amount due
+        entered_amount : parseInt(recievedAmtEle.current.value),   // recieved amount
         outstanding_amount : outAmt,   // outstanding amount
         remarks : remarkEle.current.value,
         tag : "income"
