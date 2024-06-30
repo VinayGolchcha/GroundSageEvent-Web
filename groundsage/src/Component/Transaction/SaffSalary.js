@@ -31,7 +31,9 @@ export default function SaffSalary() {
     }
     addTransection(body);
     
+    if(isSucessTransection){
       navigate("/transactions");
+    }
     
   }
   return (

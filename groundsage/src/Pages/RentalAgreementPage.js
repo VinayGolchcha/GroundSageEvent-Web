@@ -440,7 +440,7 @@ export default function RentalAgreementPage() {
                     color: "rgb(255, 255, 255)",
                   }}
                 >
-                  Shop {shopId[shopId?.length - 1]}
+                  Shop {shopNumber}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -806,7 +806,7 @@ export default function RentalAgreementPage() {
                         id="demo-simple-select-standard-label"
                         style={{
                           color: "white",
-                          fontSize: { xs: "17px", md: "20px" },
+                          fontSize : "18px"
                         }}
                       >
                         Rent mode
@@ -845,7 +845,7 @@ export default function RentalAgreementPage() {
                     <div>
                       <Typography
                         sx={{
-                          fontSize: "11px",
+                          fontSize: "18px",
                           position: "absolute",
                           paddingTop: "6px",
                           color: "white",
@@ -908,12 +908,15 @@ export default function RentalAgreementPage() {
 
                             "& .MuiOutlinedInput-root":
                               {
+                                marginTop : "8px",
                                 borderRadius: "0px",
                                 borderBottom: " 1px solid rgb(188, 189, 163)",
                               },
                             "& .MuiOutlinedInput-input": {
                               paddingLeft: "1px",
                               color: "white",
+                              fontSize: "18px",
+                              paddingBottom : "4px"
                             },
                           }}
                         />
@@ -922,7 +925,7 @@ export default function RentalAgreementPage() {
                     <div>
                       <Typography
                         sx={{
-                          fontSize: "11px",
+                          fontSize: "18px",
                           position: "absolute",
                           paddingTop: "6px",
                           color: "white",
@@ -986,10 +989,13 @@ export default function RentalAgreementPage() {
                               {
                                 borderRadius: "0px",
                                 borderBottom: " 1px solid rgb(188, 189, 163)",
+                                marginTop : "8px"
                               },
                             "& .MuiOutlinedInput-input": {
                               paddingLeft: "1px",
                               color: "white",
+                              fontSize: "18px",
+                              paddingBottom : "4px"
                             },
                           }}
                         />

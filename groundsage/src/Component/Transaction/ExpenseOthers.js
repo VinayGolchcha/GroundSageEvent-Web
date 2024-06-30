@@ -34,7 +34,9 @@ export default function ExpenseOthers() {
     }
     addTransection(body);
     console.log("successfulltransection" , isSucessTransection);
-    navigate("/transactions");
+    if(isSucessTransection){
+      navigate("/transactions");
+    }
     
   }
   return (

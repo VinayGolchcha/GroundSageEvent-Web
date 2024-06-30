@@ -8,12 +8,14 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function Others() {
+  const[isLoading , setIsLoading] = useState(false);
+  const [transactionData, setTransactionData] = useState([]);
   const [amtDue , setAmtDue] = useState(0);
   const [recAmt , setRecAmt] = useState(0);
   const [outAmt , setOutAmt] = useState(0);
@@ -22,7 +24,7 @@ export default function Others() {
   const recievedAmtEle = useRef(null);
   const outstandingAmtEle = useRef(null);
   const remarkEle = useRef(null);
-  const {addTransection , isSucessTransection} = useContext(AuthContext);
+  const {addTransection , isSucessTransection , user , activeEventId} = useContext(AuthContext);
   const navigate = useNavigate();
   const handleSave = () => {
     if(recievedAmtEle.current.value >  amtDueEle.current.value){
@@ -47,18 +49,57 @@ export default function Others() {
         tag : "income"
       }
       addTransection(body);
+      fecthTransections()
     }
    
     
+    if(isSucessTransection){
       navigate("/transactions");
+    }
     
   }
-  const handleChange = (e) => {
-    const val = e.target.value
-    setRecAmt(val);
-    const amt = amtDue - val;
-    setOutAmt(amt);
-  }
+
+  const fecthTransections = () => {
+    setIsLoading(true);
+    fetch(
+      `${process.env.REACT_APP_API_URI}/transaction/fetch-all-transaction`,
+      {
+        method: "POST",
+        headers: {
+          authorization: user?.token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          role_id: user?.role_id,
+        },
+        body: JSON.stringify({
+          event_id: activeEventId,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with fetched data
+        setTransactionData(data.data);
+        console.log(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error fetching transaction data:", error);
+      });
+  };
+
+  useEffect(() => {
+    setOutAmt(amtDue - recAmt);
+  }, [amtDue, recAmt]);
+
+  const handleAmtDueChange = (e) => {
+    setAmtDue(Number(e.target.value));
+  };
+
+  const handleRecAmtChange = (e) => {
+    setRecAmt(Number(e.target.value));
+  };
   return (<>
   <ToastContainer/>
     <Grid item lg={6} md={6} sm={6} xs={12}>
@@ -130,7 +171,7 @@ export default function Others() {
           margin: "10px 0px ",
         }}
         inputRef={amtDueEle}
-        onChange={(e) => setAmtDue(e.target.value)}
+        onChange={handleAmtDueChange}
         InputProps={{
           style: {
             color: "rgb(255, 255, 255)",
@@ -185,7 +226,7 @@ export default function Others() {
           },
         }}
         inputRef={recievedAmtEle}
-        onChange={handleChange}
+        onChange={handleRecAmtChange}
         id="standard-basic"
         label="Received amount ₹"
         variant="standard"

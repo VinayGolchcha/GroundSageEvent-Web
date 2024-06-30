@@ -15,6 +15,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function ShopRental(){
+  const[isLoading , setIsLoading] = useState(false);
+  const [transactionData, setTransactionData] = useState([]);
   const [amtDue , setAmtDue] = useState(0);
   const [recAmt , setRecAmt] = useState(0);
   const [outAmt , setOutAmt] = useState(0);
@@ -26,8 +28,39 @@ export default function ShopRental(){
   const remarkEle = useRef(null);
   const {addTransection , activeEventId , user , isSucessTransection} = useContext(AuthContext);
   const [shopNo , setShopNo] = useState([]);
+
+  const fecthTransections = () => {
+    setIsLoading(true);
+    fetch(
+      `${process.env.REACT_APP_API_URI}/transaction/fetch-all-transaction`,
+      {
+        method: "POST",
+        headers: {
+          authorization: user?.token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          role_id: user?.role_id,
+        },
+        body: JSON.stringify({
+          event_id: activeEventId,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with fetched data
+        setTransactionData(data.data);
+        console.log(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error fetching transaction data:", error);
+      });
+  };
+
   const handleSave = () => {
-    if(recievedAmtEle.current.value >  amtDueEle.current.value){
+    if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
       console.log(true);
       toast.warning("received amount, should be less than the Due amount ₹", {
         style: {
@@ -50,10 +83,12 @@ export default function ShopRental(){
       }
       console.log(body);
       addTransection(body);
+      fecthTransections()
     }
-    
-    
+    if(isSucessTransection){
       navigate("/transactions");
+    }
+      
     
   }
   const fetchAllShop = async() => {
@@ -72,13 +107,17 @@ export default function ShopRental(){
       console.log(err);
     }
   }
+  useEffect(() => {
+    setOutAmt(amtDue - recAmt);
+  }, [amtDue, recAmt]);
 
-  const handleChange = (e) => {
-    const val = e.target.value
-    setRecAmt(val);
-    const amt = amtDue - val;
-    setOutAmt(amt);
-  }
+  const handleAmtDueChange = (e) => {
+    setAmtDue(Number(e.target.value));
+  };
+
+  const handleRecAmtChange = (e) => {
+    setRecAmt(Number(e.target.value));
+  };
   useEffect(() => {
     fetchAllShop();
   },[])
@@ -189,7 +228,7 @@ export default function ShopRental(){
                 fontSize: { xs: "17px", md: "20px" },
               },}}
               inputRef={amtDueEle}
-              onChange={(e) => setAmtDue(e.target.value)}
+              onChange={handleAmtDueChange}
               id="standard-basic"
               label="Amount due ₹"
               variant="standard"
@@ -220,7 +259,7 @@ export default function ShopRental(){
                 margin: "10px 0px ",
               }}
               inputRef={recievedAmtEle}
-              onChange={handleChange}
+              onChange={handleRecAmtChange}
               InputProps={{
                 style: {
                   color: "rgb(255, 255, 255)",

@@ -305,6 +305,7 @@ export default function CreateEventPage() {
                       color: "white",
                       paddingLeft: "1px",
                       fontSize: "18px",
+                      paddingBottom : "4px"
                     },
 
                     "& .MuiOutlinedInput-root": {
@@ -376,6 +377,7 @@ export default function CreateEventPage() {
                     "& .MuiOutlinedInput-input": {
                       paddingLeft: "1px",
                       color: "white",
+                      paddingBottom : "4px"
                     },
                   }}
                 />
