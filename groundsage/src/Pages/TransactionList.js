@@ -89,7 +89,14 @@ const TransactionList = () => {
   useEffect(() => {
     // Fetch transaction data from the API
     fecthTransections();
+  }, []);
+
+  useEffect(() => {
+    // Fetch transaction data from the API
+    fecthTransections();
   }, [activeEventId ]);
+
+
   if (isLoading) {
     return <Loading />;
   } else {
@@ -287,7 +294,7 @@ const TransactionList = () => {
               
             </Box>
           )}
-          {transactionData?.filter((item) => item?.tag === "expense").length === 0 && (
+          {transactionData.length > 0 && transactionData?.filter((item) => item?.tag === "expense").length === 0 && (
             <Box
               sx={{
                 display: "flex",

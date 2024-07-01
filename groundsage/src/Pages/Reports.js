@@ -47,6 +47,21 @@ const iconsPath = [
   "/occupancyreport",
 ];
 
+const months = [
+  {'january': 0},
+  {'february': 0},
+  {'march': 0},
+  {'april': 0},
+  {'may': 0},
+  {'june': 0},
+  {'july': 0},
+  {'august': 0},
+  {'september': 0},
+  {'october': 0},
+  {'november': 0},
+  {'december': 0}
+]
+
 const Reports = () => {
   const navigate = useNavigate();
   const [chartType, setChartType] = useState("year");
@@ -57,6 +72,22 @@ const Reports = () => {
   const [expenseData, setExpenseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [defaultData, setDefaultData] = useState([]);
+
+  const transformData = (data) => {
+    // Create a copy of the months array
+    const transformedMonths = [...months];
+
+    // Iterate over the data array and update the corresponding month in transformedMonths
+    data.forEach(item => {
+      const month = item.month.toLowerCase();
+      const monthObject = transformedMonths.find(m => m.hasOwnProperty(month));
+      if (monthObject) {
+        monthObject[month] = item.income;
+      }
+    });
+
+    return transformedMonths;
+  };
 
   const fetchYearlyReportData = async () => {
     try {
@@ -81,7 +112,13 @@ const Reports = () => {
           chartType === "year" ? item.year : item?.month?.split(" ")[0],
         income: item.total / 1000,
       }));
-      setYearlyReport(data);
+      if(chartType === "month"){
+        const transformedData = transformData(data);
+        setYearlyReport(data);
+      }else{
+        setYearlyReport(data);
+      }
+      
     } catch (err) {
       console.log(err);
       setYearlyReport([]);
@@ -97,73 +134,77 @@ const Reports = () => {
   };
 
   const fetchYearlyData = async () => {
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URI}/transaction/fetch-yearly-data`,
-        {
-          year: selectedPieOption,
-          type: "income",
-          event_id: activeEventId,
-        },
-        {
-          headers: {
-            authorization: `${user?.token}`,
-            Accept: "application/json",
-            role_id: user?.role_id,
+    if(Number.isInteger(selectedPieOption)){
+        
+      try {
+        
+        const res = await axios.post(
+          `${process.env.REACT_APP_API_URI}/transaction/fetch-yearly-data`,
+          {
+            year: selectedPieOption,
+            type: "income",
+            event_id: activeEventId,
           },
+          {
+            headers: {
+              authorization: `${user?.token}`,
+              Accept: "application/json",
+              role_id: user?.role_id,
+            },
+          }
+        );
+  
+        const data = res?.data?.data;
+        setPieChartData(data);
+        console.log(data);
+        const mainValue = data.shop_rental_total || data.staff_salary_total;
+        const othersValue = data.others_total;
+        const total = parseInt(data.total);
+  
+        // Calculate percentages
+        const mainPercentage = Math.ceil(((mainValue / total) * 100).toFixed(2));
+        const othersPercentage = Math.ceil((100 - mainPercentage).toFixed(2));
+  
+        const newExpenseData = [
+          {
+            name: data.shop_rental_total ? "Shop Rental" : "Staff Salary",
+            value: mainPercentage,
+            fill: "rgb(236, 219, 163)",
+          },
+          { name: "Others", value: othersPercentage, fill: "rgb(63, 128, 101)" },
+        ];
+        const selectedData = yearlyReport?.find(
+          (item) =>
+            item[chartType === "year" ? "year" : "month"] === selectedPieOption
+        );
+        if (selectedData) {
+          newExpenseData[0].value =
+            (selectedData.income * parseInt(newExpenseData[0].value)) /
+            parseInt(data.total);
+          newExpenseData[1].value =
+            (selectedData.income * parseInt(newExpenseData[1].value)) /
+            parseInt(data.total);
+        } else {
+          newExpenseData[0].value =
+            (data.total * parseInt(newExpenseData[0].value)) /
+            parseInt(data.total);
+          newExpenseData[1].value =
+            (data.total * parseInt(newExpenseData[1].value)) /
+            parseInt(data.total);
         }
-      );
-
-      const data = res?.data?.data;
-      setPieChartData(data);
-      console.log(data);
-      const mainValue = data.shop_rental_total || data.staff_salary_total;
-      const othersValue = data.others_total;
-      const total = parseInt(data.total);
-
-      // Calculate percentages
-      const mainPercentage = Math.ceil(((mainValue / total) * 100).toFixed(2));
-      const othersPercentage = Math.ceil((100 - mainPercentage).toFixed(2));
-
-      const newExpenseData = [
-        {
-          name: data.shop_rental_total ? "Shop Rental" : "Staff Salary",
-          value: mainPercentage,
-          fill: "rgb(236, 219, 163)",
-        },
-        { name: "Others", value: othersPercentage, fill: "rgb(63, 128, 101)" },
-      ];
-      const selectedData = yearlyReport?.find(
-        (item) =>
-          item[chartType === "year" ? "year" : "month"] === selectedPieOption
-      );
-      if (selectedData) {
-        newExpenseData[0].value =
-          (selectedData.income * parseInt(newExpenseData[0].value)) /
-          parseInt(data.total);
-        newExpenseData[1].value =
-          (selectedData.income * parseInt(newExpenseData[1].value)) /
-          parseInt(data.total);
-      } else {
-        newExpenseData[0].value =
-          (data.total * parseInt(newExpenseData[0].value)) /
-          parseInt(data.total);
-        newExpenseData[1].value =
-          (data.total * parseInt(newExpenseData[1].value)) /
-          parseInt(data.total);
+  
+        setExpenseData(newExpenseData);
+      } catch (err) {
+        toast.error(err?.response?.data?.message, {
+          style: {
+            fontSize: "16px",
+            fontFamily: "Inter",
+            fontWeight: "600",
+            color: "rgb(66, 92, 90)",
+          },
+        });
+        setExpenseData([]);
       }
-
-      setExpenseData(newExpenseData);
-    } catch (err) {
-      toast.error(err?.response?.data?.message, {
-        style: {
-          fontSize: "16px",
-          fontFamily: "Inter",
-          fontWeight: "600",
-          color: "rgb(66, 92, 90)",
-        },
-      });
-      setExpenseData([]);
     }
   };
   useEffect(() => {

@@ -156,7 +156,7 @@ const App = () => {
                   )}
                 </em>
               </MenuItem>
-              {activeEvent?.slice(0, activeEvent?.length - 1).map((name) => (
+              {activeEvent?.slice(0, activeEvent?.length).map((name) => (
                 <MenuItem
                   key={name.id}
                   value={name?.event_name}

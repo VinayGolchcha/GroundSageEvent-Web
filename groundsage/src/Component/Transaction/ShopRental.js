@@ -62,7 +62,7 @@ export default function ShopRental(){
   const handleSave = () => {
     if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
       console.log(true);
-      toast.warning("received amount, should be less than the Due amount ₹", {
+      toast.warning("Received amount, should be less than the Due amount ₹", {
         style: {
           // Change font color
           fontSize: "16px", // Change font size

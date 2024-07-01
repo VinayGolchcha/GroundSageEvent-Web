@@ -27,9 +27,9 @@ export default function Others() {
   const {addTransection , isSucessTransection , user , activeEventId} = useContext(AuthContext);
   const navigate = useNavigate();
   const handleSave = () => {
-    if(recievedAmtEle.current.value >  amtDueEle.current.value){
+    if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
       console.log(true);
-      toast.warning("received amount, should be less than the Due amount ₹" , {
+      toast.warning("Received amount, should be less than the Due amount ₹" , {
         style: {
           // Change font color
           fontSize: "16px", // Change font size

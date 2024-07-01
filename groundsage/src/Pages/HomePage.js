@@ -107,9 +107,10 @@ export default function HomePage() {
         }
       );
       console.log(res);
-      setActiveEvent(res?.data?.data);
-      setActiveEventId(res?.data?.data[0]?.id);
-      setActiveEventName(res?.data?.data[0]?.event_name);
+      setActiveEvent(res?.data?.data[1]);
+      console.log(res?.data?.data[1]);
+      setActiveEventId(res?.data?.data[1][0]?.id);
+      setActiveEventName(res?.data?.data[1][0]?.event_name);
       len = activeEvent?.length - 1;
       console.log(len);
       setIsLoading(false);
@@ -211,7 +212,7 @@ export default function HomePage() {
                   },
                 }}
               >
-                {activeEvent[activeEvent?.length - 1]?.username.toUpperCase()}
+                {activeEvent[activeEvent?.length - 1]?.username?.toUpperCase()}
               </Typography>
             </Box>
           </Box>
@@ -274,9 +275,6 @@ export default function HomePage() {
               }}
             >
               {activeEvent?.map((item, index) => {
-                if (index === activeEvent?.length - 1) {
-                  return;
-                }
                 return (
                   <Grid
                     item
@@ -453,7 +451,7 @@ export default function HomePage() {
                     },
                   }}
                   onClick={() => {
-                    navigate("/Profile");
+                    navigate("/referral-code");
                   }}
                 >
                   Join now
