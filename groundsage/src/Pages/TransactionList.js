@@ -55,7 +55,9 @@ const TransactionList = () => {
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
-
+  const handleClick = () => {
+    window.location.reload();
+  }
   const fecthTransections = () => {
     setIsLoading(true);
     fetch(
@@ -126,6 +128,7 @@ const TransactionList = () => {
             marginTop: "-30px",
             textShadow: "0px 4px 4px rgba(0, 0, 0, 0.52)", // Adding outside shadow
           }}
+          onClick={handleClick}
         >
           Transactions
         </Typography>
@@ -136,6 +139,7 @@ const TransactionList = () => {
             alignItems: "center",
             marginTop: "10px",
           }}
+          
         >
           <Button
             variant={activeButton === "income" ? "contained" : "outlined"}

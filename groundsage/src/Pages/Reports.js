@@ -119,9 +119,17 @@ const Reports = () => {
         setYearlyReport(data);
       }
       
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       setYearlyReport([]);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
       // toast.error(err?.response?.data?.message, {
       //   style: {
       //     fontSize: "16px",
@@ -134,8 +142,7 @@ const Reports = () => {
   };
 
   const fetchYearlyData = async () => {
-    if(Number.isInteger(selectedPieOption)){
-        
+    // if selected option is Number then only the api will call  
       try {
         
         const res = await axios.post(
@@ -194,18 +201,31 @@ const Reports = () => {
         }
   
         setExpenseData(newExpenseData);
-      } catch (err) {
-        toast.error(err?.response?.data?.message, {
-          style: {
-            fontSize: "16px",
-            fontFamily: "Inter",
-            fontWeight: "600",
-            color: "rgb(66, 92, 90)",
-          },
-        });
+      } catch (error) {
+        if(error?.response?.message){
+          toast.error(error?.response?.message  , {
+            style: {
+              fontSize: "16px",
+              fontFamily: "Inter",
+              fontWeight: "600",
+              color: "rgb(66, 92, 90)",
+            },
+          });
+        }
+        if(error?.response?.data?.message){
+          console.log("true");
+          const item = error?.response?.data?.message
+          toast.error(item , {
+            style: {
+              fontSize: "16px",
+              fontFamily: "Inter",
+              fontWeight: "600",
+              color: "rgb(66, 92, 90)",
+            },
+          });
+        }
         setExpenseData([]);
       }
-    }
   };
   useEffect(() => {
     fetchYearlyReportData();

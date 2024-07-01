@@ -60,19 +60,33 @@ const OccupancyReport = () => {
       );
       setOccupancyData(res?.data?.data);
       setIsLoading(false);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       setIsLoading(false);
       setOccupancyData([]);
-      toast.error(err?.response?.data?.message, {
-        style: {
-          // Change font color
-          fontSize: "16px", // Change font size
-          fontFamily: "Inter", // Change font family
-          fontWeight: "600", // Change font weight
-          color: "rgb(66, 92, 90)",
-        },
-      });
+      if(error?.response?.message){
+        toast.error(error?.response?.message  , {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      }
+      if(error?.response?.data?.message){
+        const item = error?.response?.data?.message
+        toast.error(item  , {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      }
     }
   };
 

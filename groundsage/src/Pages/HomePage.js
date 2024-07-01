@@ -114,9 +114,17 @@ export default function HomePage() {
       len = activeEvent?.length - 1;
       console.log(len);
       setIsLoading(false);
-    } catch (err) {
+    } catch (error) {
       setIsLoading(false);
-      toast.error(err?.response?.data?.message);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
+      console.error(error);
     }
   };
 

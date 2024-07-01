@@ -56,18 +56,33 @@ const NetPaybleReport = () => {
       });
       setNetPaybleReportData(res?.data?.data);
       setIsLoading(false);
-    }catch(err){
+    }catch(error){
       setIsLoading(false);
       setNetPaybleReportData([]);
-      toast.error(err?.response?.data?.message , {
-        style: {
-          // Change font color
-          fontSize: "16px", // Change font size
-          fontFamily: "Inter", // Change font family
-          fontWeight: "600", // Change font weight
-          color: "rgb(66, 92, 90)",
-        },
-      });
+      if(error?.response?.message){
+        toast.error(error?.response?.message  , {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item  , {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      }
     }
   
   }
@@ -260,7 +275,7 @@ const NetPaybleReport = () => {
                 fontSize : {xs : "20px" , sm : "20px"}
               }}
             >
-              Yearly Update for Net Payable 
+              {selectedOption === "Year" ?<> Yearly Update </> : <>Monthly Update</>} for Net Payable 
             </Typography>
             {/* <Typography
               sx={{

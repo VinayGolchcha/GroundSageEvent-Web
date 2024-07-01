@@ -62,18 +62,33 @@ const OutStandingReport = () => {
       setOutstandingReport(res?.data?.data);
       console.log(outstandingReport);
       setIsLoading(false);
-    } catch (err) {
+    } catch (error) {
       setIsLoading(false);
       setOutstandingReport([]);
-      toast.error(err?.response?.data?.message, {
-        style: {
-          // Change font color
-          fontSize: "16px", // Change font size
-          fontFamily: "Inter", // Change font family
-          fontWeight: "600", // Change font weight
-          color: "rgb(66, 92, 90)",
-        },
-      });
+      if(error?.response?.message){
+        toast.error(error?.response?.message  , {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item  , {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      }
     }
   };
   useEffect(() => {
@@ -264,7 +279,7 @@ const OutStandingReport = () => {
                 fontSize: { xs: "20px", sm: "20px" },
               }}
             >
-              Yearly Update for Outstanding Amt
+              {selectedOption === "Year" ?<> Yearly Update </> : <>Monthly Update</>} for Outstanding Amt
             </Typography>
             {/* <Typography
               sx={{

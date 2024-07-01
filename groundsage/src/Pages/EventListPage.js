@@ -74,16 +74,26 @@ export default function EventListPage() {
           color: "rgb(66, 92, 90)",
         },
       });
+      fetchEvents();
       setIsEdit(!isEdit);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       setIsLoading(false);
-      const errArray = err?.response?.data?.errors;
+      const errArray = error?.response?.data?.errors;
       console.log(errArray);
-      errArray?.forEach((err) => {
-        toast.error(err?.msg);
+      errArray?.forEach((error) => {
+        toast.error(error?.msg);
       });
-      toast.error(err);
+      toast.error(error);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
+
     }
   };
   const fetchEvents = async () => {
@@ -127,10 +137,18 @@ export default function EventListPage() {
           color: "rgb(66, 92, 90)",
         },
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       setIsLoading(false);
-      toast.error(err?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
     }
   };
 

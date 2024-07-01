@@ -49,9 +49,17 @@ const Notes = () => {
       console.log(res);
       fetchNotes();
       setIsLoading(false);
-    }catch(err){
-      toast.error(err);
+    }catch(error){
       setIsLoading(false);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
+      console.error(error);
     }
 
   }
@@ -70,9 +78,18 @@ const Notes = () => {
       console.log(eventList);
       setIsLoading(false);
       console.log(newEventList);
-    }catch(err){
+    }catch(error){
       setIsLoading(false);
-      setEventList([])
+      setEventList([]);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
+      console.error(error);
     }
   }
 
@@ -123,10 +140,10 @@ const Notes = () => {
           color: "rgb(66, 92, 90)",
         },});
         fetchNotes();
-    }catch(err){
-      console.log(err);
-      const errors = err?.response?.data?.errors;
-      errors.forEach(element => {
+    }catch(error){
+      console.log(error);
+      const errors = error?.response?.data?.errors;
+      errors?.forEach(element => {
         toast.error(element?.msg ,  {
           style: {
             // Change font color
@@ -136,6 +153,14 @@ const Notes = () => {
             color: "rgb(66, 92, 90)",
           }}); 
       });
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
     }
   }
   const handleSaveNote = async (body) => {
@@ -174,10 +199,10 @@ const Notes = () => {
           color: "rgb(66, 92, 90)",
         },});
         fetchNotes();
-    }catch(err){
-      console.log(err.message);
-      const errors = err?.response?.data?.errors;
-      errors.forEach(element => {
+    }catch(error){
+      console.log(error.message);
+      const errors = error?.response?.data?.errors;
+      errors?.forEach(element => {
         toast.error(element?.msg ,  {
           style: {
             // Change font color
@@ -187,6 +212,14 @@ const Notes = () => {
             color: "rgb(66, 92, 90)",
           }}); 
       });
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
     }
     
      // Use toast to show success message

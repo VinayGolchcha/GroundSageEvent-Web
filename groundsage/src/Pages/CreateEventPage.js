@@ -106,12 +106,20 @@ export default function CreateEventPage() {
       navigate("/refferalcode"); // Adjust the path as needed
 
       toast.success("Data Added Successfully");
-    } catch (err) {
-      const errArray = err?.response?.data?.errors;
+    } catch (error) {
+      const errArray = error?.response?.data?.errors;
       errArray?.forEach((err) => {
         toast.error(err?.msg);
       });
-      toast.error(err);
+      toast.error(error);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
     }
   };
   const handleSave = () => {

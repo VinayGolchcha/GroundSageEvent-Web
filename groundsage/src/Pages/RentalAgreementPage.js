@@ -75,8 +75,16 @@ export default function RentalAgreementPage() {
         setShopData(fecthShopData);
         setShopNumber(res?.data?.data[0].shop_number);
       }
-    } catch (err) {
-      throw err;
+    } catch (error) {
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
+      throw error;
     }
   };
   const fetchRentalAgree = async () => {
@@ -119,9 +127,16 @@ export default function RentalAgreementPage() {
       }
       console.log(res);
       setLoading(false);
-    } catch (err) {
-      toast.error(err?.response?.data?.message);
+    } catch (error) {
       setLoading(false);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
     }
   };
 
@@ -185,14 +200,14 @@ export default function RentalAgreementPage() {
           imageUrls: shop,
         },
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       setLoading(false);
-      const errArray = err?.response?.data?.errors;
-      errArray?.forEach((err) => {
-        toast.error(err?.msg);
+      const errArray = error?.response?.data?.errors;
+      errArray?.forEach((error) => {
+        toast.error(error?.msg);
       });
-      toast.error(err?.response?.data, {
+      toast.error(error?.response?.data, {
         style: {
           // Change font color
           fontSize: "16px", // Change font size
@@ -201,6 +216,14 @@ export default function RentalAgreementPage() {
           color: "rgb(66, 92, 90)",
         },
       });
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
     }
   };
 
@@ -241,9 +264,9 @@ export default function RentalAgreementPage() {
             imageUrls: shop,
           },
         });
-      } catch (err) {
+      } catch (error) {
         setLoading(false);
-        toast.success(err?.response?.data?.message, {
+        toast.success(error?.response?.data?.message, {
           style: {
             // Change font color
             fontSize: "16px", // Change font size
@@ -252,7 +275,15 @@ export default function RentalAgreementPage() {
             color: "rgb(66, 92, 90)",
           },
         });
-        console.log(err);
+        if(error?.response?.message){
+          toast.error(error?.response?.message);
+        }
+        if(error?.response?.data?.message){
+          console.log("true");
+          const item = error?.response?.data?.message
+          toast.error(item);
+        }
+        console.log(error);
       }
     }
   };
@@ -297,13 +328,21 @@ export default function RentalAgreementPage() {
           imageUrls: shop,
         },
       });
-    } catch (err) {
+    } catch (error) {
       setLoading(false);
-      console.log(err);
-      const errArray = err?.response?.data?.errors;
-      errArray?.forEach((err) => {
-        toast.error(err?.msg);
+      console.log(error);
+      const errArray = error?.response?.data?.errors;
+      errArray?.forEach((error) => {
+        toast.error(error?.msg);
       });
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
     }
   };
   const handleSave = () => {
@@ -438,6 +477,7 @@ export default function RentalAgreementPage() {
                   sx={{
                     position: "absolute",
                     color: "rgb(255, 255, 255)",
+                    textShadow: "0 6px rgba(81,67,21,0.8)",
                   }}
                 >
                   Shop {shopNumber}
