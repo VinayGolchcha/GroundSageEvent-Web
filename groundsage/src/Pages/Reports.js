@@ -48,21 +48,37 @@ const iconsPath = [
 ];
 
 const months = [
-  {'january': 0},
-  {'february': 0},
-  {'march': 0},
-  {'april': 0},
-  {'may': 0},
-  {'june': 0},
-  {'july': 0},
-  {'august': 0},
-  {'september': 0},
-  {'october': 0},
-  {'november': 0},
-  {'december': 0}
+  {Income: 0, month: 'Jan'},
+  {Income: 0, month: 'Feb'},
+  {Income: 0, month: 'Mar'},
+  {Income: 0, month: 'April'},
+  {Income: 0, month: 'May'},
+  {Income: 0, month: 'June'},
+  {Income: 0, month: 'July'},
+  {Income: 0, month: 'Aug'},
+  {Income: 0, month: 'Sep'},
+  {Income: 0, month: 'Oct'},
+  {Income: 0, month: 'Nov'},
+  {Income: 0, month: 'Dec'}
 ]
 
+const fullToAbbreviatedMonthMap = {
+  January: 'Jan',
+  February: 'Feb',
+  March: 'Mar',
+  April: 'April',
+  May: 'May',
+  June: 'June',
+  July: 'July',
+  August: 'Aug',
+  September: 'Sep',
+  October: 'Oct',
+  November: 'Nov',
+  December: 'Dec'
+};
+
 const Reports = () => {
+  const mySet = new Set();
   const navigate = useNavigate();
   const [chartType, setChartType] = useState("year");
   const [selectedPieOption, setSelectedPieOption] = useState("2024");
@@ -72,21 +88,29 @@ const Reports = () => {
   const [expenseData, setExpenseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [defaultData, setDefaultData] = useState([]);
+  const [filterListData , setFilterListData] = useState([]);
+  const [yearSpan , setYearSpan] = useState("");
 
-  const transformData = (data) => {
+  const updateMonthlyIncome = (months, backendData , monthMap) => {
     // Create a copy of the months array
-    const transformedMonths = [...months];
+    const updatedMonths = months.map(month => ({ ...month }));
 
-    // Iterate over the data array and update the corresponding month in transformedMonths
-    data.forEach(item => {
-      const month = item.month.toLowerCase();
-      const monthObject = transformedMonths.find(m => m.hasOwnProperty(month));
-      if (monthObject) {
-        monthObject[month] = item.income;
-      }
-    });
+  // Iterate over the backend data
+  backendData.forEach(backendItem => {
+    const abbreviatedMonth = monthMap[backendItem.month];
 
-    return transformedMonths;
+    // Find the corresponding month in the updatedMonths array
+    const monthToUpdate = updatedMonths.find(
+      month => month.month === abbreviatedMonth
+    );
+
+    // Update the Income value if the month is found
+    if (monthToUpdate) {
+      monthToUpdate.Income = backendItem.Income;
+    }
+  });
+
+  return updatedMonths;
   };
 
   const fetchYearlyReportData = async () => {
@@ -113,73 +137,56 @@ const Reports = () => {
         income: item.total / 1000,
       }));
       if(chartType === "month"){
-        const transformedData = transformData(data);
-        setYearlyReport(data);
+        const settingYears = res?.data?.data?.map((item) => mySet.add(item?.month?.split(" ")[1]));
+        let yearStr = ""
+        if(mySet.size > 1){
+          mySet?.forEach(value => {
+            yearStr = yearStr + value + "-"
+          });
+        }else{
+          mySet?.forEach(value => {
+            yearStr = yearStr + value;
+          });
+        }
+        setYearSpan(yearStr);
       }else{
-        setYearlyReport(data);
+        setYearSpan("");
       }
       
-    } catch (error) {
-      console.log(error);
-      setYearlyReport([]);
-      if(error?.response?.message){
-        toast.error(error?.response?.message);
+      setFilterListData(res?.data.data);
+      console.log("filtered data" , filterListData);
+      const convertedData = data.map((item) => {
+        let {income , ...rest} = item;
+        return {Income : income , ...rest};
+      });
+      console.log(convertedData);
+      if(chartType === "month"){
+        const transformedData = updateMonthlyIncome(months , convertedData , fullToAbbreviatedMonthMap);
+        setYearlyReport(transformedData);
+      }else{
+        setYearlyReport(convertedData);
       }
-      if(error?.response?.data?.message){
-        console.log("true");
-        const item = error?.response?.data?.message
-        toast.error(item);
-      }
-      // toast.error(err?.response?.data?.message, {
-      //   style: {
-      //     fontSize: "16px",
-      //     fontFamily: "Inter",
-      //     fontWeight: "600",
-      //     color: "rgb(66, 92, 90)",
-      //   },
-      // });
-    }
-  };
-
-  const fetchYearlyData = async () => {
-    // if selected option is Number then only the api will call  
-      try {
-        
-        const res = await axios.post(
-          `${process.env.REACT_APP_API_URI}/transaction/fetch-yearly-data`,
-          {
-            year: selectedPieOption,
-            type: "income",
-            event_id: activeEventId,
-          },
-          {
-            headers: {
-              authorization: `${user?.token}`,
-              Accept: "application/json",
-              role_id: user?.role_id,
-            },
-          }
-        );
-  
-        const data = res?.data?.data;
-        setPieChartData(data);
-        console.log(data);
-        const mainValue = data.shop_rental_total || data.staff_salary_total;
-        const othersValue = data.others_total;
-        const total = parseInt(data.total);
-  
+      console.log(yearlyReport);
+        const dataPie = res?.data?.data[0];
+        setPieChartData(dataPie);
+        console.log(dataPie);
+        const mainValue = parseInt(dataPie.shop_rental_total) || data.staff_salary_total;
+        const othersValue = parseInt(dataPie.other_total);
+        const total = parseInt(dataPie.total);
         // Calculate percentages
         const mainPercentage = Math.ceil(((mainValue / total) * 100).toFixed(2));
         const othersPercentage = Math.ceil((100 - mainPercentage).toFixed(2));
-  
+        console.log("main percentage" , mainPercentage);
+        console.log("others percentage" , othersPercentage);
         const newExpenseData = [
           {
-            name: data.shop_rental_total ? "Shop Rental" : "Staff Salary",
+            name: dataPie.shop_rental_total ? "Shop Rental" : "Staff Salary",
             value: mainPercentage,
             fill: "rgb(236, 219, 163)",
           },
           { name: "Others", value: othersPercentage, fill: "rgb(63, 128, 101)" },
         ];
+        console.log("newExpenseData" , newExpenseData)
         const selectedData = yearlyReport?.find(
           (item) =>
             item[chartType === "year" ? "year" : "month"] === selectedPieOption
@@ -187,45 +194,47 @@ const Reports = () => {
         if (selectedData) {
           newExpenseData[0].value =
             (selectedData.income * parseInt(newExpenseData[0].value)) /
-            parseInt(data.total);
+            parseInt(dataPie.total);
           newExpenseData[1].value =
             (selectedData.income * parseInt(newExpenseData[1].value)) /
-            parseInt(data.total);
+            parseInt(dataPie.total);
         } else {
           newExpenseData[0].value =
-            (data.total * parseInt(newExpenseData[0].value)) /
-            parseInt(data.total);
+            (dataPie.total * parseInt(newExpenseData[0].value)) /
+            parseInt(dataPie.total);
           newExpenseData[1].value =
-            (data.total * parseInt(newExpenseData[1].value)) /
-            parseInt(data.total);
+            (dataPie.total * parseInt(newExpenseData[1].value)) /
+            parseInt(dataPie.total);
         }
   
         setExpenseData(newExpenseData);
-      } catch (error) {
-        if(error?.response?.message){
-          toast.error(error?.response?.message  , {
-            style: {
-              fontSize: "16px",
-              fontFamily: "Inter",
-              fontWeight: "600",
-              color: "rgb(66, 92, 90)",
-            },
-          });
-        }
-        if(error?.response?.data?.message){
-          console.log("true");
-          const item = error?.response?.data?.message
-          toast.error(item , {
-            style: {
-              fontSize: "16px",
-              fontFamily: "Inter",
-              fontWeight: "600",
-              color: "rgb(66, 92, 90)",
-            },
-          });
-        }
-        setExpenseData([]);
+      
+    } catch (error) {
+      console.log(error);
+      setYearlyReport([]);
+      if(error?.response?.message){
+        toast.error(error?.response?.message , {
+          style: {
+            fontSize: "16px",
+            fontFamily: "Inter",
+            fontWeight: "600",
+            color: "rgb(66, 92, 90)",
+          },
+        });
       }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item , {
+          style: {
+            fontSize: "16px",
+            fontFamily: "Inter",
+            fontWeight: "600",
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      }
+    }
   };
   useEffect(() => {
     fetchYearlyReportData();
@@ -233,8 +242,81 @@ const Reports = () => {
   }, [chartType, activeEventId]);
 
   useEffect(() => {
-    fetchYearlyData();
-    setIsLoading(false);
+    const getPieChartData = () => {
+      console.log(selectedPieOption);
+      let validOption; 
+      if(selectedPieOption === "Jan"){
+        validOption = "January";
+      }else if(selectedPieOption === "Feb"){
+        validOption = "Feburary";
+      }else if(selectedPieOption === "Mar"){
+        validOption = "March";
+      }else if(selectedPieOption === "Aug"){
+        validOption = "August";
+      }else if(selectedPieOption === "Sep"){
+        validOption = "September";
+      }else if(selectedPieOption === "Oct"){
+        validOption = "October";
+      }else if(selectedPieOption === "Nov"){
+        validOption = "November";
+      }else if(selectedPieOption === "Dec"){
+        validOption = "December";
+      }
+      let dataPie
+      if(chartType === "year"){
+        dataPie = filterListData.filter((item) => item?.year === selectedPieOption);
+        console.log(dataPie);
+      }
+      if(chartType === "month"){
+        if(validOption){
+          dataPie = filterListData?.filter((item) => item?.month?.split(" ")[0] === validOption);
+        }else{
+          dataPie = filterListData?.filter((item) => item?.month?.split(" ")[0] === selectedPieOption);
+        }
+        
+      }
+      const data = dataPie[0]
+        setPieChartData(data);
+        console.log(data);
+        const mainValue = parseInt(data?.shop_rental_total);
+        const othersValue = parseInt(data?.other_total);
+        const total = parseInt(data?.total);
+        // Calculate percentages
+        
+        const mainPercentage = Math.ceil(((mainValue / total) * 100).toFixed(2));
+        const othersPercentage = Math.ceil((100 - mainPercentage).toFixed(2));
+
+        const newExpenseData = [
+          {
+            name: data?.shop_rental_total ? "Shop Rental" : "Staff Salary",
+            value: mainPercentage,
+            fill: "rgb(236, 219, 163)",
+          },
+          { name: "Others", value: othersPercentage, fill: "rgb(63, 128, 101)" },
+        ];
+        // const selectedData = yearlyReport?.find(
+        //   (item) =>
+        //     item[chartType === "year" ? "year" : "month"] === selectedPieOption
+        // );
+        // if (selectedData) {
+        //   newExpenseData[0].value =
+        //     (selectedData.income * parseInt(newExpenseData[0].value)) /
+        //     parseInt(data?.total);
+        //   newExpenseData[1].value =
+        //     (selectedData.income * parseInt(newExpenseData[1].value)) /
+        //     parseInt(data?.total);
+        // } else {
+        //   newExpenseData[0].value =
+        //     (data?.total * parseInt(newExpenseData[0].value)) /
+        //     parseInt(data?.total);
+        //   newExpenseData[1].value =
+        //     (data?.total * parseInt(newExpenseData[1].value)) /
+        //     parseInt(data?.total);
+        // }
+  
+        setExpenseData(newExpenseData); 
+    }
+    getPieChartData();
   }, [selectedPieOption, activeEventId]);
 
   const handlePieOptionChange = (event) => {
@@ -385,7 +467,18 @@ const Reports = () => {
             <Box sx={{ width: "100%", height: "40vh" }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
-                  <XAxis dataKey={xAxisDataKey} />
+                  <XAxis dataKey={xAxisDataKey} label={{value : `${yearSpan}` , angle: 0,
+                      position: "insidedown",
+                      dx: -10,
+                      dy : 15,
+                      style: {
+                        textAnchor: "middle",
+                        fontFamily: "Inter",
+                        fontWeight: "600",
+                        fill: "rgb(189, 189, 189)",
+                        fontSize: "14px",
+                        
+                      },}}/>
                   <YAxis
                     tickFormatter={(value) => `${value}`} // Custom tick formatter
                     label={{
@@ -410,7 +503,7 @@ const Reports = () => {
                     wrapperStyle={{ top: -30 }}
                   />
 
-                  <Bar dataKey="income" fill="rgb(63, 128, 101)" barSize={30} />
+                  <Bar dataKey="Income" fill="rgb(63, 128, 101)" barSize={30} />
                 </BarChart>
               </ResponsiveContainer>
             </Box>
