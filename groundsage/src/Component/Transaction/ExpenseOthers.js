@@ -19,10 +19,24 @@ export default function ExpenseOthers() {
   const balancePayAmtEle = useRef(null);
   const remarkEle = useRef(null);
   const navigate = useNavigate();
-  const {addTransection , isSucessTransection} = useContext(AuthContext);
+  const {addTransection , isSucessTransection , setIsSucessTransection} = useContext(AuthContext);
   useEffect(() => {
     console.log("successfulltransection" , isSucessTransection);
   },[])
+
+  const callAddTransection = async (body) => {
+    try {
+      // Your logic for adding a transaction
+      // Assuming this is an asynchronous operation
+      const response = await addTransection(body);;
+      setIsSucessTransection(true);
+      return response; // Return the response
+    } catch (error) {
+      setIsSucessTransection(false);
+      throw error; // Throw the error to be caught later
+    }
+
+  }
   const handleSave = () => {
     const body = {
       item : addItemEle.current.value,//shop no in string
@@ -32,13 +46,14 @@ export default function ExpenseOthers() {
       remarks : remarkEle.current.value,
       tag : "expense"
     }
-    addTransection(body);
-    console.log("successfulltransection" , isSucessTransection);
+    callAddTransection(body);
     if(isSucessTransection){
       navigate("/transactions");
     }
     
   }
+
+
   return (
     <>
     <ToastContainer/>

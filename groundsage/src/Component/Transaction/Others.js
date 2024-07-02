@@ -24,8 +24,23 @@ export default function Others() {
   const recievedAmtEle = useRef(null);
   const outstandingAmtEle = useRef(null);
   const remarkEle = useRef(null);
-  const {addTransection , isSucessTransection , user , activeEventId} = useContext(AuthContext);
+  const {addTransection , isSucessTransection , user , activeEventId , setIsSucessTransection} = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const callAddTransection = async (body) => {
+    try {
+      // Your logic for adding a transaction
+      // Assuming this is an asynchronous operation
+      const response = await addTransection(body);;
+      setIsSucessTransection(true);
+      return response; // Return the response
+    } catch (error) {
+      setIsSucessTransection(false);
+      throw error; // Throw the error to be caught later
+    }
+
+  }
+
   const handleSave = () => {
     if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
       console.log(true);
@@ -48,8 +63,7 @@ export default function Others() {
         remarks : remarkEle.current.value,
         tag : "income"
       }
-      addTransection(body);
-      fecthTransections()
+      callAddTransection(body);
     }
    
     
@@ -58,6 +72,7 @@ export default function Others() {
     }
     
   }
+
 
   const fecthTransections = () => {
     setIsLoading(true);

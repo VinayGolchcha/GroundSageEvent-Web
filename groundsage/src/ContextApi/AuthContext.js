@@ -127,6 +127,7 @@ const AuthProvider = ({ children }) => {
         },
       });
       setIsSucessTransection(true);
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  ")
     } catch (err) {
       const errors = err?.response?.data?.errors;
       errors?.forEach((element) => {
@@ -188,6 +189,7 @@ const AuthProvider = ({ children }) => {
       value={{
         activeEventName,
         setActiveEventName,
+        setIsSucessTransection,
         isEmailVerified,
         setIsEmailVerified,
         user,

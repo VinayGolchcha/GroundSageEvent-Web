@@ -8,7 +8,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,23 @@ export default function SaffSalary() {
   const balancePayAmtEle = useRef(null);
   const remarkEle = useRef(null);
   const navigate = useNavigate();
-  const {addTransection , isSucessTransection} = useContext(AuthContext);
+  const {addTransection , isSucessTransection , setIsSucessTransection} = useContext(AuthContext);
+
+  const callAddTransection = async (body) => {
+    try {
+      // Your logic for adding a transaction
+      // Assuming this is an asynchronous operation
+      const response = await addTransection(body);;
+      setIsSucessTransection(true);
+      return response; // Return the response
+    } catch (error) {
+      setIsSucessTransection(false);
+      throw error; // Throw the error to be caught later
+    }
+
+  }
+
+
   const handleSave = () => {
     const body = {
       item : addItemEle.current.value,             //shop no in string
@@ -29,13 +45,14 @@ export default function SaffSalary() {
       remarks : remarkEle.current.value, 
       tag : "expense"
     }
-    addTransection(body);
+    callAddTransection(body);
     
     if(isSucessTransection){
       navigate("/transactions");
     }
     
   }
+
   return (
     <>
     <ToastContainer/>

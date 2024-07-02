@@ -85,6 +85,7 @@ const DescriptionPage = () => {
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error("Error fetching shop data:", error);
+      
       setLoading(false); // Also set loading to false in case of error
     }
   };
@@ -92,7 +93,7 @@ const DescriptionPage = () => {
   useEffect(() => {
     fetchShopData();
     fetchRentalAgree(); // Fetch shop data when component mounts
-  }, [shopNumber]);
+  }, [shopNumber ]);
 
   if (loading) {
     // Show a loading indicator while the data is being fetched

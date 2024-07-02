@@ -26,7 +26,7 @@ export default function ShopRental(){
   const outstandingAmtEle = useRef(null);
   const navigate = useNavigate();
   const remarkEle = useRef(null);
-  const {addTransection , activeEventId , user , isSucessTransection} = useContext(AuthContext);
+  const {addTransection , activeEventId , user , isSucessTransection , setIsSucessTransection} = useContext(AuthContext);
   const [shopNo , setShopNo] = useState([]);
 
   const fecthTransections = () => {
@@ -59,6 +59,21 @@ export default function ShopRental(){
       });
   };
 
+  const callAddTransection = async (body) => {
+    try {
+      // Your logic for adding a transaction
+      // Assuming this is an asynchronous operation
+      const response = await addTransection(body);;
+      setIsSucessTransection(true);
+      return response; // Return the response
+    } catch (error) {
+      setIsSucessTransection(false);
+      throw error; // Throw the error to be caught later
+    }
+
+  }
+
+
   const handleSave = () => {
     if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
       console.log(true);
@@ -82,15 +97,14 @@ export default function ShopRental(){
         tag : "income"
       }
       console.log(body);
-      addTransection(body);
-      fecthTransections()
+      callAddTransection(body);
     }
     if(isSucessTransection){
       navigate("/transactions");
     }
-      
-    
   }
+
+
   const fetchAllShop = async() => {
     try{
       const res = await axios.get(`${process.env.REACT_APP_API_URI}/shop/fetch-all-shop/${activeEventId}` , {
