@@ -139,6 +139,9 @@ const Footer = () => {
                 borderRadius: "4px",
                 background: "rgb(115, 135, 135)",
                 border: "1px solid rgb(188, 189, 163)", // Add border color
+                '& .MuiFilledInput-input.Mui-disabled': {
+                  WebkitTextFillColor: '#FFFFFF !important',
+                },
               }}
             />
             <br />
