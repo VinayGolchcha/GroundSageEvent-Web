@@ -319,6 +319,7 @@ const Reports = () => {
     getPieChartData();
   }, [selectedPieOption, activeEventId]);
 
+
   const handlePieOptionChange = (event) => {
     setSelectedPieOption(event.target.value);
   };

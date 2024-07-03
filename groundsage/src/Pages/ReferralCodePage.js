@@ -1,12 +1,50 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Typography, TextField, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const ReferralCodePage = () => {
   const navigate = useNavigate();
-  const { RCode } = useContext(AuthContext);
+  const { RCode  , setActiveEventName , setActiveEvent,  user, setActiveEventId, activeEvent} = useContext(AuthContext);
+  const [isloading, setIsLoading] = useState(true);
 
+  const fecthApiHome = async () => {
+    try {
+      const res = await axios.get(
+        `https://groundsageevent-be.onrender.com/api/v1/home/home-page/${user?.user_id}`,
+        {
+          headers: {
+            authorization: user?.token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            role_id: user?.role_id,
+          },
+        }
+      );
+      console.log(res);
+      setActiveEvent(res?.data?.data[1]);
+      console.log(res?.data?.data[1]);
+      setActiveEventId(res?.data?.data[1][0]?.id);
+      setActiveEventName(res?.data?.data[1][0]?.event_name);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      if(error?.response?.data?.message){
+        console.log("true");
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fecthApiHome();
+  }, []);
   console.log(RCode);
   const handleCopyClick = (referralCode) => {
     if (referralCode) {
