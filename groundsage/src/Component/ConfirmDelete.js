@@ -3,18 +3,20 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: {lg : 400 , md : 400 , sm : 400 , xs : 350},
   backgroundColor: "rgb(66, 92, 90)",
   border: '2px solid #000',
   boxShadow: 24,
   borderRadius : "10px",
-  p: 4,
+  p: 2,
+  pb:4
 };
 
 export default function ConfirmDelete({open , handleClose , handleIncomeDelete}) {
@@ -29,6 +31,7 @@ export default function ConfirmDelete({open , handleClose , handleIncomeDelete})
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+        <Typography textAlign="end" sx={{cursor : "pointer"}} onClick={handleClose}><CloseIcon/></Typography>
           <Typography id="modal-modal-title" variant="h6" component="h2" textAlign="center" sx={{padding : "20px" , color : "white"}}>
             Are you sure want to delete
           </Typography>

@@ -152,8 +152,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
             <Box sx={{ alignContent : "center" , width : "60%" ,  boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.2) , -5px -5px 10px rgba(0, 0, 0, 0.2)" , borderRadius : "10px"  ,padding : "40px"}}>
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px"},
                   },
                   "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
@@ -167,8 +168,12 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
+                  "& .MuiInputBase-input": {
+                    fontSize: { xs: "18px" }, // Set input font size here
+                  },
                   width: "100%",
                   margin: "10px 0px ",
+          
                 }}
                 InputProps={{
                   style: {
@@ -187,7 +192,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                 defaultValue={selectedItem?.event_name}
               />
               <div><Typography sx ={{
-                        fontSize: "11px",
+                        fontSize: "14px",
                         position: "absolute",
                         paddingTop: "6px",
                         color : "white"
@@ -218,31 +223,36 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                             />
                           ),
                         },
+                        InputLabelProps: {
+                          fontSize: { xs: "18px", md: "20px" },
+                        },
                       },
                     }}
                     sx={{
-                      "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                      "& .MuiOutlinedInput-notchedOutline": {
                         border: "none",
                         borderRadius: "none",
   
                       },
-                      "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                      "& .MuiInputBase-input-MuiOutlinedInput-input": {
                         color: "white",
                       },
                     //   "& :hover": {
                     //     borderBottom: " 1px solid rgb(188, 189, 163)",
                     //   },
-                      "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                      "& .MuiInputBase-input-MuiOutlinedInput-input" : {
                         color : "white"
                       },
 
-                      "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
+                      "& .MuiOutlinedInput-root" : {
                         borderRadius : "0px",
                         borderBottom: " 1px solid rgb(188, 189, 163)",
+                        fontSize: "18px",
                       },
-                      "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                      "& .MuiOutlinedInput-input" : {
                         paddingLeft : "1px",
-                        color : "white"
+                        color : "white", 
+                        paddingBottom : "4px"
                       }
                     }}
                     defaultValue={selectedItem?.start_date}
@@ -250,7 +260,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                 </FormControl>
               </LocalizationProvider>
               <div><Typography sx ={{
-                        fontSize: "11px",
+                        fontSize: "14px",
                         position: "absolute",
                         paddingTop: "6px",
                         color : "white"
@@ -281,30 +291,35 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                             />
                           ),
                         },
+                        InputLabelProps: {
+                          fontSize: { xs: "18px", md: "20px" },
+                        },
                       },
                     }}
                     sx={{
-                        "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                        "& .MuiOutlinedInput-notchedOutline": {
                             border: "none",
                             borderRadius: "none",
       
                           },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                          "& .MuiInputBase-input-MuiOutlinedInput-input": {
                             color: "white",
                           },
                         //   "& :hover": {
                         //     borderBottom: " 1px solid rgb(188, 189, 163)",
                         //   },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                          "& .MuiInputBase-input-MuiOutlinedInput-input" : {
                             color: "white",
                           },
-                          "& .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root" : {
+                          "& .MuiOutlinedInput-root" : {
                             borderRadius : "0px",
                             borderBottom: " 1px solid rgb(188, 189, 163)",
+                            fontSize: "18px",
                           },
-                          "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input" : {
+                          "& .MuiOutlinedInput-input" : {
                             paddingLeft : "1px",
-                            color : "white"
+                            color : "white" ,
+                            paddingBottom : "4px"
                           }
 
                     }}
@@ -314,8 +329,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
               </LocalizationProvider>
               <TextField
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px"},
                   },
                   "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
@@ -329,6 +345,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
                     borderBottomColor: "rgb(188, 189, 163)", // Color of the bottom border on hover
                   },
+                  "& .MuiInputBase-input": {
+                    fontSize: { xs: "18px" }, // Set input font size here
+                  },
                   width: "100%",
                   margin: "10px 0px ",
                 }}
@@ -338,7 +357,8 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                     color: "rgb(255, 255, 255)",
                   },
                 }}
-                InputLabelProps={{
+                InputLabelProps={
+                  {
                   style: {
                     color: "white",
                   },
@@ -355,8 +375,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                 variant="standard"
                 value={file.map((item) => item?.original_filename)}
                 sx={{
-                  "& .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root": {
+                  "& .MuiInputLabel-root": {
                     color: "rgb(255, 255, 255)",
+                    fontSize: { xs: "18px"},
                   },
                   "& .MuiInput-underline::before": {
                     borderBottom: "1px solid rgb(188, 189, 163)",
@@ -372,6 +393,9 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                   },
                   width: "100%",
                   margin: "10px 0px ",
+                  "& .MuiInputBase-input": {
+                    fontSize: { xs: "18px" }, // Set input font size here
+                  },
                 }}
                 InputLabelProps={{
                   style: {
