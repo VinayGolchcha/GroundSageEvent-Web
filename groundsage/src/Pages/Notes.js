@@ -140,6 +140,7 @@ const Notes = () => {
           color: "rgb(66, 92, 90)",
         },});
         fetchNotes();
+        setIsEditPopupOpen(false);
     }catch(error){
       console.log(error);
       const errors = error?.response?.data?.errors;

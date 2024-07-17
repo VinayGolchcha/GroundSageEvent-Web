@@ -10,8 +10,9 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function SaffSalary() {
   const addItemEle = useRef(null);
@@ -19,21 +20,66 @@ export default function SaffSalary() {
   const balancePayAmtEle = useRef(null);
   const remarkEle = useRef(null);
   const navigate = useNavigate();
-  const {addTransection , isSucessTransection , setIsSucessTransection} = useContext(AuthContext);
+  const {user , isSucessTransection , setIsSucessTransection , activeEventId , transectionType} = useContext(AuthContext);
 
-  const callAddTransection = async (body) => {
+  // const callAddTransection = async (body) => {
+  //   try {
+  //     // Your logic for adding a transaction
+  //     // Assuming this is an asynchronous operation
+  //     const response = await addTransection(body);;
+  //     setIsSucessTransection(true);
+  //     return response; // Return the response
+  //   } catch (error) {
+  //     setIsSucessTransection(false);
+  //     throw error; // Throw the error to be caught later
+  //   }
+
+  
+
+  const addTransection = async (body) => {
+    const newbody = {
+      ...body,
+      event_id: activeEventId,
+      type: transectionType,
+    };
     try {
-      // Your logic for adding a transaction
-      // Assuming this is an asynchronous operation
-      const response = await addTransection(body);;
-      setIsSucessTransection(true);
-      return response; // Return the response
-    } catch (error) {
-      setIsSucessTransection(false);
-      throw error; // Throw the error to be caught later
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/transaction/add-transaction`,
+        newbody,
+        {
+          headers: {
+            authorization: `${user?.token}`, // Ensure the token format is correct
+            Accept: "application/json",
+            role_id: user?.role_id,
+          },
+        }
+      );
+      toast.success("Transection added successfully", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+      navigate("/transactions");
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  ")
+    } catch (err) {
+      const errors = err?.response?.data?.errors;
+      errors?.forEach((element) => {
+        toast.error(element?.msg, {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      });
     }
-
-  }
+  };
 
 
   const handleSave = () => {
@@ -45,11 +91,7 @@ export default function SaffSalary() {
       remarks : remarkEle.current.value, 
       tag : "expense"
     }
-    callAddTransection(body);
-    
-    if(isSucessTransection){
-      navigate("/transactions");
-    }
+    addTransection(body);
     
   }
 

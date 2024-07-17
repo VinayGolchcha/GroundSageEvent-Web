@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -12,9 +12,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { cleanDigitSectionValue } from "@mui/x-date-pickers/internals/hooks/useField/useField.utils";
 
 const ForgetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword , setShowConfirmPassword] = useState(false);
 
   // const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +24,18 @@ const ForgetPassword = () => {
   const location = useLocation();
   const { parentRoute, email } = location.state || {};
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(window.history);
+  }, []);
+  const handlePopState = (event) => {
+    window.removeEventListener("popstate", handlePopState);
+    navigate("/signin"); 
+    
+  };
+  useEffect(() => {
+    window.addEventListener("popstate" , handlePopState);
+  }, []); 
 
   const handleForgetPassword = async () => {
     console.log(email);
@@ -49,10 +63,16 @@ const ForgetPassword = () => {
       } else {
         // Password reset failed, handle error
         console.log(response);
-        toast.error(response.message);
+        toast.error(response.message || "Password reset failed.");
         console.error("Password reset failed:", response.statusText);
       }
     } catch (error) {
+      const errArray = error?.response?.data?.errors;
+      console.log(error);
+      console.log(errArray);
+      errArray?.forEach((error) => {
+        toast.error(error?.msg);
+      });
       console.error("Password reset failed:", error.message);
       toast.error("An error occurred while resetting password.");
     }
@@ -169,7 +189,7 @@ const ForgetPassword = () => {
                     style={{ width: "18px" }}
                   />
                 </Box>
-                <Typography sx={{ color: "white" }}>Your password</Typography>
+                <Typography sx={{ color: "white" }}>New password</Typography>
               </Box>
             }
 
@@ -234,17 +254,17 @@ const ForgetPassword = () => {
             }
             variant="filled"
             fullWidth
-            type={showPassword ? "text" : "password"}
+            type={showConfirmPassword ? "text" : "password"}
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     edge="end"
                   >
-                    {showPassword ? (
+                    {showConfirmPassword ? (
                       <VisibilityIcon
                         style={{ color: "white", marginRight: "10px" }}
                       />

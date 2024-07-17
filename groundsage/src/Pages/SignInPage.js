@@ -6,6 +6,7 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  GlobalStyles,
 } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -93,6 +94,21 @@ const SignInPage = () => {
       toast.error("An error occurred. Please try again.");
     }
   };
+  const checkIsVerified = () => {
+    if(isEmailVerified){
+      toast.warn("Email is already verified" , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+    }else{
+      handleVerify();
+    }
+  }
 
   const handleVerify = async () => {
     try {
@@ -180,7 +196,7 @@ const SignInPage = () => {
                         ? "success"
                         : "primary"
                     }
-                    onClick={handleVerify}
+                    onClick={checkIsVerified}
                     sx={{
                       color:
                         isEmailVerified && email.length > 0

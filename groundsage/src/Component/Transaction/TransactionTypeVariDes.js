@@ -25,24 +25,24 @@ export default function TransactionTypeVariDes({list}){
               alignItems: "center",
             }}
           >
-            {transactionTypeVariant === list[0] ? (<>
+            {transactionTypeVariant === list[0] ? (<Box sx={{display : "flex" , alignItems :"center"}} onClick = {() => handleClick(list[0])}>
             <img
               src="Ellipse-yellow.png"
-              style={{ margin: "0px 5px", height: "20px", width: "20px" }}
+              style={{ margin: "0px 5px", height: "20px", width: "20px"  , cursor : "pointer"}}
               alt="Ellipse"
             /> 
-            <Typography onClick = {() => handleClick(list[0])} variant="h5" sx={{ color: "rgb(255, 238, 179)" , cursor : "pointer" , fontSize :  {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"} }}>
+            <Typography  variant="h5" sx={{ color: "rgb(255, 238, 179)" , cursor : "pointer" , fontSize :  {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"} }}>
             {list[0]}
-          </Typography></>)
-            : ( <><img
+          </Typography></Box>)
+            : ( <Box Box sx={{display : "flex" , alignItems :"center"}} onClick = {() => handleClick(list[0])}><img
             src="Ellipse-gray.png"
-            style={{ margin: "0px 5px", height: "20px", width: "20px" }}
+            style={{ margin: "0px 5px", height: "20px", width: "20px" , cursor : "pointer" }}
             alt="Ellipse"
           />
           <Typography onClick = {() => handleClick(list[0])} variant="h5" sx={{ color: "rgb(198, 208, 217)" , cursor : "pointer" , fontSize :  {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"}}}>
             {list[0]}
           </Typography>
-          </>)}
+          </Box>)}
           </Box>
           
         </Box>
@@ -54,24 +54,24 @@ export default function TransactionTypeVariDes({list}){
               alignItems: "center",
             }}
           >
-        {transactionTypeVariant === list[1] ? (<>
+        {transactionTypeVariant === list[1] ? (<Box sx={{display : "flex" , alignItems :"center"}} onClick = {() => handleClick(list[1])}>
             <img
               src="Ellipse-yellow.png"
-              style={{ margin: "0px 5px", height: "20px", width: "20px" }}
+              style={{ margin: "0px 5px", height: "20px", width: "20px" , cursor : "pointer"}}
               alt="Ellipse"
             /> 
             <Typography onClick = {() => handleClick(list[1])} variant="h5" sx={{ color: "rgb(255, 238, 179)" , cursor : "pointer" , fontSize : {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"}}}>
             {list[1]}
-          </Typography></>)
-            : ( <><img
+          </Typography></Box>)
+            : ( <Box sx={{display : "flex" , alignItems :"center"}} onClick = {() => handleClick(list[1])}><img
             src="Ellipse-gray.png"
-            style={{ margin: "0px 5px", height: "20px", width: "20px" }}
+            style={{ margin: "0px 5px", height: "20px", width: "20px" ,cursor : "pointer" }}
             alt="Ellipse"
           />
           <Typography onClick = {() => handleClick(list[1])} variant="h5" sx={{ color: "rgb(198, 208, 217)" , cursor : "pointer" , fontSize :  {lg : "1.6rem" , md : "1.6rem" , sm : "1.6rem" , xs : "1.1rem"}}}>
             {list[1]}
           </Typography>
-          </>)}
+          </Box>)}
           </Box>
         </Box>
         <FormsData transactionTypeVariant = {transactionTypeVariant}  list = {list}/>

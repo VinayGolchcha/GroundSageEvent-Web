@@ -26,7 +26,7 @@ export default function ShopRental(){
   const outstandingAmtEle = useRef(null);
   const navigate = useNavigate();
   const remarkEle = useRef(null);
-  const {addTransection , activeEventId , user , isSucessTransection , setIsSucessTransection} = useContext(AuthContext);
+  const { activeEventId , user , isSucessTransection , setIsSucessTransection , transectionType} = useContext(AuthContext);
   const [shopNo , setShopNo] = useState([]);
 
   const fecthTransections = () => {
@@ -59,21 +59,51 @@ export default function ShopRental(){
       });
   };
 
-  const callAddTransection = async (body) => {
+
+
+  const addTransection = async (body) => {
+    const newbody = {
+      ...body,
+      event_id: activeEventId,
+      type: transectionType,
+    };
     try {
-      // Your logic for adding a transaction
-      // Assuming this is an asynchronous operation
-      const response = await addTransection(body);;
-      setIsSucessTransection(true);
-      return response; // Return the response
-    } catch (error) {
-      setIsSucessTransection(false);
-      throw error; // Throw the error to be caught later
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URI}/transaction/add-transaction`,
+        newbody,
+        {
+          headers: {
+            authorization: `${user?.token}`, // Ensure the token format is correct
+            Accept: "application/json",
+            role_id: user?.role_id,
+          },
+        }
+      );
+      toast.success("Transection added successfully", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
+      navigate("/transactions");
+    } catch (err) {
+      const errors = err?.response?.data?.errors;
+      errors?.forEach((element) => {
+        toast.error(element?.msg, {
+          style: {
+            // Change font color
+            fontSize: "16px", // Change font size
+            fontFamily: "Inter", // Change font family
+            fontWeight: "600", // Change font weight
+            color: "rgb(66, 92, 90)",
+          },
+        });
+      });
     }
-
-  }
-
-
+  };
   const handleSave = () => {
     if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
       console.log(true);
@@ -97,11 +127,11 @@ export default function ShopRental(){
         tag : "income"
       }
       console.log(body);
-      callAddTransection(body);
+      addTransection(body);
     }
-    if(isSucessTransection){
-      navigate("/transactions");
-    }
+    // if(isSucessTransection){
+    //   navigate("/transactions");
+    // }
   }
 
 

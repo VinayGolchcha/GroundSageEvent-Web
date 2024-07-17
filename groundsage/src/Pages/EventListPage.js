@@ -177,6 +177,19 @@ export default function EventListPage() {
 
   const handleEditEvent = () => {
     const ele = eventList?.filter((item) => item.isSelected === true);
+    if(ele.length === 0){
+      toast.warning("Please select the event to edit", {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+        // Other options like position, autoClose, etc.
+      });
+      return;
+    }
     console.log(ele);
     if (ele.length > 1) {
       toast.warning("Cannot edit the multiple events", {
@@ -226,6 +239,7 @@ export default function EventListPage() {
     let date = new Date(data);
     const array = date.toString().split(" ");
     date = array.slice(1, 4).join(" ");
+    console.log(date);
     return date;
   };
   if (isLoading) {
@@ -430,7 +444,7 @@ export default function EventListPage() {
                       fontFamily: "Poppins",
                     }}
                   >
-                    {forrmattedDate(item?.created_at)}
+                    {forrmattedDate(item?.start_date)+ " - " +forrmattedDate(item?.end_date)}
                   </Typography>
                   <Typography
                     sx={{

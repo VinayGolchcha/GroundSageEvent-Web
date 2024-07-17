@@ -278,7 +278,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
                     open={openCalendar2}
                     onOpen={handleOpenCalender2}
                     onClose={() => setOpenCalendar2(false)}
-                    minDate={dayjs(toDate)}
+                    minDate={dayjs(fromDate)}
                     inputRef={toDateElement}
                     slotProps={{
                       textField: {

@@ -32,7 +32,7 @@ import UpdateShopPage from "./Pages/UpdateShop";
 import EditEvent from "./Component/event/EditEvent";
 import { Theme, useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { Box, FormControl, MenuItem, Modal, Select } from "@mui/material";
+import { Box, FormControl, GlobalStyles, MenuItem, Modal, Select  } from "@mui/material";
 import { AuthContext } from "./ContextApi/AuthContext";
 import ReferralCodeScreen from "./Pages/ReferralCodeScreen";
 import PrivateRoute from "./Component/PrivateRoute";
@@ -171,6 +171,16 @@ const App = () => {
           </FormControl>
         </Box>
       </Modal>
+        <GlobalStyles
+          styles={{
+            'input:-internal-autofill-selected': {
+              appearance: 'menulist-button',
+              backgroundImage: 'none !important',
+              backgroundColor: 'rgb(115, 135, 135) !important',
+              color: 'fieldtext !important',
+            },
+          }}
+        />
       <Routes>
         <Route path="/" element={<SplashScreenPage />} />
         <Route path="/signin" element={<SignInPage />} />

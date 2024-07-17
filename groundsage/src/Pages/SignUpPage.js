@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword , setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -268,17 +269,17 @@ const SignUpPage = () => {
             fullWidth
             value={formData.confirmPassword}
             onChange={handleChange}
-            type={showPassword ? "text" : "password"}
+            type={showConfirmPassword ? "text" : "password"}
             InputProps={{
               disableUnderline: true,
               style: { color: "white", margin: "1px" },
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     edge="end"
                   >
-                    {showPassword ? (
+                    {showConfirmPassword ? (
                       <VisibilityIcon
                         style={{ color: "white", marginRight: "10px" }}
                       />

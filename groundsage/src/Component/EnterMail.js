@@ -95,7 +95,7 @@ const EnterMail = () => {
               margin: "20px 0px 30px 10px",
             }}
           >
-            An Otp will be send to the registered email below, once the email is
+            An OTP will be send to the registered email below, once the email is
             verified, you can move forward to reset your password.
           </Typography>
           <TextField

@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const ReferralCodeScreen = () => {
   const navigate = useNavigate();
@@ -34,7 +35,17 @@ const ReferralCodeScreen = () => {
         console.log(response.data.message);
       }
     } catch (error) {
+      console.log(error);
       console.error("Error joining team with referral code:", error);
+      toast.error(error?.response?.data?.message , {
+        style: {
+          // Change font color
+          fontSize: "16px", // Change font size
+          fontFamily: "Inter", // Change font family
+          fontWeight: "600", // Change font weight
+          color: "rgb(66, 92, 90)",
+        },
+      });
     }
   };
 
@@ -50,6 +61,7 @@ const ReferralCodeScreen = () => {
         padding: { xs: "20px", md: "40px" },
       }}
     >
+      <ToastContainer/>
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <img
           src="../../../Images/logo_1 1.png"

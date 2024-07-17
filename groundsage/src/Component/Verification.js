@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Box, Typography, Button, TextField } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../ContextApi/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
 
 const Verification = () => {
   const [otp, setOtp] = useState(["", "", "", ""]); // Initialize state for 4 digits
@@ -57,7 +58,19 @@ const Verification = () => {
         }); // Redirect to forget password screen
       }
     } catch (error) {
-      console.error("Error verifying OTP:", error);
+      toast.error(error?.message);
+      if(error?.response?.data?.message){
+        const item = error?.response?.data?.message
+        toast.error(item);
+      }
+      if(error?.response?.message){
+        toast.error(error?.response?.message);
+      }
+      const errArray = error?.response?.data?.errors;
+      console.log(errArray);
+      errArray?.forEach((error) => {
+        toast.error(error?.msg);
+      });
     }
   };
 
@@ -119,6 +132,7 @@ const Verification = () => {
           overflow: "hidden",
         }}
       >
+        <ToastContainer/>
         <Box
           sx={{
             marginTop: { xs: "20px", md: "100px" },
