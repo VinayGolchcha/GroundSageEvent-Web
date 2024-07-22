@@ -183,7 +183,7 @@ const App = () => {
         />
       <Routes>
         <Route path="/" element={<SplashScreenPage />} />
-        <Route path="/signin" element={<SignInPage />} />
+        {!user && <Route path="/signin" element={<SignInPage />} />}
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verification" element={<Verification />} />

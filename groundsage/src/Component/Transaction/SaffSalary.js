@@ -64,7 +64,6 @@ export default function SaffSalary() {
         },
       });
       navigate("/transactions");
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  ")
     } catch (err) {
       const errors = err?.response?.data?.errors;
       errors?.forEach((element) => {
