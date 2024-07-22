@@ -93,6 +93,10 @@ export default function HomePage() {
   }, []);
   console.log(activeEvent);
 
+  const handleSeeAll =  () => {
+    navigate("/Events");
+  }
+
   const fecthApiHome = async () => {
     try {
       const res = await axios.get(
@@ -258,7 +262,9 @@ export default function HomePage() {
                     xs: "1.2rem",
                   },
                   marginRight: "4%",
+                  cursor : "pointer"
                 }}
+                onClick={handleSeeAll}
               >
                 See All <img src="/Images/Vector-1.png" />{" "}
               </Box>

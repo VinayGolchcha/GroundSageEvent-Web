@@ -137,6 +137,11 @@ const Reports = () => {
         income: item.total / 1000,
       }));
       if(chartType === "month"){
+        setSelectedPieOption(data[0]?.month);
+      }else{
+        setSelectedPieOption(data[0]?.year);
+      }
+      if(chartType === "month"){
         const settingYears = res?.data?.data?.map((item) => mySet.add(item?.month?.split(" ")[1]));
         let yearStr = ""
         if(mySet.size > 1){
@@ -191,6 +196,7 @@ const Reports = () => {
           (item) =>
             item[chartType === "year" ? "year" : "month"] === selectedPieOption
         );
+        console.log("currently selected option : " , selectedPieOption);
         if (selectedData) {
           newExpenseData[0].value =
             (selectedData.income * parseInt(newExpenseData[0].value)) /
