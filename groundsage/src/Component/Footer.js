@@ -210,7 +210,8 @@ const Footer = () => {
           marginRight: { xs: "20px", lg: "10%" },
         }}
       >
-        © 2024 All Rights Reserved
+        ©2024 All Rights Reserved <br/>
+        Designed by <span style={{color : "rgb(247, 230, 173)"}}>Amarya Business Consultancy</span>
       </Typography>
     </div>
   );
