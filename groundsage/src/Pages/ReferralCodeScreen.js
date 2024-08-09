@@ -29,7 +29,7 @@ const ReferralCodeScreen = () => {
       );
 
       if (response.data.success) {
-        console.log(response.data.message);
+
         navigate("/home");
       } else {
         console.log(response.data.message);

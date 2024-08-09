@@ -47,7 +47,7 @@ export default function TransactionPage() {
       setTransectionTag("income");
     }
     setTransactions(newList);
-    console.log(transectionTag);
+
   };
   return (
     <Box

@@ -52,7 +52,7 @@ export default function RentalAgreementPage() {
   const [shopData , setShopData] = useState([]);
   const [rentalImage , setRentalImage] = useState(null);
   const navigate = useNavigate();
-  console.log(shopId, typeof shopId);
+
   const fetchShopById = async () => {
     try {
       const res = await axios.post(
@@ -80,7 +80,7 @@ export default function RentalAgreementPage() {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -125,7 +125,7 @@ export default function RentalAgreementPage() {
         // Set the URL as the image source
         setRentalImage(url);
       }
-      console.log(res);
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -133,7 +133,7 @@ export default function RentalAgreementPage() {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -162,7 +162,7 @@ export default function RentalAgreementPage() {
     } else {
       setFIle(file);
     }
-    console.log(file);
+
   };
 
   const addRental = async (body) => {
@@ -184,7 +184,7 @@ export default function RentalAgreementPage() {
         }
       );
       setLoading(false);
-      console.log(res);
+
       toast.success(res?.data?.message, {
         style: {
           // Change font color
@@ -201,7 +201,7 @@ export default function RentalAgreementPage() {
         },
       });
     } catch (error) {
-      console.log(error);
+
       setLoading(false);
       const errArray = error?.response?.data?.errors;
       errArray?.forEach((error) => {
@@ -220,7 +220,7 @@ export default function RentalAgreementPage() {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -232,7 +232,7 @@ export default function RentalAgreementPage() {
       const body = {
         _id: rentalObj?.agreement_id,
       };
-      console.log(body);
+
       try {
         setLoading(true);
         const res = await axios.delete(
@@ -279,7 +279,7 @@ export default function RentalAgreementPage() {
           toast.error(error?.response?.message);
         }
         if(error?.response?.data?.message){
-          console.log("true");
+
           const item = error?.response?.data?.message
           toast.error(item);
         }
@@ -339,7 +339,6 @@ export default function RentalAgreementPage() {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
         const item = error?.response?.data?.message
         toast.error(item);
       }

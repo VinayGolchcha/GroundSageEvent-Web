@@ -15,6 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextApi/AuthContext";
 import debounce from "lodash.debounce";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,7 @@ const SignInPage = () => {
   const [password, setPassword] = useState("");
   const { setUser } = useContext(AuthContext);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [loading , setLoading] = useState(false);
   const navigate = useNavigate();
 
   const checkEmailVerificationStatus = useCallback(async (email) => {
@@ -65,6 +67,7 @@ const SignInPage = () => {
   }, [email, debouncedCheckEmailVerificationStatus]);
   const handleSubmit = async () => {
     debouncedCheckEmailVerificationStatus();
+    setLoading(true);
     try {
       const response = await fetch(
         "https://groundsageevent-be.onrender.com/api/v1/profile/login",
@@ -83,15 +86,17 @@ const SignInPage = () => {
 
       if (response.ok) {
         toast.success("Login successful");
+        setLoading(false);
         const userData = data?.data?.[0];
         setUser(userData);
-        console.log(userData);
+   
         navigate("/referral-code");
       } else {
         toast.error(data.message || "Login failed. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
+      setLoading(false);
     }
   };
   const checkIsVerified = () => {
@@ -125,7 +130,7 @@ const SignInPage = () => {
 
       if (!response.ok) {
         throw new Error("Failed to send OTP");
-        console.log(response);
+
       }
 
       navigate("/verification", {
@@ -324,7 +329,7 @@ const SignInPage = () => {
               }}
               onClick={handleSubmit}
             >
-              Sign In
+              {loading ? <CircularProgress color="inherit" size={30}/> : <>Sign In</>}
               <img
                 src="../../../Images/Group 4.svg"
                 alt="Right Arrow"

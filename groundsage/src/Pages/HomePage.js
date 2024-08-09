@@ -52,9 +52,9 @@ export default function HomePage() {
   } = useContext(AuthContext);
   const [isloading, setIsLoading] = useState(true);
   let today = new Date();
-  console.log(user);
+
   let len;
-  console.log(events);
+
 
   const newActiveEvent = events?.filter((event) => {
     const endDate = new Date(event.end_date);
@@ -91,7 +91,7 @@ export default function HomePage() {
   useEffect(() => {
     fecthApiHome();
   }, []);
-  console.log(activeEvent);
+
 
   const handleSeeAll =  () => {
     navigate("/Events");
@@ -110,13 +110,12 @@ export default function HomePage() {
           },
         }
       );
-      console.log(res);
+
       setActiveEvent(res?.data?.data[1]);
-      console.log(res?.data?.data[1]);
       setActiveEventId(res?.data?.data[1][0]?.id);
       setActiveEventName(res?.data?.data[1][0]?.event_name);
       len = activeEvent?.length - 1;
-      console.log(len);
+
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -124,7 +123,7 @@ export default function HomePage() {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -178,7 +177,8 @@ export default function HomePage() {
             color="rgb(255, 255, 255)"
             sx={{ fontFamily: "Aoboshi One" }}
           >
-            To Switch Events Click Here!
+            {/* To Switch Events Click Here! */}
+            <br/>
           </Typography>
 
           <Box

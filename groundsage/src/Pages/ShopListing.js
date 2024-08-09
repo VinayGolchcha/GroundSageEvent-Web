@@ -31,7 +31,7 @@ const ShopListing = () => {
   const [selectedShops, setSelectedShops] = useState([]);
   const [selectMode, setSelectMode] = useState(false);
   const { setLastShopNumber, user, activeEventId } = useContext(AuthContext);
-  console.log(activeEventId);
+
   const navigate = useNavigate();
 
   const [Doms, setDoms] = useState([]);

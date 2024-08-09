@@ -94,13 +94,13 @@ export default function CreateEventPage() {
           },
         }
       );
-      console.log("API response:", res.data.data[0].roles);
+
 
       // Update the RCode state
       setRCode(res.data.data[0].roles);
 
       // Log the updated RCode state
-      console.log("Updated RCode state:", res.data.data[0].roles);
+
 
       // If navigate is intended after setting RCode
       navigate("/refferalcode"); // Adjust the path as needed
@@ -116,7 +116,7 @@ export default function CreateEventPage() {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -133,8 +133,7 @@ export default function CreateEventPage() {
     formattedToDate[0] = formattedToDate[1];
     formattedToDate[1] = tempTodate;
     formattedToDate = formattedToDate.reverse().join("-");
-    console.log("from Date", formattedFromDate);
-    console.log("from Date", formattedToDate);
+
     if (
       parseInt(teamSizeElement.current.value) !==
       parseInt(coordinatorCountElement.current.value) +
@@ -168,7 +167,7 @@ export default function CreateEventPage() {
       staff_members_count: staffMemberCountElement.current.value,
       helpers_count: helperCountElement.current.value,
     };
-    console.log(body);
+
     addEvent(body);
   };
   return (

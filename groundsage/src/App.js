@@ -71,9 +71,7 @@ const App = () => {
   } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
-    console.log("handle Open called");
     setOpen(true);
-    console.log(open);
   };
   const handleClose = () => setOpen(false);
   const [personName, setPersonName] = React.useState([]);
@@ -81,12 +79,11 @@ const App = () => {
   useEffect(() => {
     setActiveEventId(activeEvent[0]?.id);
   }, []);
-  console.log(activeEventId);
+
   const handleSelection = (name) => {
     setActiveEventId(name.id);
     setActiveEventName(name.event_name);
   };
-  console.log(activeEvent);
   const handleChange = (event) => {
     const {
       target: { value },

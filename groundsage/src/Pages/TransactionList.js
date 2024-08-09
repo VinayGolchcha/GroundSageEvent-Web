@@ -51,7 +51,7 @@ const TransactionList = () => {
     }
   };
 
-  console.log(user);
+
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
@@ -79,7 +79,7 @@ const TransactionList = () => {
       .then((data) => {
         // Update state with fetched data
         setTransactionData(data.data);
-        console.log(data.data);
+
         setIsLoading(false);
       })
       .catch((error) => {

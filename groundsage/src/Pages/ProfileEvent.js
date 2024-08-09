@@ -12,7 +12,7 @@ const ProfileEvent = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    console.log(user);
+
     fetch(
       `https://groundsageevent-be.onrender.com/api/v1/event/get-all-user-event/${user?.user_id}`,
       {

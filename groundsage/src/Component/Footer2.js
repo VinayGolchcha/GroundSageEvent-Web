@@ -51,7 +51,6 @@ const Footer2 = () => {
           },
         }
       );
-      console.log("Feedback sent successfully:", response.data);
       toast.success("Feedback sent successfully");
       setFeedback("");
       setEmail("");

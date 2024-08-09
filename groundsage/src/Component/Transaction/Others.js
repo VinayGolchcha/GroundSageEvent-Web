@@ -74,7 +74,7 @@ export default function Others() {
 
   const handleSave = () => {
     if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
-      console.log(true);
+
       toast.warning("Received amount, should be less than the Due amount ₹" , {
         style: {
           // Change font color
@@ -121,7 +121,7 @@ export default function Others() {
       .then((data) => {
         // Update state with fetched data
         setTransactionData(data.data);
-        console.log(data.data);
+
         setIsLoading(false);
       })
       .catch((error) => {

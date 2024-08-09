@@ -127,7 +127,6 @@ const AuthProvider = ({ children }) => {
         },
       });
       setIsSucessTransection(true);
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  ")
     } catch (err) {
       const errors = err?.response?.data?.errors;
       errors?.forEach((element) => {
@@ -173,7 +172,6 @@ const AuthProvider = ({ children }) => {
         setRCode(null);
         localStorage.clear();
         navigate("/signin");
-        console.log("Logout successful");
       } else {
         console.error("Failed to logout");
       }

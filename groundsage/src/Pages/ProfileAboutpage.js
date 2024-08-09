@@ -25,7 +25,7 @@ const ProfileAboutpage = () => {
       return;
     }
     // Fetch data from the API
-    console.log(user);
+
     fetch(
       "https://groundsageevent-be.onrender.com/api/v1/profile/get-user-about-page-data",
       {

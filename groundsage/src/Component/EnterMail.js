@@ -33,11 +33,9 @@ const EnterMail = () => {
 
       if (!response.ok) {
         throw new Error("Failed to send OTP");
-        console.log(response);
       }
 
       // If successful response, show success message
-      console.log(response);
       toast.success("OTP sent successfully!");
       navigate("/verification", {
         state: { parentRoute: "entermail", email: email },

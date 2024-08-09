@@ -22,7 +22,6 @@ const ShopEditPopup = ({ shopDetails, open, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Edited shop details:", editedShopDetails);
     onClose();
   };
 

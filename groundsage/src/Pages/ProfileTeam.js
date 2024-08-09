@@ -23,7 +23,7 @@ const ProfileTeam = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    console.log(user);
+
     fetch(
       "https://groundsageevent-be.onrender.com/api/v1/profile/get-user-event-and-team-count",
       {
@@ -43,7 +43,7 @@ const ProfileTeam = () => {
         if (data.success) {
           const userDataFromApi = data.data;
           setData(userDataFromApi);
-          console.log(userDataFromApi);
+          
           setLoading(false);
         } else {
           console.error("Failed to fetch user data:", data.message);
@@ -83,7 +83,7 @@ const ProfileTeam = () => {
   };
 
   const handleSavePopupData = (data) => {
-    console.log("Popup data saved:", data);
+
     handlePopupClose();
   };
 

@@ -23,9 +23,9 @@ const ReferralCodePage = () => {
           },
         }
       );
-      console.log(res);
+
       setActiveEvent(res?.data?.data[1]);
-      console.log(res?.data?.data[1]);
+  
       setActiveEventId(res?.data?.data[1][0]?.id);
       setActiveEventName(res?.data?.data[1][0]?.event_name);
       setIsLoading(false);
@@ -35,7 +35,7 @@ const ReferralCodePage = () => {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -45,7 +45,7 @@ const ReferralCodePage = () => {
   useEffect(() => {
     fecthApiHome();
   }, []);
-  console.log(RCode);
+
   const handleCopyClick = (referralCode) => {
     if (referralCode) {
       navigator.clipboard

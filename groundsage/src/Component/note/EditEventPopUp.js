@@ -3,7 +3,6 @@ import { Button, Dialog, DialogTitle, TextField, Box } from "@mui/material";
 import { toast } from "react-toastify";
 
 export default function EditEventPopUp({ open, onClose, onSave , item}){
-    console.log(item)
     const currentDate = new Date();
     const now = currentDate.toISOString().split('T')[0];
     const [data, setData] = useState({

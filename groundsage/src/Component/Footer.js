@@ -38,7 +38,6 @@ const Footer = () => {
           },
         }
       );
-      console.log("Feedback sent successfully:", response.data);
       toast.success("Feedback sent successfully");
       setFeedback("");
     } catch (error) {

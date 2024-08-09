@@ -50,7 +50,6 @@ const IncomeList = ({data , deleteTransection }) => {
     const deletedItem = Income?.filter((item) => item.isSelected);
     if(deletedItem?.length >0){
 
-      console.log(deletedItem , deletedItem[0]?._id);
       deleteTransection(deletedItem[0]?._id);
     }
     setIncome(newArray);

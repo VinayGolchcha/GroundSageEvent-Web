@@ -50,7 +50,6 @@ export default function ShopRental(){
       .then((data) => {
         // Update state with fetched data
         setTransactionData(data.data);
-        console.log(data.data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -106,7 +105,7 @@ export default function ShopRental(){
   };
   const handleSave = () => {
     if(parseInt(recievedAmtEle.current.value) >  parseInt(amtDueEle.current.value)){
-      console.log(true);
+
       toast.warning("Received amount, should be less than the Due amount ₹", {
         style: {
           // Change font color
@@ -126,7 +125,7 @@ export default function ShopRental(){
         remarks : remarkEle.current.value,
         tag : "income"
       }
-      console.log(body);
+
       addTransection(body);
     }
     // if(isSucessTransection){
@@ -144,7 +143,7 @@ export default function ShopRental(){
           role_id : user?.role_id
         }
       });
-      console.log(res?.data?.data);
+
       const shopList = res?.data?.data
       setShopNo(shopList?.map((i) => i.shop_number));
     }catch(err){

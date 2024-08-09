@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import TransactionTypeVariDes from "./TransactionTypeVariDes";
 
 export default function TransactionTypeVari({ transactions }) {
-  console.log(transactions);
   return (
     <Box sx={{ margin: "0px 12%" }}>
       {transactions[1].type === "expense" && transactions[0].vari === "contained" ? (

@@ -25,9 +25,7 @@ const ForgetPassword = () => {
   const { parentRoute, email } = location.state || {};
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(window.history);
-  }, []);
+
   const handlePopState = (event) => {
     window.removeEventListener("popstate", handlePopState);
     navigate("/signin"); 
@@ -38,7 +36,7 @@ const ForgetPassword = () => {
   }, []); 
 
   const handleForgetPassword = async () => {
-    console.log(email);
+
     try {
       const response = await fetch(
         "https://groundsageevent-be.onrender.com/api/v1/profile/forgot-password",
@@ -57,19 +55,17 @@ const ForgetPassword = () => {
 
       if (response.ok) {
         // Password reset successful, handle accordingly (e.g., redirect)
-        console.log(response);
+
         toast.success(response.message);
         navigate("/signin");
       } else {
         // Password reset failed, handle error
-        console.log(response);
+
         toast.error(response.message || "Password reset failed.");
         console.error("Password reset failed:", response.statusText);
       }
     } catch (error) {
       const errArray = error?.response?.data?.errors;
-      console.log(error);
-      console.log(errArray);
       errArray?.forEach((error) => {
         toast.error(error?.msg);
       });

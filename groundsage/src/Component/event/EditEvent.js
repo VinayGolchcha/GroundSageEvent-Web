@@ -30,7 +30,6 @@ import { useNavigate } from "react-router-dom";
   
 
 export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
-  console.log(selectedItem);
     const navigate = useNavigate();
     const [openCalendar1, setOpenCalendar1] = useState(false);
     const [openCalendar2, setOpenCalendar2] = useState(false);
@@ -56,7 +55,6 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
       const newFile = file?.filter((i) => i.public_id != item?.public_id);
       setFIle(newFile);
       setPublicIds((prevPublicIds) => [...prevPublicIds , item?.public_id]);
-      console.log(publicIds);
     }
 
     const handleFileUpload = (event) => {
@@ -82,21 +80,11 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
       // files coming from the create event page...
       setFile(files);
     };
-    // const addEvent = async(body) => {
-    //   try{
-    //     const res = await axios.post("https://groundsageevent-be.onrender.com/api/v1/event/create-event-team-and-referral-code" , body);
-    //     console.log(res);
-    //     toast.success("Data Added Successfully"); 
-    //   }catch(err){
-    //     console.log(err);
-    //     toast.error(err);
-    //   }
-    // }
+
     const handleClearFile = (index) => {
       setFIle((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
     const handleSave = () => {
-      console.log("save evenet is called");
       let formattedFromDate = fromDateElement.current.value.split('/');
       let temp = formattedFromDate[0];
       formattedFromDate[0] = formattedFromDate[1]
@@ -116,7 +104,7 @@ export default function EditEvent({ selectedItem , handleSaveEvent , setFile}){
           public_ids : formattedPublicIds
           // user_id : user?.user_id,
         }
-     console.log(body);
+
      handleSaveEvent(body);
      
     }

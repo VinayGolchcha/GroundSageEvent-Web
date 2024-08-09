@@ -67,7 +67,6 @@ const Verification = () => {
         toast.error(error?.response?.message);
       }
       const errArray = error?.response?.data?.errors;
-      console.log(errArray);
       errArray?.forEach((error) => {
         toast.error(error?.msg);
       });

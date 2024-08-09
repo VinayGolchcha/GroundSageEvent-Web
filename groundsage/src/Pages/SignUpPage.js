@@ -6,6 +6,7 @@ import {
   TextField,
   InputAdornment,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -17,6 +18,7 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword , setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const [loading , setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -38,8 +40,8 @@ const SignUpPage = () => {
       toast.error("Confirm password and password do not match");
       return;
     }
-    console.log("Form data:", formData);
 
+    setLoading(true);
     try {
       const response = await fetch(
         "https://groundsageevent-be.onrender.com/api/v1/profile/register",
@@ -57,11 +59,13 @@ const SignUpPage = () => {
         }
       );
       if (response.ok) {
-        console.log("Registration successful", response);
+
         toast.success("Registration successful");
+        setLoading(false);
         navigate("/signin");
       } else {
-        console.log("Registration failed");
+
+        setLoading(false);
         const data = await response.json();
         if (data.errors && data.errors.length > 0) {
           const errorMessages = data.errors.map((error) => error.msg);
@@ -75,6 +79,7 @@ const SignUpPage = () => {
         }
       }
     } catch (error) {
+      setLoading(false);
       console.error("Error:", error);
     }
   };
@@ -358,7 +363,7 @@ const SignUpPage = () => {
               }}
               onClick={handleSubmit}
             >
-              Sign Up
+              {loading ? <CircularProgress color="inherit" size={30}/>:<>Sign Up</>}
               <img
                 src="../../../Images/Group 4.svg"
                 alt="Right Arrow"

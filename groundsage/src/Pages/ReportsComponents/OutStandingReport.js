@@ -60,7 +60,7 @@ const OutStandingReport = () => {
         }
       );
       setOutstandingReport(res?.data?.data);
-      console.log(outstandingReport);
+
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -77,7 +77,6 @@ const OutStandingReport = () => {
         });
       }
       if(error?.response?.data?.message){
-        console.log("true");
         const item = error?.response?.data?.message
         toast.error(item  , {
           style: {

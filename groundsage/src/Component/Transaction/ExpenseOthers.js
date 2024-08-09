@@ -21,9 +21,7 @@ export default function ExpenseOthers() {
   const remarkEle = useRef(null);
   const navigate = useNavigate();
   const {activeEventId , user , transectionType , isSucessTransection , setIsSucessTransection} = useContext(AuthContext);
-  useEffect(() => {
-    console.log("successfulltransection" , isSucessTransection);
-  },[])
+
 
 
   const addTransection = async (body) => {

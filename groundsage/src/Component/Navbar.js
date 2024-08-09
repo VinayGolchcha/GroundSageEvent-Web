@@ -33,22 +33,12 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
   const [eventName, setEventName] = React.useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(isActive);
-  console.log(activeEventId);
   React.useEffect(() => {
     const newArray = [activeEventName, "Visit Profile", "Logout"];
     setSettings(newArray);
     setEventName(activeEventName);
   }, [activeEventName]);
-  // React.useEffect(()=> {
-  //   const currentActiveEvent = isActive?.filter((item) => (item.id === activeEventId));
-  //   console.log(currentActiveEvent);
-  //   let newActiveEvent = currentActiveEvent.length === 0 ? "Event Atrangi" : currentActiveEvent[0].event_name;
-  //   setCurrentActiveEventName(newActiveEvent);
-  //   console.log(currentActiveEventName)
-  //   const newSettings = [currentActiveEventName ,"Visit Profile", "Logout"];
-  //   setSettings(newSettings)
-  // } , [activeEventId])
+
   if (
     location.pathname === "/" ||
     location.pathname === "/referral-code" ||
@@ -257,7 +247,7 @@ function Navbar({ handleOpen, isActive, activeEventId, activeEventName }) {
                           (setting === "Logout" && handleLogout()) || (((setting===activeEventName)&&activeEventName) && handleOpen());
                       }}
                     >
-                      {setting === null ? activeEventName : setting}
+                      {setting == null ? (activeEventName == null ? "No Event" : activeEventName) : setting}
                     </Typography>
                   </MenuItem>
                 ))}

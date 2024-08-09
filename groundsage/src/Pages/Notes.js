@@ -30,11 +30,10 @@ const Notes = () => {
   const [selectedId , setSelectedId] = useState(null);
   const [selectedItem , setSelectedItem] = useState(null);
   const {user , activeEventId} = useContext(AuthContext);
-  console.log(user);
-  console.log(activeEventId);
+
   const deleteNoteByMultipleId = async (ids) => {
     setIsLoading(true);
-    console.log(ids)
+
     try{
       const res = axios.delete(`${process.env.REACT_APP_API_URI}/note/delete-note`  ,{
         headers: {
@@ -46,7 +45,7 @@ const Notes = () => {
         data: { ids }
       }
       );
-      console.log(res);
+
       fetchNotes();
       setIsLoading(false);
     }catch(error){
@@ -55,7 +54,7 @@ const Notes = () => {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -75,9 +74,9 @@ const Notes = () => {
       });
       const newEventList = res?.data?.data?.map((item) => ({...item , isSelected : false}))
       setEventList(newEventList);
-      console.log(eventList);
+
       setIsLoading(false);
-      console.log(newEventList);
+
     }catch(error){
       setIsLoading(false);
       setEventList([]);
@@ -85,7 +84,7 @@ const Notes = () => {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -130,7 +129,6 @@ const Notes = () => {
           role_id : user?.role_id
         }
       });
-      console.log(res);
       toast.success(res?.data.data, {
         style: {
           // Change font color
@@ -158,7 +156,6 @@ const Notes = () => {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -190,7 +187,7 @@ const Notes = () => {
       }
        );
       setIsPopupOpen(false);
-      console.log(res);
+
       toast.success("Note added successfully!", {
         style: {
           // Change font color
@@ -201,7 +198,7 @@ const Notes = () => {
         },});
         fetchNotes();
     }catch(error){
-      console.log(error.message);
+
       const errors = error?.response?.data?.errors;
       errors?.forEach(element => {
         toast.error(element?.msg ,  {
@@ -217,7 +214,7 @@ const Notes = () => {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -235,7 +232,7 @@ const Notes = () => {
         'Content-Type': 'application/json'
         }
       });
-      console.log(res);
+
       toast.success(res.data.message, {
         style: {
           // Change font color
@@ -249,7 +246,7 @@ const Notes = () => {
       fetchNotes();
     }catch(err){
       toast.error(err);
-      console.log(err);
+
     }
   }
   const handleAllChange = () => {
@@ -308,7 +305,7 @@ const Notes = () => {
       }
       return item;
     });
-    console.log(newEventList)
+
     setEventList(newEventList);
   };
   

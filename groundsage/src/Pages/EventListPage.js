@@ -37,7 +37,6 @@ export default function EventListPage() {
   const handleEditEventApi = async (body) => {
     try {
       setIsLoading(true);
-      console.log(body);
       const formData = new FormData();
       Object.keys(body).forEach((key) => {
         formData.append(key, body[key]);
@@ -47,7 +46,6 @@ export default function EventListPage() {
         formData.append("files", f);
       });
       const publicIds = body?.public_ids;
-      console.log(publicIds);
       // publicIds.forEach((id) => {
       // formData.append('public_ids', publicIds);
       // });
@@ -63,7 +61,6 @@ export default function EventListPage() {
           },
         }
       );
-      console.log(res);
       setIsLoading(false);
       toast.success(res?.data?.message, {
         style: {
@@ -77,10 +74,9 @@ export default function EventListPage() {
       fetchEvents();
       setIsEdit(!isEdit);
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       const errArray = error?.response?.data?.errors;
-      console.log(errArray);
+
       errArray?.forEach((error) => {
         toast.error(error?.msg);
       });
@@ -89,7 +85,7 @@ export default function EventListPage() {
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -125,9 +121,7 @@ export default function EventListPage() {
           event_name: item?.event_name,
         }))
       );
-      console.log(eventIds);
       setIsLoading(false);
-      console.log(res);
       toast.success(res?.data?.message, {
         style: {
           // Change font color
@@ -138,14 +132,13 @@ export default function EventListPage() {
         },
       });
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       toast.error(error?.response?.data?.message);
       if(error?.response?.message){
         toast.error(error?.response?.message);
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item);
       }
@@ -190,7 +183,7 @@ export default function EventListPage() {
       });
       return;
     }
-    console.log(ele);
+
     if (ele.length > 1) {
       toast.warning("Cannot edit the multiple events", {
         style: {
@@ -209,7 +202,7 @@ export default function EventListPage() {
     setIsEdit(true);
   };
   const handleCheckboxChange = (index) => {
-    console.log(index);
+
     const newEventList = eventList?.map((item, i) => {
       if (item?.id === index) {
         return { ...item, isSelected: !item.isSelected };
@@ -239,7 +232,6 @@ export default function EventListPage() {
     let date = new Date(data);
     const array = date.toString().split(" ");
     date = array.slice(1, 4).join(" ");
-    console.log(date);
     return date;
   };
   if (isLoading) {

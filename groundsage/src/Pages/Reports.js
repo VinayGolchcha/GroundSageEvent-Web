@@ -159,30 +159,28 @@ const Reports = () => {
       }
       
       setFilterListData(res?.data.data);
-      console.log("filtered data" , filterListData);
       const convertedData = data.map((item) => {
         let {income , ...rest} = item;
         return {Income : income , ...rest};
       });
-      console.log(convertedData);
+
       if(chartType === "month"){
         const transformedData = updateMonthlyIncome(months , convertedData , fullToAbbreviatedMonthMap);
         setYearlyReport(transformedData);
       }else{
         setYearlyReport(convertedData);
       }
-      console.log(yearlyReport);
+
         const dataPie = res?.data?.data[0];
         setPieChartData(dataPie);
-        console.log(dataPie);
+
         const mainValue = parseInt(dataPie.shop_rental_total) || data.staff_salary_total;
         const othersValue = parseInt(dataPie.other_total);
         const total = parseInt(dataPie.total);
         // Calculate percentages
         const mainPercentage = Math.ceil(((mainValue / total) * 100).toFixed(2));
         const othersPercentage = Math.ceil((100 - mainPercentage).toFixed(2));
-        console.log("main percentage" , mainPercentage);
-        console.log("others percentage" , othersPercentage);
+
         const newExpenseData = [
           {
             name: dataPie.shop_rental_total ? "Shop Rental" : "Staff Salary",
@@ -191,12 +189,12 @@ const Reports = () => {
           },
           { name: "Others", value: othersPercentage, fill: "rgb(63, 128, 101)" },
         ];
-        console.log("newExpenseData" , newExpenseData)
+
         const selectedData = yearlyReport?.find(
           (item) =>
             item[chartType === "year" ? "year" : "month"] === selectedPieOption
         );
-        console.log("currently selected option : " , selectedPieOption);
+
         if (selectedData) {
           newExpenseData[0].value =
             (selectedData.income * parseInt(newExpenseData[0].value)) /
@@ -229,7 +227,7 @@ const Reports = () => {
         });
       }
       if(error?.response?.data?.message){
-        console.log("true");
+
         const item = error?.response?.data?.message
         toast.error(item , {
           style: {
@@ -249,7 +247,7 @@ const Reports = () => {
 
   useEffect(() => {
     const getPieChartData = () => {
-      console.log(selectedPieOption);
+
       let validOption; 
       if(selectedPieOption === "Jan"){
         validOption = "January";
@@ -271,7 +269,7 @@ const Reports = () => {
       let dataPie
       if(chartType === "year"){
         dataPie = filterListData.filter((item) => item?.year === selectedPieOption);
-        console.log(dataPie);
+
       }
       if(chartType === "month"){
         if(validOption){
@@ -283,7 +281,7 @@ const Reports = () => {
       }
       const data = dataPie[0]
         setPieChartData(data);
-        console.log(data);
+
         const mainValue = parseInt(data?.shop_rental_total);
         const othersValue = parseInt(data?.other_total);
         const total = parseInt(data?.total);
@@ -364,9 +362,7 @@ const Reports = () => {
     return <span style={textStyle}>{value}</span>;
   };
   // Debugging: Log expenseData to ensure it's being updated correctly
-  useEffect(() => {
-    console.log("Expense Data:", expenseData);
-  }, [expenseData]);
+
   if (isLoading) {
     return <Loading />;
   } else {

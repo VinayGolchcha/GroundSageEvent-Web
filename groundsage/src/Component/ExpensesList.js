@@ -57,10 +57,8 @@ const ExpensesList = ({data , deleteTransection}) => {
   const handleExpenseDelete = () => {
     const newArray = expenses.filter((item) => !item.isSelected);
     const deletedItem = expenses?.filter((item) => item.isSelected);
-    console.log(deletedItem)
     if(deletedItem?.length >0){
 
-      console.log(deletedItem , deletedItem[0]?._id);
       deleteTransection(deletedItem[0]?._id);
     }
     setExpenses(newArray);

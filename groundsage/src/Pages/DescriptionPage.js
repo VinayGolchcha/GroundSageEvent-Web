@@ -19,9 +19,7 @@ const DescriptionPage = () => {
   const { user, activeEventId } = useContext(AuthContext);
   const [isRental, setIsRenatal] = useState(false);
   const [shopNumber,setShopNumber] = useState(shopIndex);
-  useEffect(() => {
-    console.log(shopDetails);
-  },[])
+
   const toggleFormVisibility = () => {
     setIsFormOpen(!isFormOpen);
   };
@@ -34,7 +32,7 @@ const DescriptionPage = () => {
       },
     });
   };
-  console.log(selectedShop?.status);
+
   const apiUrl = process.env.REACT_APP_API_URI;
   const fetchRentalAgree = async () => {
     setLoading(true);
@@ -57,7 +55,7 @@ const DescriptionPage = () => {
         const obj = res?.data?.data[0];
         setIsRenatal(true);
       }
-      console.log(res);
+
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -81,7 +79,6 @@ const DescriptionPage = () => {
       const data = await response.json();
       setSelectedShop(data.data[0]); // Assuming shop details are at data[0]
       setImageUrls(data.data[1]); // Assuming images are at data[1]
-      console.log(data.data[1]);
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error("Error fetching shop data:", error);

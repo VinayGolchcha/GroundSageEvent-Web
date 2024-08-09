@@ -98,7 +98,7 @@ export default function CreateShopPage() {
         const shopNumber = response.data.data.shop_number;
         setLastShopNumber(shopNumber);
         setLastShopNumberFetched(true);
-        console.log(lastShopNumber);
+
       }
     } catch (error) {
       console.error("Error fetching last shop number:", error);
@@ -127,20 +127,18 @@ export default function CreateShopPage() {
 
       // Append each key-value pair from eventData to formData
       Object.entries(updatedEventData).forEach(([key, value]) => {
-        console.log(key, value);
+
         formData.append(key, value);
       });
 
       // Assuming 'files' is an array of File objects
       file.forEach((file) => {
-        console.log(file);
+
         formData.append("files", file);
       });
 
-      console.log("Logging FormData contents:");
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
+
+
 
       const response = await axios.post(
         `${apiUrl}/shop/create-shop`,

@@ -57,7 +57,7 @@ export default function UpdateShopPage() {
       });
       setShopStatus(selectedShop.status);
     }
-    console.log(selectedShop);
+
   }, [selectedShop]);
 
   const handleInputChange = (e, field) => {
@@ -75,13 +75,13 @@ export default function UpdateShopPage() {
   const [images, setImages] = useState(imageUrls);
 
   const handleSubmit = async () => {
-    console.log(imageUrls);
+
     let formattedPublicIds = [];
 
     formattedPublicIds =
       "[" + deletedPublicIds?.map((id) => `"${id.trim()}"`).join(", ") + "]";
 
-    console.log(formattedPublicIds);
+
     try {
       // Prepare the updated data
       const updatedData = {
@@ -97,13 +97,13 @@ export default function UpdateShopPage() {
 
       const formData = new FormData();
       Object.entries(updatedData).forEach(([key, value]) => {
-        console.log(key, value);
+
         formData.append(key, value);
       });
 
       if (file.length > 0) {
         file.forEach((file) => {
-          console.log(file);
+
           formData.append("files", file);
         });
       } else {
@@ -115,10 +115,8 @@ export default function UpdateShopPage() {
       }
 
       // formData.append("public_ids", "");
-      console.log("Logging FormData contents:");
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
+
+
       // Send PUT request to update shop details
       const response = await axios.put(
         `https://groundsageevent-be.onrender.com/api/v1/shop/update-shop/${selectedShop.id}/${selectedShop.event_id}`,
@@ -136,7 +134,7 @@ export default function UpdateShopPage() {
       if (response.status >= 200 && response.status < 300) {
         // Show success message
         toast.success("Shop details updated successfully!");
-        console.log(response);
+
         navigate("/shops");
       } else {
         // If response status is not in the 2xx range, throw an error
@@ -201,7 +199,7 @@ export default function UpdateShopPage() {
       }
       return true;
     });
-    setFile((prevFiles) => [...prevFiles, ...validFiles]); //     console.log(validFiles);
+    setFile((prevFiles) => [...prevFiles, ...validFiles]); 
   };
   const handleFile = (file) => {
     const reader = new FileReader();
